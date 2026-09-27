@@ -18,7 +18,7 @@ Read `evergreen.json` next to this file. If `verify_at_use` is true, re-check th
 | The user wants | Do |
 |---|---|
 | a new subject | procedure A: interview, scaffold, research, verify |
-| a built-in beat as their own (ai-video, global-economics, downtempo) | `ES beat-new <slug> --title ...` would duplicate it; instead copy the built-in folder into their private beat dir (`ES where` shows it) and tune it with procedure B |
+| a subject a built-in beat already covers (ai-video, global-economics, downtempo) | copy the built-in folder into the private beat dir (`ES where` shows it), then refresh it: procedure B's check-all, and procedure A step 3 (discovery) for communities and feeds the starter lacks or that appeared since its `verified` date; add what passes A step 4, update `verified`. A starter is a head start, not a finished beat |
 | to add, check or drop a source | procedure B |
 | to grow the vocabulary or questions | procedure C |
 | to see their beats | `ES beats`, then one line per beat |
@@ -30,7 +30,7 @@ A new beat, briefly (procedure A has the detail). Ask at most three questions, a
 
 ## Step 3: verify
 
-`ES beat-check <slug>` must exit 0 (fix every ERROR; fix warnings unless there is a reason). Then `ES probe --beat <slug> --save` (paced; background it for more than about 15 sources). A `BAD` row is fixed or removed, never left. Then `ES index --beat <slug>` to create the data folder, and append `## [date] beat | <slug>: created, N sources (M engage), K entities, Q questions` to `DATA/log.md`. Rewrite `DATA/HANDOFF.md` with the next action (usually the first scan).
+`ES beat-check <slug>` must exit 0 (fix every ERROR; fix warnings unless there is a reason). Then `ES probe --beat <slug> --save` (Reddit is batched ten subreddits a request; a 40-source beat takes a few minutes). Run it in the foreground with a long timeout, or background it and wait for it: never end the turn while it runs, because a non-interactive session kills background work when it ends and the beat is then left unverified (T-20260926-1). A `BAD` row is fixed or removed, never left. Then `ES index --beat <slug>` to create the data folder, and append `## [date] beat | <slug>: created, N sources (M engage), K entities, Q questions` to `DATA/log.md`. Rewrite `DATA/HANDOFF.md` with the next action (usually the first scan).
 
 ## Output
 

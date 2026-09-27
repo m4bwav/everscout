@@ -49,7 +49,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.1.0"
+VERSION = "0.1.1"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -605,7 +605,34 @@ def cmd_probe(a):
         rows = [r for r in rows if r["kind"] in a.kinds.split(",")]
     bad = 0
     results = []
+    # Reddit first, ten subreddits per multireddit request: a subreddit that shows up in the shared window is alive;
+    # only the ones that do not show up are probed alone (renamed, banned, private, or just quiet)
+    done = set()
+    reddit_rows = [r for r in rows if r["kind"] == "reddit"]
+    for i in range(0, len(reddit_rows), 10):
+        batch = reddit_rows[i:i + 10]
+        if len(batch) < 2:
+            break
+        url = S.reddit_multi_url([r["source"] for r in batch])
+        try:
+            text, cached, status = f.get(url, ttl=cfg["pace"]["feed_ttl_seconds"], force=a.force)
+            items = S.parse_reddit(text, url) if text else []
+        except (S.FetchError, ValueError) as e:
+            note(f"multireddit probe failed ({e}); probing one by one")
+            continue
+        for r in batch:
+            name = re.sub(r"^r/", "", r["source"]).lower()
+            mine = [it for it in items if it["kind"] == "post" and (it.get("community") or "").lower() == name]
+            if not mine:
+                continue
+            newest = max((it["published"] for it in mine if it.get("published")), default="")
+            results.append({"source": r["source"], "kind": "reddit", "status": status, "items": len(mine), "newest": newest,
+                            "ok": True, "url": url, "via": "multireddit"})
+            print(f"ok  {status} {len(mine):>3} items newest {newest[:10] or '-':<10} {'cache ' if cached else 'multi '}reddit    {r['source']}")
+            done.add(id(r))
     for r in rows:
+        if id(r) in done:
+            continue
         for url, listing, parser in feed_urls(r, since_days=30)[:1]:
             try:
                 text, cached, status = f.get(url, ttl=cfg["pace"]["feed_ttl_seconds"], force=a.force)

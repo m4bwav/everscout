@@ -8,4 +8,10 @@ Lessons inherited from indie-ai-scout (its LEARNINGS, 2026-09-18 to 2026-09-20) 
 
 ## Active
 
-(none yet)
+### L-001 · 2026-09-26 · A headless session kills background work when it ends
+- Trigger: T-20260926-1, the probe was backgrounded and the run ended before it reported
+- Hypothesis: `claude -p` (and any non-interactive harness) exits after the final message; background shells die with it
+- Rule: never end the turn while a command the outcome depends on is still running; run it in the foreground or wait for it
+- Evidence: T-20260926-1, C-20260926-2
+- Scope: global
+- Status: active · helpful 1 · harmful 0 · last_confirmed 2026-09-26

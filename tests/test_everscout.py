@@ -478,6 +478,30 @@ class MultiredditTests(WorkspaceTest):
         self.assertEqual(len(calls), 3, calls)
 
 
+class ProbeTests(WorkspaceTest):
+    write_sources = MultiredditTests.write_sources
+
+    def test_probe_batches_reddit_and_checks_absent_ones_alone(self):
+        self.write_sources(["alpha", "beta", "gone"])
+        calls = []
+
+        def net(req, timeout=0):
+            calls.append(req.full_url)
+            if "+" in req.full_url:
+                return FakeResponse(reddit_atom("alpha", [("a1", "u", "t", "x", ago(1))]).replace(
+                    "</feed>", reddit_atom("beta", [("b1", "v", "t", "y", ago(2))]).split('<category term="beta"/>', 1)[1]))
+            if "/r/gone/" in req.full_url:
+                import urllib.error
+                raise urllib.error.HTTPError(req.full_url, 404, "nf", {}, None)
+            raise AssertionError(req.full_url)
+        with mock.patch("urllib.request.urlopen", net):
+            code, out, _ = self.run_cli("probe", "--beat", "test-beat")
+        self.assertEqual(len(calls), 2, calls)
+        self.assertEqual(code, 2)
+        self.assertIn("BAD 404", out)
+        self.assertEqual(out.count("multi reddit"), 2)
+
+
 class EngageTests(WorkspaceTest):
     def entry(self, hours, **kw):
         e = {"ts": ago(hours), "beat": "test-beat", "platform": "reddit", "community": "a", "item": "reddit:x", "author": "u1",

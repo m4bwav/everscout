@@ -2,6 +2,13 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.1.1 · 2026-09-26
+
+Fixes from the first headless test of "set up a scout for ai video generation" (everscout-beat TESTS.md, T-20260926-1).
+
+- `probe` checks Reddit through multireddit requests, ten subreddits each, and probes alone only the ones that do not appear.
+- everscout-beat waits for the probe instead of ending with it running, and refreshes a matching starter beat with a discovery pass instead of only copying it.
+
 ## 0.1.0 · 2026-09-26
 
 First release. A topic-agnostic scout, generalised from the private indie-ai-scout 0.3.1.
