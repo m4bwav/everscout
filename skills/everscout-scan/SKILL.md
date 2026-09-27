@@ -23,11 +23,11 @@ Triage from the saved JSON, not by re-fetching: keep an item when it teaches som
 
 ## Step 3: replies, web, signals, housekeeping
 
-Replies from `followups` go into the thread's note under `## Their answers` (create the note if none exists; set `engaged: true`). Run the beat's `searches.md` rows due this scan (weekly rows every week, monthly ones on the first scan of a month), ingesting anything substantive as a `web` note with `ES new-note <url> --beat <slug> --note-kind web --title "..." --posted <date>`. Then `ES validate --beat <slug> --strict` (fix every finding), `ES tally --beat <slug>`, `ES index --beat <slug>`, `ES retention`, and append `## [date] scan | <n> sources, <m> new items, <k> notes, <r> replies` plus one line of what stood out to `DATA/log.md`. Rewrite `DATA/HANDOFF.md` when something is left undone.
+Replies from `followups` go into the thread's note under `## Their answers` (create the note if none exists; set `engaged: true`). Run the beat's `searches.md` rows due this scan (weekly rows every week, monthly ones on the first scan of a month), ingesting anything substantive as a `web` note with `ES new-note <url> --beat <slug> --note-kind web --title "..." --posted <date>`. Then `ES validate --beat <slug> --strict` (fix every finding), `ES tally --beat <slug>`, `ES stats collect --beat <slug>` (the beat's metrics; failures are recorded, not retried; [../../kb/stats.md](../../kb/stats.md)), `ES index --beat <slug>`, `ES retention`, and append `## [date] scan | <n> sources, <m> new items, <k> notes, <r> replies` plus one line of what stood out to `DATA/log.md`. Rewrite `DATA/HANDOFF.md` when something is left undone.
 
 ## Output
 
-Three to eight lines: sources and items scanned, notes written (count and the folder), replies found, the three most interesting items with one clause each (linked to their notes), the tally's movers (new and rising entities), and whether a report is due by the beat's `report_cadence`.
+Three to eight lines: sources and items scanned, notes written (count and the folder), replies found, the three most interesting items with one clause each (linked to their notes), the tally's movers (new and rising entities), metric values collected or failed, and whether a report is due by the beat's `report_cadence`.
 
 ## Rules
 

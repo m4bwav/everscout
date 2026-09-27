@@ -12,11 +12,11 @@ It is a Claude Code plugin: five skills, a standard-library Python CLI and a mar
 
 | skill | does | say |
 |---|---|---|
-| everscout-beat | defines a subject: scope, research questions, a verified watch list, an entity vocabulary with aliases, a question bank, web searches, a study outline | "set up a scout for AI video", "add r/X to my beat", "check my sources" |
-| everscout-scan | fetches, triages, writes notes, collects replies from makers you asked, retallies the signals | "scan", "catch me up on economics", "any replies?" |
+| everscout-beat | defines a subject: scope, research questions, a verified watch list, an entity vocabulary with aliases, a question bank, web searches, a study outline, and the metrics to track | "set up a scout for AI video", "add r/X to my beat", "check my sources" |
+| everscout-scan | fetches, triages, writes notes, collects replies from makers you asked, retallies the signals, collects the metrics | "scan", "catch me up on economics", "any replies?" |
 | everscout-engage | finds a fresh post where nobody has asked about the process, drafts a question, checks the pace and the community's rules, hands the text to you to paste, records it | "find a post to ask", "thank them for the answer" |
-| everscout-report | radar report, weekly digest, or the baseline study, every claim linked to a note and every link checked | "write the radar", "what's rising", "build the study" |
-| everscout-ask | answers any question about a beat's subject: recalls the notes, grades whether they are enough and fresh, researches the gaps, answers with sources, confidence and unknowns, and saves the answer for next time | "ask my tech-hiring scout...", "what are people saying about X", "brief me on Y" |
+| everscout-report | radar report, weekly digest, or the baseline study, every claim linked to a note and every link checked; the radar reviews the metrics and charts them | "write the radar", "what's rising", "build the study" |
+| everscout-ask | answers any question about a beat's subject: recalls the notes, grades whether they are enough and fresh, researches the gaps, answers with sources, confidence and unknowns, and saves the answer for next time; number questions start from the metrics | "ask my tech-hiring scout...", "what are people saying about X", "brief me on Y" |
 
 ## Starter beats
 
@@ -86,6 +86,17 @@ The rules come from research into platform policies, the 2025 r/changemyview AI 
 | `candidates --beat`, `questions --beat` | rank posts for a question; sample question seeds |
 | `engage-check`, `engage-record`, `engage-update`, `ledger`, `followups` | pace rules, the ledger, replies from the people asked |
 | `retention`, `state --beat` | purge the cache; fetch state |
+| `stats list\|add\|collect\|review\|export --beat` | beat metrics: the catalog, collection (tallies, GDELT, Wikimedia pageviews, derived, manual), the lifecycle review, and a chart-ready CSV (see below) |
+
+## Statistics
+
+Each beat can keep a few numbers over time, so a growing data pool can be charted. The catalog is `metrics.md` in the beat folder: one row per metric with the research question it answers, a definition, unit, source, method, cadence, an Admiralty source grade (`B2`), a status and a version. Values go to `DATA/stats/series.csv`, one long-form CSV per beat (`date,metric,version,value,unit,source,note_ref`) that is only ever appended to.
+
+- **Sources**: the beat's own tallies (`tally:notes`, `tally:<facet>/<entity>`, optionally as a share), GDELT news volume (`gdelt:` share, `gdelt-raw:` counts), Wikimedia pageviews (`wikipedia:en.wikipedia/<Article>`), a metric derived from two others, or a number entered by hand from a release. All keyless; Google Trends stays out because the only routes are scrapers.
+- **Lifecycle**: new metrics are candidates. `stats review` proposes promotion after three values from a source graded C3 or better (you say yes), and archiving when a metric is stale (three failed collections, or no value for three periods) or flat (under 5% variation over eight values). You can archive one as irrelevant, gamed or superseded. Nothing is deleted. A definition change bumps the version, and charts split the series there. The thresholds can be changed under `stats` in `config.json`.
+- **Charts**: `stats export` writes `DATA/stats/export.csv`. When [chartwright](https://github.com/m4bwav/chartwright) is installed (found next to this repository, in the Claude Code plugin cache, or at `$EVERSCOUT_CHARTWRIGHT`), it prints the commands for a line chart, terminal sparklines and small multiples, and `--charts` builds them into `DATA/reports/charts/`. Without chartwright the CSV opens in any spreadsheet.
+
+The starter beats ship two or three candidate metrics each. `kb/stats.md` is what the skills follow; the research is `ai-docs/research/2026-09-27-beat-statistics.md`.
 
 ## Method
 

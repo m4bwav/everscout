@@ -19,7 +19,7 @@ Read `evergreen.json` next to this file. If `verify_at_use` is true, re-check th
 
 ## Step 2: recall what the beat knows
 
-Run `ES recall --beat <slug> --q "<the question>"`, then once or twice more with the question reworded in the beat's own vocabulary (`vocab.md` aliases). Read the top hits in full (notes, earlier answers, report sections, study chapters) and the signal rows it prints for the entities the question names. Read `DATA/journal.md` and `DATA/feedback.md` for the user's own view.
+Run `ES recall --beat <slug> --q "<the question>"`, then once or twice more with the question reworded in the beat's own vocabulary (`vocab.md` aliases). Read the top hits in full (notes, earlier answers, report sections, study chapters) and the signal rows it prints for the entities the question names. Read `DATA/journal.md` and `DATA/feedback.md` for the user's own view. For a question about a number or a trend, read `ES stats list --beat <slug> --json` and `DATA/stats/series.csv` first; if no metric answers it, you may propose a candidate ([../../kb/stats.md](../../kb/stats.md)).
 
 ## Step 3: grade the recall (corrective retrieval)
 

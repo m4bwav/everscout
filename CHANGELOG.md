@@ -2,6 +2,19 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.3.0 · 2026-09-27
+
+Beat statistics, built from the approved design in `ai-docs/research/2026-09-27-beat-statistics.md` (section 5).
+
+- because: Mark wants each beat to gather statistics over time, propose and retire metrics, and feed chartwright; the research note found no skill that does the loop and set the schema, storage and lifecycle.
+- Metric catalog `metrics.md` per beat (id, question, definition, unit, kind, source, method, cadence, Admiralty grade, status, version, created, reviewed, archive_reason, headline), validated by `beat-check`. The template and the four starter beats ship candidates (notes per week, GDELT news volume, Wikipedia pageviews), sources checked live on 2026-09-27.
+- Append-only `DATA/stats/series.csv` (`date,metric,version,value,unit,source,note_ref`); failed collections are rows with an empty value.
+- CLI `stats list|add|collect|review|export`. Adapters: tally (notes or an entity, count or share), GDELT DOC 2.0 TimelineVol and TimelineVolRaw, Wikimedia pageviews, derived, manual. Network reads go through the paced fetcher with a 20 s timeout and no retries; a refusal is never cached.
+- Lifecycle in `stats review`: promotion after 3 points at grade C3 or better on the user's yes; archive as stale (3 failures, or no value for 3 periods), flat (CV under 5% over 8 points), irrelevant, gamed or superseded; never deletes rows; a definition change bumps the version and export splits the series. Thresholds configurable under `stats` in config.json. Trends and co-movement shown, never acted on.
+- `stats export` writes a chartwright-ready long CSV and, when chartwright is found, prints or builds (`--charts`) a line chart, sparklines and small multiples into `DATA/reports/charts/`. Chartwright stays optional.
+- Skills: everscout-beat defines metrics, everscout-scan collects, everscout-report reviews and charts, everscout-ask reads the series (procedure in `kb/stats.md`). beat and report descriptions updated with skill-tidy (check OK).
+- `kb/SCHEMA.md` and `kb/platforms.md` document the files and the two new sources. 45 offline tests (15 new).
+
 ## 0.2.2 · 2026-09-26
 
 - The five skill descriptions shortened with skill-tidy so each is under the 1,024-character spec cap (some hosts drop longer ones), under 200 words and at most 12 quoted phrases, with every trigger meaning kept and a boundary sentence naming the siblings. ask 1,415 to 962 chars, beat 1,081 to 926, engage 1,165 to 1,011, report 1,102 to 920, scan 1,096 to 949.

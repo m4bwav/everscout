@@ -5,12 +5,12 @@ status: active
 date: 2026-09-27
 verified: 2026-09-27
 tags: [metrics, statistics, time-series, lifecycle, chartwright, gqm, intelligence]
-summary: read before adding metrics, statistics or charts to everscout beats; prior art, selection and retirement practice, and the proposed metric schema, storage and lifecycle (design only, not built)
+summary: read before adding metrics, statistics or charts to everscout beats; prior art, selection and retirement practice, and the proposed metric schema, storage and lifecycle (design built in everscout 0.3.0)
 ---
 
 # Beat statistics (researched 2026-09-27)
 
-Mark wants each beat to gather statistics: define metrics, collect them over time, propose new ones, update old ones and archive the ones that stop mattering, so a growing data pool can feed charts through chartwright. This note is research and a design. Nothing is implemented yet. All sources were read or searched on 2026-09-27 unless a date says otherwise; claims taken only from search snippets are marked "(snippet)".
+Mark wants each beat to gather statistics: define metrics, collect them over time, propose new ones, update old ones and archive the ones that stop mattering, so a growing data pool can feed charts through chartwright. This note is research and a design; the design was approved and built in everscout 0.3.0 on 2026-09-27 (decision: [../decisions/2026-09-27-beat-statistics.md](../decisions/2026-09-27-beat-statistics.md)). All sources were read or searched on 2026-09-27 unless a date says otherwise; claims taken only from search snippets are marked "(snippet)".
 
 ## Summary
 
@@ -62,7 +62,7 @@ Mark wants each beat to gather statistics: define metrics, collect them over tim
 - **Retirement practice.** Organisations add metrics faster than they retire them. KPI pruning guides say to flag a candidate for retirement, record what it was for and why that no longer applies, check where it is used, and archive rather than delete ([kpitree.co](https://kpitree.co/guides/how-to/how-to-sunset-a-metric); [Sigma](https://www.sigmacomputing.com/blog/kpi-graveyard-useless-metrics); snippets). Dashboard certification is usually reviewed quarterly ([Basedash](https://www.basedash.com/blog/dashboard-sprawl-how-to-audit-certify-and-retire-dashboards), snippet). Julie Zhuo argues for a weekly team metrics review ([Medium](https://joulee.medium.com/why-your-team-needs-a-weekly-metrics-review-dcc9cce7ac3c)).
 - **Platform-forced retirement.** Sources remove metrics too, as Facebook did in March 2024 ([Emplifi](https://docs.emplifi.io/platform/latest/home/facebook-metrics-deprecation-march-2024)). A source that stops answering is an archive reason of its own.
 
-## 5. Recommended design for everscout (not built)
+## 5. Recommended design for everscout (built in 0.3.0)
 
 ### 5.1 Metric catalog: `metrics.md` in the beat folder
 
@@ -133,4 +133,4 @@ Also check each active metric at review: a trend test (slope over the last eight
 ## Open questions
 
 - Whether Google's official Trends API becomes available to individuals (alpha since July 2025); recheck at the next everscout-beat refresh.
-- Whether tallies should be normalised by notes per scan (a share) as GDELT normalises by all coverage. Probably yes; decide when building.
+- Whether tallies should be normalised by notes per scan (a share) as GDELT normalises by all coverage. Decided in 0.3.0: either, by the unit (`share %` divides by the period's notes).

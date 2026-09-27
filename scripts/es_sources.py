@@ -50,6 +50,8 @@ DEFAULT_HOST_GAPS = {
     "api.github.com": 2,
     "news.google.com": 10,
     "musicbrainz.org": 1.1,
+    "api.gdeltproject.org": 6,  # GDELT asks for at most one request every 5 s (its refusal text, 2026-09-27)
+    "wikimedia.org": 1,
     "default": 3,
 }
 
@@ -138,6 +140,8 @@ class Fetcher:
         self.opener = opener or urllib.request.urlopen
         self.fetched = 0
         self.cached = 0
+        self.timeout = 40
+        self.retry = True  # False: fail at once on 429, 503 or 406 (statistics collection must not stall a scan)
 
     # state
     def _rl_path(self):
@@ -194,7 +198,7 @@ class Fetcher:
             self._wait(host)
             req = urllib.request.Request(url, headers=headers)
             try:
-                with self.opener(req, timeout=40) as r:
+                with self.opener(req, timeout=self.timeout) as r:
                     raw = r.read()
                     charset = r.headers.get_content_charset() or "utf-8"
                     body = raw.decode(charset, "replace")
@@ -214,12 +218,12 @@ class Fetcher:
                     return body, False, r.status
             except urllib.error.HTTPError as e:
                 self._mark(host, gap)
-                if e.code in (503, 406) and tries < 3:  # busy or a transient refusal (arXiv, MusicBrainz): back off
+                if e.code in (503, 406) and tries < 3 and self.retry:  # busy or a transient refusal (arXiv, MusicBrainz): back off
                     wait = 15 * tries
                     self.log(f"{e.code} from {host}; waiting {wait}s (try {tries})")
                     self._mark(host, wait)
                     continue
-                if e.code == 429 and tries < 4:
+                if e.code == 429 and tries < 4 and self.retry:
                     retry = e.headers.get("Retry-After") if e.headers else None
                     wait = float(retry) if retry and retry.isdigit() else 60 * tries
                     self.log(f"429 from {host}; waiting {wait:.0f}s (try {tries})")
@@ -234,6 +238,9 @@ class Fetcher:
             except urllib.error.URLError as e:
                 self._mark(host, gap)
                 raise FetchError(url, "network", str(e.reason))
+            except (TimeoutError, OSError) as e:  # a read that times out is not always wrapped in URLError
+                self._mark(host, gap)
+                raise FetchError(url, "timeout", str(e) or "timed out")
 
     def get_json(self, url, ttl=3600, force=False):
         text, cached, status = self.get(url, ttl=ttl, force=force, accept="application/json")
@@ -665,3 +672,46 @@ def google_news_feed(query, hl="en-US", gl="US"):
 def arxiv_query_feed(query, max_results=50):
     params = {"search_query": query, "sortBy": "submittedDate", "sortOrder": "descending", "max_results": str(max_results)}
     return "https://export.arxiv.org/api/query?" + urllib.parse.urlencode(params)
+
+
+# ---------------------------------------------------------------- statistics sources (beat metrics)
+
+def gdelt_timeline_url(query, raw=False, start=None, end=None, timespan="3months"):
+    """GDELT DOC 2.0 timeline. TimelineVol is the share (%) of all monitored coverage; TimelineVolRaw is the count."""
+    params = {"query": query, "mode": "TimelineVolRaw" if raw else "TimelineVol", "format": "json"}
+    if start and end:
+        params["startdatetime"] = start.strftime("%Y%m%d000000")
+        params["enddatetime"] = end.strftime("%Y%m%d235959")
+    else:
+        params["timespan"] = timespan
+    return "https://api.gdeltproject.org/api/v2/doc/doc?" + urllib.parse.urlencode(params)
+
+
+def parse_gdelt_timeline(data):
+    """[(date 'YYYY-MM-DD', value float)] from a TimelineVol or TimelineVolRaw JSON body (first series)."""
+    out = []
+    for series in (data or {}).get("timeline") or []:
+        for pt in series.get("data") or []:
+            d = str(pt.get("date") or "")
+            if len(d) >= 8 and d[:8].isdigit():
+                try:
+                    out.append((f"{d[:4]}-{d[4:6]}-{d[6:8]}", float(pt.get("value") or 0)))
+                except (TypeError, ValueError):
+                    continue
+        break
+    return out
+
+
+def wikimedia_pageviews_url(project, article, start, end, agent="user"):
+    art = urllib.parse.quote(article.replace(" ", "_"), safe="")
+    return (f"https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/{project}/all-access/{agent}/{art}/daily/"
+            f"{start.strftime('%Y%m%d')}00/{end.strftime('%Y%m%d')}00")
+
+
+def parse_wikimedia_pageviews(data):
+    out = []
+    for it in (data or {}).get("items") or []:
+        ts = str(it.get("timestamp") or "")
+        if len(ts) >= 8:
+            out.append((f"{ts[:4]}-{ts[4:6]}-{ts[6:8]}", float(it.get("views") or 0)))
+    return out

@@ -57,6 +57,13 @@ Best sources: the platforms' own docs and rules pages, r/redditdev, bsky.network
 
 ## Findings log
 
+### R-20260927-1 · 2026-09-27 · Beat statistics
+- Summary: a beat keeps a metric catalog (`metrics.md`) and an append-only long-form series (`DATA/stats/series.csv`); metrics are chosen from research questions (GQM), pass an actionability test (Lean Analytics), carry an Admiralty grade, and move candidate, active, archived with explicit thresholds; GDELT DOC 2.0 and Wikimedia pageviews are keyless series sources, Google Trends is scrape-only. Full note: `ai-docs/research/2026-09-27-beat-statistics.md`.
+- Track: practice, tooling
+- Sources: see the research note
+- Magnitude: moderate (new capability)
+- Applied: C-20260927-1
+
 ### R-20260926-1 · 2026-09-26 · Initial research
 - Summary: four parallel research passes on 2026-09-26 (platform access with live endpoint checks; engagement ethics and platform rules; prior art in agents, social listening, horizon scanning and knowledge bases; three sample beats). Findings summarised above; full notes under `ai-docs/research/`.
 - Track: subject, tooling, practice

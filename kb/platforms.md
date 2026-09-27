@@ -22,6 +22,17 @@ What each platform lets a personal scout read without paying, and how to name it
 
 Every request sends `everscout/<version> (+https://github.com/m4bwav/everscout; <contact>)`, and Reddit gets its required `<platform>:everscout:v<version> (by /u/<user>)`. Set `contact` and `reddit_user` in `config.json`. Never swap in a browser User-Agent: a source that only answers a browser string is left out (Bing News was left out for this reason).
 
+## Statistics sources (beat metrics, `stats collect`)
+
+Checked 2026-09-27 by live calls; evidence in `ai-docs/research/2026-09-27-beat-statistics.md`.
+
+| `source` | what the CLI calls | pace | notes |
+|---|---|---|---|
+| `gdelt:<query>`, `gdelt-raw:<query>` | `api.gdeltproject.org/api/v2/doc/doc?mode=TimelineVol` (share %) or `TimelineVolRaw` (counts), `format=json`, start and end dates | 6 s | keyless; searches the last three months only; over its pace it answered HTTP 429 with a plain-text "Please limit requests to one every 5 seconds" (recorded as a failed value, not retried in the run; a non-JSON body is never cached); query syntax: quoted phrases, `OR` inside parentheses |
+| `wikipedia:<project>/<Article>` | `wikimedia.org/api/rest_v1/metrics/pageviews/per-article/<project>/all-access/user/<Article>/daily/<start>/<end>` | 1 s | keyless and documented; an article that does not exist answers 404 (recorded as failed); the title is the URL form (`Trip_hop`) |
+
+Google Trends stays out: pytrends is archived, the official API is a closed alpha, and the replacements scrape through proxies (research note section 1).
+
 ## Keyed sources (not built in; the agent may use them when the user has a key)
 
 Bluesky post search (app password), OpenAlex (free key; the keyless allowance is $0.10 a day since 2026), Semantic Scholar (free key, 1 a second), FRED API (free key), YouTube Data API (free key; 100 searches a day), Last.fm (free key), Discogs (free token, 60 a minute), Podcast Index (free key and secret), GitHub REST (PAT, 5,000 an hour), Product Hunt GraphQL (token).

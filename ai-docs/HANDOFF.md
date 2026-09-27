@@ -1,6 +1,6 @@
 # Handoff
 
-Updated 2026-09-26 (night, 0.2.2: descriptions shortened with skill-tidy, root `evals/` for `claude plugin eval`, 12/12). Everscout 0.1.0 was built in one session from indie-ai-scout 0.3.1; 0.2.0 added the everscout-ask skill (interrogate a beat like a reporter) and the tech-hiring beat, the first built from scratch. Read [log.md](log.md) for what happened, `decisions/` for the architecture, and `research/` for the evidence.
+Updated 2026-09-27 (0.3.0: beat statistics built; see the section below). Everscout 0.1.0 was built in one session from indie-ai-scout 0.3.1; 0.2.0 added the everscout-ask skill (interrogate a beat like a reporter) and the tech-hiring beat, the first built from scratch. Read [log.md](log.md) for what happened, `decisions/` for the architecture, and `research/` for the evidence.
 
 ## What Mark wants (2026-09-26)
 
@@ -20,6 +20,13 @@ Name any subject and get an AI scout generated for it that keeps up with the sub
 - Built-in `tech-hiring` beat (33 sources) with Mark's real data folder at `~/.everscout/data/tech-hiring`: never scanned; one saved answer (on-site interviews and AI cheating). Next for it: the first scan (everscout-scan), then more questions.
 
 - Mark's config (`~/.everscout/config.json`) exists since 2026-09-26: private beats from indie-ai-scout's `beats/` (the `indie-ai-games` beat, migrated from indie-ai-scout with 101 notes), `reddit_user`, ledger and voice in the vault and the indie repository. tech-hiring data still uses the default `~/.everscout/data`.
+
+## 0.3.0 state (2026-09-27)
+
+- Beat statistics: `metrics.md` per beat, `DATA/stats/series.csv`, `ES stats list|add|collect|review|export`, procedure in `kb/stats.md`, decision in `decisions/2026-09-27-beat-statistics.md`. 45 offline tests.
+- Mark's tech-hiring data folder has the first real series (Wikipedia Layoff pageviews, 8 weeks; GDELT v1 with the narrow query, 8 weeks; GDELT v2 not yet collected because GDELT answered 429 all session). Next collect: `ES stats collect --beat tech-hiring`, then `ES stats review --beat tech-hiring` should propose promoting wiki-layoff (ask Mark).
+- indie-ai-games (private beat, in the indie-ai-scout repo) has no `metrics.md` yet: offer candidates from its tallies next time it is scanned.
+- Thresholds are judgment; revisit after three months of data (around 2026-12-27).
 
 ## Next single action
 

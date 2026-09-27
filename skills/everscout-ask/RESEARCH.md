@@ -48,6 +48,13 @@ Best sources: arXiv papers with code, the Tow Center and EBU studies on AI answe
 
 ## Findings log
 
+### R-20260927-1 · 2026-09-27 · Beat statistics
+- Summary: a beat keeps a metric catalog (`metrics.md`) and an append-only long-form series (`DATA/stats/series.csv`); metrics are chosen from research questions (GQM), pass an actionability test (Lean Analytics), carry an Admiralty grade, and move candidate, active, archived with explicit thresholds; GDELT DOC 2.0 and Wikimedia pageviews are keyless series sources, Google Trends is scrape-only. Full note: `ai-docs/research/2026-09-27-beat-statistics.md`.
+- Track: practice, tooling
+- Sources: see the research note
+- Magnitude: moderate (new capability)
+- Applied: C-20260927-1
+
 ### R-20260926-1 · 2026-09-26 · CRAG's three actions fit a beat's knowledge base
 - source: https://arxiv.org/abs/2401.15884
 - magnitude: new

@@ -2,6 +2,11 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`.
 
+### C-20260927-1 · 2026-09-27 · Metrics catalog (beat statistics)
+- because: user request (approved design), R-20260927-1, ai-docs/research/2026-09-27-beat-statistics.md section 5
+- files: SKILL.md (description: metrics; route table; step 2), kb/stats.md, kb/SCHEMA.md, beats/*/metrics.md
+- New route to add, promote, archive or change a metric; new beats get two to five candidates; `beat-check` validates `metrics.md`. Description 926 to 1,020 chars (skill-tidy check OK, closest skill 0.28). Plugin 0.3.0.
+
 ### C-20260926-9 · 2026-09-26 · Description shortened (skill-tidy)
 - because: skill-tidy lint ST005 (over 1,024 chars)
 - files: SKILL.md (front matter only)

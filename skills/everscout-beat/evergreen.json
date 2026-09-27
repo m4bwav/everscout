@@ -27,6 +27,11 @@
       "claim": "Bluesky searchPosts needs login; profile RSS and getFeed are public",
       "checked": "2026-09-26",
       "recheck_days": 60
+    },
+    {
+      "claim": "GDELT DOC 2.0 TimelineVol/TimelineVolRaw are keyless, cover the last three months, and ask for one request every 5 s; Wikimedia per-article pageviews are keyless",
+      "checked": "2026-09-27",
+      "recheck_days": 60
     }
   ],
   "contradiction": null,

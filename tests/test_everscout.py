@@ -638,5 +638,317 @@ class FetcherTests(unittest.TestCase):
             shutil.rmtree(tmp, ignore_errors=True)
 
 
+# ---------------------------------------------------------------- stats (beat metrics)
+
+GDELT_RAW = {"query_details": {"title": "q"}, "timeline": [{"series": "Article Count", "data": [
+    {"date": "20260907T000000Z", "value": 10, "norm": 1000}, {"date": "20260908T000000Z", "value": 5, "norm": 1000},
+    {"date": "20260914T000000Z", "value": 7, "norm": 1000}, {"date": "20260921T000000Z", "value": 4, "norm": 1000},
+    {"date": "20260927T000000Z", "value": 1, "norm": 1000}]}]}
+GDELT_VOL = {"timeline": [{"series": "Volume Intensity", "data": [
+    {"date": "20260914T000000Z", "value": 0.2}, {"date": "20260915T000000Z", "value": 0.4}]}]}
+WIKI_VIEWS = {"items": [{"timestamp": "2026091400", "views": 100}, {"timestamp": "2026091500", "views": 50},
+                        {"timestamp": "2026092100", "views": 30}]}
+TODAY = "2026-09-28"  # a Monday: complete weeks start 2026-08-03 ... 2026-09-21
+
+
+class StatsTests(WorkspaceTest):
+    def setUp(self):
+        super().setUp()
+        self.calls = []
+        self.responses = {}
+
+    # helpers
+    def add(self, mid, **kw):
+        args = ["stats", "add", "--beat", "test-beat", "--id", mid]
+        base = {"question": "Q1 demand", "definition": "d", "unit": "count", "kind": "leading", "source": "tally:notes",
+                "method": "tally", "cadence": "weekly", "grade": "C3"}
+        base.update(kw)
+        for k, v in base.items():
+            args += ["--" + k.replace("_", "-"), v]
+        return self.run_cli(*args)
+
+    def note(self, posted, tools=()):
+        d = os.path.join(self.tmp, "data", "test-beat", "notes", posted[:7])
+        os.makedirs(d, exist_ok=True)
+        n = len(os.listdir(d))
+        with open(os.path.join(d, f"{posted}-n{n}.md"), "w", encoding="utf-8") as f:
+            f.write(f"---\ntitle: t\nposted: {posted}\ntools: [{', '.join(tools)}]\n---\nbody\n")
+
+    def series(self):
+        return E.load_series(self.cfg(), "test-beat")
+
+    def seed(self, mid, values, version="1", start="2026-08-03"):
+        d = dt.date.fromisoformat(start)
+        rows = []
+        for v in values:
+            rows.append({"date": d.isoformat(), "metric": mid, "version": version, "value": "" if v is None else str(v),
+                         "unit": "count", "source": "x", "note_ref": "failed: x" if v is None else ""})
+            d += dt.timedelta(days=7)
+        E.append_series(self.cfg(), "test-beat", rows)
+
+    def fake_fetcher(self):
+        def opener(req, timeout=0):
+            self.calls.append((req.full_url, timeout, req.get_header("User-agent")))
+            for key, resp in self.responses.items():
+                if key in req.full_url:
+                    if isinstance(resp, BaseException):
+                        raise resp
+                    if isinstance(resp, int):
+                        import urllib.error
+                        raise urllib.error.HTTPError(req.full_url, resp, "x", {}, None)
+                    return FakeResponse(resp if isinstance(resp, str) else json.dumps(resp))
+            raise AssertionError("unexpected URL " + req.full_url)
+        return S.Fetcher(os.path.join(self.tmp, "local"), "everscout/test (+x; test@example.org)",
+                         host_gaps={"default": 0, "api.gdeltproject.org": 0, "wikimedia.org": 0}, sleep=lambda s: None, opener=opener)
+
+    def collect(self, *extra):
+        f = self.fake_fetcher()
+        with mock.patch.object(E, "fetcher", return_value=f):
+            return self.run_cli("stats", "collect", "--beat", "test-beat", "--date", TODAY, *extra)
+
+    def review(self, *extra):
+        return self.run_cli("stats", "review", "--beat", "test-beat", "--date", TODAY, *extra)
+
+    def status(self):
+        return {m["id"]: m for m in E.load_metrics(E.get_beat(self.cfg(), "test-beat"))}
+
+    def log(self):
+        with open(os.path.join(self.tmp, "data", "test-beat", "log.md"), encoding="utf-8") as f:
+            return f.read()
+
+    # catalog
+    def test_template_ships_a_metrics_catalog(self):
+        code, out, _ = self.run_cli("stats", "list", "--beat", "test-beat")
+        self.assertIn("notes-per-week", out)
+        code, out, _ = self.run_cli("beat-check", "test-beat")
+        self.assertEqual(code, 0, out)
+        self.assertIn("1 metrics", out)
+
+    def test_add_validates_and_versions(self):
+        code, out, err = self.add("bad", source="gdelt:x", method="tally")
+        self.assertNotEqual(code, 0)
+        self.assertIn("tally source", err)
+        with open(os.path.join(self.bd, "metrics.md"), encoding="utf-8") as f:
+            self.assertNotIn("| bad |", f.read())
+        code, out, err = self.add("layoff-news", source='gdelt-raw:"tech layoffs"', method="api", headline="yes")
+        self.assertEqual(code, 0, err)
+        m = self.status()
+        self.assertEqual((m["layoff-news"]["status"], m["layoff-news"]["version"]), ("candidate", "1"))
+        self.run_cli("stats", "add", "--beat", "test-beat", "--id", "layoff-news", "--grade", "B2")
+        self.assertEqual(self.status()["layoff-news"]["version"], "1", "a grade change is not a definition change")
+        self.run_cli("stats", "add", "--beat", "test-beat", "--id", "layoff-news", "--definition", "weekly articles, new query")
+        self.assertEqual(self.status()["layoff-news"]["version"], "2")
+        self.add("wiki", source="wikipedia:en.wikipedia/Layoff", method="api", headline="yes")
+        m = self.status()
+        self.assertEqual((m["wiki"]["headline"], m["layoff-news"]["headline"]), ("yes", ""), "at most one headline")
+        self.assertIn("version 2", self.log())
+
+    def test_beat_check_catches_bad_metric_rows(self):
+        with open(os.path.join(self.bd, "metrics.md"), "a", encoding="utf-8") as f:
+            f.write("| notes-per-week | Q1 x | d | count | leading | tally:notes | tally | fortnightly | Z9 | archived | 1 | 2026-09-27 | | | yes |\n"
+                    "| ratio | Q1 x | d | ratio | leading | derived: notes-per-week / missing | derived | weekly | C3 | candidate | 1 | 2026-09-27 | | | yes |\n")
+        code, out, _ = self.run_cli("beat-check", "test-beat")
+        self.assertEqual(code, 1)
+        for bit in ("duplicate id", "cadence", "Admiralty", "archive_reason", "unknown metric missing", "headline"):
+            self.assertIn(bit, out)
+
+    # collection
+    def test_collect_tally_counts_shares_and_skips_before_first_note(self):
+        self.note("2026-09-01", ["toolx"])
+        self.note("2026-09-02", ["tooly"])
+        self.note("2026-09-15", ["toolx"])
+        self.add("toolx-share", source="tally:tools/toolx", unit="share %")
+        code, out, err = self.collect()
+        self.assertEqual(code, 0, err)
+        rows = {(r["metric"], r["date"]): r["value"] for r in self.series()}
+        self.assertEqual(rows[("notes-per-week", "2026-08-31")], "2")
+        self.assertEqual(rows[("notes-per-week", "2026-09-07")], "0")
+        self.assertEqual(rows[("notes-per-week", "2026-09-21")], "0")
+        self.assertNotIn(("notes-per-week", "2026-08-24"), rows, "no zeros before the first note")
+        self.assertEqual(rows[("toolx-share", "2026-08-31")], "50")
+        self.assertNotIn(("toolx-share", "2026-09-07"), rows, "a share of zero notes is undefined")
+        n = len(self.series())
+        code, out, _ = self.collect()
+        self.assertIn("current", out)
+        self.assertEqual(len(self.series()), n, "a second collect in the same week appends nothing")
+
+    def test_collect_gdelt_and_wikipedia(self):
+        self.add("news", source='gdelt-raw:"tech layoffs"', method="api", grade="B2")
+        self.add("share", source="gdelt:layoffs", method="api", unit="share %", grade="B2")
+        self.add("wiki", source="wikipedia:en.wikipedia/Layoff", method="api", grade="A2")
+        self.responses = {"TimelineVolRaw": GDELT_RAW, "TimelineVol&": GDELT_VOL, "wikimedia.org": WIKI_VIEWS}
+        code, out, err = self.collect("--metric", "news,share,wiki")
+        self.assertEqual(code, 0, err)
+        rows = {(r["metric"], r["date"]): r["value"] for r in self.series()}
+        self.assertEqual(rows[("news", "2026-09-07")], "15", "raw counts are summed over the week")
+        self.assertEqual(rows[("news", "2026-09-21")], "5")
+        self.assertEqual(rows[("share", "2026-09-14")], "0.3", "shares are averaged")
+        self.assertEqual(rows[("wiki", "2026-09-14")], "150")
+        urls = [c[0] for c in self.calls]
+        self.assertTrue(any("startdatetime=20260803000000" in u and "enddatetime=20260927235959" in u for u in urls), urls)
+        self.assertTrue(any("/per-article/en.wikipedia/all-access/user/Layoff/daily/2026080300/2026092700" in u for u in urls), urls)
+        self.assertTrue(all(c[1] == 20 for c in self.calls), "the stats timeout applies")
+        self.assertTrue(all("everscout" in (c[2] or "") for c in self.calls), "an honest User-Agent")
+
+    def test_collect_records_failures_and_never_crashes(self):
+        self.add("news", source="gdelt-raw:x", method="api")
+        self.add("wiki", source="wikipedia:en.wikipedia/Nope", method="api")
+        self.add("slow", source="wikipedia:de.wikipedia/Slow", method="api")
+        self.add("busy", source="wikipedia:fr.wikipedia/Busy", method="api")
+        self.responses = {"gdeltproject": "Please limit requests to one every 5 seconds", "Nope": 404, "Slow": TimeoutError("timed out"),
+                          "Busy": 429}
+        code, out, err = self.collect("--metric", "news,wiki,slow,busy")
+        self.assertEqual(code, 0, err)
+        fails = {r["metric"]: r for r in self.series() if r["value"] == ""}
+        self.assertEqual(set(fails), {"news", "wiki", "slow", "busy"})
+        self.assertEqual(sum(1 for c in self.calls if "Busy" in c[0]), 1, "a 429 is not retried during collection")
+        self.assertIn("not JSON", fails["news"]["note_ref"])
+        self.assertIn("timed out", fails["slow"]["note_ref"])
+        self.assertEqual(fails["news"]["date"], "2026-09-21")
+        gurl = [c[0] for c in self.calls if "gdelt" in c[0]][0]
+        self.assertFalse(os.path.exists(self.fake_fetcher().cache_path(gurl)), "a refusal is not cached as data")
+        self.assertIn("FAILED", out)
+
+    def test_collect_manual_and_derived(self):
+        self.add("postings", source="Indeed Hiring Lab release", method="manual", cadence="monthly")
+        code, out, err = self.run_cli("stats", "collect", "--beat", "test-beat", "--metric", "postings", "--value", "80.5",
+                                      "--date", "2026-08-01", "--note-ref", "https://example.org/release")
+        self.assertEqual(code, 0, err)
+        self.seed("a", [10, 20])
+        self.seed("b", [5, 0])
+        self.add("a")
+        self.add("b")
+        self.add("ratio", source="derived: a / b", method="derived", unit="ratio")
+        self.collect("--metric", "ratio")
+        rows = [r for r in self.series() if r["metric"] == "ratio"]
+        self.assertEqual([(r["date"], r["value"]) for r in rows], [("2026-08-03", "2")], "division by zero is skipped")
+        self.assertIn(("postings", "2026-08-01", "80.5"), [(r["metric"], r["date"], r["value"]) for r in self.series()])
+        code, out, _ = self.collect("--metric", "postings")
+        self.assertIn("skip", out, "manual metrics are never fetched")
+
+    def test_fetcher_turns_a_read_timeout_into_a_fetch_error(self):
+        self.responses = {"example.org": TimeoutError("timed out")}
+        with self.assertRaises(S.FetchError):
+            self.fake_fetcher().get("https://example.org/slow")
+
+    # lifecycle
+    def test_promote_needs_three_points_a_good_grade_and_a_yes(self):
+        self.add("good", grade="B2")
+        self.add("weak", grade="D4")
+        self.add("young", grade="A1")
+        self.seed("good", [1, 2, 3], start="2026-09-07")
+        self.seed("weak", [1, 2, 3], start="2026-09-07")
+        self.seed("young", [1, 2], start="2026-09-14")
+        code, out, _ = self.review()
+        self.assertIn("promote  good", out)
+        self.assertIn("below C3", out)
+        self.assertEqual(self.status()["good"]["status"], "candidate", "review alone never promotes")
+        code, out, err = self.review("--promote", "young")
+        self.assertNotEqual(code, 0)
+        code, out, err = self.review("--promote", "weak")
+        self.assertNotEqual(code, 0)
+        code, out, err = self.review("--promote", "good")
+        self.assertEqual(code, 0, err)
+        self.assertEqual(self.status()["good"]["status"], "active")
+        self.assertIn("promoted good", self.log())
+
+    def test_archive_stale_by_failures_and_by_age(self):
+        self.add("failing")
+        self.add("old")
+        self.seed("failing", [5, None, None, None], start="2026-08-31")
+        self.seed("old", [5, 6], start="2026-07-06")
+        code, out, _ = self.review()
+        self.assertIn("archive  failing: stale, the source failed 3 times", out)
+        self.assertIn("archive  old: stale, no new value", out)
+        self.assertEqual(self.status()["old"]["status"], "candidate", "proposals only without --apply")
+        before = len(self.series())
+        self.review("--apply")
+        st = self.status()
+        self.assertEqual((st["failing"]["status"], st["old"]["status"]), ("archived", "archived"))
+        self.assertTrue(st["old"]["archive_reason"].startswith("stale"))
+        self.assertEqual(st["notes-per-week"]["reviewed"], TODAY)
+        self.assertEqual(len(self.series()), before, "archiving never deletes rows")
+
+    def test_archive_flat_and_trends_and_pairs(self):
+        self.add("flat")
+        self.add("up")
+        self.add("up2")
+        self.seed("flat", [100, 101, 100, 99, 100, 101, 100, 100])
+        self.seed("up", [1, 2, 3, 4, 5, 6, 7, 8])
+        self.seed("up2", [2, 4, 6, 8, 10, 12, 14, 17])
+        code, out, _ = self.review()
+        self.assertIn("archive  flat: flat", out)
+        self.assertIn("up: ready", out)
+        self.assertIn("trend rising", out)
+        self.assertIn("up and up2 move together", out)
+        code, out, _ = self.review("--json")
+        self.assertEqual({f["id"]: f["action"] for f in json.loads(out)["findings"]}["flat"], "archive")
+
+    def test_flat_threshold_is_configurable(self):
+        cfgp = os.path.join(self.home, "config.json")
+        with open(cfgp, encoding="utf-8") as f:
+            cfg = json.load(f)
+        cfg["stats"] = {"flat_cv": 0.001}
+        with open(cfgp, "w", encoding="utf-8") as f:
+            json.dump(cfg, f)
+        self.add("flat")
+        self.seed("flat", [100, 101, 100, 99, 100, 101, 100, 100])
+        code, out, _ = self.review()
+        self.assertNotIn("archive  flat", out)
+
+    def test_manual_archive_reasons_and_reactivate(self):
+        self.add("gamed-one")
+        self.add("better")
+        code, out, err = self.review("--archive", "gamed-one")
+        self.assertNotEqual(code, 0, "a reason is required")
+        self.review("--archive", "gamed-one", "--reason", "gamed")
+        self.assertEqual(self.status()["gamed-one"]["archive_reason"], "gamed")
+        self.review("--archive", "better", "--reason", "superseded-by:gamed-one")
+        self.assertEqual(self.status()["better"]["archive_reason"], "superseded-by:gamed-one")
+        self.review("--reactivate", "gamed-one")
+        self.assertEqual((self.status()["gamed-one"]["status"], self.status()["gamed-one"]["archive_reason"]), ("active", ""))
+
+    # export
+    def test_export_splits_versions_hides_archived_and_offers_charts(self):
+        self.add("m1")
+        self.add("gone")
+        self.seed("m1", [1, 2], version="1")
+        self.seed("m1", [5], version="2", start="2026-09-07")
+        self.seed("gone", [3])
+        self.seed("m1", [None], version="2", start="2026-09-14")
+        self.review("--archive", "gone", "--reason", "irrelevant")
+        with mock.patch.object(E, "find_chartwright", return_value=None):
+            code, out, err = self.run_cli("stats", "export", "--beat", "test-beat")
+        self.assertEqual(code, 0, err)
+        self.assertIn("chartwright not found", out)
+        path = os.path.join(self.tmp, "data", "test-beat", "stats", "export.csv")
+        import csv as _csv
+        with open(path, encoding="utf-8") as f:
+            rows = list(_csv.DictReader(f))
+        self.assertEqual({r["series"] for r in rows}, {"m1 v1", "m1 v2"}, "archived hidden, versions split, gaps dropped")
+        with mock.patch.object(E, "find_chartwright", return_value=None):
+            self.run_cli("stats", "export", "--beat", "test-beat", "--include-archived")
+        with open(path, encoding="utf-8") as f:
+            self.assertIn("gone", f.read())
+        cw = os.path.join(self.tmp, "cw.py")
+        with open(cw, "w", encoding="utf-8") as f:
+            f.write("import sys\nout = sys.argv[sys.argv.index('--out') + 1]\nopen(out, 'w').write(' '.join(sys.argv[1:]))\n")
+        with mock.patch.dict(os.environ, {"EVERSCOUT_CHARTWRIGHT": cw}):
+            code, out, err = self.run_cli("stats", "export", "--beat", "test-beat")
+            self.assertIn("chartwright found", out)
+            self.assertIn("--chart small-multiples", out)
+            code, out, err = self.run_cli("stats", "export", "--beat", "test-beat", "--charts")
+        charts = os.path.join(self.tmp, "data", "test-beat", "reports", "charts")
+        self.assertEqual(sorted(os.listdir(charts)), ["test-beat-metrics-line.html", "test-beat-small-multiples.html", "test-beat-sparklines.txt"])
+        with open(os.path.join(charts, "test-beat-metrics-line.html"), encoding="utf-8") as f:
+            self.assertIn("--series series", f.read())
+
+    def test_list_json(self):
+        self.seed("notes-per-week", [4, 5])
+        code, out, _ = self.run_cli("stats", "list", "--beat", "test-beat", "--json")
+        m = json.loads(out)[0]
+        self.assertEqual((m["points"], m["last_value"]), (2, "5"))
+
+
 if __name__ == "__main__":
     unittest.main()

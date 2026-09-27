@@ -27,13 +27,16 @@ Standard library only; runs on Windows, macOS and Linux with Python 3.9+.
 from __future__ import annotations
 
 import argparse
+import csv
 import datetime as dt
+import glob
 import hashlib
 import json
 import math
 import os
 import re
 import shutil
+import subprocess
 import sys
 import time
 import urllib.parse
@@ -49,7 +52,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.2.2"
+VERSION = "0.3.0"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -573,12 +576,17 @@ def cmd_beat_check(a):
         warns.append("questions.md has fewer than three categories")
     if not b.searches():
         warns.append("searches.md has no table rows")
+    metrics = load_metrics(b) if os.path.exists(b.file("metrics.md")) else []
+    if metrics:
+        me, mw = metric_problems(b, metrics)
+        errs += me
+        warns += mw
     for e in errs:
         print("ERROR  " + e)
     for w in warns:
         print("warn   " + w)
     print(f"{b.slug}: {len(rows)} sources, {sum(len(v) for v in voc.values())} entities in {len(voc)} facets, "
-          f"{len(qs)} question seeds, {len(b.searches())} searches; {len(errs)} errors, {len(warns)} warnings")
+          f"{len(qs)} question seeds, {len(b.searches())} searches, {len(metrics)} metrics; {len(errs)} errors, {len(warns)} warnings")
     sys.exit(1 if errs or (a.strict and warns) else 0)
 
 
@@ -1748,6 +1756,697 @@ def cmd_state(a):
                      indent=1))
 
 
+# ---------------------------------------------------------------- stats (beat metrics)
+# Design: ai-docs/research/2026-09-27-beat-statistics.md section 5. The catalog is the beat's
+# metrics.md; values are one long-form, append-only CSV per beat at DATA/stats/series.csv.
+
+METRIC_FIELDS = ["id", "question", "definition", "unit", "kind", "source", "method", "cadence", "grade", "status",
+                 "version", "created", "reviewed", "archive_reason", "headline"]
+METRIC_METHODS = ("tally", "api", "manual", "derived")
+METRIC_STATUSES = ("candidate", "active", "archived")
+METRIC_KINDS = ("leading", "lagging")
+# Days per cadence period, used for staleness. "per scan" collects weekly periods.
+METRIC_CADENCES = {"per scan": 7, "weekly": 7, "monthly": 30, "quarterly": 91, "on release": 365}
+ARCHIVE_REASONS = ("stale", "flat", "irrelevant", "gamed", "superseded", "source-gone")
+DEFINING_FIELDS = ("definition", "unit", "source", "method")
+API_PREFIXES = ("gdelt:", "gdelt-raw:", "wikipedia:")
+SERIES_FIELDS = ["date", "metric", "version", "value", "unit", "source", "note_ref"]
+# Thresholds are judgment (research note 5.3); override any of them under "stats" in config.json.
+STATS_DEFAULTS = {"promote_points": 3, "promote_grade": "C3", "stale_periods": 3, "fail_streak": 3,
+                  "flat_cv": 0.05, "flat_points": 8, "trend_points": 8, "backfill_periods": 8, "api_timeout": 20}
+METRICS_HEAD = ("# Metrics\n\nThe beat's recurring numbers, one row per metric (format: `kb/SCHEMA.md`, section metrics.md). "
+                "Values live in the data folder's `stats/series.csv`. Never delete a row: archive it with a reason.\n\n")
+
+
+def stats_settings(cfg):
+    st = dict(STATS_DEFAULTS)
+    st.update(cfg.get("stats") or {})
+    return st
+
+
+def series_path(cfg, slug):
+    return os.path.join(data_dir(cfg, slug), "stats", "series.csv")
+
+
+def load_metrics(b):
+    rows = []
+    for r in parse_table(b.text("metrics.md")):
+        m = {k: (r.get(k) or "").strip() for k in METRIC_FIELDS}
+        m["id"] = m["id"].strip("`")
+        m["source"] = m["source"].strip("`")
+        if m["id"]:
+            rows.append(m)
+    return rows
+
+
+def render_metrics_table(rows):
+    lines = ["| " + " | ".join(METRIC_FIELDS) + " |", "|" + "---|" * len(METRIC_FIELDS)]
+    for r in rows:
+        lines.append("| " + " | ".join(str(r.get(k, "")).replace("|", "/").replace("\n", " ") for k in METRIC_FIELDS) + " |")
+    return "\n".join(lines) + "\n"
+
+
+def save_metrics(b, rows):
+    path = b.file("metrics.md")
+    text = b.text("metrics.md")
+    table = render_metrics_table(rows)
+    if not text.strip():
+        write(path, METRICS_HEAD + table)
+        return
+    lines = text.splitlines(keepends=True)
+    start = next((i for i, l in enumerate(lines) if l.lstrip().startswith("|")), None)
+    if start is None:
+        write(path, text.rstrip("\n") + "\n\n" + table)
+        return
+    end = start
+    while end < len(lines) and lines[end].lstrip().startswith("|"):
+        end += 1
+    write(path, "".join(lines[:start]) + table + "".join(lines[end:]))
+
+
+def load_series(cfg, slug):
+    p = series_path(cfg, slug)
+    if not os.path.exists(p):
+        return []
+    with open(p, encoding="utf-8", newline="") as f:
+        return list(csv.DictReader(f))
+
+
+def append_series(cfg, slug, rows):
+    """Append only: rows are never rewritten or deleted."""
+    if not rows:
+        return
+    p = series_path(cfg, slug)
+    new = not os.path.exists(p)
+    os.makedirs(os.path.dirname(p), exist_ok=True)
+    with open(p, "a", encoding="utf-8", newline="") as f:
+        w = csv.DictWriter(f, SERIES_FIELDS, lineterminator="\n")
+        if new:
+            w.writeheader()
+        for r in rows:
+            w.writerow({k: r.get(k, "") for k in SERIES_FIELDS})
+
+
+def grade_ok(grade, floor="C3"):
+    """Admiralty grade (source A-F, information 1-6) at least as good as floor."""
+    g, f = re.fullmatch(r"([A-F])([1-6])", grade or ""), re.fullmatch(r"([A-F])([1-6])", floor)
+    return bool(g and f and g.group(1) <= f.group(1) and int(g.group(2)) <= int(f.group(2)))
+
+
+def beat_question_numbers(b):
+    sec = re.search(r"^## What we want to learn\s*$(.*?)(?=^## |\Z)", b.body, re.M | re.S)
+    return {int(n) for n in re.findall(r"^(\d+)\.\s", sec.group(1) if sec else "", re.M)}
+
+
+def metric_problems(b, rows):
+    """(errors, warnings) for a metrics catalog."""
+    errs, warns, seen = [], [], set()
+    qnums = beat_question_numbers(b)
+    for m in rows:
+        i = m["id"]
+        if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", i):
+            errs.append(f"metric {i!r}: id must be a lower-case slug")
+        if i in seen:
+            errs.append(f"metric {i}: duplicate id (ids are never reused)")
+        seen.add(i)
+        for k in ("question", "definition", "unit", "source", "method", "cadence", "grade", "status", "version", "created"):
+            if not m.get(k):
+                errs.append(f"metric {i}: {k} is empty")
+        if m["method"] and m["method"] not in METRIC_METHODS:
+            errs.append(f"metric {i}: method {m['method']!r} not in {', '.join(METRIC_METHODS)}")
+        if m["status"] and m["status"] not in METRIC_STATUSES:
+            errs.append(f"metric {i}: status {m['status']!r} not in {', '.join(METRIC_STATUSES)}")
+        if m["kind"] and m["kind"] not in METRIC_KINDS:
+            errs.append(f"metric {i}: kind {m['kind']!r} not in {', '.join(METRIC_KINDS)}")
+        if m["cadence"] and m["cadence"] not in METRIC_CADENCES:
+            errs.append(f"metric {i}: cadence {m['cadence']!r} not in {', '.join(METRIC_CADENCES)}")
+        if m["grade"] and not re.fullmatch(r"[A-F][1-6]", m["grade"]):
+            errs.append(f"metric {i}: grade {m['grade']!r} is not Admiralty (A-F then 1-6, like B2)")
+        if m["version"] and not m["version"].isdigit():
+            errs.append(f"metric {i}: version must be a whole number")
+        src, meth = m["source"], m["method"]
+        if meth == "tally" and not re.fullmatch(r"tally:(notes|[a-z0-9_]+/[a-z0-9][a-z0-9.+_-]*)", src):
+            errs.append(f"metric {i}: a tally source is tally:notes or tally:<facet>/<entity>")
+        if meth == "api" and not src.startswith(API_PREFIXES):
+            errs.append(f"metric {i}: an api source starts with one of {', '.join(API_PREFIXES)}")
+        if meth == "api" and src.startswith("wikipedia:") and "/" not in src:
+            errs.append(f"metric {i}: a wikipedia source is wikipedia:<project>/<Article> (en.wikipedia/Layoff)")
+        if meth == "derived" and not re.fullmatch(r"derived:\s*[a-z0-9-]+\s*[-+*/]\s*[a-z0-9-]+", src):
+            errs.append(f"metric {i}: a derived source is derived:<id> <op> <id> with op one of + - * /")
+        if m["status"] == "archived" and not m["archive_reason"]:
+            errs.append(f"metric {i}: archived without an archive_reason")
+        qm = re.match(r"Q(\d+)\b", m["question"])
+        if qm and qnums and int(qm.group(1)) not in qnums:
+            warns.append(f"metric {i}: {qm.group(0)} is not a numbered research question in beat.md")
+        if not qm and m["question"]:
+            warns.append(f"metric {i}: question should start with the research question number (Q2 ...)")
+    if sum(1 for m in rows if m["headline"].lower() == "yes") > 1:
+        errs.append("more than one metric has headline yes (at most one per beat)")
+    for m in rows:
+        if m["method"] == "derived":
+            for ref in re.findall(r"[a-z0-9-]+", m["source"].split(":", 1)[-1]):
+                if ref not in seen:
+                    errs.append(f"metric {m['id']}: derived from unknown metric {ref}")
+    return errs, warns
+
+
+# periods ---------------------------------------------------------------------------
+
+def period_start(d, cadence):
+    if cadence in ("weekly", "per scan"):
+        return d - dt.timedelta(days=d.weekday())
+    if cadence == "monthly":
+        return d.replace(day=1)
+    if cadence == "quarterly":
+        return d.replace(month=(d.month - 1) // 3 * 3 + 1, day=1)
+    return d
+
+
+def next_period(d, cadence):
+    if cadence in ("weekly", "per scan"):
+        return d + dt.timedelta(days=7)
+    if cadence in ("monthly", "quarterly"):
+        step = 1 if cadence == "monthly" else 3
+        y, mth = d.year + (d.month - 1 + step) // 12, (d.month - 1 + step) % 12 + 1
+        return d.replace(year=y, month=mth, day=1)
+    return d + dt.timedelta(days=1)
+
+
+def due_periods(m, series, today_d, backfill):
+    """Complete periods after the last collected one for this metric version, newest `backfill` at most."""
+    cad = m["cadence"]
+    done = {r["date"] for r in series if r["metric"] == m["id"] and r["version"] == m["version"] and r["value"] != ""}
+    last_done = max(done) if done else None
+    end = period_start(today_d, cad)  # the current period is incomplete
+    periods, p = [], end
+    for _ in range(max(1, int(backfill))):
+        prev = period_start(p - dt.timedelta(days=1), cad)
+        if last_done and prev.isoformat() <= last_done:
+            break
+        periods.insert(0, (prev, p))
+        p = prev
+    return periods
+
+
+def bucket(points, periods, how):
+    """Aggregate dated points [(YYYY-MM-DD, v)] into {period_start_iso: value} (sum or mean); empty periods are left out."""
+    out = {}
+    for ps, pe in periods:
+        vals = [v for d, v in points if ps.isoformat() <= d < pe.isoformat()]
+        if vals:
+            out[ps.isoformat()] = round(sum(vals) / len(vals), 4) if how == "mean" else round(sum(vals), 4)
+    return out
+
+
+def agg_for(m):
+    u = m["unit"].lower()
+    return "mean" if ("share" in u or "%" in u or "index" in u or "rank" in u) else "sum"
+
+
+# adapters ---------------------------------------------------------------------------
+
+def _stats_get_json(fetch, url, ttl):
+    """GET JSON; a body that is not JSON (GDELT answers its rate limit in plain text) is dropped from the cache."""
+    text, _, status = fetch.get(url, ttl=ttl, accept="application/json")
+    if status in (404, 410):
+        raise S.FetchError(url, status, "not found (a renamed article or a dead endpoint)")
+    try:
+        return json.loads(text) if text.strip() else None
+    except ValueError:
+        for p in (fetch.cache_path(url), fetch.cache_path(url) + ".json"):
+            try:
+                os.remove(p)
+            except OSError:
+                pass
+        raise S.FetchError(url, status, "not JSON: " + re.sub(r"\s+", " ", text)[:120])
+
+
+def collect_tally(cfg, b, m, periods, fetch=None):
+    spec = m["source"].split(":", 1)[1].strip()
+    notes = []
+    for _, fm, _ in all_notes(data_dir(cfg, b.slug)):
+        t = S.parse_time(str(fm.get("posted") or fm.get("date") or ""))
+        if t:
+            notes.append((t.date().isoformat(), fm))
+    if not notes:
+        return {}
+    first = min(d for d, _ in notes)
+    share = agg_for(m) == "mean"
+    out = {}
+    for ps, pe in periods:
+        if pe.isoformat() <= first:
+            continue  # before the beat's first note: no data, not zero
+        inside = [fm for d, fm in notes if ps.isoformat() <= d < pe.isoformat()]
+        if spec == "notes":
+            out[ps.isoformat()] = len(inside)
+            continue
+        facet, ent = spec.split("/", 1)
+        hits = 0
+        for fm in inside:
+            vals = fm.get(facet) or []
+            hits += ent in ([vals] if isinstance(vals, str) else vals)
+        if share:
+            if inside:
+                out[ps.isoformat()] = round(100.0 * hits / len(inside), 2)
+        else:
+            out[ps.isoformat()] = hits
+    return out
+
+
+def collect_gdelt(cfg, b, m, periods, fetch):
+    prefix, q = m["source"].split(":", 1)
+    start, end = periods[0][0], periods[-1][1] - dt.timedelta(days=1)
+    start = max(start, periods[-1][1] - dt.timedelta(days=88))  # the DOC API searches the last three months
+    periods = [p for p in periods if p[1] > start]
+    if not periods:
+        return {}
+    url = S.gdelt_timeline_url(q.strip(), raw=prefix == "gdelt-raw", start=start, end=end)
+    return bucket(S.parse_gdelt_timeline(_stats_get_json(fetch, url, ttl=6 * 3600)), periods, agg_for(m))
+
+
+def collect_wikipedia(cfg, b, m, periods, fetch):
+    project, article = m["source"].split(":", 1)[1].strip().split("/", 1)
+    start, end = periods[0][0], periods[-1][1] - dt.timedelta(days=1)
+    url = S.wikimedia_pageviews_url(project, article, start, end)
+    return bucket(S.parse_wikimedia_pageviews(_stats_get_json(fetch, url, ttl=6 * 3600)), periods, "sum")
+
+
+def collect_derived(m, series_rows, metrics_by_id):
+    a, op, c = re.fullmatch(r"derived:\s*([a-z0-9-]+)\s*([-+*/])\s*([a-z0-9-]+)", m["source"]).groups()
+
+    def values(mid):
+        ver = (metrics_by_id.get(mid) or {}).get("version", "1")
+        return {r["date"]: float(r["value"]) for r in series_rows if r["metric"] == mid and r["version"] == ver and r["value"] != ""}
+    va, vc = values(a), values(c)
+    done = {r["date"] for r in series_rows if r["metric"] == m["id"] and r["version"] == m["version"] and r["value"] != ""}
+    out = {}
+    for d in sorted(set(va) & set(vc) - done):
+        x, y = va[d], vc[d]
+        if op == "/" and y == 0:
+            continue
+        out[d] = round({"+": x + y, "-": x - y, "*": x * y, "/": x / y if y else 0}[op], 4)
+    return out
+
+
+def metric_adapter(m):
+    if m["method"] == "tally":
+        return collect_tally
+    if m["method"] == "api":
+        return collect_wikipedia if m["source"].startswith("wikipedia:") else collect_gdelt
+    return None
+
+
+def fmt_num(v):
+    return str(int(v)) if float(v).is_integer() else str(v)
+
+
+def stats_collect(cfg, b, metrics, only=None, today_d=None, fetch=None, backfill=None):
+    """Collect due values for candidate and active metrics. Returns (rows appended, report lines)."""
+    st = stats_settings(cfg)
+    today_d = today_d or now_utc().date()
+    series = load_series(cfg, b.slug)
+    if fetch is None:
+        fetch = fetcher(cfg)
+    fetch.timeout = float(st["api_timeout"])
+    fetch.retry = False  # a refused metric is recorded as a gap and tried at the next collect
+    appended, report = [], []
+    live = [m for m in metrics if m["status"] in ("candidate", "active") and (not only or m["id"] in only)]
+    for m in sorted(live, key=lambda m: m["method"] == "derived"):
+        base = {"metric": m["id"], "version": m["version"], "unit": m["unit"], "source": m["source"]}
+        if m["method"] == "manual" or m["cadence"] == "on release" and m["method"] != "derived":
+            report.append(f"  skip    {m['id']}: {m['method']}, add values with `stats collect --metric {m['id']} --value N`")
+            continue
+        if m["method"] == "derived":
+            vals = collect_derived(m, series + appended, {x["id"]: x for x in metrics})
+            rows = [dict(base, date=d, value=fmt_num(v), note_ref="derived") for d, v in sorted(vals.items())]
+        else:
+            periods = due_periods(m, series + appended, today_d, backfill or st["backfill_periods"])
+            if not periods:
+                report.append(f"  current {m['id']}")
+                continue
+            try:
+                vals = metric_adapter(m)(cfg, b, m, periods, fetch)
+                rows = [dict(base, date=d, value=fmt_num(v), note_ref="") for d, v in sorted(vals.items())]
+            except Exception as e:  # network, timeout, block page, bad JSON: record the gap, never crash the scan
+                reason = re.sub(r"[\r\n,]+", " ", str(e))[:160]
+                rows = [dict(base, date=periods[-1][0].isoformat(), value="", note_ref=f"failed: {reason}")]
+        appended.extend(rows)
+        ok = [r for r in rows if r["value"] != ""]
+        if ok:
+            report.append(f"  ok      {m['id']}: {len(ok)} value(s), latest {ok[-1]['date']} = {ok[-1]['value']} {m['unit']}")
+        elif rows:
+            report.append(f"  FAILED  {m['id']}: {rows[0]['note_ref']}")
+        else:
+            report.append(f"  empty   {m['id']}: no data for the due periods")
+    append_series(cfg, b.slug, appended)
+    return appended, report
+
+
+# review ---------------------------------------------------------------------------
+
+def _slope(vals):
+    n = len(vals)
+    if n < 2:
+        return 0.0
+    mx, my = (n - 1) / 2, sum(vals) / n
+    den = sum((i - mx) ** 2 for i in range(n))
+    return sum((i - mx) * (v - my) for i, v in enumerate(vals)) / den if den else 0.0
+
+
+def _pearson(xs, ys):
+    n = len(xs)
+    if n < 3:
+        return None
+    mx, my = sum(xs) / n, sum(ys) / n
+    sx = math.sqrt(sum((x - mx) ** 2 for x in xs))
+    sy = math.sqrt(sum((y - my) ** 2 for y in ys))
+    if not sx or not sy:
+        return None
+    return sum((x - mx) * (y - my) for x, y in zip(xs, ys)) / (sx * sy)
+
+
+def review_metrics(metrics, series, st, today_d):
+    """Findings per live metric: {'id', 'action' (promote|archive|keep), 'reason', 'detail', 'trend'}. Nothing is changed here."""
+    out = []
+    for m in metrics:
+        if m["status"] == "archived":
+            continue
+        rows = sorted((r for r in series if r["metric"] == m["id"] and r["version"] == m["version"]), key=lambda r: r["date"])
+        vals = [float(r["value"]) for r in rows if r["value"] != ""]
+        per = METRIC_CADENCES.get(m["cadence"], 30)
+        f = {"id": m["id"], "action": "keep", "reason": "", "detail": f"{len(vals)} point(s)", "trend": ""}
+        streak = 0
+        for r in reversed(rows):
+            if r["value"] != "":
+                break
+            streak += 1
+        last_ok = max((r["date"] for r in rows if r["value"] != ""), default=None)
+        since = last_ok or m.get("created") or ""
+        age = (today_d - dt.date.fromisoformat(since[:10])).days if re.match(r"\d{4}-\d{2}-\d{2}", since) else 0
+        # a period's value is dated at its start, so allow one period for it to complete
+        stale_after = (int(st["stale_periods"]) + 1) * per
+        if streak >= int(st["fail_streak"]):
+            f.update(action="archive", reason="stale", detail=f"the source failed {streak} times in a row")
+        elif m["method"] != "manual" and age > stale_after:
+            f.update(action="archive", reason="stale", detail=f"no new value for {age} days ({st['stale_periods']} {m['cadence']} periods)")
+        elif m["method"] == "manual" and age > stale_after:
+            f.update(action="archive", reason="stale", detail=f"no value entered for {age} days")
+        elif len(vals) >= int(st["flat_points"]):
+            last = vals[-int(st["flat_points"]):]
+            mean = sum(last) / len(last)
+            sd = math.sqrt(sum((v - mean) ** 2 for v in last) / len(last))
+            cv = sd / abs(mean) if mean else (0.0 if sd == 0 else float("inf"))
+            if cv < float(st["flat_cv"]):
+                f.update(action="archive", reason="flat", detail=f"coefficient of variation {cv:.3f} over the last {len(last)} points "
+                         "(archive unless a research question depends on its level)")
+        if f["action"] == "keep" and m["status"] == "candidate":
+            if len(vals) >= int(st["promote_points"]) and grade_ok(m["grade"], st["promote_grade"]):
+                f.update(action="promote", reason="ready", detail=f"{len(vals)} points, grade {m['grade']}: ask the user before promoting")
+            elif not grade_ok(m["grade"], st["promote_grade"]):
+                f["detail"] += f"; grade {m['grade']} is below {st['promote_grade']}, cannot be promoted"
+        tp = vals[-int(st["trend_points"]):]
+        if len(tp) >= 3:
+            mean = sum(tp) / len(tp)
+            s = _slope(tp)
+            rel = s / abs(mean) if mean else 0.0
+            f["trend"] = ("rising" if rel > 0.05 else "falling" if rel < -0.05 else "level") + f" (slope {s:+.3g} per period over {len(tp)})"
+        out.append(f)
+    by_q = {}
+    for m in metrics:
+        if m["status"] != "archived":
+            by_q.setdefault(m["question"].split()[0] if m["question"] else "", []).append(m)
+    pairs = []
+    for q, ms in by_q.items():
+        for i in range(len(ms)):
+            for j in range(i + 1, len(ms)):
+                a_, c_ = ms[i], ms[j]
+                va = {r["date"]: float(r["value"]) for r in series if r["metric"] == a_["id"] and r["version"] == a_["version"] and r["value"] != ""}
+                vc = {r["date"]: float(r["value"]) for r in series if r["metric"] == c_["id"] and r["version"] == c_["version"] and r["value"] != ""}
+                common = sorted(set(va) & set(vc))
+                r = _pearson([va[d] for d in common], [vc[d] for d in common])
+                if r is not None:
+                    pairs.append((q, a_["id"], c_["id"], round(r, 2), len(common)))
+    return out, pairs
+
+
+# commands ---------------------------------------------------------------------------
+
+def _stats_beat(a):
+    cfg = config()
+    b = get_beat(cfg, a.beat)
+    return cfg, b
+
+
+def _stats_log(cfg, b, text):
+    append(os.path.join(data_dir(cfg, b.slug), "log.md"), f"\n## [{today()}] stats | {text}\n")
+
+
+def _builtin_warning(b):
+    if os.path.abspath(b.path).startswith(os.path.abspath(os.path.join(ROOT, "beats"))):
+        note(f"note: {b.slug} is a built-in beat; its metrics.md is part of the plugin. Copy the beat into your private beat dir "
+             "(`everscout.py where`) before editing it for yourself.")
+
+
+def cmd_stats_list(a):
+    cfg, b = _stats_beat(a)
+    metrics = load_metrics(b)
+    series = load_series(cfg, b.slug)
+    out = []
+    for m in metrics:
+        rows = [r for r in series if r["metric"] == m["id"]]
+        ok = sorted((r for r in rows if r["value"] != "" and r["version"] == m["version"]), key=lambda r: r["date"])
+        out.append(dict(m, points=len(ok), last_date=ok[-1]["date"] if ok else "", last_value=ok[-1]["value"] if ok else "",
+                        rows_all_versions=len(rows)))
+    if a.status:
+        out = [m for m in out if m["status"] in a.status.split(",")]
+    if a.json:
+        print(json.dumps(out, indent=1, ensure_ascii=False))
+        return
+    if not out:
+        print(f"{b.slug}: no metrics (add one with `stats add`; format in kb/SCHEMA.md)")
+        return
+    print(f"{b.slug}: {len(out)} metrics; series at {series_path(cfg, b.slug)}")
+    for m in out:
+        star = " *" if m["headline"].lower() == "yes" else ""
+        last = f"{m['last_value']} {m['unit']} ({m['last_date']})" if m["points"] else "no values yet"
+        print(f"  {m['status']:<9} {m['id']}{star} v{m['version']}  {m['method']}:{m['cadence']}  {m['grade']}  {m['points']} pts  last {last}"
+              + (f"  [{m['archive_reason']}]" if m["status"] == "archived" else ""))
+
+
+def cmd_stats_add(a):
+    cfg, b = _stats_beat(a)
+    metrics = load_metrics(b)
+    by = {m["id"]: m for m in metrics}
+    given = {k: getattr(a, k) for k in ("question", "definition", "unit", "kind", "source", "method", "cadence", "grade", "status")
+             if getattr(a, k) is not None}
+    if a.headline is not None:
+        given["headline"] = "yes" if a.headline == "yes" else ""
+    if a.id in by:
+        m = by[a.id]
+        if m["status"] == "archived" and given.get("status") not in (None, "archived"):
+            given.setdefault("archive_reason", "")
+        changed = [k for k in DEFINING_FIELDS if k in given and given[k] != m[k]]
+        m.update(given)
+        if changed:
+            m["version"] = str(int(m["version"] or 1) + 1)
+        m["reviewed"] = today()
+        what = f"updated {a.id}" + (f", {', '.join(changed)} changed: version {m['version']}" if changed else "")
+    else:
+        m = {k: "" for k in METRIC_FIELDS}
+        m.update(id=a.id, status="candidate", version="1", created=today(), reviewed=today(), kind="leading")
+        m.update(given)
+        metrics.append(m)
+        what = f"added candidate {a.id} ({m['method']}, {m['source']})"
+    if m.get("headline") == "yes":
+        for x in metrics:
+            if x is not m and x["headline"] == "yes":
+                x["headline"] = ""
+                note(f"headline moved from {x['id']} to {m['id']}")
+    errs, warns = metric_problems(b, metrics)
+    mine = [e for e in errs if e.startswith(f"metric {a.id}") or "headline" in e]
+    if mine:
+        fail("not saved: " + "; ".join(mine))
+    _builtin_warning(b)
+    save_metrics(b, metrics)
+    _stats_log(cfg, b, what)
+    for w in warns:
+        if w.startswith(f"metric {a.id}"):
+            note("warn: " + w)
+    print(what)
+
+
+def cmd_stats_collect(a):
+    cfg, b = _stats_beat(a)
+    metrics = load_metrics(b)
+    only = set(a.metric.split(",")) if a.metric else None
+    if a.value is not None:
+        if not only or len(only) != 1:
+            fail("--value needs exactly one --metric")
+        mid = next(iter(only))
+        m = next((x for x in metrics if x["id"] == mid), None)
+        if not m:
+            fail(f"no metric {mid} in {b.slug}")
+        d = a.date or period_start(now_utc().date(), m["cadence"]).isoformat()
+        append_series(cfg, b.slug, [{"date": d, "metric": mid, "version": m["version"], "value": a.value, "unit": m["unit"],
+                                     "source": m["source"], "note_ref": a.note_ref or "manual"}])
+        print(f"{mid}: {d} = {a.value} {m['unit']}")
+        return
+    today_d = dt.date.fromisoformat(a.date) if a.date else None
+    rows, report = stats_collect(cfg, b, metrics, only=only, today_d=today_d, backfill=a.backfill)
+    ok = sum(1 for r in rows if r["value"] != "")
+    print(f"{b.slug}: {ok} value(s) and {len(rows) - ok} failure(s) appended to {series_path(cfg, b.slug)}")
+    for line in report:
+        print(line)
+    if rows:
+        _stats_log(cfg, b, f"collected {ok} value(s), {len(rows) - ok} failed")
+
+
+def cmd_stats_review(a):
+    cfg, b = _stats_beat(a)
+    st = stats_settings(cfg)
+    metrics = load_metrics(b)
+    by = {m["id"]: m for m in metrics}
+    today_d = dt.date.fromisoformat(a.date) if a.date else now_utc().date()
+    changes = []
+    for mid in (a.promote.split(",") if a.promote else []):
+        if mid not in by:
+            fail(f"no metric {mid}")
+        findings, _ = review_metrics([by[mid]], load_series(cfg, b.slug), st, today_d)
+        if by[mid]["status"] != "candidate":
+            fail(f"{mid} is {by[mid]['status']}, not a candidate")
+        if not (findings and findings[0]["action"] == "promote") and not a.force:
+            fail(f"{mid} does not meet the promotion rule ({st['promote_points']} points at {st['promote_grade']} or better): "
+                 f"{findings[0]['detail'] if findings else ''}; --force overrides")
+        by[mid]["status"] = "active"
+        changes.append(f"promoted {mid} to active (user yes)")
+    if a.archive:
+        if not a.reason:
+            fail("--archive needs --reason (" + ", ".join(ARCHIVE_REASONS) + ", superseded-by:<id>, or free text)")
+        for mid in a.archive.split(","):
+            if mid not in by:
+                fail(f"no metric {mid}")
+            by[mid].update(status="archived", archive_reason=a.reason)
+            changes.append(f"archived {mid}: {a.reason}")
+    for mid in (a.reactivate.split(",") if a.reactivate else []):
+        if mid not in by or by[mid]["status"] != "archived":
+            fail(f"{mid} is not archived")
+        by[mid].update(status="active", archive_reason="")
+        changes.append(f"reactivated {mid}")
+    findings, pairs = review_metrics(metrics, load_series(cfg, b.slug), st, today_d)
+    if a.apply:
+        for f in findings:
+            if f["action"] == "archive" and by[f["id"]]["status"] != "archived":
+                by[f["id"]].update(status="archived", archive_reason=f"{f['reason']}: {f['detail']}")
+                changes.append(f"archived {f['id']}: {f['reason']} ({f['detail']})")
+        for m in metrics:
+            m["reviewed"] = today_d.isoformat()
+    if a.json:
+        print(json.dumps({"findings": findings, "pairs": [dict(zip(("question", "a", "b", "r", "n"), p)) for p in pairs],
+                          "changes": changes}, indent=1))
+    else:
+        print(f"{b.slug}: review of {len(findings)} live metric(s) on {today_d.isoformat()}")
+        for f in findings:
+            print(f"  {f['action']:<8} {f['id']}: {f['reason'] + ', ' if f['reason'] else ''}{f['detail']}"
+                  + (f"; trend {f['trend']}" if f["trend"] else ""))
+        for q, x, y, r, n in pairs:
+            print(f"  pair    {q}: {x} and {y} move {'together' if r > 0.5 else 'apart' if r < -0.5 else 'independently'} (r={r}, {n} common points)")
+        for c in changes:
+            print("  " + c)
+        if not a.apply and any(f["action"] == "archive" for f in findings):
+            print("  (proposals only; --apply archives stale and flat metrics and stamps reviewed)")
+    if changes or a.apply:
+        _builtin_warning(b)
+        save_metrics(b, metrics)
+        for c in changes:
+            _stats_log(cfg, b, c)
+
+
+def find_chartwright(cfg):
+    """Path to chartwright's cw.py, or None. Optional: everscout never needs it."""
+    cands = [os.environ.get("EVERSCOUT_CHARTWRIGHT") or "", cfg.get("chartwright") or "",
+             os.path.join(os.path.dirname(ROOT), "chartwright", "scripts", "cw.py")]
+    for base in (os.path.expanduser("~/.claude/plugins/cache"), os.path.expanduser("~/.claude/plugins/marketplaces")):
+        if os.path.isdir(base):
+            cands += sorted(glob.glob(os.path.join(base, "*", "chartwright", "*", "scripts", "cw.py")), reverse=True)
+            cands += glob.glob(os.path.join(base, "chartwright", "scripts", "cw.py"))
+    for c in cands:
+        if c and os.path.isfile(expand(c)):
+            return expand(c)
+    return None
+
+
+def chart_commands(cw, csv_path, charts_dir, slug, title):
+    """(name, argv) for the three chartwright builds: a line chart, terminal sparklines, small multiples."""
+    base = [sys.executable, cw, "build", "--data", csv_path, "--x", "date", "--y", "value", "--series", "series", "--agg", "mean"]
+    return [
+        ("line", base + ["--chart", "line", "--target", "vega-lite", "--html", "--title", title + ": metrics",
+                         "--out", os.path.join(charts_dir, slug + "-metrics-line.html")]),
+        ("sparkline", base + ["--chart", "sparkline", "--target", "terminal", "--out", os.path.join(charts_dir, slug + "-sparklines.txt")]),
+        ("small-multiples", base + ["--chart", "small-multiples", "--target", "vega-lite", "--html", "--title", title + ": by metric",
+                                    "--out", os.path.join(charts_dir, slug + "-small-multiples.html")]),
+    ]
+
+
+def show_argv(argv):
+    return " ".join('"' + x + '"' if (" " in x or not x) else x for x in ["python"] + argv[1:])
+
+
+def cmd_stats_export(a):
+    cfg, b = _stats_beat(a)
+    metrics = {m["id"]: m for m in load_metrics(b)}
+    want = set(a.metric.split(",")) if a.metric else None
+    rows = []
+    for r in load_series(cfg, b.slug):
+        m = metrics.get(r["metric"])
+        if r["value"] == "" or (want and r["metric"] not in want) or (a.since and r["date"] < a.since):
+            continue
+        if not want and m and m["status"] == "archived" and not a.include_archived:
+            continue
+        rows.append(r)
+    versions = {}
+    for r in rows:
+        versions.setdefault(r["metric"], set()).add(r["version"])
+    dd = data_dir(cfg, b.slug)
+    out = expand(a.out) if a.out else os.path.join(dd, "stats", "export.csv")
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    with open(out, "w", encoding="utf-8", newline="") as f:
+        w = csv.writer(f, lineterminator="\n")
+        w.writerow(["date", "metric", "series", "value", "unit", "version", "status"])
+        for r in sorted(rows, key=lambda r: (r["metric"], r["version"], r["date"])):
+            # a definition change starts a new series, so a break is never drawn as a trend
+            cur = (metrics.get(r["metric"]) or {}).get("version")
+            series = r["metric"] if versions[r["metric"]] == {cur} else f"{r['metric']} v{r['version']}"
+            w.writerow([r["date"], r["metric"], series, r["value"], r["unit"], r["version"],
+                        (metrics.get(r["metric"]) or {}).get("status", "unknown")])
+    print(f"{len(rows)} rows from {len(versions)} metric(s) written to {out} (long form: date, series, value)")
+    charts_dir = os.path.join(dd, "reports", "charts")
+    cw = find_chartwright(cfg)
+    if not cw:
+        print("chartwright not found (set EVERSCOUT_CHARTWRIGHT or config `chartwright` to its scripts/cw.py); the CSV works in any chart tool")
+        return
+    cmds = chart_commands(cw, out, charts_dir, b.slug, b.title)
+    if not a.charts:
+        print(f"chartwright found: {cw}. Build charts into {charts_dir} with --charts, or run:")
+        for name, c in cmds:
+            print(f"  {name}: {show_argv(c)}")
+        return
+    if not rows:
+        print("no rows: no charts built")
+        return
+    os.makedirs(charts_dir, exist_ok=True)
+    for name, argv in cmds:
+        try:
+            r = subprocess.run(argv, capture_output=True, text=True, timeout=120)
+            print(f"  {name}: {'ok' if r.returncode == 0 else 'failed ' + str(r.returncode)} {(r.stderr or r.stdout).strip()[:200]}")
+        except Exception as e:
+            print(f"  {name}: failed ({e})")
+
+
+def cmd_stats(a):
+    {"list": cmd_stats_list, "add": cmd_stats_add, "collect": cmd_stats_collect, "review": cmd_stats_review,
+     "export": cmd_stats_export}[a.action](a)
+
+
 # ---------------------------------------------------------------- main
 
 def main(argv=None):
@@ -1808,6 +2507,24 @@ def main(argv=None):
     p.add_argument("--strict", action="store_true"); p.add_argument("--stale-days", type=int, default=120); p.add_argument("--no-url-check", action="store_true")
     p = add("retention", cmd_retention, "purge cached raw content older than retention_hours")
     p = add("state", cmd_state, "fetch state of a beat"); p.add_argument("--beat")
+    p = add("stats", cmd_stats, "beat metrics: list, add, collect, review, export (kb/SCHEMA.md, metrics.md)")
+    ssp = p.add_subparsers(dest="action", required=True)
+    q = ssp.add_parser("list", help="the beat's metrics with point counts and last values"); q.add_argument("--beat"); q.add_argument("--status"); q.add_argument("--json", action="store_true")
+    q = ssp.add_parser("add", help="add a candidate metric, or edit one (a definition, unit, source or method change bumps its version)")
+    q.add_argument("--beat"); q.add_argument("--id", required=True)
+    for f in ("question", "definition", "unit", "source", "grade"):
+        q.add_argument("--" + f)
+    q.add_argument("--kind", choices=METRIC_KINDS); q.add_argument("--method", choices=METRIC_METHODS)
+    q.add_argument("--cadence", choices=list(METRIC_CADENCES)); q.add_argument("--status", choices=METRIC_STATUSES); q.add_argument("--headline", choices=["yes", "no"])
+    q = ssp.add_parser("collect", help="collect due values (tally, GDELT, Wikimedia, derived) or record a manual one")
+    q.add_argument("--beat"); q.add_argument("--metric"); q.add_argument("--value"); q.add_argument("--date", help="manual: the period; otherwise: collect as if today were this date")
+    q.add_argument("--note-ref"); q.add_argument("--backfill", type=int)
+    q = ssp.add_parser("review", help="lifecycle review: promotion candidates, stale and flat metrics, trends; --apply to archive")
+    q.add_argument("--beat"); q.add_argument("--apply", action="store_true"); q.add_argument("--promote"); q.add_argument("--force", action="store_true")
+    q.add_argument("--archive"); q.add_argument("--reason"); q.add_argument("--reactivate"); q.add_argument("--date"); q.add_argument("--json", action="store_true")
+    q = ssp.add_parser("export", help="chartwright-ready long-form CSV, and chart commands when chartwright is found")
+    q.add_argument("--beat"); q.add_argument("--metric"); q.add_argument("--since"); q.add_argument("--out"); q.add_argument("--include-archived", action="store_true")
+    q.add_argument("--charts", action="store_true", help="build the charts into DATA/reports/charts/ with chartwright")
     a = ap.parse_args(argv)
     a.fn(a)
 
