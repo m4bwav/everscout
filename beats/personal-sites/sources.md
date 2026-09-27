@@ -34,6 +34,15 @@ The watch list. Columns and markers: `beats/_template/sources.md` and `kb/SCHEMA
 | #smallweb@mastodon.social | mastodon | small web | open | no | yes | | ✓ 2026-09-27 fediverse tag |
 | #personalwebsite@mastodon.social | mastodon | small web | open | no | yes | | ✓ 2026-09-27 fediverse tag |
 | #webdesign@mastodon.social | mastodon | design | open | no | yes | portfolio personal site website | ✓ 2026-09-27 fediverse tag, filtered |
+| r/vibecoding | reddit | ai | native | no | yes | portfolio personal site personal website design ui landing slop | ~ AI-built sites; filter keeps site-design posts. Feed ✓ 2026-09-27 |
+| "AI slop" | hn | ai | n/a | no | yes | +design ui website frontend | ✓ 2026-09-27 Hacker News query, filtered to design. Added 2026-09-27 |
+| "vibe coded" | hn | ai | n/a | no | yes | website site portfolio design | ✓ 2026-09-27 Hacker News query. Added 2026-09-27 |
+| https://sidebar.io/feed.xml | rss | design | n/a | no | yes | | ✓ 2026-09-27 five design links a day, a good pulse of current visual design |
+| https://uxdesign.cc/feed | rss | design | n/a | no | yes | ai portfolio personal website trend | ✓ 2026-09-27 UX Collective; filtered |
+| https://www.awwwards.com/blog/feed/ | rss | design | n/a | no | yes | | ✓ 2026-09-27 Awwwards blog: what the showcase crowd rewards |
+| https://www.creativebloq.com/feeds/all | rss | design | n/a | no | yes | web design portfolio website trend typography ai | ✓ 2026-09-27 Creative Bloq; broad, filtered |
+| AI website design | news | ai | n/a | no | yes | | ✓ 2026-09-27 Google News. Added 2026-09-27 |
+| github.com/funboy322/avoid-ai-design | web | ai | n/a | no | no | | ✓ 2026-09-27 agent skill listing 67 AI design tells and fixes; read by hand quarterly |
 | typewolf.com/portfolio-sites | web | design | n/a | no | no | | ~ curated designer portfolio list; read by hand quarterly |
 | siteinspire.com | web | design | n/a | no | no | | ~ gallery with a portfolio category; read by hand monthly |
 | godly.website | web | design | n/a | no | no | | ~ gallery of current web design; read by hand monthly |

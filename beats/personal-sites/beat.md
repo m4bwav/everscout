@@ -4,6 +4,7 @@ title: Personal and professional websites
 status: active
 created: 2026-09-27
 verified: 2026-09-27
+updated: 2026-09-27
 engage: true
 scan_cadence: weekly
 report_cadence: monthly
@@ -21,7 +22,7 @@ Follows how people, especially developers, designers and other tech workers, thi
 
 ## Scope
 
-- In: personal portfolios and homepages of developers, designers, writers and other tech people; personal blogs and newsletters on one's own domain; digital gardens and "now", "uses", colophon and other slash pages; IndieWeb practice (own your domain, POSSE, webmentions, RSS, webrings, blogrolls); visual and interaction trends as applied to personal sites (typography, bento grids, dark mode, motion, texture, brutalism, retro "old web"); static site generators and hosting for personal sites; how hiring managers and clients read portfolios; AI-built sites and the reaction to them.
+- In: personal portfolios and homepages of developers, designers, writers and other tech people; personal blogs and newsletters on one's own domain; digital gardens and "now", "uses", colophon and other slash pages; IndieWeb practice (own your domain, POSSE, webmentions, RSS, webrings, blogrolls); visual and interaction trends as applied to personal sites (typography, bento grids, dark mode, motion, texture, brutalism, retro "old web"); static site generators and hosting for personal sites; how hiring managers and clients read portfolios; AI in personal sites: AI builders and coding agents used to design and build them, the "AI slop" look and how people avoid it, design-direction files (DESIGN.md) and design skills for agents, AI features on the site itself (ask-me chatbots, generated art, personalisation).
 - Out: business and e-commerce sites, agency marketing, SEO and growth for commercial blogs, template and theme sales, general web-dev questions unrelated to a personal site, social-media-only personal branding.
 
 ## What we want to learn
@@ -32,6 +33,7 @@ Follows how people, especially developers, designers and other tech workers, thi
 4. Which stacks and hosts do people choose for personal sites, and why (static generators, frameworks, no-code builders, AI builders)?
 5. What do hiring managers, recruiters and clients actually look at on a portfolio?
 6. How is the IndieWeb or small-web revival changing personal sites (RSS, webrings, blogrolls, webmentions, slash pages)?
+7. How are people using AI to design and build personal sites, what does a site that does not look AI-made do differently, and which AI features on a personal site are well received and which are mocked?
 
 ## Keep and skip
 

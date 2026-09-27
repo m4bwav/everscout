@@ -13,6 +13,10 @@ What the scan runs with web search beyond the feeds. Built 2026-09-27.
 | "digital garden" OR "now page" OR "slash pages" <year> | quarterly | page conventions |
 | AI website builder portfolio <year> | quarterly | AI-built sites and reactions |
 | static site generator personal blog <year> | quarterly | stack choices |
+| AI slop design avoid generic <month year> | monthly | the AI-look tells and fixes |
+| web design trends <month year> | monthly | the newest visual trend pieces (count only where several agree) |
+| AI portfolio builder OR "vibe coded portfolio" <year> | monthly | AI-built personal sites and reactions |
+| DESIGN.md OR "design skill" claude cursor frontend <year> | monthly | design guidance files for coding agents |
 
 ## Pages worth reading directly
 

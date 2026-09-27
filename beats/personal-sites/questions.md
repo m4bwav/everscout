@@ -41,3 +41,10 @@ Two to four seeds from at least two categories. Lead with a short, specific than
 - [smallweb] Do you offer RSS, and do you see people subscribing?
 - [smallweb] Are you in any webrings or blogrolls, and did they bring visitors?
 - [smallweb] Do you post on your site first and syndicate elsewhere?
+
+## AI and design
+
+- [ai, design] Where in the design did AI help most, and where did you override what it suggested?
+- [ai, design] How did you keep the site from looking like every other AI-built one?
+- [ai, design] Did you write down a design direction (tokens, fonts, rules) for the tool to follow, and did it stick to it?
+- [ai] Has anyone used the chat or AI feature on your site, and what do they ask it?

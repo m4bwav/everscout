@@ -9,6 +9,7 @@ The history and guide everscout-report writes in baseline mode, one chapter at a
 | 02-why-a-site.md | why tech and design people keep a site now: hiring, clients, writing, ownership |
 | 03-structure.md | pages and content that work: home, about, work, writing, now, uses, colophon, contact |
 | 04-visual-ideas.md | current visual and interaction ideas, and which are wearing out |
+| 04b-ai-and-design.md | using AI to design and build a personal site: builders, coding agents, design files, the AI-slop tells and how to avoid them, AI features on the site |
 | 05-stacks-and-hosting.md | generators, frameworks, builders, hosts, costs |
 | 06-reviewers.md | what hiring managers, recruiters and clients read |
 | 07-small-web.md | IndieWeb practice: RSS, webmentions, webrings, blogrolls, POSSE |

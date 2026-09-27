@@ -59,7 +59,28 @@ Keep canonical ids stable. A new builder or trend gets its own id when people co
 - netlify: Netlify
 - vercel: Vercel
 - cloudflare-pages: Cloudflare Pages
-- ai-site-builder: AI website builder, v0, Lovable, Bolt.new, vibe coded, vibe-coded
+- ai-site-builder: AI website builder, AI site builder
+
+## AI and design
+
+- ai-slop-design: AI slop, slop design, looks AI-generated, looks AI made, AI look
+- purple-gradient: purple gradient, indigo gradient, violet gradient
+- glassmorphism: glassmorphism, glass cards, frosted glass
+- inter-font: Inter font, Inter typeface
+- shadcn: shadcn, shadcn/ui
+- design-md: DESIGN.md, design tokens file
+- design-skill: frontend-design skill, avoid-ai-design, design skill
+- vibe-coding: vibe coding, vibe coded, vibe-coded, vibecoding, vibecoded
+- v0: v0, v0.dev
+- lovable: Lovable
+- bolt: Bolt.new
+- figma-make: Figma Make
+- framer-ai: Framer AI
+- claude-code: Claude Code
+- cursor: Cursor
+- portfolio-chatbot: AI chatbot, ask me anything bot, chat with my resume, AI assistant on my site
+- generative-art: generative art, generative background, shader, AI-generated image, AI art
+- human-made: human-made, handmade, hand-coded, no AI, not by AI
 
 ## Small web
 
