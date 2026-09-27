@@ -1773,7 +1773,7 @@ API_PREFIXES = ("gdelt:", "gdelt-raw:", "wikipedia:")
 SERIES_FIELDS = ["date", "metric", "version", "value", "unit", "source", "note_ref"]
 # Thresholds are judgment (research note 5.3); override any of them under "stats" in config.json.
 STATS_DEFAULTS = {"promote_points": 3, "promote_grade": "C3", "stale_periods": 3, "fail_streak": 3,
-                  "flat_cv": 0.05, "flat_points": 8, "trend_points": 8, "backfill_periods": 8, "api_timeout": 20}
+                  "flat_cv": 0.05, "flat_points": 8, "trend_points": 8, "backfill_periods": 8, "api_timeout": 60}
 METRICS_HEAD = ("# Metrics\n\nThe beat's recurring numbers, one row per metric (format: `kb/SCHEMA.md`, section metrics.md). "
                 "Values live in the data folder's `stats/series.csv`. Never delete a row: archive it with a reason.\n\n")
 
@@ -2135,18 +2135,19 @@ def review_metrics(metrics, series, st, today_d):
         vals = [float(r["value"]) for r in rows if r["value"] != ""]
         per = METRIC_CADENCES.get(m["cadence"], 30)
         f = {"id": m["id"], "action": "keep", "reason": "", "detail": f"{len(vals)} point(s)", "trend": ""}
-        streak = 0
+        failed_periods = set()  # several failed attempts on one period (a busy API retried the same day) count once
         for r in reversed(rows):
             if r["value"] != "":
                 break
-            streak += 1
+            failed_periods.add(r["date"])
+        streak = len(failed_periods)
         last_ok = max((r["date"] for r in rows if r["value"] != ""), default=None)
         since = last_ok or m.get("created") or ""
         age = (today_d - dt.date.fromisoformat(since[:10])).days if re.match(r"\d{4}-\d{2}-\d{2}", since) else 0
         # a period's value is dated at its start, so allow one period for it to complete
         stale_after = (int(st["stale_periods"]) + 1) * per
         if streak >= int(st["fail_streak"]):
-            f.update(action="archive", reason="stale", detail=f"the source failed {streak} times in a row")
+            f.update(action="archive", reason="stale", detail=f"the source failed for {streak} periods in a row")
         elif m["method"] != "manual" and age > stale_after:
             f.update(action="archive", reason="stale", detail=f"no new value for {age} days ({st['stale_periods']} {m['cadence']} periods)")
         elif m["method"] == "manual" and age > stale_after:

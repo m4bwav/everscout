@@ -46,7 +46,7 @@ Periods follow `cadence`: `weekly` and `per scan` are ISO weeks (dated by their 
 2. **Promote**: `review` lists a candidate as `promote` after `promote_points` (3) values from a source graded `promote_grade` (C3) or better. Ask the user; only on a yes run `--promote <id>`. Never promote without the yes.
 3. **Collect** on cadence during every scan.
 4. **Review** with each radar report (monthly) and the whole catalog quarterly.
-5. **Archive**, never delete: `stale` (the last `fail_streak` (3) collections failed, or no value for `stale_periods` (3) periods plus the one being completed), `flat` (coefficient of variation under `flat_cv` (0.05) over the last `flat_points` (8) values; keep it instead if a research question depends on its level), and by hand `irrelevant`, `gamed`, `superseded-by:<id>` or `source-gone`. Rows in `series.csv` stay. An archived metric can be reactivated.
+5. **Archive**, never delete: `stale` (collection failed for the last `fail_streak` (3) periods, however many tries each, or no value for `stale_periods` (3) periods plus the one being completed), `flat` (coefficient of variation under `flat_cv` (0.05) over the last `flat_points` (8) values; keep it instead if a research question depends on its level), and by hand `irrelevant`, `gamed`, `superseded-by:<id>` or `source-gone`. Rows in `series.csv` stay. An archived metric can be reactivated.
 6. **Update**: a definition change bumps the version (above).
 
 `review` also shows a trend per metric (least-squares slope over the last eight values: rising, falling or level) and, for two metrics on one question, whether they move together. Show these to the user; they never archive anything.

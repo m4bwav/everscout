@@ -787,7 +787,7 @@ class StatsTests(WorkspaceTest):
         urls = [c[0] for c in self.calls]
         self.assertTrue(any("startdatetime=20260803000000" in u and "enddatetime=20260927235959" in u for u in urls), urls)
         self.assertTrue(any("/per-article/en.wikipedia/all-access/user/Layoff/daily/2026080300/2026092700" in u for u in urls), urls)
-        self.assertTrue(all(c[1] == 20 for c in self.calls), "the stats timeout applies")
+        self.assertTrue(all(c[1] == 60 for c in self.calls), "the stats timeout applies")
         self.assertTrue(all("everscout" in (c[2] or "") for c in self.calls), "an honest User-Agent")
 
     def test_collect_records_failures_and_never_crashes(self):
@@ -857,8 +857,13 @@ class StatsTests(WorkspaceTest):
         self.add("old")
         self.seed("failing", [5, None, None, None], start="2026-08-31")
         self.seed("old", [5, 6], start="2026-07-06")
+        self.add("busy")
+        self.seed("busy", [5, 6], start="2026-09-07")
+        for _ in range(3):
+            self.seed("busy", [None], start="2026-09-21")
         code, out, _ = self.review()
-        self.assertIn("archive  failing: stale, the source failed 3 times", out)
+        self.assertNotIn("archive  busy", out, "three failed tries on one period are one failure")
+        self.assertIn("archive  failing: stale, the source failed for 3 periods", out)
         self.assertIn("archive  old: stale, no new value", out)
         self.assertEqual(self.status()["old"]["status"], "candidate", "proposals only without --apply")
         before = len(self.series())
