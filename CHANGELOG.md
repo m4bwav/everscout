@@ -2,6 +2,14 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.1.2 · 2026-09-27
+
+From the second headless test of "set up a scout for ai video generation" (everscout-beat TESTS.md, T-20260927-2, 3 of 3 passed).
+
+- `probe --save` merges a partial probe into the day's snapshot instead of overwriting it.
+- The built-in ai-video beat takes the test run's verified refresh: 46 sources, all answering on 2026-09-27; three GitHub rows moved to commit feeds (the repositories publish no releases); AI film newsletters, a Bluesky feed generator, arXiv and Lemmy added; PixVerse, KlingAI and SeedVR2 in the vocabulary.
+- Procedure and platform guide: check `releases.atom` before adding a GitHub row; prefer arXiv category RSS.
+
 ## 0.1.1 · 2026-09-26
 
 Fixes from the first headless test of "set up a scout for ai video generation" (everscout-beat TESTS.md, T-20260926-1).

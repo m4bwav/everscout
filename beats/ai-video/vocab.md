@@ -16,12 +16,14 @@ Add a new model version as its own line when people argue about the difference (
 - kling-3: Kling 3, Kling 3.0, Kling 3.0 Omni, Kling 3.0 Turbo, kling3
 - kling-o1: Kling O1
 - kling-2.6: Kling 2.6
+- kling: KlingAI, Kling AI
 - runway-gen-4.5: Gen-4.5, Gen 4.5, Gen4.5, Runway Gen-4.5
 - runway-aleph: Aleph, Runway Aleph, Aleph 2.0
 - seedance-2: Seedance 2, Seedance 2.0, Dreamina Seedance
 - seedance-2.5: Seedance 2.5
 - luma-ray3: Ray3, Ray 3, Luma Ray3
 - pika-2.5: Pika 2.5, Pika Labs
+- pixverse: PixVerse, Pixverse
 - grok-imagine: Grok Imagine
 - midjourney-video: Midjourney video, MJ video
 - skyreels-v4: SkyReels V4, SkyReels
@@ -55,6 +57,7 @@ Add a new model version as its own line when people argue about the difference (
 - premiere: Premiere, Premiere Pro
 - after-effects: After Effects
 - topaz-video: Topaz Video, Topaz Video AI, Topaz
+- seedvr2: SeedVR2, SeedVR
 - elevenlabs: ElevenLabs, Eleven Labs
 - suno: Suno
 - udio: Udio

@@ -2,6 +2,11 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`.
 
+### C-20260927-1 · 2026-09-27 · Partial probes merge into the snapshot; GitHub and arXiv guidance; starter beat refreshed
+- because: T-20260927-2, L-002, L-003
+- files: scripts/everscout.py (probe --save), references/procedure.md (A4), kb/platforms.md (github row), beats/ai-video/sources.md and vocab.md
+- The built-in ai-video beat takes the test run's verified refresh (46 sources, all probed ok on 2026-09-27).
+
 ### C-20260926-3 · 2026-09-26 · Starter beats are refreshed, not just copied
 - because: T-20260926-1 (route shallow)
 - files: SKILL.md (Step 1 route table)

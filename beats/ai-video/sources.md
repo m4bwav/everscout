@@ -1,6 +1,6 @@
 # Sources: AI video generation
 
-The watch list. Columns and markers: `beats/_template/sources.md` and `kb/SCHEMA.md`. Activity figures are posts a day seen in Reddit's feeds on 2026-09-26; member counts are third-party estimates. Written subreddit rules could not be fetched on 2026-09-26, so Reddit stances are `~` unless noted; verify with the rules page before relying on a stance.
+The watch list. Columns and markers: `beats/_template/sources.md` and `kb/SCHEMA.md`. Refreshed 2026-09-27 from the built-in starter (probe, GitHub feed fixes, Bluesky, arXiv, newsletters). Activity figures are posts a day seen in Reddit's feeds on 2026-09-26; member counts are third-party estimates. Written subreddit rules could not be fetched on 2026-09-26, so Reddit stances are `~` unless noted; verify with the rules page before relying on a stance.
 
 | source | kind | group | stance | engage | scan | filter | notes |
 |---|---|---|---|---|---|---|---|
@@ -22,13 +22,12 @@ The watch list. Columns and markers: `beats/_template/sources.md` and `kb/SCHEMA
 | r/Filmmakers | reddit | sentiment | hostile | no | yes | ai | ~ about 23 a day; human film, hostile to AI work; read for sentiment only |
 | r/VideoEditing | reddit | sentiment | mixed | no | no | | ~ about 3 a day; kept for reference |
 | "video model" | hn | news | n/a | no | yes | | ✓ 2026-09-26: 26 stories over 30 points in 90 days; model names alone return little |
-| "text-to-video" | hn | news | n/a | no | yes | | ~ |
 | #aivideo@mastodon.social | mastodon | fediverse | open | no | yes | | ✓ 2026-09-26 feed; low volume |
 | Comfy-Org/ComfyUI | github | releases | n/a | no | yes | | ✓ 2026-09-26; moved from comfyanonymous; v0.37.0 on 2026-09-21 |
-| Wan-Video/Wan2.2 | github | releases | n/a | no | yes | | ✓ 2026-09-26 |
+| https://github.com/Wan-Video/Wan2.2/commits.atom | rss | releases | n/a | no | yes | | ✓ 2026-09-27; the repo publishes no releases or tags, so commits (newest 2026-09-21) |
 | Lightricks/LTX-2 | github | releases | n/a | no | yes | | ✓ 2026-09-26; v1.3.0 on 2026-08-26 (the old LTX-Video feed is stale) |
-| Lightricks/ComfyUI-LTXVideo | github | releases | n/a | no | yes | | ✓ 2026-09-26 |
-| MiniMax-AI/MiniMax-H3 | github | releases | n/a | no | yes | | ~ repository seen 2026-09-26; releases feed not yet probed |
+| https://github.com/Lightricks/ComfyUI-LTXVideo/commits.atom | rss | releases | n/a | no | yes | | ✓ 2026-09-27; no releases or tags, so commits (newest 2026-09-24) |
+| https://github.com/MiniMax-AI/MiniMax-H3/commits.atom | rss | releases | n/a | no | yes | | ✓ 2026-09-27; no releases or tags, so commits (newest 2026-08-15) |
 | models?pipeline_tag=text-to-video | huggingface | models | n/a | no | yes | | ✓ 2026-09-26; trending open weights (MiniMax-H3 derivatives, LTX-2.5) |
 | models?pipeline_tag=image-to-video | huggingface | models | n/a | no | yes | | ✓ 2026-09-26 |
 | https://blog.comfy.org/feed | rss | blogs | n/a | no | yes | | ✓ 2026-09-26 |
@@ -46,3 +45,8 @@ The watch list. Columns and markers: `beats/_template/sources.md` and `kb/SCHEMA
 | AI video model release | news | news | n/a | no | yes | | ✓ 2026-09-26 Google News works; personal alerts only |
 | Artificial Analysis video leaderboard | web | rankings | n/a | no | no | | ✓ 2026-09-26 read by hand monthly: artificialanalysis.ai/video/leaderboard/text-to-video (no feed) |
 | Banodoco | web | community | native | no | no | | ✓ 2026-09-26 the Discord is not readable; banodoco.ai and github.com/banodoco are |
+| https://aicinema.substack.com/feed | rss | newsletters | n/a | no | yes | | ✓ 2026-09-27 AI Cinema (Elettra Fiumi): makers, craft and culture of AI film; a few posts a month |
+| https://tarynoneill.substack.com/feed | rss | newsletters | n/a | no | yes | | ✓ 2026-09-27 The New Protagonists / Future Film Fridays (Taryn O'Neill); weekly, newest 2026-09-25 |
+| at://did:plc:eui32x3omyjlc7dkird5bvfu/app.bsky.feed.generator/aaadqb5v4v7po | bluesky | fediverse | mixed | no | yes | | ✓ 2026-09-27 "AI Video" keyword feed via getFeed; maker posts mixed with public reaction, so read for both; no curated topic feed found (searchPosts needs login) |
+| https://rss.arxiv.org/rss/cs.CV | rss | research | n/a | no | yes | "video generation" "video diffusion" text-to-video image-to-video | ✓ 2026-09-27 several matching papers a day (multi-shot, joint audio-video, few-step distillation); the arXiv API row drew HTTP 406 on 2026-09-27, so the category RSS with a filter; feeds research question 6 |
+| c/stable_diffusion@lemmy.dbzer0.com | lemmy | fediverse | native | no | no | | ✓ 2026-09-27 feed live but image-heavy; video posts allowed with a flashing warning; reference only |

@@ -49,7 +49,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.1.1"
+VERSION = "0.1.2"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -651,7 +651,10 @@ def cmd_probe(a):
     if a.save:
         dd = data_dir(cfg, b.slug)
         p = os.path.join(dd, "sources", f"probe-{today()}.json")
-        save_json(p, results)
+        merged = {(r.get("kind"), r.get("source")): r for r in load_json(p, [])}  # a partial probe updates its rows only
+        merged.update({(r.get("kind"), r.get("source")): r for r in results})
+        current = {(r["kind"], r["source"]) for r in b.sources()}
+        save_json(p, [r for k, r in merged.items() if k in current])
         print(f"saved {p}")
     print(f"{len(rows)} sources probed, {bad} bad")
     sys.exit(2 if bad else 0)
