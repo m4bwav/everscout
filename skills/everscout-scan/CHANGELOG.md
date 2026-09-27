@@ -2,6 +2,11 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`.
 
+### C-20260927-2 · 2026-09-27 · GDELT cool-down
+- because: GDELT kept refusing (429) for more than 10 minutes after a burst; ai-docs/solutions/2026-09-27-gdelt-rate-limit.md
+- files: kb/stats.md, kb/platforms.md
+- `stats collect` skips GDELT metrics during a cool-down after a refusal and reports `cooling`. Description unchanged. Plugin 0.3.1.
+
 ### C-20260927-1 · 2026-09-27 · Collect metrics after the tally
 - because: user request (approved design), R-20260927-1, ai-docs/research/2026-09-27-beat-statistics.md section 5
 - files: SKILL.md (step 3, output), kb/stats.md

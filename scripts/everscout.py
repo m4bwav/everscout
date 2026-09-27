@@ -52,7 +52,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.3.0"
+VERSION = "0.3.1"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -2013,6 +2013,9 @@ def collect_tally(cfg, b, m, periods, fetch=None):
     return out
 
 
+GDELT_HOST = "api.gdeltproject.org"
+
+
 def collect_gdelt(cfg, b, m, periods, fetch):
     prefix, q = m["source"].split(":", 1)
     start, end = periods[0][0], periods[-1][1] - dt.timedelta(days=1)
@@ -2021,7 +2024,15 @@ def collect_gdelt(cfg, b, m, periods, fetch):
     if not periods:
         return {}
     url = S.gdelt_timeline_url(q.strip(), raw=prefix == "gdelt-raw", start=start, end=end)
-    return bucket(S.parse_gdelt_timeline(_stats_get_json(fetch, url, ttl=6 * 3600)), periods, agg_for(m))
+    try:
+        data = _stats_get_json(fetch, url, ttl=6 * 3600)
+    except S.FetchError as e:
+        if e.code == 429 or "limit requests" in str(e):  # a refusal: stay away (kb/platforms.md, GDELT row)
+            secs = fetch.set_cooldown(GDELT_HOST, str(e))
+            raise S.FetchError(url, e.code, f"refused; GDELT skipped for {secs // 60:.0f} min")
+        raise
+    fetch.clear_cooldown(GDELT_HOST)
+    return bucket(S.parse_gdelt_timeline(data), periods, agg_for(m))
 
 
 def collect_wikipedia(cfg, b, m, periods, fetch):
@@ -2083,6 +2094,11 @@ def stats_collect(cfg, b, metrics, only=None, today_d=None, fetch=None, backfill
             periods = due_periods(m, series + appended, today_d, backfill or st["backfill_periods"])
             if not periods:
                 report.append(f"  current {m['id']}")
+                continue
+            cd = fetch.cooldown(GDELT_HOST) if m["source"].startswith(("gdelt:", "gdelt-raw:")) else None
+            if cd:
+                until = dt.datetime.fromtimestamp(cd[0], dt.timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+                report.append(f"  cooling {m['id']}: GDELT refused earlier; next try after {until}")
                 continue
             try:
                 vals = metric_adapter(m)(cfg, b, m, periods, fetch)

@@ -10,6 +10,7 @@ import os
 import shutil
 import sys
 import tempfile
+import time
 import unittest
 from unittest import mock
 
@@ -802,12 +803,33 @@ class StatsTests(WorkspaceTest):
         fails = {r["metric"]: r for r in self.series() if r["value"] == ""}
         self.assertEqual(set(fails), {"news", "wiki", "slow", "busy"})
         self.assertEqual(sum(1 for c in self.calls if "Busy" in c[0]), 1, "a 429 is not retried during collection")
-        self.assertIn("not JSON", fails["news"]["note_ref"])
+        self.assertIn("refused", fails["news"]["note_ref"])
         self.assertIn("timed out", fails["slow"]["note_ref"])
         self.assertEqual(fails["news"]["date"], "2026-09-21")
         gurl = [c[0] for c in self.calls if "gdelt" in c[0]][0]
         self.assertFalse(os.path.exists(self.fake_fetcher().cache_path(gurl)), "a refusal is not cached as data")
         self.assertIn("FAILED", out)
+
+    def test_gdelt_refusal_starts_a_cooldown_that_collect_respects(self):
+        self.add("news", source="gdelt-raw:x", method="api")
+        self.responses = {"gdeltproject": 429}
+        code, out, err = self.collect("--metric", "news")
+        self.assertEqual(code, 0, err)
+        f = self.fake_fetcher()
+        until, _ = f.cooldown("api.gdeltproject.org")
+        self.assertAlmostEqual(until - time.time(), 3600, delta=60, msg="first refusal: one hour")
+        n = len(self.calls)
+        code, out, err = self.collect("--metric", "news")
+        self.assertEqual(len(self.calls), n, "no request while cooling down")
+        self.assertIn("cooling", out)
+        self.assertEqual(sum(1 for r in self.series() if r["metric"] == "news"), 1, "no extra failed row while cooling")
+        # a second refusal in a row doubles the wait; a success clears it
+        self.assertEqual(f.set_cooldown("api.gdeltproject.org", "again"), 7200)
+        f.clear_cooldown("api.gdeltproject.org")
+        self.responses = {"TimelineVolRaw": GDELT_RAW}
+        code, out, err = self.collect("--metric", "news")
+        self.assertIn("ok", out)
+        self.assertIsNone(f.cooldown("api.gdeltproject.org"))
 
     def test_collect_manual_and_derived(self):
         self.add("postings", source="Indeed Hiring Lab release", method="manual", cadence="monthly")

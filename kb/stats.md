@@ -30,7 +30,7 @@ Two to five candidates per beat is enough. At most one `headline: yes`.
 | `derived` | `derived:<id> <op> <id>` | `+ - * /` of two metrics on the same dates |
 | `manual` | the release or page, in words | entered with `ES stats collect --metric <id> --value N --date <period> --note-ref <url>` |
 
-Periods follow `cadence`: `weekly` and `per scan` are ISO weeks (dated by their Monday), `monthly` by the first of the month, `quarterly` by the quarter's first day. Only complete periods are collected. The first collect backfills up to eight periods (`backfill_periods`), so a candidate often has three points at once. GDELT asks for one request every five seconds and the fetcher keeps six; Wikimedia gets one a second. A refusal, timeout or missing article is recorded as a row with an empty value and `failed: <reason>`, never retried in the same run.
+Periods follow `cadence`: `weekly` and `per scan` are ISO weeks (dated by their Monday), `monthly` by the first of the month, `quarterly` by the quarter's first day. Only complete periods are collected. The first collect backfills up to eight periods (`backfill_periods`), so a candidate often has three points at once. GDELT asks for one request every five seconds and the fetcher keeps ten; Wikimedia gets one a second. A refusal, timeout or missing article is recorded as a row with an empty value and `failed: <reason>`, never retried in the same run. A GDELT refusal also starts a cool-down (1 h, doubling per refusal in a row, at most 24 h); until it passes, collect reports `cooling` for GDELT metrics, sends nothing and writes no row (`kb/platforms.md`, GDELT row).
 
 ## Commands
 

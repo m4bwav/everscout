@@ -1,6 +1,6 @@
 {
   "name": "everscout",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Name any subject and get a scout for it: everscout researches where the subject lives online, verifies each community and feed, and writes a beat (watch list, entity vocabulary, question bank, searches, study outline); then it reads Reddit, Hacker News, Bluesky, Mastodon, Lemmy, Discourse forums, newsletters, YouTube, GitHub, arXiv and Hugging Face at each platform's polite pace, distils one paraphrased note per thread worth keeping, tallies entities into signals (new, rising, fading), writes radar-style trend reports and a sourced baseline study, and drafts respectful questions to makers that you approve and post by hand, paced by a ledger and bound by a researched conduct code, answers any question about a subject like a reporter on the beat, from its notes plus fresh research, with sources and confidence, and keeps statistics per beat (a metric catalog, an append-only series from its tallies, GDELT news volume and Wikipedia pageviews, a review that promotes and archives metrics, chart-ready CSV for chartwright).",
   "author": {
     "name": "Mark Rogers"

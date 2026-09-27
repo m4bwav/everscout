@@ -50,7 +50,7 @@ DEFAULT_HOST_GAPS = {
     "api.github.com": 2,
     "news.google.com": 10,
     "musicbrainz.org": 1.1,
-    "api.gdeltproject.org": 6,  # GDELT asks for at most one request every 5 s (its refusal text, 2026-09-27)
+    "api.gdeltproject.org": 10,  # GDELT asks for one request every 5 s; reports say 5 s still draws 429s (kb/platforms.md)
     "wikimedia.org": 1,
     "default": 3,
 }
@@ -178,6 +178,33 @@ class Fetcher:
         st = self._load(self._rl_path(), {})
         st[host] = time.time() + seconds
         self._save(self._rl_path(), st)
+
+    # cool-downs: a host that refused us (GDELT's 429) is skipped until the time passes
+    def _cd_path(self):
+        return os.path.join(self.local, "cooldown.json")
+
+    def cooldown(self, host):
+        """(until_epoch, reason) while host is cooling down, else None."""
+        c = self._load(self._cd_path(), {}).get(host)
+        if c and c.get("until", 0) > time.time():
+            return c["until"], c.get("reason", "")
+        return None
+
+    def set_cooldown(self, host, reason, base=3600, cap=86400):
+        """Record a refusal: wait base seconds, doubling for each refusal in a row, at most cap. Returns the seconds."""
+        st = self._load(self._cd_path(), {})
+        strikes = int((st.get(host) or {}).get("strikes", 0)) + 1
+        secs = min(cap, base * 2 ** (strikes - 1))
+        st[host] = {"until": time.time() + secs, "strikes": strikes, "reason": reason[:200],
+                    "at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
+        self._save(self._cd_path(), st)
+        return secs
+
+    def clear_cooldown(self, host):
+        st = self._load(self._cd_path(), {})
+        if host in st:
+            del st[host]
+            self._save(self._cd_path(), st)
 
     def get(self, url, ttl=3600, force=False, accept="*/*"):
         """Body text (str) for url; from the cache when younger than ttl. Returns (text, from_cache, status).

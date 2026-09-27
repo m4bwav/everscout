@@ -26,7 +26,12 @@ Name any subject and get an AI scout generated for it that keeps up with the sub
 - Beat statistics: `metrics.md` per beat, `DATA/stats/series.csv`, `ES stats list|add|collect|review|export`, procedure in `kb/stats.md`, decision in `decisions/2026-09-27-beat-statistics.md`. 45 offline tests.
 - Mark's tech-hiring data folder has the first real series (Wikipedia Layoff pageviews, 8 weeks; GDELT v1 with the narrow query, 8 weeks; GDELT v2 not yet collected because GDELT answered 429 all session). Next collect: `ES stats collect --beat tech-hiring`, then `ES stats review --beat tech-hiring` should propose promoting wiki-layoff (ask Mark).
 - indie-ai-games (private beat, in the indie-ai-scout repo) has no `metrics.md` yet: offer candidates from its tallies next time it is scanned.
-- Thresholds are judgment; revisit after three months of data (around 2026-12-27).
+- Thresholds stay as judgment calls (Mark agreed 2026-09-27); revisit them after about three months of data (around 2026-12-27).
+
+## 0.3.1 state (2026-09-27)
+
+- tech-hiring `wiki-layoff` is active (promoted on Mark's yes). GDELT still refused a single probe at 16:38 UTC after 10 quiet minutes, so a cool-down runs to about 17:39 UTC (`~/.everscout/local/cooldown.json`); the v2 GDELT values are still missing. Next: `ES stats collect --beat tech-hiring` after that time (it skips GDELT while cooling). Details: [solutions/2026-09-27-gdelt-rate-limit.md](solutions/2026-09-27-gdelt-rate-limit.md).
+- indie-ai-games: the beat folder and voice live in the indie-ai-scout repo (`beats/indie-ai-games`, commit 4988ecf, 0.4.0 parked), the data in the vault (`projects/indie-ai-scout/ai-docs/scout`); everscout runs it through `beat_dirs` in `~/.everscout/config.json`. Its `metrics.md` therefore belongs in indie-ai-scout; not added this session (that repo was not to be modified). Candidates to offer: notes per week (tally:notes), Wikipedia pageviews of a generative-AI article, GDELT raw volume for "AI-generated" game coverage.
 
 ## Next single action
 

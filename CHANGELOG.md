@@ -2,6 +2,14 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.3.1 · 2026-09-27
+
+- because: GDELT answered 429 all through the 0.3.0 session and to a single probe 10 minutes after the last call; its only published limit is "one request every 5 seconds" in the refusal text, and reports show blocks lasting much longer (ai-docs/solutions/2026-09-27-gdelt-rate-limit.md).
+- GDELT gap raised from 6 s to 10 s between completed calls.
+- A GDELT refusal starts a cool-down in `LOCAL/cooldown.json` (1 h, doubling per refusal in a row, at most 24 h); `stats collect` skips GDELT metrics until it passes, sends nothing and writes no failed row; a success clears it. New test (46 offline tests).
+- tech-hiring: `wiki-layoff` promoted to active (the user's yes, 8 points).
+- `kb/platforms.md` GDELT row and `kb/stats.md` updated.
+
 ## 0.3.0 · 2026-09-27
 
 Beat statistics, built from the approved design in `ai-docs/research/2026-09-27-beat-statistics.md` (section 5).
