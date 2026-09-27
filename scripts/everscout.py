@@ -49,7 +49,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.2.0"
+VERSION = "0.2.1"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -1114,10 +1114,11 @@ def cmd_followups(a):
         if not t:
             continue
         have = {r.get("id") for r in e.get("replies") or []}
+        have_when = {str(r.get("when") or "")[:16] for r in e.get("replies") or []}  # replies imported without a comment id
         new = []
         for c in t["comments"]:
             ct = S.parse_time(c.get("published"))
-            if c.get("author", "").lower() == (e.get("author") or "").lower() and ct and ct > ts and c.get("id") not in have:
+            if c.get("author", "").lower() == (e.get("author") or "").lower() and ct and ct > ts and c.get("id") not in have                     and str(c.get("published") or "")[:16] not in have_when:
                 r = {"id": c.get("id"), "when": c.get("published"), "text": (c.get("text") or "")[:3000], "is_op": True}
                 e.setdefault("replies", []).append(r)
                 new.append(r)

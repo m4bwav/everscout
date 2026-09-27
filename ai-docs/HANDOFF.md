@@ -19,6 +19,8 @@ Name any subject and get an AI scout generated for it that keeps up with the sub
 - Five skills; `everscout-ask` passed its first headless test 3/3 (TESTS.md T-20260926-1). CLI `recall`, `fetch --peek`, `answers/` folder, plural alias matching; 30 offline tests pass.
 - Built-in `tech-hiring` beat (33 sources) with Mark's real data folder at `~/.everscout/data/tech-hiring`: never scanned; one saved answer (on-site interviews and AI cheating). Next for it: the first scan (everscout-scan), then more questions.
 
+- Mark's config (`~/.everscout/config.json`) exists since 2026-09-26: private beats from indie-ai-scout's `beats/` (the `indie-ai-games` beat, migrated from indie-ai-scout with 101 notes), `reddit_user`, ledger and voice in the vault and the indie repository. tech-hiring data still uses the default `~/.everscout/data`.
+
 ## Next single action
 
 Run the first scan of the tech-hiring beat ("scan the tech-hiring beat"), then interrogate it with a few questions to see recall grade `enough` from real notes. The from-scratch beat build and the ask skill are both proven (2026-09-26).

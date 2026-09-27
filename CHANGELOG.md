@@ -2,6 +2,10 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.2.1 · 2026-09-26
+
+- `followups` recognises replies imported without a comment id (matched by time), so a migrated ledger does not collect the same answer twice. Found moving indie-ai-scout onto everscout as the private beat `indie-ai-games` (its plan and log are in indie-ai-scout's private doc set).
+
 ## 0.2.0 · 2026-09-26
 
 - New skill **everscout-ask**: interrogate a beat like a reporter. It recalls what the beat's knowledge base holds, grades whether that is enough and fresh (corrective retrieval: enough, partial, none), researches the gaps in the beat's communities, data pages and the web, answers with what the scout had seen, what is new, where sources disagree, confidence and unknowns, and saves the answer under `answers/` so the next question starts from it.
