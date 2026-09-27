@@ -20,7 +20,7 @@ It is a Claude Code plugin: five skills, a standard-library Python CLI and a mar
 
 ## Starter beats
 
-The starter beats are examples of what a generated beat looks like, and a quick start if one happens to be your subject. `beats/ai-video` (a maker community, open about AI), `beats/global-economics` (analysts and data, strict forums), `beats/downtempo` (musicians, hostile to AI music) and `beats/tech-hiring` (candidates, hiring managers and labour data; built from scratch by everscout-beat on 2026-09-26 as a test) were picked because they differ, and their sources were checked on the day they were added. `beats/_template` is what `beat-new` copies. Copy a starter beat into your private beats folder to make it yours; a private beat shadows a built-in one with the same name.
+The starter beats are examples of what a generated beat looks like, and a quick start if one happens to be your subject. `beats/ai-video` (a maker community, open about AI), `beats/global-economics` (analysts and data, strict forums), `beats/downtempo` (musicians, hostile to AI music) `beats/tech-hiring` (candidates, hiring managers and labour data; built from scratch by everscout-beat on 2026-09-26 as a test) and `beats/personal-sites` (how tech and design people build their own websites and blogs; added 2026-09-27) were picked because they differ, and their sources were checked on the day they were added. `beats/_template` is what `beat-new` copies. Copy a starter beat into your private beats folder to make it yours; a private beat shadows a built-in one with the same name.
 
 ## Where your data lives
 

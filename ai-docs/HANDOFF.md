@@ -49,3 +49,8 @@ Run the first scan of the tech-hiring beat ("scan the tech-hiring beat"), then i
 ## Pre-approved metrics (0.3.2)
 
 tech-hiring `news-tech-layoffs` and indie-ai-games `news-ai-indie-games` are pre-approved (`approved` in metrics.md) and will promote automatically on the first `stats collect` or `stats review` after GDELT data gives them 3 points.
+
+## personal-sites beat (2026-09-27)
+
+- New built-in beat `beats/personal-sites` (34 sources, probe clean). Mark's data folder `~/.everscout/data/personal-sites` holds the first reading: `answers/2026-09-27-state-of-personal-sites.md` (peek only; no scan yet, nothing marked seen).
+- Purpose: refresh Mark's professional site (markdavidrogers repos under Ai/) and seed a new personal-site design skill from the beat. Next: first scan, then agree the study outline and write chapters 03, 04 and 06.
