@@ -52,7 +52,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.3.1"
+VERSION = "0.3.2"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -1761,7 +1761,7 @@ def cmd_state(a):
 # metrics.md; values are one long-form, append-only CSV per beat at DATA/stats/series.csv.
 
 METRIC_FIELDS = ["id", "question", "definition", "unit", "kind", "source", "method", "cadence", "grade", "status",
-                 "version", "created", "reviewed", "archive_reason", "headline"]
+                 "version", "created", "reviewed", "archive_reason", "headline", "approved"]
 METRIC_METHODS = ("tally", "api", "manual", "derived")
 METRIC_STATUSES = ("candidate", "active", "archived")
 METRIC_KINDS = ("leading", "lagging")
@@ -1893,6 +1893,10 @@ def metric_problems(b, rows):
             errs.append(f"metric {i}: a wikipedia source is wikipedia:<project>/<Article> (en.wikipedia/Layoff)")
         if meth == "derived" and not re.fullmatch(r"derived:\s*[a-z0-9-]+\s*[-+*/]\s*[a-z0-9-]+", src):
             errs.append(f"metric {i}: a derived source is derived:<id> <op> <id> with op one of + - * /")
+        if m.get("approved") and not re.fullmatch(r"\d{4}-\d{2}-\d{2}", m["approved"]):
+            errs.append(f"metric {i}: approved must be empty or an ISO date (the day the user pre-approved promotion)")
+        if m.get("approved") and m["status"] == "archived":
+            warns.append(f"metric {i}: archived but still pre-approved (clear it with `stats approve --withdraw`)")
         if m["status"] == "archived" and not m["archive_reason"]:
             errs.append(f"metric {i}: archived without an archive_reason")
         qm = re.match(r"Q(\d+)\b", m["question"])
@@ -2181,6 +2185,8 @@ def review_metrics(metrics, series, st, today_d):
                 f.update(action="promote", reason="ready", detail=f"{len(vals)} points, grade {m['grade']}: ask the user before promoting")
             elif not grade_ok(m["grade"], st["promote_grade"]):
                 f["detail"] += f"; grade {m['grade']} is below {st['promote_grade']}, cannot be promoted"
+            if m.get("approved"):
+                f["detail"] += f"; pre-approved {m['approved']}"
         tp = vals[-int(st["trend_points"]):]
         if len(tp) >= 3:
             mean = sum(tp) / len(tp)
@@ -2204,6 +2210,21 @@ def review_metrics(metrics, series, st, today_d):
                 if r is not None:
                     pairs.append((q, a_["id"], c_["id"], round(r, 2), len(common)))
     return out, pairs
+
+
+def auto_promote(cfg, b, metrics, today_d=None):
+    """Promote pre-approved candidates that meet the normal rule. Changes `metrics` in place; returns the change lines."""
+    today_d = today_d or now_utc().date()
+    by = {m["id"]: m for m in metrics}
+    findings, _ = review_metrics(metrics, load_series(cfg, b.slug), stats_settings(cfg), today_d)
+    changes = []
+    for f in findings:
+        m = by[f["id"]]
+        if f["action"] == "promote" and m["status"] == "candidate" and m.get("approved"):
+            m["status"] = "active"
+            m["reviewed"] = today_d.isoformat()
+            changes.append(f"promoted {m['id']} (pre-approved {m['approved']})")
+    return changes
 
 
 # commands ---------------------------------------------------------------------------
@@ -2316,6 +2337,41 @@ def cmd_stats_collect(a):
         print(line)
     if rows:
         _stats_log(cfg, b, f"collected {ok} value(s), {len(rows) - ok} failed")
+    promoted = auto_promote(cfg, b, metrics, today_d)
+    if promoted:
+        save_metrics(b, metrics)
+        for c in promoted:
+            print(c)
+            _stats_log(cfg, b, c)
+
+
+def cmd_stats_approve(a):
+    cfg, b = _stats_beat(a)
+    metrics = load_metrics(b)
+    m = next((x for x in metrics if x["id"] == a.metric), None)
+    if not m:
+        fail(f"no metric {a.metric} in {b.slug}")
+    if a.withdraw:
+        if not m.get("approved"):
+            fail(f"{a.metric} is not pre-approved")
+        m["approved"] = ""
+        what = f"withdrew pre-approval of {a.metric}"
+    else:
+        if m["status"] != "candidate":
+            fail(f"{a.metric} is {m['status']}, not a candidate")
+        m["approved"] = a.date or today()
+        what = f"pre-approved {a.metric}: promoted automatically once it meets the promotion rule"
+    _builtin_warning(b)
+    save_metrics(b, metrics)
+    _stats_log(cfg, b, what)
+    print(what)
+    if not a.withdraw:
+        promoted = auto_promote(cfg, b, metrics)
+        if promoted:
+            save_metrics(b, metrics)
+            for c in promoted:
+                print(c)
+                _stats_log(cfg, b, c)
 
 
 def cmd_stats_review(a):
@@ -2349,6 +2405,7 @@ def cmd_stats_review(a):
             fail(f"{mid} is not archived")
         by[mid].update(status="active", archive_reason="")
         changes.append(f"reactivated {mid}")
+    changes += auto_promote(cfg, b, metrics, today_d)
     findings, pairs = review_metrics(metrics, load_series(cfg, b.slug), st, today_d)
     if a.apply:
         for f in findings:
@@ -2461,7 +2518,7 @@ def cmd_stats_export(a):
 
 def cmd_stats(a):
     {"list": cmd_stats_list, "add": cmd_stats_add, "collect": cmd_stats_collect, "review": cmd_stats_review,
-     "export": cmd_stats_export}[a.action](a)
+     "approve": cmd_stats_approve, "export": cmd_stats_export}[a.action](a)
 
 
 # ---------------------------------------------------------------- main
@@ -2539,6 +2596,8 @@ def main(argv=None):
     q = ssp.add_parser("review", help="lifecycle review: promotion candidates, stale and flat metrics, trends; --apply to archive")
     q.add_argument("--beat"); q.add_argument("--apply", action="store_true"); q.add_argument("--promote"); q.add_argument("--force", action="store_true")
     q.add_argument("--archive"); q.add_argument("--reason"); q.add_argument("--reactivate"); q.add_argument("--date"); q.add_argument("--json", action="store_true")
+    q = ssp.add_parser("approve", help="pre-approve promoting a candidate: collect and review promote it once it meets the rule")
+    q.add_argument("metric"); q.add_argument("--beat"); q.add_argument("--withdraw", action="store_true"); q.add_argument("--date", help=argparse.SUPPRESS)
     q = ssp.add_parser("export", help="chartwright-ready long-form CSV, and chart commands when chartwright is found")
     q.add_argument("--beat"); q.add_argument("--metric"); q.add_argument("--since"); q.add_argument("--out"); q.add_argument("--include-archived", action="store_true")
     q.add_argument("--charts", action="store_true", help="build the charts into DATA/reports/charts/ with chartwright")

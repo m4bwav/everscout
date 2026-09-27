@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.3.2 · 2026-09-27
+
+- because: Mark said yes to two candidates while GDELT was cooling down and they had no points, so the yes had to wait in a handoff note.
+- Pre-approved promotion: `stats approve --beat B METRIC [--withdraw]` stamps an optional `approved` column in `metrics.md` (old catalogs stay valid). `stats collect`, `stats review` and `approve` itself promote an approved candidate once it meets the normal rule (3 points at C3 or better), print `promoted X (pre-approved <date>)` and log it. Unapproved candidates are still only proposed. `beat-check` validates the date. kb/SCHEMA.md, kb/stats.md, scan skill and report reference updated. 49 offline tests.
+
 ## 0.3.1 · 2026-09-27
 
 - because: GDELT answered 429 all through the 0.3.0 session and to a single probe 10 minutes after the last call; its only published limit is "one request every 5 seconds" in the refusal text, and reports show blocks lasting much longer (ai-docs/solutions/2026-09-27-gdelt-rate-limit.md).

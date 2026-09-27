@@ -37,13 +37,14 @@ Periods follow `cadence`: `weekly` and `per scan` are ISO weeks (dated by their 
 - `ES stats list --beat <slug> [--status candidate,active] [--json]`: the catalog with point counts and last values.
 - `ES stats add --beat <slug> --id <id> --question "Q2 ..." --definition "..." --unit count --kind leading --source ... --method ... --cadence weekly --grade B2 [--headline yes]`: adds a candidate. On an existing id it edits; a change to `definition`, `unit`, `source` or `method` bumps `version`, and export splits the series so the break is never drawn as a trend.
 - `ES stats collect --beat <slug> [--metric a,b]`: collects every due candidate and active metric.
-- `ES stats review --beat <slug>`: lifecycle findings. `--apply` archives the stale and flat ones and stamps `reviewed`; `--promote <id>` after the user says yes; `--archive <id> --reason <reason>`; `--reactivate <id>`.
+- `ES stats review --beat <slug>`: lifecycle findings. `--apply` archives the stale and flat ones and stamps `reviewed`; `--promote <id>` after the user says yes; `--archive <id> --reason <reason>`; `--reactivate <id>`. It also promotes pre-approved candidates that are ready (below).
+- `ES stats approve --beat <slug> <id> [--withdraw]`: the user's yes in advance. Stamps `approved: <date>` on a candidate; `--withdraw` clears it.
 - `ES stats export --beat <slug> [--metric a,b] [--since date] [--include-archived] [--charts]`: writes `DATA/stats/export.csv` (columns `date, metric, series, value, unit, version, status`) and, when chartwright is installed, prints or (`--charts`) runs its builds into `DATA/reports/charts/`.
 
 ## Lifecycle (thresholds are defaults; override under `stats` in config.json)
 
 1. **Propose** (beat, scan, report, ask): add a candidate when a research question has no metric, an entity keeps rising in the tallies, or the user asks the same quantitative question twice. Fill every field.
-2. **Promote**: `review` lists a candidate as `promote` after `promote_points` (3) values from a source graded `promote_grade` (C3) or better. Ask the user; only on a yes run `--promote <id>`. Never promote without the yes.
+2. **Promote**: `review` lists a candidate as `promote` after `promote_points` (3) values from a source graded `promote_grade` (C3) or better. Ask the user; only on a yes run `--promote <id>`. Never promote without the yes. A yes given before the metric is ready is recorded with `ES stats approve --beat <slug> <id>`: every later `stats collect` or `stats review` promotes it automatically once it meets the same rule, prints `promoted <id> (pre-approved <date>)` and logs it. Unapproved candidates are still only proposed.
 3. **Collect** on cadence during every scan.
 4. **Review** with each radar report (monthly) and the whole catalog quarterly.
 5. **Archive**, never delete: `stale` (collection failed for the last `fail_streak` (3) periods, however many tries each, or no value for `stale_periods` (3) periods plus the one being completed), `flat` (coefficient of variation under `flat_cv` (0.05) over the last `flat_points` (8) values; keep it instead if a research question depends on its level), and by hand `irrelevant`, `gamed`, `superseded-by:<id>` or `source-gone`. Rows in `series.csv` stay. An archived metric can be reactivated.

@@ -9,7 +9,7 @@ Detail for [SKILL.md](../SKILL.md). `ES` = `python "<plugin root>/scripts/eversc
 3. Notes posted in the period (`DATA/notes/<month>/INDEX.md`). Read in full the ten with the highest interest and every note on a `new` or `rising` entity.
 4. `ES ledger --beat <slug> --days 90 --json`: entries with `replies` are practitioner answers.
 5. `DATA/journal.md` and `DATA/feedback.md`: the user's own view and steer.
-6. The beat's metrics: `ES stats collect --beat <slug>`, then `ES stats review --beat <slug>` (findings: promote, archive, keep, trends, pairs; see `kb/stats.md`), then `ES stats export --beat <slug> --charts` (charts in `DATA/reports/charts/` when chartwright is installed).
+6. The beat's metrics: `ES stats collect --beat <slug>`, then `ES stats review --beat <slug>` (findings: promote, archive, keep, trends, pairs; see `kb/stats.md`; pre-approved candidates, `approved` in `metrics.md`, are promoted automatically once ready, so name them in the report instead of asking again; a yes for a candidate not yet ready is recorded with `ES stats approve --beat <slug> <id>`), then `ES stats export --beat <slug> --charts` (charts in `DATA/reports/charts/` when chartwright is installed).
 7. Optional web check when the user asks for "latest" and the last scan is older than a week: run the scan's due searches first (everscout-scan procedure A8), so the report still cites notes, not memory. A page read only for this report (a policy page, a release note) is logged with `ES source-log <url> --beat <slug> --title ... --supports ...` before it is cited.
 
 ## The radar report: `reports/<date>-radar.md`

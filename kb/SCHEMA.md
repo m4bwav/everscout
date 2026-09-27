@@ -49,7 +49,7 @@ Stances: `native, open, mixed, hostile, anti, n/a, unknown`. Kinds: see `kb/plat
 
 How the skills use them: [stats.md](stats.md). Design and evidence: `ai-docs/research/2026-09-27-beat-statistics.md`.
 
-`metrics.md` columns, in order: `id | question | definition | unit | kind | source | method | cadence | grade | status | version | created | reviewed | archive_reason | headline`.
+`metrics.md` columns, in order: `id | question | definition | unit | kind | source | method | cadence | grade | status | version | created | reviewed | archive_reason | headline | approved`. `approved` is optional: a catalog without the column stays valid, and the CLI adds it the next time it saves the table.
 
 | column | values |
 |---|---|
@@ -66,6 +66,7 @@ How the skills use them: [stats.md](stats.md). Design and evidence: `ai-docs/res
 | created, reviewed | ISO dates |
 | archive_reason | `stale: ...`, `flat: ...`, `irrelevant`, `gamed`, `superseded-by:<id>`, `source-gone` or free text; required when archived |
 | headline | `yes` on at most one metric |
+| approved | empty, or the ISO date the user pre-approved promotion (`stats approve`); `collect` and `review` then promote the candidate once it meets the rule |
 
 `stats/series.csv`: header `date,metric,version,value,unit,source,note_ref`, one row per metric per period, appended and never rewritten. `date` is the start of the period the value describes (a Monday for weekly), not the collection time. A failed collection is a row with an empty `value` and `note_ref` = `failed: <reason>`, so gaps stay visible. Archived metrics keep their rows.
 

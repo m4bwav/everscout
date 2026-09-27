@@ -874,6 +874,57 @@ class StatsTests(WorkspaceTest):
         self.assertEqual(self.status()["good"]["status"], "active")
         self.assertIn("promoted good", self.log())
 
+    def test_pre_approved_candidate_promotes_on_collect_once_ready(self):
+        self.add("news", source='gdelt-raw:"tech layoffs"', method="api", grade="B2")
+        self.add("weak", grade="D4")
+        code, out, err = self.run_cli("stats", "approve", "--beat", "test-beat", "news")
+        self.assertEqual(code, 0, err)
+        self.run_cli("stats", "approve", "--beat", "test-beat", "weak")
+        self.assertEqual(self.status()["news"]["approved"], E.today())
+        self.assertEqual(self.status()["news"]["status"], "candidate", "no points yet")
+        # GDELT cooling: no points, stays a candidate
+        with mock.patch.object(S.Fetcher, "cooldown", return_value=(9e9, 1)):
+            code, out, _ = self.collect("--metric", "news")
+        self.assertIn("cooling", out)
+        self.assertEqual(self.status()["news"]["status"], "candidate")
+        # the data arrives: three weekly points, promoted with the approval date
+        self.seed("news", [4, 5, 6], start="2026-09-07")
+        self.seed("weak", [1, 2, 3], start="2026-09-07")
+        code, out, err = self.collect("--metric", "weak")
+        self.assertEqual(code, 0, err)
+        self.assertIn(f"promoted news (pre-approved {E.today()})", out)
+        st = self.status()
+        self.assertEqual((st["news"]["status"], st["weak"]["status"]), ("active", "candidate"), "grade D4 never promotes")
+        self.assertIn("promoted news (pre-approved", self.log())
+
+    def test_unapproved_is_only_proposed_and_approval_can_be_withdrawn(self):
+        self.add("good", grade="B2")
+        self.seed("good", [1, 2, 3], start="2026-09-07")
+        self.run_cli("stats", "approve", "--beat", "test-beat", "good", "--date", "2026-09-20")
+        # approve itself promotes when already ready; undo for the withdraw path
+        self.assertEqual(self.status()["good"]["status"], "active")
+        self.add("other", grade="B2")
+        self.seed("other", [1, 2, 3], start="2026-09-07")
+        self.run_cli("stats", "approve", "--beat", "test-beat", "--withdraw", "other")
+        code, out, _ = self.review()
+        self.assertIn("promote  other", out)
+        self.assertEqual(self.status()["other"]["status"], "candidate")
+        code, _, err = self.run_cli("stats", "approve", "--beat", "test-beat", "good")
+        self.assertNotEqual(code, 0, "only candidates can be pre-approved")
+
+    def test_review_promotes_pre_approved_and_old_catalog_stays_valid(self):
+        code, out, _ = self.run_cli("beat-check", "test-beat")
+        self.assertEqual(code, 0, out)  # template has no approved column
+        self.add("good", grade="B2")
+        with mock.patch.object(E, "auto_promote", return_value=[]):
+            self.run_cli("stats", "approve", "--beat", "test-beat", "good")
+        self.seed("good", [1, 2, 3], start="2026-09-07")
+        code, out, _ = self.review()
+        self.assertIn("promoted good (pre-approved", out)
+        self.assertEqual(self.status()["good"]["status"], "active")
+        code, out, _ = self.run_cli("beat-check", "test-beat")
+        self.assertEqual(code, 0, out)
+
     def test_archive_stale_by_failures_and_by_age(self):
         self.add("failing")
         self.add("old")

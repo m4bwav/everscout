@@ -48,3 +48,7 @@ Built the approved design from [research/2026-09-27-beat-statistics.md](research
 ## [2026-09-27] fix | GDELT cool-down; wiki-layoff promoted; 0.3.1
 
 Promoted tech-hiring `wiki-layoff` to active on Mark's yes (`stats review --promote`). Probed GDELT once (16:38 UTC, 10 minutes after the last call, everscout User-Agent): still HTTP 429 with the plain-text "one every 5 seconds" body, so the block outlasts the published rate. Research: no official rate-limit page; issue reports see 429s at 5 to 30 s spacing and multi-minute blocks. Fetcher gained a per-host cool-down (1 h doubling, cap 24 h) that `stats collect` honours for GDELT; gap 10 s. The collect for GDELT v2 waits for the cool-down. indie-ai-games checked: beat files in the indie-ai-scout repo, data in the vault, run by everscout through config; no metrics.md added. Thresholds stay judgment until about 2026-12-27. Solution: [solutions/2026-09-27-gdelt-rate-limit.md](solutions/2026-09-27-gdelt-rate-limit.md).
+
+## [2026-09-27] feature | pre-approved metric promotion; 0.3.2
+
+`stats approve --beat B METRIC [--withdraw]` records a yes in advance in a new optional `approved` column of `metrics.md`; `stats collect`, `stats review` and `approve` promote approved candidates that meet the rule (3 points at C3 or better) and print and log `promoted X (pre-approved <date>)`. Old catalogs stay valid. Applied: tech-hiring `news-tech-layoffs` and indie-ai-games `news-ai-indie-games` (the latter in the indie-ai-scout repo) approved; the HANDOFF "Pending promotion" section replaced. 49 offline tests pass.
