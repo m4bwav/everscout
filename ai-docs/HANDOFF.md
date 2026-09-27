@@ -45,3 +45,6 @@ Run the first scan of the tech-hiring beat ("scan the tech-hiring beat"), then i
 4. arXiv API: 406 after bursts on 2026-09-26; gap now 15 s. Re-probe `global-economics` arXiv and BIS rows.
 5. Possible 0.2: posting through personal APIs stays out (decision); an MCP server over the notes; a span check for quotes.
 6. indie-ai-scout migration, stages 1 to 4, when Mark asks.
+
+## Pending promotion (user approved 2026-09-27)
+The user said yes to promoting news-tech-layoffs (tech-hiring) and news-ai-indie-games (indie-ai-games, metrics in the indie-ai-scout repo). They had 0 points because GDELT was cooling down. At the start of any everscout session: run `stats collect` on both beats, and promote each with `stats review --beat <beat> --promote <metric>` once it has 3 points; then delete this section.
