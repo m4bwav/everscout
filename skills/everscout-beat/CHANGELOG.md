@@ -2,6 +2,11 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`.
 
+### C-20260926-9 · 2026-09-26 · Description shortened (skill-tidy)
+- because: skill-tidy lint ST005 (over 1,024 chars)
+- files: SKILL.md (front matter only)
+- 1081 to 926 chars; same trigger meanings (skill-tidy check OK), boundary sentence kept. Plugin 0.2.2; plugin eval trigger cases 12/12.
+
 ### C-20260926-4 · 2026-09-26 · Build with `fetch --peek`; rules pages through search
 - because: L-004, L-005 (building the tech-hiring beat from scratch, the first from-scratch run)
 - files: references/procedure.md (A4), scripts/everscout.py (`fetch --peek`), beats/tech-hiring (new built-in starter)

@@ -1,6 +1,6 @@
 # Handoff
 
-Updated 2026-09-26 (evening, 0.2.0). Everscout 0.1.0 was built in one session from indie-ai-scout 0.3.1; 0.2.0 added the everscout-ask skill (interrogate a beat like a reporter) and the tech-hiring beat, the first built from scratch. Read [log.md](log.md) for what happened, `decisions/` for the architecture, and `research/` for the evidence.
+Updated 2026-09-26 (night, 0.2.2: descriptions shortened with skill-tidy, root `evals/` for `claude plugin eval`, 12/12). Everscout 0.1.0 was built in one session from indie-ai-scout 0.3.1; 0.2.0 added the everscout-ask skill (interrogate a beat like a reporter) and the tech-hiring beat, the first built from scratch. Read [log.md](log.md) for what happened, `decisions/` for the architecture, and `research/` for the evidence.
 
 ## What Mark wants (2026-09-26)
 

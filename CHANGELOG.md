@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.2.2 · 2026-09-26
+
+- The five skill descriptions shortened with skill-tidy so each is under the 1,024-character spec cap (some hosts drop longer ones), under 200 words and at most 12 quoted phrases, with every trigger meaning kept and a boundary sentence naming the siblings. ask 1,415 to 962 chars, beat 1,081 to 926, engage 1,165 to 1,011, report 1,102 to 920, scan 1,096 to 949.
+- New `evals/` at the plugin root: 12 trigger and decoy cases for `claude plugin eval . --ablation none --no-publish --trust-plugin` (runs on native Windows); first run 12/12. `evals/results/` is ignored.
+
 ## 0.2.1 · 2026-09-26
 
 - `followups` recognises replies imported without a comment id (matched by time), so a migrated ledger does not collect the same answer twice. Found moving indie-ai-scout onto everscout as the private beat `indie-ai-games` (its plan and log are in indie-ai-scout's private doc set).

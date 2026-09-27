@@ -5,3 +5,4 @@ __pycache__/
 .everscout/
 config.json
 voice.md
+evals/results/
