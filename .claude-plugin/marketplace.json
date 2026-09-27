@@ -10,7 +10,7 @@
     {
       "name": "everscout",
       "source": "./",
-      "description": "Name any subject and get a scout: it finds and verifies the communities, scans them politely, distils notes, tallies signals, writes radar reports and a baseline study, and drafts questions to makers for you to post"
+      "description": "Name any subject and get a scout: it finds and verifies the communities, scans them politely, distils notes, tallies signals, writes radar reports and a baseline study, and drafts questions to makers for you to post, and answers your questions about the subject like a reporter on the beat"
     }
   ]
 }

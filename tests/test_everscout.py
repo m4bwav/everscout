@@ -279,7 +279,7 @@ class BeatTests(WorkspaceTest):
         self.assertIn("unknown kind", out)
 
     def test_builtin_beats_pass_check(self):
-        for slug in ("ai-video", "global-economics", "downtempo"):
+        for slug in ("ai-video", "global-economics", "downtempo", "tech-hiring"):
             code, out, _ = self.run_cli("beat-check", slug)
             self.assertEqual(code, 0, f"{slug}: {out}")
 
@@ -381,6 +381,16 @@ class FetchTests(WorkspaceTest):
         self.assertIn("made.up/article", out)
         self.assertNotIn("comments/p1/slug/ ", out.replace("\n", " ").split("made.up")[0].split("warn")[-1] + " x")
 
+    def test_peek_leaves_items_new(self):
+        code, out, _ = self.run_cli("fetch", "--beat", "test-beat", "--max-age-days", "3650", "--peek")
+        n_peek = int(out.split(" new items")[0].split()[-1])
+        self.assertGreater(n_peek, 0)
+        self.assertFalse(os.path.exists(E.state_path(self.cfg(), "test-beat")))
+        code, out, _ = self.run_cli("fetch", "--beat", "test-beat", "--max-age-days", "3650")
+        self.assertEqual(int(out.split(" new items")[0].split()[-1]), n_peek)
+        code, out, _ = self.run_cli("fetch", "--beat", "test-beat", "--max-age-days", "3650")
+        self.assertIn(" 0 new items", out)
+
     def test_community_is_the_row_and_source_log_satisfies_lint(self):
         self.run_cli("fetch", "--beat", "test-beat", "--max-age-days", "3650")
         items = json.load(open(E.items_path(self.cfg(), "test-beat"), encoding="utf-8"))
@@ -476,6 +486,53 @@ class MultiredditTests(WorkspaceTest):
             code, out, err = self.run_cli("fetch", "--beat", "test-beat", "--force", "--max-age-days", "3")
         self.assertIn("window full", err)
         self.assertEqual(len(calls), 3, calls)
+
+
+class RecallTests(WorkspaceTest):
+    def write(self, rel, text):
+        dd = E.data_dir(self.cfg(), "test-beat")
+        p = os.path.join(dd, rel)
+        os.makedirs(os.path.dirname(p), exist_ok=True)
+        open(p, "w", encoding="utf-8").write(text)
+        return p
+
+    def test_recall_ranks_notes_answers_and_names_entities(self):
+        today = E.today()
+        self.write(f"notes/{today[:7]}/p1-tool-x.md", f"---\ntitle: My Tool X pipeline for short films\nkind: note\ndate: {today}\n"
+                   f"posted: {today}\nbeat: test-beat\nurl: https://www.reddit.com/r/exampleSub/comments/p1/x/\ntools: [toolx]\n"
+                   "techniques: [pipeline]\nsummary: a maker's end-to-end pipeline\n---\n# t\n\nThe pipeline uses Tool X.\n")
+        self.write("notes/2020-01/p2-old.md", "---\ntitle: Old ToolY thread\nkind: note\ndate: 2020-01-02\nposted: 2020-01-02\n"
+                   "tools: [tooly]\nsummary: an old discussion of ToolY\n---\nnothing about the other one\n")
+        self.write(f"answers/{today}-what-pipeline.md", f"---\ntitle: What pipeline do makers use\nkind: answer\ndate: {today}\n"
+                   f"verified: {today}\nquestion: what pipeline do makers use with Tool X\nsummary: mostly Tool X then an editor\n---\n"
+                   "## Answer\n\nTool X, then an editor.\n")
+        self.run_cli("tally", "--beat", "test-beat")
+        code, out, _ = self.run_cli("recall", "--beat", "test-beat", "--q", "Which pipeline do people build around Tool X?", "--json")
+        self.assertEqual(code, 0)
+        r = json.loads(out)
+        self.assertEqual(r["status"]["notes"], 2)
+        self.assertEqual(r["status"]["answers"], 1)
+        self.assertEqual(r["entities"], {"tools": ["toolx"], "techniques": ["pipeline"]})
+        kinds = [h["kind"] for h in r["hits"]]
+        self.assertIn("note", kinds)
+        self.assertIn("answer", kinds)
+        self.assertNotIn("notes/2020-01/p2-old.md", [h["path"] for h in r["hits"]])  # names neither the words nor the entities
+        self.assertEqual(r["tallies"][0]["signal"], "new")
+        code, out, _ = self.run_cli("recall", "--beat", "test-beat", "--q", "zebra migration")
+        self.assertIn("nothing in the knowledge base matches", out)
+
+    def test_answers_are_indexed_and_linted(self):
+        today = E.today()
+        self.write(f"answers/{today}-q.md", f"---\ntitle: q\nkind: answer\ndate: {today}\nverified: {today}\nsummary: s\n---\n"
+                   "[invented](https://made.up/claim)\n")
+        code, out, _ = self.run_cli("index", "--beat", "test-beat")
+        self.assertIn("answers 1", out)
+        code, out, _ = self.run_cli("lint", "--beat", "test-beat", "--strict")
+        self.assertEqual(code, 1)
+        self.assertIn("answers/", out)
+        self.run_cli("source-log", "https://made.up/claim", "--beat", "test-beat")
+        code, out, _ = self.run_cli("lint", "--beat", "test-beat", "--strict")
+        self.assertEqual(code, 0, out)
 
 
 class ProbeTests(WorkspaceTest):

@@ -18,7 +18,3 @@ A test passes on evidence (a tool call in the trace, a file, a marker, a log lin
 - route · action · shallow · a built-in beat matched, so the skill copied it and stopped there; no discovery or research ran
 - finish · action · fail · probe of 42 sources started in the background, the reply said "I'll finish the setup when it reports", the session ended and killed it: no probe snapshot, no data folder, no log line (9 turns, $0.37)
 - led to: C-20260926-2, C-20260926-3
-
-### T-20260926-1 · 2026-09-26 · not yet run · skill · 0/0
-- Suite written; no run recorded. Trigger cases need a fresh session started after the plugin is installed. Run the baseline without the skill, then with it (`evergreen-test`).
-- led to: none

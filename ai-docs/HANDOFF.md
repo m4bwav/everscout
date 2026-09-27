@@ -1,6 +1,6 @@
 # Handoff
 
-Updated 2026-09-26 (late). Everscout 0.1.0 was built in one session from indie-ai-scout 0.3.1. Read [log.md](log.md) for what happened, `decisions/` for the architecture, and `research/` for the evidence.
+Updated 2026-09-26 (evening, 0.2.0). Everscout 0.1.0 was built in one session from indie-ai-scout 0.3.1; 0.2.0 added the everscout-ask skill (interrogate a beat like a reporter) and the tech-hiring beat, the first built from scratch. Read [log.md](log.md) for what happened, `decisions/` for the architecture, and `research/` for the evidence.
 
 ## What Mark wants (2026-09-26)
 
@@ -14,9 +14,14 @@ Name any subject and get an AI scout generated for it that keeps up with the sub
 - Four skills registered with evergreen; `evergreen.py lint` OK on all four. No eval run yet (TESTS.md: trigger cases need a fresh session after install).
 - Built-in beats `ai-video` (42 sources), `global-economics` (52), `downtempo` (48) pass `beat-check`. Their Reddit stances are mostly `~` because subreddit rules pages could not be fetched.
 
+## 0.2.0 state (2026-09-26 evening)
+
+- Five skills; `everscout-ask` passed its first headless test 3/3 (TESTS.md T-20260926-1). CLI `recall`, `fetch --peek`, `answers/` folder, plural alias matching; 30 offline tests pass.
+- Built-in `tech-hiring` beat (33 sources) with Mark's real data folder at `~/.everscout/data/tech-hiring`: never scanned; one saved answer (on-site interviews and AI cheating). Next for it: the first scan (everscout-scan), then more questions.
+
 ## Next single action
 
-In a fresh session after installing the plugin: say "set up a scout for <a subject Mark cares about>" and watch everscout-beat build a beat from nothing. That run is the real test of the core idea; fix what it gets wrong as a C- entry in the beat skill.
+Run the first scan of the tech-hiring beat ("scan the tech-hiring beat"), then interrogate it with a few questions to see recall grade `enough` from real notes. The from-scratch beat build and the ask skill are both proven (2026-09-26).
 
 ## Standing work
 

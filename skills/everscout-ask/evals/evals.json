@@ -1,0 +1,62 @@
+{
+ "skill": "everscout-ask",
+ "_format": "skill-creator evals.json plus evergreen fields (kind, decoy, evidence, baseline). Run with a scratch EVERSCOUT_HOME holding a copy of the tech-hiring beat so no real data is touched.",
+ "evals": [
+  {
+   "id": "trigger-1",
+   "kind": "trigger",
+   "prompt": "ask my tech-hiring scout: are companies moving interviews back on-site because of AI cheating?",
+   "expectations": ["the everscout-ask skill is invoked"],
+   "runs": 3
+  },
+  {
+   "id": "trigger-2",
+   "kind": "trigger",
+   "prompt": "what does my ai-video beat know about keeping characters consistent across shots?",
+   "expectations": ["the everscout-ask skill is invoked"],
+   "runs": 3
+  },
+  {
+   "id": "decoy-1",
+   "kind": "trigger",
+   "prompt": "write the monthly radar for my ai-video beat",
+   "expectations": ["the everscout-ask skill is not invoked (everscout-report is)"],
+   "runs": 3,
+   "decoy": true
+  },
+  {
+   "id": "decoy-2",
+   "kind": "trigger",
+   "prompt": "set up a scout for container gardening",
+   "expectations": ["the everscout-ask skill is not invoked (everscout-beat is)"],
+   "runs": 3,
+   "decoy": true
+  },
+  {
+   "id": "action-1",
+   "kind": "action",
+   "prompt": "Ask the tech-hiring beat: how are entry-level developer job postings trending this year?",
+   "expectations": ["the action happened, proven by the evidence below, not by the reply saying so"],
+   "evidence": {
+    "type": "trace",
+    "tool": "Bash",
+    "input_match": "everscout.py recall",
+    "and": {"type": "file", "path": "<DATA>/answers/<date>-*.md"}
+   },
+   "baseline": "without the skill a fresh session answers from web search in chat, with no recall of the beat's notes and no saved answer",
+   "runs": 3
+  },
+  {
+   "id": "outcome-1",
+   "kind": "outcome",
+   "prompt": "Ask the tech-hiring beat: are companies moving interviews back on-site because of AI cheating?",
+   "expectations": [
+    "the answer states a grade (enough, partial or none) and a confidence level",
+    "the answer file has Answer, What the beat has seen, What is new, Where sources disagree, Confidence and gaps and Sources sections",
+    "everscout.py lint --beat tech-hiring exits 0",
+    "DATA/log.md has an ask line"
+   ],
+   "runs": 3
+  }
+ ]
+}

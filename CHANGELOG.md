@@ -2,6 +2,13 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.2.0 · 2026-09-26
+
+- New skill **everscout-ask**: interrogate a beat like a reporter. It recalls what the beat's knowledge base holds, grades whether that is enough and fresh (corrective retrieval: enough, partial, none), researches the gaps in the beat's communities, data pages and the web, answers with what the scout had seen, what is new, where sources disagree, confidence and unknowns, and saves the answer under `answers/` so the next question starts from it.
+- CLI: `recall --beat --q` ranks notes, answers, reports, study and the journal against a question and prints the signals for the entities it names; `index` and `lint` cover `answers/`; `fetch --peek` reads without marking items seen; vocabulary aliases also match their plural.
+- Tested headless: "Ask my tech-hiring scout: are companies moving interviews back on-site because of AI cheating?" passed 3 of 3 (everscout-ask TESTS.md, T-20260926-1).
+- New built-in beat **tech-hiring** (developer and tech hiring), the first beat built from scratch by everscout-beat: 33 sources (15 subreddits, 5 Hacker News queries, Indeed Hiring Lab, the Pragmatic Engineer, Crunchbase News, Google News, Mastodon, data pages), 49 entities in 5 facets, 27 question seeds, an 11-chapter study outline.
+
 ## 0.1.2 · 2026-09-27
 
 From the second headless test of "set up a scout for ai video generation" (everscout-beat TESTS.md, T-20260927-2, 3 of 3 passed).

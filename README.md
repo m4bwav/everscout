@@ -4,11 +4,11 @@ Name a subject and get a scout for it. Everscout keeps up with any subject by re
 
 Say "set up a scout for vintage synth restoration" (or container gardening, or Formula 1 aerodynamics). The everscout-beat skill asks you up to three questions: what's in scope, what you want to learn, and whether you want to talk to makers. Then it researches where that subject lives online, fetches every candidate community and feed to check it's real and active, and writes the scout, called a **beat**. You can have as many beats as you like.
 
-A beat covers one subject: AI video, global economics, down-tempo music, whatever you follow. Everscout reads that beat's subreddits, forums, Hacker News, Bluesky, Mastodon, Lemmy, newsletters, YouTube channels, GitHub releases, arXiv and Hugging Face at each platform's polite pace. It writes one short paraphrased note per thread worth keeping and counts the tools, models, artists or indicators those notes name. From that it writes a monthly radar of what is new, rising and fading, and a sourced history-and-guide for the subject. When a maker posts their work, it drafts a question in your voice. You approve it and paste it yourself.
+A beat covers one subject: AI video, global economics, down-tempo music, whatever you follow. Everscout reads that beat's subreddits, forums, Hacker News, Bluesky, Mastodon, Lemmy, newsletters, YouTube channels, GitHub releases, arXiv and Hugging Face at each platform's polite pace. It writes one short paraphrased note per thread worth keeping and counts the tools, models, artists or indicators those notes name. From that it writes a monthly radar of what is new, rising and fading, and a sourced history-and-guide for the subject. When a maker posts their work, it drafts a question in your voice. You approve it and paste it yourself. And you can interrogate it like a reporter on the beat: ask it anything about the subject, and it answers from what it has already read, fills the gaps from the beat's communities and the web, and tells you what it saw before, what it just found, where sources disagree and how sure it is.
 
-It is a Claude Code plugin: four skills, a standard-library Python CLI and a markdown knowledge base. The skills are evergreen units, so their research refreshes on a schedule instead of going stale.
+It is a Claude Code plugin: five skills, a standard-library Python CLI and a markdown knowledge base. The skills are evergreen units, so their research refreshes on a schedule instead of going stale.
 
-## The four skills
+## The five skills
 
 | skill | does | say |
 |---|---|---|
@@ -16,10 +16,11 @@ It is a Claude Code plugin: four skills, a standard-library Python CLI and a mar
 | everscout-scan | fetches, triages, writes notes, collects replies from makers you asked, retallies the signals | "scan", "catch me up on economics", "any replies?" |
 | everscout-engage | finds a fresh post where nobody has asked about the process, drafts a question, checks the pace and the community's rules, hands the text to you to paste, records it | "find a post to ask", "thank them for the answer" |
 | everscout-report | radar report, weekly digest, or the baseline study, every claim linked to a note and every link checked | "write the radar", "what's rising", "build the study" |
+| everscout-ask | answers any question about a beat's subject: recalls the notes, grades whether they are enough and fresh, researches the gaps, answers with sources, confidence and unknowns, and saves the answer for next time | "ask my tech-hiring scout...", "what are people saying about X", "brief me on Y" |
 
 ## Starter beats
 
-The starter beats are examples of what a generated beat looks like, and a quick start if one happens to be your subject. `beats/ai-video` (a maker community, open about AI), `beats/global-economics` (analysts and data, strict forums) and `beats/downtempo` (musicians, hostile to AI music) were picked because they differ, and their sources were checked on the day they were added. `beats/_template` is what `beat-new` copies. Copy a starter beat into your private beats folder to make it yours; a private beat shadows a built-in one with the same name.
+The starter beats are examples of what a generated beat looks like, and a quick start if one happens to be your subject. `beats/ai-video` (a maker community, open about AI), `beats/global-economics` (analysts and data, strict forums), `beats/downtempo` (musicians, hostile to AI music) and `beats/tech-hiring` (candidates, hiring managers and labour data; built from scratch by everscout-beat on 2026-09-26 as a test) were picked because they differ, and their sources were checked on the day they were added. `beats/_template` is what `beat-new` copies. Copy a starter beat into your private beats folder to make it yours; a private beat shadows a built-in one with the same name.
 
 ## Where your data lives
 
@@ -74,12 +75,13 @@ The rules come from research into platform policies, the 2025 r/changemyview AI 
 | `where [--beat]` | resolved paths |
 | `beats`, `beat-new <slug> --title`, `beat-check <slug>` | list, scaffold, validate beats |
 | `sources --beat`, `probe --beat [--save]` | list sources; fetch each once and report which fail |
-| `fetch --beat [--kinds] [--sources] [--listing new,top] [--max-age-days N] [--json]` | fetch a beat's sources (paced, cached) and list new items |
+| `fetch --beat [--kinds] [--sources] [--listing new,top] [--max-age-days N] [--peek] [--json]` | fetch a beat's sources (paced, cached) and list new items; `--peek` reads without marking them seen |
 | `thread <url>` | a thread with comments |
 | `search --kind reddit\|hn\|news\|arxiv --q ...` | search one platform |
 | `new-note <url> --beat --note-kind` | scaffold a note, prefilled with the vocabulary it finds |
 | `vocab-match --beat --text` | canonical entities named in a text |
-| `validate`, `tally`, `index`, `lint` (each `--beat`) | check notes; recount signals; rebuild indexes; check report and study links |
+| `validate`, `tally`, `index`, `lint` (each `--beat`) | check notes; recount signals; rebuild indexes; check report, study and answer links |
+| `recall --beat --q "question" [--json]` | what the knowledge base holds on a question: ranked notes, answers, reports and study, plus the signals for the entities it names |
 | `source-log <url> --beat` | record a web page actually read, so reports may cite it |
 | `candidates --beat`, `questions --beat` | rank posts for a question; sample question seeds |
 | `engage-check`, `engage-record`, `engage-update`, `ledger`, `followups` | pace rules, the ledger, replies from the people asked |
@@ -96,7 +98,7 @@ claude plugin marketplace add https://github.com/m4bwav/everscout
 claude plugin install everscout@everscout --scope user
 ```
 
-Then run `python <plugin dir>/scripts/everscout.py where`, write `~/.everscout/config.json` with at least `contact`, and say "set up a scout for <subject>" or "scan the ai-video beat". Other agents (Copilot, Codex, Cursor) can use the four skill folders directly; AGENTS.md has the rules for working in the repository.
+Then run `python <plugin dir>/scripts/everscout.py where`, write `~/.everscout/config.json` with at least `contact`, and say "set up a scout for <subject>" or "scan the ai-video beat". Other agents (Copilot, Codex, Cursor) can use the five skill folders directly; AGENTS.md has the rules for working in the repository.
 
 ## Tests
 

@@ -4,7 +4,7 @@ Rules for any AI agent (Claude Code, Copilot, Cursor, Codex) working in this rep
 
 ## What this is
 
-A plugin that keeps one person current on any subject. Four skills under `skills/` (`everscout-beat` defines a subject, `everscout-scan` reads it, `everscout-engage` drafts questions to makers for the person to post, `everscout-report` writes radar reports and the baseline study), one CLI at `scripts/everscout.py` with source adapters in `scripts/es_sources.py`, a knowledge base under `kb/` (conduct code, platform guide, method, schema, voice template), built-in starter beats under `beats/` (`ai-video`, `global-economics`, `downtempo`, and `_template`), offline tests under `tests/`. The README has the layout and the CLI. Handoff notes, decisions, research and the log are under `ai-docs/` (start with `ai-docs/HANDOFF.md`).
+A plugin that keeps one person current on any subject. Five skills under `skills/` (`everscout-beat` defines a subject, `everscout-scan` reads it, `everscout-engage` drafts questions to makers for the person to post, `everscout-report` writes radar reports and the baseline study, `everscout-ask` answers the person's questions about a beat from its knowledge base plus fresh research), one CLI at `scripts/everscout.py` with source adapters in `scripts/es_sources.py`, a knowledge base under `kb/` (conduct code, platform guide, method, schema, voice template), built-in starter beats under `beats/` (`ai-video`, `global-economics`, `downtempo`, `tech-hiring`, and `_template`), offline tests under `tests/`. The README has the layout and the CLI. Handoff notes, decisions, research and the log are under `ai-docs/` (start with `ai-docs/HANDOFF.md`).
 
 ## This repository is public
 

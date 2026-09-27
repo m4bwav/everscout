@@ -17,3 +17,11 @@ Mark clarified mid-session: the core is "name a subject, get a scout"; the start
 ## [2026-09-27] test | "set up a scout for ai video generation", two headless runs
 
 Run 1 on 0.1.0: the skill triggered, copied the starter beat, backgrounded the probe and ended, so the probe died with the session (1/3; fixed in 0.1.1). Run 2 on 0.1.1: 3/3, refreshed the starter with a discovery pass, 46 sources all ok, full evidence on disk, 6.3 minutes, $1.55. Its fixes to the starter were backported and `probe --save` now merges (0.1.2). Not yet tested: a subject with no starter beat, which is the from-scratch path Mark cares most about.
+
+## [2026-09-26] build | tech-hiring beat from scratch; everscout-ask skill; 0.2.0
+
+Mark asked, "for a test and use", for a scout for developer and tech hiring, then mid-session for the scout to answer any question from its knowledge base plus whatever else it needs, "like a reporter" interrogated about their beat, and to run and push everything. The tech-hiring beat is the first built with no starter to copy: 33 sources (15 subreddits, 5 HN queries, 3 feeds, 3 Google News queries, 2 Mastodon tags, 5 data pages), probe 32 ok and 1 bad (interviewing.io has no feed, now a web row), 49 entities in 5 facets, 27 question seeds, 11 searches, an 11-chapter study outline; beat-check 0 errors, 0 warnings; data folder at `~/.everscout/data/tech-hiring` (default data_root; Mark's config.json is still absent). Research note `research/2026-09-26-tech-hiring-beat.md`.
+
+The ask feature: skill `everscout-ask` (recall, grade enough/partial/none, research the gaps, answer with seen/new/disagreements/confidence/unknowns, save to `answers/`), CLI `recall`, `answers/` in index and lint; decision `decisions/2026-09-26-ask-the-beat.md`. The build also found that a verification fetch marks items seen and would empty the first scan: `fetch --peek` added, the real state reset (everscout-beat L-004). Rules pages are unreadable through Claude Code's fetch, old.reddit.com included (L-005). The CLI's dates are UTC (L-006). 30 offline tests pass; evergreen lint OK for everscout-ask and everscout-beat (two older lint issues in the beat skill fixed).
+
+## [2026-09-26] index | rebuilt (3 entries)

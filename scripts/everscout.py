@@ -49,7 +49,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.1.2"
+VERSION = "0.2.0"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -760,13 +760,15 @@ def cmd_fetch(a):
             it["age_hours"] = round((now_utc() - pub).total_seconds() / 3600, 1) if pub else None
             allitems.append(it)
             if it["id"] not in seen:
-                seen[it["id"]] = {"first_seen": iso(now_utc()), "source": r["source"], "title": it["title"][:120]}
+                if not a.peek:
+                    seen[it["id"]] = {"first_seen": iso(now_utc()), "source": r["source"], "title": it["title"][:120]}
                 if pub is None or pub >= cutoff:
                     new.append(it)
     st["fetches"] = (st.get("fetches") or [])[-49:] + [{"at": iso(now_utc()), "sources": len(rows), "fetched": f.fetched,
                                                           "cached": f.cached, "new": len(new), "errors": errors}]
     st["last_fetch"] = iso(now_utc())
-    save_json(state_path(cfg, b.slug), st)
+    if not a.peek:  # a peek (building a beat, answering a question) must not use up the next scan's new items
+        save_json(state_path(cfg, b.slug), st)
     merged = {i["id"]: i for i in load_json(items_path(cfg, b.slug), [])}
     for it in allitems:
         old = merged.get(it["id"], {})
@@ -1241,7 +1243,7 @@ def note_path(dd, posted, nid, title):
 
 
 def vocab_match(b, text):
-    """{facet: [canonical]} for every alias found in text (word-bounded, case-insensitive). A line with aliases matches
+    """{facet: [canonical]} for every alias found in text (word-bounded, case-insensitive, a plural counts). A line with aliases matches
     only its aliases (the id is an id: `us`, `fed` or `warp` must not fire on ordinary words); a line without aliases
     matches its id."""
     low = " " + (text or "").lower() + " "
@@ -1252,7 +1254,7 @@ def vocab_match(b, text):
                 t = term.lower().strip()
                 if not t:
                     continue
-                if re.search(r"(?<![a-z0-9])" + re.escape(t) + r"(?![a-z0-9])", low):
+                if re.search(r"(?<![a-z0-9])" + re.escape(t) + r"(?:s|es)?(?![a-z0-9])", low):
                     out.setdefault(facet, []).append(canon)
                     break
     return out
@@ -1463,6 +1465,110 @@ def cmd_tally(a):
         print(f"  {r['signal']:<7} {f}: {v} ({r['30d']} in 30d, {r['prev30d']} before, spread {r['spread90']})")
 
 
+# ---------------------------------------------------------------- recall (the beat as a reporter's memory)
+
+STOPWORDS = set("""a an and are as at be been but by can could did do does for from had has have how i if in into is it its
+me my no not of on or our so than that the their them then there these they this to too up us was we were what when where
+which who why will with would you your about any anything just more most much should some tell very""".split())
+
+
+def query_terms(q):
+    return [w for w in re.findall(r"[a-z0-9][a-z0-9+.#-]*", (q or "").lower()) if w not in STOPWORDS and len(w) > 1]
+
+
+def kb_documents(dd):
+    """Every file in a beat's knowledge base the reporter can recall: notes, answers, reports, study, the journal."""
+    docs = [("note", p, fm, body) for p, fm, body in all_notes(dd)]
+    for sub, kind in (("answers", "answer"), ("reports", "report"), ("study", "study")):
+        folder = os.path.join(dd, sub)
+        if os.path.isdir(folder):
+            for f in sorted(os.listdir(folder)):
+                if f.endswith(".md") and f != "INDEX.md":
+                    fm, body = parse_frontmatter(read(os.path.join(folder, f)))
+                    docs.append((kind, os.path.join(folder, f), fm, body))
+    j = os.path.join(dd, "journal.md")
+    if os.path.exists(j):
+        docs.append(("journal", j, {"title": "journal"}, read(j)))
+    return docs
+
+
+def recall(b, dd, q, limit=12, now=None):
+    """Rank the knowledge base against a question. Score: each query word (whole word, plural allowed) found in the title (x3), the summary or
+    question (x2) and the body (x1, at most 3 a word), plus 4 for each vocabulary entity the question names that the
+    document is tagged with or mentions; a note's score is scaled by its age on the beat's half-life (never below half).
+    Returns (hits, entities named in the question, tally rows for them)."""
+    now = now or now_utc()
+    terms = query_terms(q)
+    named = vocab_match(b, q)
+    ents = [(f, e) for f, es in named.items() for e in es]
+    voc = b.vocab()
+    half_life = float(b.meta.get("half_life_days") or 30)
+    hits = []
+    for kind, p, fm, body in kb_documents(dd):
+        title = str(fm.get("title") or "").lower()
+        summ = (str(fm.get("summary") or "") + " " + str(fm.get("question") or "")).lower()
+        low = body.lower()
+        s = 0.0
+        for t in terms:
+            pat = r"(?<![a-z0-9])" + re.escape(t) + r"(?:s|es)?(?![a-z0-9])"
+            s += 3 * len(re.findall(pat, title)) + 2 * len(re.findall(pat, summ)) + min(3, len(re.findall(pat, low)))
+        for f, e in ents:
+            vals = fm.get(f) or []
+            vals = [vals] if isinstance(vals, str) else vals
+            aliases = voc.get(f, {}).get(e) or [e]
+            if e in vals or any(re.search(r"(?<![a-z0-9])" + re.escape(al.lower()) + r"(?![a-z0-9])", low) for al in aliases):
+                s += 4
+        if s <= 0:
+            continue
+        when = str(fm.get("posted") or fm.get("date") or "")
+        t0 = S.parse_time(when)
+        if kind == "note" and t0:
+            s *= 0.5 + 0.5 * 0.5 ** (max(0, (now - t0).days) / half_life)
+        hits.append({"score": round(s, 2), "kind": kind, "date": when[:10], "path": os.path.relpath(p, dd).replace(os.sep, "/"),
+                     "title": fm.get("title") or os.path.basename(p), "summary": fm.get("summary") or "",
+                     "url": fm.get("url") or "", "community": fm.get("community") or ""})
+    hits.sort(key=lambda h: (-h["score"], h["path"]))
+    tallies = load_json(os.path.join(dd, "signals", "tallies.json"), {}).get("facets", {})
+    keep = ("30d", "prev30d", "90d", "all", "signal", "last", "spread90")
+    trows = [dict({"facet": f, "entity": e}, **{k: v for k, v in (tallies.get(f, {}).get(e) or {}).items() if k in keep})
+             for f, e in ents]
+    return hits[:limit], named, trows
+
+
+def kb_status(cfg, b, dd):
+    st = load_json(state_path(cfg, b.slug), {})
+    dates = sorted(str(fm.get("posted") or fm.get("date") or "")[:10] for _, fm, _ in all_notes(dd))
+    ad = os.path.join(dd, "answers")
+    return {"beat": b.slug, "title": b.title, "notes": len(dates), "newest_note": dates[-1] if dates else None,
+            "oldest_note": dates[0] if dates else None, "last_fetch": st.get("last_fetch"),
+            "answers": len([f for f in os.listdir(ad) if f.endswith(".md") and f != "INDEX.md"]) if os.path.isdir(ad) else 0}
+
+
+def cmd_recall(a):
+    cfg = config()
+    b = get_beat(cfg, a.beat)
+    dd = data_dir(cfg, b.slug)
+    hits, named, trows = recall(b, dd, a.q, a.limit)
+    status = kb_status(cfg, b, dd)
+    if a.json:
+        print(json.dumps({"status": status, "entities": named, "tallies": trows, "hits": hits}, indent=1))
+        return
+    print(f"{b.slug}: {status['notes']} notes (newest {status['newest_note'] or '-'}), {status['answers']} answers, "
+          f"last fetch {status['last_fetch'] or 'never'}")
+    if named:
+        print("entities named: " + "; ".join(f"{k}: {', '.join(v)}" for k, v in named.items()))
+    for r in trows:
+        if "signal" in r:
+            print(f"  signal {r['entity']}: {r['signal']} ({r.get('30d')} in 30d, {r.get('prev30d')} before, "
+                  f"{r.get('all')} all, last {r.get('last')})")
+        else:
+            print(f"  signal {r['entity']}: no notes yet")
+    if not hits:
+        print("nothing in the knowledge base matches; answer from the beat's sources and the web, then save the answer")
+    for h in hits:
+        print(f"{h['score']:>6} {h['kind']:<7} {h['date'] or '-':<10} {h['path']}  {h['summary'] or h['title']}")
+
+
 # ---------------------------------------------------------------- indexes
 
 def index_folder(folder, title, intro, recurse=False):
@@ -1498,6 +1604,7 @@ def cmd_index(a):
         "notes": index_folder(os.path.join(dd, "notes"), "Notes", "One distilled note per thread or page, newest month first.", True),
         "reports": index_folder(os.path.join(dd, "reports"), "Reports", "Dated trend reports, newest first."),
         "study": index_folder(os.path.join(dd, "study"), "Baseline study", "The history and guide for this beat."),
+        "answers": index_folder(os.path.join(dd, "answers"), "Answers", "Questions put to the beat and the answers given, newest first."),
         "sources": index_folder(os.path.join(dd, "sources"), "Sources", "Dated snapshots of rules pages, probes and watch lists."),
     }
     build_ledger_index(cfg)
@@ -1506,13 +1613,14 @@ def cmd_index(a):
            f"- [notes](notes/INDEX.md): {counts['notes']} distilled notes",
            f"- [reports](reports/INDEX.md): {counts['reports']} trend reports",
            f"- [study](study/INDEX.md): {counts['study']} study chapters",
+           f"- [answers](answers/INDEX.md): {counts['answers']} questions put to the beat, with the answers given",
            "- [signals](signals/signals.md): tallies of the vocabulary, with velocity",
            f"- [sources](sources/INDEX.md): {counts['sources']} snapshots",
            "- [log](log.md): one line per scan, report and engagement session",
            "- [journal](journal.md): the person's own reflections (the immersion journal); agents read it, never rewrite it",
            "- [feedback](feedback.md): more of this, less of this; triage reads it every scan", ""]
     write(os.path.join(dd, "INDEX.md"), "\n".join(top))
-    for f, text in (("log.md", f"# Log: {b.title}\n\nAppend only, newest last. `## [YYYY-MM-DD] scan|report|engage|beat | summary`.\n"),
+    for f, text in (("log.md", f"# Log: {b.title}\n\nAppend only, newest last. `## [YYYY-MM-DD] scan|report|engage|beat|ask | summary`.\n"),
                     ("journal.md", f"# Journal: {b.title}\n\nYour own reflections on this beat: hunches, what surprised you, what you want to "
                                    "understand next. Dated entries, newest last. Agents read this before a report and never edit it.\n"),
                     ("feedback.md", f"# Feedback: {b.title}\n\nSteer the scan. One line each, dated. Triage reads this every scan.\n\n"
@@ -1564,7 +1672,7 @@ def cmd_lint(a):
             known_urls.add(row["source"].rstrip("/"))
     errs, warns, files = [], [], 0
     stale_days = a.stale_days
-    for sub in ("reports", "study"):
+    for sub in ("reports", "study", "answers"):
         folder = os.path.join(dd, sub)
         if not os.path.isdir(folder):
             continue
@@ -1598,7 +1706,7 @@ def cmd_lint(a):
         print("ERROR  " + e)
     for w in warns:
         print("warn   " + w)
-    print(f"{files} report and study files, {len(errs)} errors, {len(warns)} warnings")
+    print(f"{files} report, study and answer files, {len(errs)} errors, {len(warns)} warnings")
     sys.exit(1 if errs or (a.strict and warns) else 0)
 
 
@@ -1662,6 +1770,7 @@ def main(argv=None):
     p.add_argument("--sources"); p.add_argument("--kinds"); p.add_argument("--listing", default="new"); p.add_argument("--t", default="week")
     p.add_argument("--max-age-days", type=float, default=3); p.add_argument("--all", action="store_true"); p.add_argument("--limit", type=int, default=200)
     p.add_argument("--force", action="store_true"); p.add_argument("--json", action="store_true")
+    p.add_argument("--peek", action="store_true", help="read without marking items seen or saving fetch state (beat building, questions)")
     p = add("thread", cmd_thread, "a thread with comments (Reddit, HN, Bluesky, Mastodon, Lemmy, Discourse)"); p.add_argument("url"); p.add_argument("--beat")
     p.add_argument("--force", action="store_true"); p.add_argument("--limit", type=int, default=60); p.add_argument("--json", action="store_true")
     p = add("search", cmd_search, "search reddit, hn, news or arxiv"); p.add_argument("--q", required=True)
@@ -1689,6 +1798,8 @@ def main(argv=None):
     p.add_argument("--engaged", action="store_true"); p.add_argument("--force", action="store_true")
     p = add("validate", cmd_validate, "check a beat's notes"); p.add_argument("--beat"); p.add_argument("--strict", action="store_true")
     p = add("tally", cmd_tally, "recount signals from the notes"); p.add_argument("--beat")
+    p = add("recall", cmd_recall, "what the knowledge base holds on a question: ranked notes, answers, reports, study, signals"); p.add_argument("--beat")
+    p.add_argument("--q", required=True); p.add_argument("--limit", type=int, default=12); p.add_argument("--json", action="store_true")
     p = add("index", cmd_index, "regenerate the data folder's indexes"); p.add_argument("--beat")
     p = add("source-log", cmd_source_log, "record a web page actually read, so it may be cited"); p.add_argument("url"); p.add_argument("--beat")
     p.add_argument("--title"); p.add_argument("--supports", help="the claim it supports, in a few words")

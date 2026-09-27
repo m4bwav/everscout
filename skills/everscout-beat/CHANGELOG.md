@@ -2,6 +2,11 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`.
 
+### C-20260926-4 · 2026-09-26 · Build with `fetch --peek`; rules pages through search
+- because: L-004, L-005 (building the tech-hiring beat from scratch, the first from-scratch run)
+- files: references/procedure.md (A4), scripts/everscout.py (`fetch --peek`), beats/tech-hiring (new built-in starter)
+- The from-scratch path worked end to end: 33 sources, 32 answered the first probe, the one bad feed became a web row.
+
 ### C-20260927-1 · 2026-09-27 · Partial probes merge into the snapshot; GitHub and arXiv guidance; starter beat refreshed
 - because: T-20260927-2, L-002, L-003
 - files: scripts/everscout.py (probe --save), references/procedure.md (A4), kb/platforms.md (github row), beats/ai-video/sources.md and vocab.md
