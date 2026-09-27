@@ -1,0 +1,75 @@
+{
+  "skill": "everscout-report",
+  "_format": "skill-creator evals.json plus evergreen fields (kind, decoy, evidence, baseline). Run with a scratch EVERSCOUT_HOME so no real ledger or data is touched.",
+  "evals": [
+    {
+      "id": "trigger-1",
+      "kind": "trigger",
+      "prompt": "write the monthly radar for my ai-video beat",
+      "expectations": [
+        "the everscout-report skill is invoked"
+      ],
+      "runs": 3
+    },
+    {
+      "id": "trigger-2",
+      "kind": "trigger",
+      "prompt": "I want a history and guide to down-tempo music built from my scout",
+      "expectations": [
+        "the everscout-report skill is invoked"
+      ],
+      "runs": 3
+    },
+    {
+      "id": "decoy-1",
+      "kind": "trigger",
+      "prompt": "add a new source to my economics beat",
+      "expectations": [
+        "the everscout-report skill is not invoked (everscout-beat is)"
+      ],
+      "runs": 3,
+      "decoy": true
+    },
+    {
+      "id": "decoy-2",
+      "kind": "trigger",
+      "prompt": "make a bar chart of these sales numbers",
+      "expectations": [
+        "the everscout-report skill is not invoked"
+      ],
+      "runs": 3,
+      "decoy": true
+    },
+    {
+      "id": "action-1",
+      "kind": "action",
+      "prompt": "Write this week's digest for my ai-video beat",
+      "expectations": [
+        "the action happened, proven by the evidence below, not by the reply saying so"
+      ],
+      "evidence": {
+        "type": "file",
+        "path": "<DATA>/reports/<date>-digest.md",
+        "or": {
+          "type": "trace",
+          "tool": "Bash",
+          "input_match": "everscout.py (tally|lint)"
+        }
+      },
+      "baseline": "without the skill a fresh session writes a summary in chat from web search, with no file, no tally and no lint",
+      "runs": 3
+    },
+    {
+      "id": "outcome-1",
+      "kind": "outcome",
+      "prompt": "Write the radar report for the test beat (fixture data folder with 20 notes)",
+      "files": [],
+      "expectations": [
+        "everscout.py lint --beat <slug> exits 0",
+        "the report has Direction, Radar, Signals and trends, Open questions and Sources sections",
+        "every entity called rising has the tally's 30d and prev 30d numbers beside it"
+      ],
+      "runs": 3
+    }
+  ]
+}

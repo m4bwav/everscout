@@ -1,0 +1,74 @@
+{
+  "skill": "everscout-scan",
+  "_format": "skill-creator evals.json plus evergreen fields (kind, decoy, evidence, baseline). Run with a scratch EVERSCOUT_HOME so no real ledger or data is touched.",
+  "evals": [
+    {
+      "id": "trigger-1",
+      "kind": "trigger",
+      "prompt": "run the scout on my downtempo beat",
+      "expectations": [
+        "the everscout-scan skill is invoked"
+      ],
+      "runs": 3
+    },
+    {
+      "id": "trigger-2",
+      "kind": "trigger",
+      "prompt": "catch me up on global economics, anything new this week from my scout?",
+      "expectations": [
+        "the everscout-scan skill is invoked"
+      ],
+      "runs": 3
+    },
+    {
+      "id": "decoy-1",
+      "kind": "trigger",
+      "prompt": "write this month's trend report for ai video",
+      "expectations": [
+        "the everscout-scan skill is not invoked (everscout-report is)"
+      ],
+      "runs": 3,
+      "decoy": true
+    },
+    {
+      "id": "decoy-2",
+      "kind": "trigger",
+      "prompt": "find me a post to ask a maker about their process",
+      "expectations": [
+        "the everscout-scan skill is not invoked (everscout-engage is)"
+      ],
+      "runs": 3,
+      "decoy": true
+    },
+    {
+      "id": "action-1",
+      "kind": "action",
+      "prompt": "Scan my ai-video beat, but only the Hacker News and GitHub sources, and write notes for anything worth keeping",
+      "expectations": [
+        "the action happened, proven by the evidence below, not by the reply saying so"
+      ],
+      "evidence": {
+        "type": "trace",
+        "tool": "Bash",
+        "input_match": "everscout.py fetch .*--beat ai-video",
+        "or": {
+          "type": "file",
+          "path": "<DATA>/log.md"
+        }
+      },
+      "baseline": "without the skill a fresh session searches the web and summarises in chat, writing no notes and no log line",
+      "runs": 3
+    },
+    {
+      "id": "outcome-1",
+      "kind": "outcome",
+      "prompt": "Ingest this thread into my ai-video notes: <a Hacker News item URL about video generation>",
+      "files": [],
+      "expectations": [
+        "a new file exists under DATA/notes/<yyyy-mm>/ with url equal to the given URL",
+        "everscout.py validate --beat ai-video exits 0"
+      ],
+      "runs": 3
+    }
+  ]
+}

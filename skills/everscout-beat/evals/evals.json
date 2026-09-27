@@ -1,0 +1,74 @@
+{
+  "skill": "everscout-beat",
+  "_format": "skill-creator evals.json plus evergreen fields (kind, decoy, evidence, baseline). Run with a scratch EVERSCOUT_HOME so no real ledger or data is touched.",
+  "evals": [
+    {
+      "id": "trigger-1",
+      "kind": "trigger",
+      "prompt": "I want to keep up with AI video generation. Can you set up a scout for it?",
+      "expectations": [
+        "the everscout-beat skill is invoked"
+      ],
+      "runs": 3
+    },
+    {
+      "id": "trigger-2",
+      "kind": "trigger",
+      "prompt": "add r/aivideo to my ai video scout and check it's still alive",
+      "expectations": [
+        "the everscout-beat skill is invoked"
+      ],
+      "runs": 3
+    },
+    {
+      "id": "decoy-1",
+      "kind": "trigger",
+      "prompt": "what's new in AI video this week according to my scout?",
+      "expectations": [
+        "the everscout-beat skill is not invoked (everscout-scan is)"
+      ],
+      "runs": 3,
+      "decoy": true
+    },
+    {
+      "id": "decoy-2",
+      "kind": "trigger",
+      "prompt": "write me a python script that parses RSS feeds",
+      "expectations": [
+        "the everscout-beat skill is not invoked"
+      ],
+      "runs": 3,
+      "decoy": true
+    },
+    {
+      "id": "action-1",
+      "kind": "action",
+      "prompt": "Set up an everscout beat called test-birding for backyard bird photography, keep it small (five sources)",
+      "expectations": [
+        "the action happened, proven by the evidence below, not by the reply saying so"
+      ],
+      "evidence": {
+        "type": "file",
+        "path": "<EVERSCOUT_HOME>/beats/test-birding/sources.md",
+        "or": {
+          "type": "trace",
+          "tool": "Bash",
+          "input_match": "everscout.py (beat-check|probe)"
+        }
+      },
+      "baseline": "without the skill a fresh session writes a list of subreddits in chat and creates no beat files",
+      "runs": 3
+    },
+    {
+      "id": "outcome-1",
+      "kind": "outcome",
+      "prompt": "Check the sources of my global-economics beat and tell me which ones fail",
+      "files": [],
+      "expectations": [
+        "an everscout.py probe command ran (trace)",
+        "the reply lists failing sources by name with their status, or says none failed"
+      ],
+      "runs": 3
+    }
+  ]
+}

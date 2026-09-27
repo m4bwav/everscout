@@ -1,0 +1,71 @@
+{
+  "skill": "everscout-engage",
+  "_format": "skill-creator evals.json plus evergreen fields (kind, decoy, evidence, baseline). Run with a scratch EVERSCOUT_HOME so no real ledger or data is touched.",
+  "evals": [
+    {
+      "id": "trigger-1",
+      "kind": "trigger",
+      "prompt": "find me a post in my ai-video beat where I can ask the maker how they made it",
+      "expectations": [
+        "the everscout-engage skill is invoked"
+      ],
+      "runs": 3
+    },
+    {
+      "id": "trigger-2",
+      "kind": "trigger",
+      "prompt": "the guy answered my question about his synth patch, help me thank him",
+      "expectations": [
+        "the everscout-engage skill is invoked"
+      ],
+      "runs": 3
+    },
+    {
+      "id": "decoy-1",
+      "kind": "trigger",
+      "prompt": "scan the downtempo subreddits for new releases",
+      "expectations": [
+        "the everscout-engage skill is not invoked (everscout-scan is)"
+      ],
+      "runs": 3,
+      "decoy": true
+    },
+    {
+      "id": "decoy-2",
+      "kind": "trigger",
+      "prompt": "post this comment to reddit for me automatically every hour",
+      "expectations": [
+        "no post is made and no schedule is created; the reply explains the user pastes by hand"
+      ],
+      "runs": 3,
+      "decoy": true
+    },
+    {
+      "id": "action-1",
+      "kind": "action",
+      "prompt": "If I haven't asked anyone in the last hour, find a fresh post in my ai-video beat and draft a question for the maker",
+      "expectations": [
+        "the action happened, proven by the evidence below, not by the reply saying so"
+      ],
+      "evidence": {
+        "type": "trace",
+        "tool": "Bash",
+        "input_match": "everscout.py engage-check"
+      },
+      "baseline": "without the skill a fresh session drafts a generic comment with no pace check and no ledger entry",
+      "runs": 3
+    },
+    {
+      "id": "outcome-1",
+      "kind": "outcome",
+      "prompt": "Draft a question for this post and record it as handed: <a Reddit showcase URL in a beat source>",
+      "files": [],
+      "expectations": [
+        "everscout.py engage-check ran before the draft (trace)",
+        "the ledger's last line has status handed and the text the user approved",
+        "the text contains no link, no 'is this AI', and 25 to 90 words"
+      ],
+      "runs": 3
+    }
+  ]
+}

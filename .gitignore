@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+# user data never belongs here
+.everscout/
+config.json
+voice.md

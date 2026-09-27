@@ -1,0 +1,37 @@
+{
+  "_comment": "Copy to ~/.everscout/config.json (or $EVERSCOUT_HOME/config.json) and edit. Everything here is optional; defaults live in scripts/everscout.py.",
+  "contact": "you@example.org or https://your.site",
+  "reddit_user": "",
+  "data_root": "~/.everscout/data",
+  "local_root": "~/.everscout/local",
+  "ledger": "",
+  "beat_dirs": [
+    "~/.everscout/beats"
+  ],
+  "beats": {
+    "ai-video": {
+      "data": "~/notes/scout/ai-video"
+    }
+  },
+  "voice": "~/.everscout/voice.md",
+  "pace": {
+    "hosts": {
+      "www.reddit.com": 60
+    },
+    "feed_ttl_seconds": 3600,
+    "thread_ttl_seconds": 1800
+  },
+  "engage": {
+    "min_gap_minutes": 60,
+    "max_per_day": 4,
+    "per_community_hours": 24,
+    "max_item_age_days": 3,
+    "min_item_age_hours": 1,
+    "platforms": {
+      "mastodon": {
+        "max_per_day": 3
+      }
+    }
+  },
+  "retention_hours": 48
+}
