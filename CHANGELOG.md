@@ -13,7 +13,7 @@ Beat statistics, built from the approved design in `ai-docs/research/2026-09-27-
 - Lifecycle in `stats review`: promotion after 3 points at grade C3 or better on the user's yes; archive as stale (3 failed periods, or no value for 3 periods), flat (CV under 5% over 8 points), irrelevant, gamed or superseded; never deletes rows; a definition change bumps the version and export splits the series. Thresholds configurable under `stats` in config.json. Trends and co-movement shown, never acted on.
 - `stats export` writes a chartwright-ready long CSV and, when chartwright is found, prints or builds (`--charts`) a line chart, sparklines and small multiples into `DATA/reports/charts/`. Chartwright stays optional.
 - Skills: everscout-beat defines metrics, everscout-scan collects, everscout-report reviews and charts, everscout-ask reads the series (procedure in `kb/stats.md`). beat and report descriptions updated with skill-tidy (check OK).
-- `kb/SCHEMA.md` and `kb/platforms.md` document the files and the two new sources. 45 offline tests (15 new).
+- `kb/SCHEMA.md` and `kb/platforms.md` document the files and the two new sources. 45 offline tests (15 new); root plugin evals 12/12 after the description changes.
 
 ## 0.2.2 · 2026-09-26
 
