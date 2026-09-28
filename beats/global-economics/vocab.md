@@ -22,10 +22,20 @@ Indicator aliases include the common abbreviations; watch for false matches on s
 - treasury-10y: 10-year yield, 10-year Treasury, UST10Y, ten-year
 - yield-curve: yield curve, 2s10s, inversion
 - oil-price: Brent, WTI, oil price, oil prices, crude oil
+- natural-gas-price: natural gas price, Henry Hub, TTF, wholesale gas
+- fuel-prices: gasoline prices, retail gasoline, diesel prices, pump prices
+- fx-reserves: FX reserves, foreign exchange reserves, COFER, reserve assets
+- exchange-rate: exchange rate, REER, real effective exchange rate, undervalued currency
 - dollar-index: DXY, dollar index, strong dollar
 - trade-balance: trade balance, trade deficit, current account
 - productivity: productivity, TFP, total factor productivity
 - house-prices: house prices, home prices, Case-Shiller, rents
+- niip: NIIP, net international investment position, net foreign assets
+- inflation-expectations: inflation expectations, breakeven inflation, breakevens, inflation swaps, 5y5y
+- term-premium: term premium, term premia
+- recession-probability: recession probability, probability of recession
+- financial-conditions: financial conditions index, FCI, systemic stress index, CISS
+- trade-flows: trade flows, bilateral trade, mirror statistics, mirror data
 
 ## Institutions
 
@@ -44,6 +54,14 @@ Indicator aliases include the common abbreviations; watch for false matches on s
 - eurostat: Eurostat
 - us-treasury: Treasury Department, US Treasury
 - supreme-court: Supreme Court, SCOTUS
+- eia: EIA, Energy Information Administration, Short-Term Energy Outlook
+- us-commerce: Commerce Department, Department of Commerce
+- norges-bank: Norges Bank, Central Bank of Norway
+- ustr: USTR, US Trade Representative, United States Trade Representative
+- nber: NBER, National Bureau of Economic Research
+- marad: MARAD, Maritime Administration, US Maritime Administration
+- ons: ONS, Office for National Statistics
+- un-comtrade: UN Comtrade, Comtrade
 
 ## Policies
 
@@ -60,11 +78,15 @@ Indicator aliases include the common abbreviations; watch for false matches on s
 - fiscal-stimulus: fiscal stimulus, stimulus, deficit spending
 - sanctions: sanctions
 - industrial-policy: industrial policy, CHIPS Act, Inflation Reduction Act, IRA subsidies
+- imf-program: IMF program, Extended Credit Facility, Extended Fund Facility, staff-level agreement
+- common-framework: Common Framework, G20 Common Framework
+- forward-guidance: forward guidance
+- jones-act: Jones Act, Jones Act waiver
 
 ## Themes
 
 - stagflation: stagflation
-- energy-shock: energy shock, oil shock, energy crisis
+- energy-shock: energy shock, oil shock, energy crisis, Strait of Hormuz
 - soft-landing: soft landing, hard landing, recession risk
 - labor-hoarding: labor hoarding, labour hoarding, no-hire, low-hire
 - ai-productivity: AI productivity, AI and jobs, AI capex, AI investment
@@ -75,6 +97,8 @@ Indicator aliases include the common abbreviations; watch for false matches on s
 - housing-affordability: housing affordability, housing crisis
 - tariff-pass-through: pass-through, tariff pass-through, who pays the tariff
 - data-quality: revisions, response rates, data quality, seasonal adjustment
+- trade-truce: trade truce, tariff truce
+- zombie-firms: zombie firms, zombie companies
 
 ## Regions
 
@@ -88,6 +112,10 @@ Indicator aliases include the common abbreviations; watch for false matches on s
 - emerging-markets: emerging markets, emerging economies, developing countries
 - sub-saharan-africa: Sub-Saharan Africa, Africa
 - latin-america: Latin America, LatAm
+- norway: Norway, Norwegian economy
+- poland: Poland, Polish economy
+- germany: Germany, German economy
+- russia: Russia, Russian economy
 
 ## Notes
 

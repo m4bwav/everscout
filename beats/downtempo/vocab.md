@@ -34,6 +34,9 @@ Short names collide with ordinary words ("Air", "Lamb", "Stone", "Om"), so their
 - erika-de-casier: Erika de Casier
 - james-k: james K
 - th-blisks: Th Blisks
+- fkj: FKJ, French Kiwi Juice
+- haruomi-hosono: Haruomi Hosono
+- madlib: Madlib, Madvillain
 
 ## Labels
 
@@ -55,6 +58,7 @@ Short names collide with ordinary words ("Air", "Lamb", "Stone", "Om"), so their
 - efficient-space: Efficient Space
 - anjunachill: Anjunachill
 - bmg-concord: Concord Music, BMG
+- stones-throw: Stones Throw, Stones Throw Records
 
 ## Gear
 
@@ -70,7 +74,10 @@ Short names collide with ordinary words ("Air", "Lamb", "Stone", "Om"), so their
 - elektron-octatrack: Octatrack
 - elektron-digitone: Digitone
 - elektron-rytm: Analog Rytm
+- elektron-monomachine: Monomachine, Elektron Monomachine, SFX-6, SFX-60
+- elektron-machinedrum: Machinedrum, Elektron Machinedrum, SPS-1
 - op-1: OP-1, OP1
+- polyend-loop: Polyend Loop
 - juno: Juno-106, Juno-60, Roland Juno
 - rhodes: Rhodes, electric piano, Fender Rhodes
 - mellotron: Mellotron
@@ -78,6 +85,8 @@ Short names collide with ordinary words ("Air", "Lamb", "Stone", "Om"), so their
 - valhalla: Valhalla, VintageVerb, Supermassive, ValhallaDSP
 - vital: Vital synth, Vital by Matt Tytel
 - serum: Serum
+- omnisphere: Omnisphere, Spectrasonics Omnisphere
+- casio-cz-101: Casio CZ-101, CZ-101, CZ101, CZ 101
 - arturia-v: Arturia V Collection, V Collection
 - kontakt: Kontakt
 - splice: Splice

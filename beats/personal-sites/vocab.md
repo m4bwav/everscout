@@ -20,6 +20,7 @@ Keep canonical ids stable. A new builder or trend gets its own id when people co
 - about-page: about page, about me
 - resume-page: resume, CV, résumé
 - links-page: link in bio, linktree, links page
+- shrine: shrine, shrines, fansite, fansites, fan site
 
 ## Design ideas
 
@@ -37,6 +38,16 @@ Keep canonical ids stable. A new builder or trend gets its own id when people co
 - gamified: gamified, game-like portfolio, interactive portfolio
 - cursor-effects: custom cursor, cursor effect
 - accessibility: accessibility, a11y, wcag
+- monochrome: monochrome, monochromatic, black and white palette, two-colour palette
+- swiss-style: Swiss style, Swiss layout, International Typographic Style
+- infinite-scroll: infinite scroll
+- microinteractions: microinteraction, microinteractions, micro-interactions
+- pixel-art: pixel art, blinkies, 88x31 buttons
+- limited-palette: limited palette, restricted palette, Amiga palette, dithering, dithered
+- typewriter-style: typewriter aesthetic, typewriter style, typewritten
+- semantic-html: semantic HTML, HTML semantics
+- progressive-enhancement: progressive enhancement
+- easter-eggs: easter egg, easter eggs, hidden pages, secret pages, hidden documents
 
 ## Stacks and hosts
 
@@ -60,6 +71,17 @@ Keep canonical ids stable. A new builder or trend gets its own id when people co
 - vercel: Vercel
 - cloudflare-pages: Cloudflare Pages
 - ai-site-builder: AI website builder, AI site builder
+- nekoweb: Nekoweb
+- pagefind: Pagefind
+- self-hosted: self-hosted, self-hosting, VPS
+- hetzner: Hetzner
+- coolify: Coolify
+- figma-sites: Figma Sites
+- svelte: Svelte, SvelteKit
+- tailwind: Tailwind, Tailwind CSS
+- uxfolio: UXfolio, UX folio
+- behance: Behance
+- dribbble: Dribbble
 
 ## AI and design
 
@@ -69,7 +91,12 @@ Keep canonical ids stable. A new builder or trend gets its own id when people co
 - inter-font: Inter font, Inter typeface
 - shadcn: shadcn, shadcn/ui
 - design-md: DESIGN.md, design tokens file
-- design-skill: frontend-design skill, avoid-ai-design, design skill
+- design-skill: frontend-design skill, avoid-ai-design, design skill, anti-slop skill, antislop, Taste Skill
+- google-stitch: Google Stitch
+- codex: OpenAI Codex, Codex CLI
+- kimi: Kimi, Kimi design
+- figma-mcp: Figma MCP
+- chatgpt: ChatGPT
 - vibe-coding: vibe coding, vibe coded, vibe-coded, vibecoding, vibecoded
 - v0: v0, v0.dev
 - lovable: Lovable
@@ -85,7 +112,7 @@ Keep canonical ids stable. A new builder or trend gets its own id when people co
 ## Small web
 
 - indieweb: IndieWeb, indie web
-- small-web: small web, smol web
+- small-web: small web, smol web, cosy web, cozy web
 - rss: RSS, Atom feed, feed reader
 - webmentions: webmention, webmentions
 - webring: webring, web ring
@@ -94,6 +121,13 @@ Keep canonical ids stable. A new builder or trend gets its own id when people co
 - own-domain: own domain, own your domain, custom domain
 - fediverse: fediverse, Mastodon, ActivityPub
 - bluesky: Bluesky
+- guestbook: guestbook, guest book, guestbooks
+- fanlisting: fanlisting, fanlistings
+- small-web-september: Small Web September
+- microformats: microformats, microformats2, h-card, h-entry
+- rel-me: rel=me, rel-me
+- indieauth: IndieAuth
+- bridgy: Bridgy, brid.gy
 
 ## Purposes
 

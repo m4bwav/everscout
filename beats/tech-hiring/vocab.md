@@ -17,9 +17,12 @@ Keep canonical ids stable: renaming one splits its history in the tallies. A new
 - behavioral: behavioral interview, behavioural interview, behavioral round, STAR method
 - superday: superday
 - onsite: onsite, on-site, on-site interview, in-person interview, final loop, final loops, final round
-- ai-allowed-interview: AI-assisted interview, AI allowed interview, AI Code Craft, interview with Copilot, interview with Cursor
+- ai-allowed-interview: AI-assisted interview, AI allowed interview, AI Code Craft, interview with Copilot, interview with Cursor, AI-assisted coding, AI-assisted coding round, AI assisted coding interview, vibe coding interview
 - ai-interviewer: AI interviewer, AI interview bot, AI video interview, AI screening call
-- interview-cheating: interview cheating, AI cheating, cheating with AI, cheat in interviews, Interview Coder, cheating tool, Cluely
+- interview-cheating: interview cheating, AI cheating, cheating with AI, cheat in interviews, Interview Coder, cheating tool, Cluely, remote access cheating
+- proctoring: proctoring, proctored, proctored assessment, webcam check, webcam photo, lockdown browser, laptop validation
+- code-review-interview: code review interview, PR review interview, review an AI-generated PR, review round
+- work-simulation: work simulation, work style survey, work style assessment, job simulation
 
 ## Screening and channels
 
@@ -47,12 +50,13 @@ Keep canonical ids stable: renaming one splits its history in the tallies. A new
 - devops-sre: DevOps, SRE, platform engineer, cloud engineer
 - data-roles: data engineer, data scientist, data analyst
 - contractor: contractor, contract role, C2C, 1099
+- quant-developer: quant developer, quant dev, quant firm, quant firms, HFT, trading firm
 
 ## Market signals
 
 - layoffs: layoff, layoffs, laid off, RIF, reduction in force
 - rehiring: boomerang hire, boomerang hires, rehire, rehiring
-- hiring-freeze: hiring freeze, headcount freeze, no headcount
+- hiring-freeze: hiring freeze, headcount freeze, no headcount, hiring pause, paused junior hiring
 - offshoring: offshoring, offshore, outsourcing, GCC, global capability center, WITCH
 - ai-replacing-jobs: AI replacing, replaced by AI, AI layoffs, jobs lost to AI
 - return-to-office: return to office, RTO, in-office mandate, hybrid mandate
@@ -60,7 +64,9 @@ Keep canonical ids stable: renaming one splits its history in the tallies. A new
 - compensation: total compensation, TC, salary band, pay transparency, lowball
 - overemployment: overemployed, overemployment, J2
 - job-postings-data: job postings index, Hiring Lab, JOLTS, job openings, postings data
-- resume-lying: lying on my resume, fake experience, résumé fraud, fake candidates
+- resume-lying: lying on my resume, fake experience, résumé fraud, fake candidates, fake applicant, fake applicants, deepfake candidate
+- ai-exposure: AI exposure, AI-exposed occupations, GenAI exposure, exposure to AI
+- job-cuts-data: Challenger report, Challenger Gray, job cut announcements, layoffs tracker, Layoffs.fyi, TrueUp layoffs
 
 ## Policy
 
@@ -69,3 +75,5 @@ Keep canonical ids stable: renaming one splits its history in the tallies. A new
 - pay-transparency-law: pay transparency law, salary range law
 - ai-hiring-law: AI hiring law, NYC Local Law 144, automated employment decision tool, AEDT, EU AI Act hiring
 - non-compete: non-compete, noncompete
+- duration-of-status: duration of status, D/S rule, fixed admission period, fixed period of admission
+- warn-notice: WARN Act, WARN notice, Cal/WARN, mass layoff notice

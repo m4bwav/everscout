@@ -1,6 +1,6 @@
 # Handoff
 
-Updated 2026-09-27 (0.3.0: beat statistics built; see the section below). Everscout 0.1.0 was built in one session from indie-ai-scout 0.3.1; 0.2.0 added the everscout-ask skill (interrogate a beat like a reporter) and the tech-hiring beat, the first built from scratch. Read [log.md](log.md) for what happened, `decisions/` for the architecture, and `research/` for the evidence.
+Updated 2026-09-28 (first all-beats scan; 0.3.0: beat statistics built; see the section below). Everscout 0.1.0 was built in one session from indie-ai-scout 0.3.1; 0.2.0 added the everscout-ask skill (interrogate a beat like a reporter) and the tech-hiring beat, the first built from scratch. Read [log.md](log.md) for what happened, `decisions/` for the architecture, and `research/` for the evidence.
 
 ## What Mark wants (2026-09-26)
 
@@ -35,7 +35,7 @@ Name any subject and get an AI scout generated for it that keeps up with the sub
 
 ## Next single action
 
-Run the first scan of the tech-hiring beat ("scan the tech-hiring beat"), then interrogate it with a few questions to see recall grade `enough` from real notes. The from-scratch beat build and the ask skill are both proven (2026-09-26).
+All six beats had their first scan on 2026-09-28 (see log.md). Next: fix the two CLI faults that scan found (a file lock in `es_sources.py` `_wait`/`_mark`, then parallel distillation is safe; percent-encode non-ASCII Reddit slugs in `reddit_thread_url`), commit the vocabulary additions in the five built-in beats, then write the first reports (indie-ai-games weekly is due) and put questions to the beats with everscout-ask.
 
 ## Standing work
 
