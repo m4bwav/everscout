@@ -2,6 +2,11 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`.
 
+### C-20260929-1 · 2026-09-29 · followups finds hand-posted asks and reads only the user's subtree
+- because: learning `followups-finds-hand-posted-asks`
+- files: scripts/everscout.py (cmd_followups)
+- Drafted Reddit asks are checked when `reddit_user` is set; the user's own comment dates the ask and marks a draft posted; replies come from the comment permalink's subtree. Tests: 49 pass.
+
 ### C-20260926-9 · 2026-09-26 · Description shortened (skill-tidy)
 - because: skill-tidy lint ST005 (over 1,024 chars) and ST007/ST013
 - files: SKILL.md (front matter only)

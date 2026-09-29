@@ -1106,8 +1106,13 @@ def cmd_followups(a):
     entries = ledger(cfg)
     cut = now_utc() - dt.timedelta(days=a.days)
     changed, found = False, 0
+    me = (cfg.get("reddit_user") or "").lower()
     for e in entries:
-        if e.get("kind", "ask") != "ask" or e.get("status") not in ("posted", "handed"):
+        # A drafted ask is checked too when the user's Reddit name is known: people often post
+        # the draft by hand and never mark it, and then its replies were never collected.
+        if e.get("kind", "ask") != "ask" or e.get("status") not in ("posted", "handed", "drafted"):
+            continue
+        if e.get("status") == "drafted" and not (me and platform_of(e.get("url", "")) == "reddit"):
             continue
         if a.beat and e.get("beat") != a.beat:
             continue
@@ -1121,6 +1126,26 @@ def cmd_followups(a):
             continue
         if not t:
             continue
+        # The user's own comment dates the ask better than the ledger's ts, which engage-update
+        # resets to "now" when the status changes (after the replies may already have arrived).
+        mine = sorted((S.parse_time(c.get("published")), c) for c in t["comments"]
+                      if me and (c.get("author") or "").lower() == me and S.parse_time(c.get("published")))
+        if mine:
+            ts = mine[0][0]
+            if e.get("status") == "drafted":
+                e["status"], e["ts"] = "posted", iso(ts)
+                e["comment_url"] = e.get("comment_url") or mine[0][1].get("url", "")
+                changed = True
+                print(f"found your comment, marked posted: {e['url']}")
+        elif e.get("status") == "drafted":
+            continue
+        # Reddit feeds carry no parent ids, so read only the subtree under the user's comment:
+        # otherwise every later comment by the author (thanks to other people) counts as a reply.
+        if e.get("comment_url") and platform_of(e["comment_url"]) == "reddit" and e["comment_url"] != e.get("url"):
+            try:
+                t = load_thread(cfg, e["comment_url"], force=a.force) or t
+            except (S.FetchError, ValueError) as ex:
+                note(f"{e['comment_url']}: {ex}")
         have = {r.get("id") for r in e.get("replies") or []}
         have_when = {str(r.get("when") or "")[:16] for r in e.get("replies") or []}  # replies imported without a comment id
         new = []

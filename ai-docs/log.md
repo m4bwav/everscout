@@ -68,3 +68,6 @@ Mark asked to run the scout on one r/aigamedev thread (a fishing game's week 9 d
 How it ran: `ES fetch` for all beats in one background loop; subagents did the web searches and the non-Reddit items in parallel and queued Reddit URLs; one serial script ran `thread` then `new-note` for each queued Reddit URL (62 threads), and subagents filled the notes from the saved thread text. Reason: the pacing file has no cross-process lock (skills/everscout-scan/LEARNINGS.md `pacing-has-no-process-lock`). A Reddit URL with a non-ASCII slug fails in `thread`; percent-encoding it works (`non-ascii-reddit-url-fails`). Both are fix candidates for the CLI. Vocabulary grew in all five built-in beats (uncommitted in this repo) and in indie-ai-games (indie-ai-scout repo, including a new `art-in-code` workflow).
 
 A checker read 18 of the 159 new notes against their sources: 3 ok, 15 fixed (small: dropped hedges, one commenter turned into "several", "about" on exact numbers, mostly in summaries); handle sweep clean. Learning `subagent-notes-drop-hedges`: the unsampled notes likely carry the same slips; sweep every summary line next time.
+## [2026-09-28] solution | token-saving processes for thread, ledger, followups and housekeeping; five CLI additions proposed
+## [2026-09-28] index | rebuilt (6 entries)
+## [2026-09-28] index | rebuilt (6 entries)

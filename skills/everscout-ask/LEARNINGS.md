@@ -13,3 +13,11 @@ Write an entry the moment a real signal happens: a user correction, the same err
 - Evidence: tech-hiring build, 2026-09-26
 - Scope: everscout-ask step 2; everscout-beat procedure C
 - Status: active · helpful 1 · harmful 0 · last_confirmed 2026-09-26
+
+### L-002 · 2026-09-29 · A thread's list of related-post titles is a search plan
+- Trigger: on ai-video, a commenter answered a settings question with about 15 earlier thread titles; the thread view shows titles but no links
+- Hypothesis: `ES search --kind reddit --community <sub> --q "<title words>" --t month` finds each one in a request, and those older threads held the substance (sampler, turbo and fast-motion threads) the new one lacked
+- Rule: when a thread lists related posts, search two or three of the most relevant titles before going to the open web; keep them serial with other Reddit calls
+- Evidence: ai-video asks, 2026-09-29 (three searches found 1wjsdoo, 1wqtn4c, 1wj6bkb)
+- Scope: everscout-ask step 4
+- Status: active · helpful 1 · harmful 0 · last_confirmed 2026-09-29
