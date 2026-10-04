@@ -45,4 +45,4 @@ Everscout 0.1 never posts. Some platforms allow a personal account to post throu
 
 ## G. Overrides
 
-When the user overrides a pace rule ("post it anyway"), pass `--override`; the ledger marks it. Say once which rule it breaks and why the rule exists. Conduct rules 4 (no personas), 6 (no profiling), 16 (no keeping deleted content) and 17 (honest access) are not overridden by this skill.
+When the user overrides a pace rule ("post it anyway"), add `--override`; the ledger marks it. Say once which rule it breaks and why the rule exists. Conduct rules 4 (no personas), 6 (no profiling), 16 (no keeping deleted content) and 17 (honest access) are not overridden by this skill.

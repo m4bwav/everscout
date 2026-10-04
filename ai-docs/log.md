@@ -71,3 +71,4 @@ A checker read 18 of the 159 new notes against their sources: 3 ok, 15 fixed (sm
 ## [2026-09-28] solution | token-saving processes for thread, ledger, followups and housekeeping; five CLI additions proposed
 ## [2026-09-28] index | rebuilt (6 entries)
 ## [2026-09-28] index | rebuilt (6 entries)
+## [2026-10-03] update | prepared for the Claude plugin directory: README Privacy section (host classes, request contents, no credentials, no posting), plugin.json homepage, documentationUrl, supportUrl, privacyPolicyUrl; "pass" wording fixed in two skill references; checklist clean (182 files, none over 256 KiB, no binaries); 49 tests OK; no version bump (no code change)

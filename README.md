@@ -115,6 +115,16 @@ Then run `python <plugin dir>/scripts/everscout.py where`, write `~/.everscout/c
 
 `python -m unittest discover -s tests` runs offline against synthetic fixtures and also checks every built-in beat. Skill evals live in each skill's `evals/evals.json` and run through the evergreen plugin's `evergreen-test`.
 
+## Privacy
+
+The CLI, the skills and the knowledge base run on your own machine. Your config, voice file and private beats stay in `~/.everscout/`, and notes, reports, statistics and the engagement ledger stay in the data folders your config names. Fetched pages are cached locally and the cache is purged after 48 hours. Nothing is uploaded to the author or to any everscout service, because there is none. The plugin has no hooks, no MCP server and no telemetry.
+
+Scanning a beat is network traffic by design. The CLI sends plain HTTP GET requests, with no login, cookies or API keys, to the hosts on that beat's watch list. Those can be Reddit (www.reddit.com Atom feeds and search), Hacker News through its Algolia API (hn.algolia.com), Bluesky (bsky.app and public.api.bsky.app), any Mastodon, Lemmy or Discourse server a beat names, YouTube channel feeds (www.youtube.com), GitHub release feeds (github.com), arXiv (export.arxiv.org and rss.arxiv.org), Hugging Face (huggingface.co), Google News search feeds (news.google.com), and any RSS or Atom feed URL a beat lists, such as a newsletter, blog or podcast. Statistics collection also queries GDELT (api.gdeltproject.org) and Wikimedia pageviews (wikimedia.org). Each request carries its URL, which holds the beat's search terms. It also carries a User-Agent naming everscout, its version and the contact you set in `config.json`; Reddit requests also carry the Reddit user name you set there. Like any web visit, each host sees your IP address. Each beat's `sources.md` is its watch list, and `python scripts/everscout.py sources --beat <slug>` prints every feed URL the beat reads without fetching anything.
+
+The skills also ask your agent to use its own web search and web fetch tools for beat research, the beat's web searches and pages the CLI has no reader for. Those requests go through your agent and fall under its privacy terms. Everscout never posts or sends messages: comment drafts are shown to you, and you paste them yourself.
+
+Everscout reads no credentials, tokens or API keys. The only environment variables it reads are EVERSCOUT_HOME, EVERSCOUT_DATA, EVERSCOUT_LOCAL and EVERSCOUT_CHARTWRIGHT, all of them local paths. When chartwright is installed, `stats export --charts` runs it on your machine to draw charts. Questions or problems go to the [issue tracker](https://github.com/m4bwav/everscout/issues).
+
 ## Prior art
 
 last30days-skill (engagement-ranked briefs across many sources) is the closest cousin; everscout differs in keeping memory across runs, tallying a fixed vocabulary, and engaging under a conduct code. F5Bot and Syften showed that boolean keyword filters are enough for alerts. GummySearch showed what happens to a tool built on Reddit's paid API. `ai-docs/research/2026-09-26-prior-art.md` has the full survey.

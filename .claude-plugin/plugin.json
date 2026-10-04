@@ -21,5 +21,9 @@
     "evergreen"
   ],
   "skills": "./skills",
-  "repository": "https://github.com/m4bwav/everscout"
+  "repository": "https://github.com/m4bwav/everscout",
+  "homepage": "https://github.com/m4bwav/everscout",
+  "documentationUrl": "https://github.com/m4bwav/everscout#readme",
+  "supportUrl": "https://github.com/m4bwav/everscout/issues",
+  "privacyPolicyUrl": "https://github.com/m4bwav/everscout#privacy"
 }

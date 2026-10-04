@@ -2,6 +2,11 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`.
 
+### C-20261003-1 · 2026-10-03 · directory wording
+- because: the Claude plugin directory scanner reads "pass" before a code span as the pass password manager
+- files: references/procedure.md
+- reworded the `--title` and `--posted` instruction ("give" instead of "pass"). Meaning unchanged; description unchanged.
+
 ### C-20260927-3 · 2026-09-27 · pre-approved promotion
 - because: the user can say yes before a candidate has its three points
 - files: kb/stats.md, kb/SCHEMA.md, scripts/everscout.py

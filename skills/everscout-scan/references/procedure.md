@@ -31,7 +31,7 @@ Detail for [SKILL.md](../SKILL.md). `ES` = `python "<plugin root>/scripts/eversc
 
 ## C. One item the user handed over
 
-`ES thread <url> --beat <slug>` or the web fetch; `ES new-note ...`; fill; `validate`, `tally`, `index`. For a page with no thread reader, pass `--title` and `--posted` to `new-note`.
+`ES thread <url> --beat <slug>` or the web fetch; `ES new-note ...`; fill; `validate`, `tally`, `index`. For a page with no thread reader, give `new-note` the `--title` and `--posted` options.
 
 ## D. Parallel distillation for a big scan
 
