@@ -7,7 +7,7 @@ description: "Answer a question about a subject the user has an everscout beat f
 
 Outcome: an answer to the user's question that leads with the answer, separates what the beat had already seen from what was found now, cites every claim (a note, an earlier answer, or a page logged with `source-log`), states a confidence level and the gaps, and is saved as `DATA/answers/<date>-<slug>.md` with `ES lint --beat <slug>` exiting 0 and a log line. Evidence: the `ES recall` call in the trace, the answer file, the lint output, the log line.
 
-Plugin root: two levels above this file. `ES` = `python "<plugin root>/scripts/everscout.py"`. `DATA` = the path `ES where --beat <slug>` prints. Formats: [../../kb/SCHEMA.md](../../kb/SCHEMA.md). Why the steps look like this: [RESEARCH.md](RESEARCH.md). Procedure detail: [references/ask.md](references/ask.md).
+Plugin root: two levels above this file. `ES` = `python "<plugin root>/scripts/everscout.py"`. `DATA` = the path `ES where --beat <slug>` prints. Formats: [references/kb/SCHEMA.md](references/kb/SCHEMA.md). Why the steps look like this: [RESEARCH.md](RESEARCH.md). Procedure detail: [references/ask.md](references/ask.md).
 
 ## Step 0: freshness (every use, one read)
 
@@ -19,7 +19,7 @@ Read `evergreen.json` next to this file. If `verify_at_use` is true, re-check th
 
 ## Step 2: recall what the beat knows
 
-Run `ES recall --beat <slug> --q "<the question>"`, then once or twice more with the question reworded in the beat's own vocabulary (`vocab.md` aliases). Read the top hits in full (notes, earlier answers, report sections, study chapters) and the signal rows it prints for the entities the question names. Read `DATA/journal.md` and `DATA/feedback.md` for the user's own view. For a question about a number or a trend, read `ES stats list --beat <slug> --json` and `DATA/stats/series.csv` first; if no metric answers it, you may propose a candidate ([../../kb/stats.md](../../kb/stats.md)).
+Run `ES recall --beat <slug> --q "<the question>"`, then once or twice more with the question reworded in the beat's own vocabulary (`vocab.md` aliases). Read the top hits in full (notes, earlier answers, report sections, study chapters) and the signal rows it prints for the entities the question names. Read `DATA/journal.md` and `DATA/feedback.md` for the user's own view. For a question about a number or a trend, read `ES stats list --beat <slug> --json` and `DATA/stats/series.csv` first; if no metric answers it, you may propose a candidate ([references/kb/stats.md](references/kb/stats.md)).
 
 ## Step 3: grade the recall (corrective retrieval)
 

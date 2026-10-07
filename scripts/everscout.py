@@ -52,7 +52,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.3.2"
+VERSION = "0.3.3"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {

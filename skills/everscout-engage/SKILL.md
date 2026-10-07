@@ -7,7 +7,7 @@ description: "Draft a respectful comment for the user to post by hand in a commu
 
 Outcome: one comment the user approved, handed to them as a single message to paste (link, blank line, text), on an item that passed the pace check and the conduct code, and recorded in the ledger with status `handed` (or `drafted` when the user wants to hold it). Evidence: `ES engage-check` exit 0 before, the ledger line after (`ES ledger --days 1`).
 
-Plugin root: two levels above this file. `ES` = `python "<plugin root>/scripts/everscout.py"`. Conduct code (read it; it binds every draft): [../../kb/conduct.md](../../kb/conduct.md). The user's voice: the file `ES where` prints as VOICE (template [../../kb/voice-template.md](../../kb/voice-template.md)). Procedure: [references/procedure.md](references/procedure.md).
+Plugin root: two levels above this file. `ES` = `python "<plugin root>/scripts/everscout.py"`. Conduct code (read it; it binds every draft): [references/kb/conduct.md](references/kb/conduct.md). The user's voice: the file `ES where` prints as VOICE (template [references/kb/voice-template.md](references/kb/voice-template.md)). Procedure: [references/procedure.md](references/procedure.md).
 
 ## Step 0: freshness (every use, one read)
 

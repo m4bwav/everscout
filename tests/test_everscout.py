@@ -1028,5 +1028,14 @@ class StatsTests(WorkspaceTest):
         self.assertEqual((m["points"], m["last_value"]), (2, "5"))
 
 
+
+class SkillRefsTest(unittest.TestCase):
+    def test_kb_copies_in_sync(self):
+        import subprocess
+        script = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "scripts", "sync-skill-refs.py")
+        r = subprocess.run([sys.executable, script, "--check"], capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+
+
 if __name__ == "__main__":
     unittest.main()
