@@ -7,7 +7,7 @@ description: "Write what an everscout beat has learned: the dated radar-style tr
 
 Outcome: a dated report under `DATA/reports/` (or a digest, or study chapters under `DATA/study/`) with the frontmatter in `kb/SCHEMA.md`, every ranking backed by `signals/tallies.json`, every claim linked to a note, `ES lint --beat <slug>` exiting 0, indexes regenerated, and a log line. Evidence: the file, the lint and index output, the log line.
 
-Plugin root: two levels above this file. `ES` = `python "<plugin root>/scripts/everscout.py"`. `DATA` = the path `ES where --beat <slug>` prints. Method (signals, rubric, radar rings, faithfulness): [../../kb/method.md](../../kb/method.md). Procedures: [references/report.md](references/report.md) (reports and digests) and [references/study.md](references/study.md) (the baseline study).
+Plugin root: two levels above this file. `ES` = `python "<plugin root>/scripts/everscout.py"`. `DATA` = the path `ES where --beat <slug>` prints. Method (signals, rubric, radar rings, faithfulness): [references/kb/method.md](references/kb/method.md). Procedures: [references/report.md](references/report.md) (reports and digests) and [references/study.md](references/study.md) (the baseline study).
 
 ## Step 0: freshness (every use, one read)
 
@@ -26,7 +26,7 @@ A report needs notes: with fewer than ten notes in the period, say "thin: N note
 
 ## Step 2: do it
 
-Report and digest: `ES tally --beat <slug>` first, then references/report.md. A radar also runs the metric review and charts (`ES stats collect`, `ES stats review`, `ES stats export --charts`; [../../kb/stats.md](../../kb/stats.md)): a Metrics section, promotions only on the user's yes, `--apply` only after saying what it archives. Every "new", "rising" or "fading" claim quotes the tally's numbers; every blip links at least one note; the rubric and rings come from kb/method.md; practitioner answers come from the ledger's replies (`ES ledger --beat <slug> --days 90 --json`); the user's `journal.md` is read and may be quoted. Study: references/study.md, chapter by chapter, each written to disk before the next, with `DATA/HANDOFF.md` updated between chapters because a study can span sessions.
+Report and digest: `ES tally --beat <slug>` first, then references/report.md. A radar also runs the metric review and charts (`ES stats collect`, `ES stats review`, `ES stats export --charts`; [references/kb/stats.md](references/kb/stats.md)): a Metrics section, promotions only on the user's yes, `--apply` only after saying what it archives. Every "new", "rising" or "fading" claim quotes the tally's numbers; every blip links at least one note; the rubric and rings come from kb/method.md; practitioner answers come from the ledger's replies (`ES ledger --beat <slug> --days 90 --json`); the user's `journal.md` is read and may be quoted. Study: references/study.md, chapter by chapter, each written to disk before the next, with `DATA/HANDOFF.md` updated between chapters because a study can span sessions.
 
 ## Step 3: prove and log
 

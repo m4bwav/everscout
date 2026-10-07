@@ -7,7 +7,7 @@ description: "Run the everscout scan for a beat: fetch every watch-list source a
 
 Outcome: the beat's `DATA/notes/` gained one paraphrased note per item worth keeping (frontmatter that `ES validate` accepts), replies from asked makers were collected and distilled, `signals/` was retallied, indexes regenerated, the cache purged, and `DATA/log.md` has a line saying what was scanned. Evidence: the note files, the `validate`, `tally` and `index` output, the log line.
 
-Plugin root: two levels above this file. `ES` = `python "<plugin root>/scripts/everscout.py"`. `DATA` = the path `ES where --beat <slug>` prints. Note format: [../../kb/SCHEMA.md](../../kb/SCHEMA.md). Method (what counts as a signal, how to paraphrase): [../../kb/method.md](../../kb/method.md). Procedure: [references/procedure.md](references/procedure.md).
+Plugin root: two levels above this file. `ES` = `python "<plugin root>/scripts/everscout.py"`. `DATA` = the path `ES where --beat <slug>` prints. Note format: [references/kb/SCHEMA.md](references/kb/SCHEMA.md). Method (what counts as a signal, how to paraphrase): [references/kb/method.md](references/kb/method.md). Procedure: [references/procedure.md](references/procedure.md).
 
 ## Step 0: freshness (every use, one read)
 
@@ -23,7 +23,7 @@ Triage from the saved JSON, not by re-fetching: keep an item when it teaches som
 
 ## Step 3: replies, web, signals, housekeeping
 
-Replies from `followups` go into the thread's note under `## Their answers` (create the note if none exists; set `engaged: true`). Run the beat's `searches.md` rows due this scan (weekly rows every week, monthly ones on the first scan of a month), ingesting anything substantive as a `web` note with `ES new-note <url> --beat <slug> --note-kind web --title "..." --posted <date>`. Then `ES validate --beat <slug> --strict` (fix every finding), `ES tally --beat <slug>`, `ES stats collect --beat <slug>` (the beat's metrics; failures are recorded, not retried; candidates the user pre-approved with `ES stats approve` are promoted automatically once ready, so report any `promoted ... (pre-approved ...)` line; [../../kb/stats.md](../../kb/stats.md)), `ES index --beat <slug>`, `ES retention`, and append `## [date] scan | <n> sources, <m> new items, <k> notes, <r> replies` plus one line of what stood out to `DATA/log.md`. Rewrite `DATA/HANDOFF.md` when something is left undone.
+Replies from `followups` go into the thread's note under `## Their answers` (create the note if none exists; set `engaged: true`). Run the beat's `searches.md` rows due this scan (weekly rows every week, monthly ones on the first scan of a month), ingesting anything substantive as a `web` note with `ES new-note <url> --beat <slug> --note-kind web --title "..." --posted <date>`. Then `ES validate --beat <slug> --strict` (fix every finding), `ES tally --beat <slug>`, `ES stats collect --beat <slug>` (the beat's metrics; failures are recorded, not retried; candidates the user pre-approved with `ES stats approve` are promoted automatically once ready, so report any `promoted ... (pre-approved ...)` line; [references/kb/stats.md](references/kb/stats.md)), `ES index --beat <slug>`, `ES retention`, and append `## [date] scan | <n> sources, <m> new items, <k> notes, <r> replies` plus one line of what stood out to `DATA/log.md`. Rewrite `DATA/HANDOFF.md` when something is left undone.
 
 ## Output
 

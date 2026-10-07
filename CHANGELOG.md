@@ -2,8 +2,9 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
-## Unreleased
+## 0.3.3 · 2026-10-06
 
+- Ready for GitHub Copilot CLI and the awesome-copilot marketplace: a root `plugin.json` (Agent Plugins 1.0), and each skill now links its own copy of the `kb/` files it uses (`references/kb/`), because Agent Skills linters reject links that leave the skill folder. `kb/` stays the one to edit; `python scripts/sync-skill-refs.py` rewrites the copies and `--check` (run by the test suite) fails when one drifts.
 - Prepared for the Claude plugin directory: README Privacy section (every host class the CLI contacts, what each request carries, no credentials read, no posting), plugin.json homepage, documentationUrl, supportUrl and privacyPolicyUrl. Two skill references reworded ("add `--override`", "give `new-note` the options") so the directory scanner does not read "pass" as the password manager.
 - New built-in beat **personal-sites** (how tech and design people think about and build personal and professional websites and blogs): 34 sources (10 subreddits, 3 Hacker News queries, 9 feeds including IndieNews, Smashing, Typewolf, Dave Rupert, Jeremy Keith, Josh Comeau and Maggie Appleton, 3 Google News queries, 4 Mastodon tags, 4 hand-read galleries), 60 entities in 5 facets, 21 question seeds, an 11-chapter study outline, 2 candidate metrics. Probed clean on 2026-09-27. Built to refresh Mark's site and to seed a personal-site design skill.
 - personal-sites: AI and visual design merged in rather than a separate beat (same communities): research question 7, an "AI and design" vocabulary facet (18 entities), 9 sources (r/vibecoding, HN "AI slop" and "vibe coded", Sidebar, UX Collective, Awwwards blog, Creative Bloq, Google News, avoid-ai-design), 4 question seeds, 4 searches, study chapter 04b.

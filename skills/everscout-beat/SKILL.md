@@ -7,7 +7,7 @@ description: "Create, research, tune or retire an everscout beat, the subject pa
 
 Outcome: a beat folder (`beat.md`, `sources.md`, `vocab.md`, `questions.md`, `searches.md`, `study.md`) that passes `ES beat-check <slug>`, whose sources were each fetched once by `ES probe --beat <slug> --save`, with the data folder initialised (`ES index --beat <slug>`) and a log line. Evidence: the beat-check output, the probe snapshot under `DATA/sources/`, the log line.
 
-Plugin root: two levels above this file. `ES` = `python "<plugin root>/scripts/everscout.py"`. `DATA` = the path `ES where --beat <slug>` prints. Knowledge: [../../kb/SCHEMA.md](../../kb/SCHEMA.md) (file formats), [../../kb/platforms.md](../../kb/platforms.md) (what each platform allows), [../../kb/conduct.md](../../kb/conduct.md) (engagement rules), [../../kb/method.md](../../kb/method.md) (why the files look like this). Procedure: [references/procedure.md](references/procedure.md).
+Plugin root: two levels above this file. `ES` = `python "<plugin root>/scripts/everscout.py"`. `DATA` = the path `ES where --beat <slug>` prints. Knowledge: [references/kb/SCHEMA.md](references/kb/SCHEMA.md) (file formats), [references/kb/platforms.md](references/kb/platforms.md) (what each platform allows), [references/kb/conduct.md](references/kb/conduct.md) (engagement rules), [references/kb/method.md](references/kb/method.md) (why the files look like this). Procedure: [references/procedure.md](references/procedure.md).
 
 ## Step 0: freshness (every use, one read)
 
@@ -21,13 +21,13 @@ Read `evergreen.json` next to this file. If `verify_at_use` is true, re-check th
 | a subject a built-in beat already covers (ai-video, global-economics, downtempo) | copy the built-in folder into the private beat dir (`ES where` shows it), then refresh it: procedure B's check-all, and procedure A step 3 (discovery) for communities and feeds the starter lacks or that appeared since its `verified` date; add what passes A step 4, update `verified`. A starter is a head start, not a finished beat |
 | to add, check or drop a source | procedure B |
 | to grow the vocabulary or questions | procedure C |
-| to add, promote, archive or change a metric | [../../kb/stats.md](../../kb/stats.md): choose it from a research question, `ES stats add`, `ES stats review --promote` only after the user's yes |
+| to add, promote, archive or change a metric | [references/kb/stats.md](references/kb/stats.md): choose it from a research question, `ES stats add`, `ES stats review --promote` only after the user's yes |
 | to see their beats | `ES beats`, then one line per beat |
 | to retire a beat | set `status: retired` in `beat.md`, log it; never delete the data |
 
 ## Step 2: build or change the beat
 
-A new beat, briefly (procedure A has the detail). Ask at most three questions, all at once: what exactly to follow and what to leave out, what they want to learn (these become the research questions), and whether they want to engage with makers at all. Then `ES beat-new <slug> --title "<title>"` (writes to the private beat dir). Research the communities in two passes (seed searches find the communities, handles and feeds; the second pass reads each one's newest posts and rules), and fill the files by `kb/SCHEMA.md`. Every source row gets a stance, an engage decision and a dated marker. The vocabulary gets three to six facets of 30 to 80 canonical entities with real aliases. The question bank gets 15 to 40 seeds a curious peer would ask, none of them "is this AI?". The study outline gets five to twelve chapters and three to five perspectives. `metrics.md` gets two to five candidates, each tied to a research question ([../../kb/stats.md](../../kb/stats.md)).
+A new beat, briefly (procedure A has the detail). Ask at most three questions, all at once: what exactly to follow and what to leave out, what they want to learn (these become the research questions), and whether they want to engage with makers at all. Then `ES beat-new <slug> --title "<title>"` (writes to the private beat dir). Research the communities in two passes (seed searches find the communities, handles and feeds; the second pass reads each one's newest posts and rules), and fill the files by `kb/SCHEMA.md`. Every source row gets a stance, an engage decision and a dated marker. The vocabulary gets three to six facets of 30 to 80 canonical entities with real aliases. The question bank gets 15 to 40 seeds a curious peer would ask, none of them "is this AI?". The study outline gets five to twelve chapters and three to five perspectives. `metrics.md` gets two to five candidates, each tied to a research question ([references/kb/stats.md](references/kb/stats.md)).
 
 ## Step 3: verify
 
