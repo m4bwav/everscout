@@ -1,5 +1,7 @@
 # everscout
 
+![A scout with binoculars on a hilltop at sunrise overlooking a valley of many small glowing village squares, a field notebook in hand](https://raw.githubusercontent.com/m4bwav/everscout/main/.github/images/banner.jpg)
+
 Name a subject and get a scout for it. Everscout keeps up with any subject by reading the communities where people make and discuss it, and asks the makers themselves when they're happy to talk.
 
 Say "set up a scout for vintage synth restoration" (or container gardening, or Formula 1 aerodynamics). The everscout-beat skill asks you up to three questions: what's in scope, what you want to learn, and whether you want to talk to makers. Then it researches where that subject lives online, fetches every candidate community and feed to check it's real and active, and writes the scout, called a **beat**. You can have as many beats as you like.
