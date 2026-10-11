@@ -78,3 +78,6 @@ A checker read 18 of the 159 new notes against their sources: 3 ok, 15 fixed (sm
 
 ## [2026-10-11] research | Forums open to AI crawlers: live robots.txt of about 40 sites parsed for GPTBot, ClaudeBot, CCBot, Google-Extended, PerplexityBot; HN, Bluesky and Discord terms read; X and Reddit paid routes checked. Bluesky, HN (API), Lemmy, Discourse forums and discussions.unity.com are open; Reddit, Stack Overflow, X, Threads, LinkedIn closed; Discord forbids scraping and AI training on message content, bot reading only where invited. research/2026-10-11-forums-open-to-ai-crawlers.md. No platforms.md or adapter change yet.
 ## [2026-10-11] index | rebuilt (6 entries)
+
+## [2026-10-11] research | Reddit after the API: Arctic Shift (free archive + API, live, scores settle after ~1.5 days, grey legal footing, future after March 2027 unknown per maintainer issue #76) is the only current reader; Devvit is subreddit-scoped (mods install), Pushshift mods only, Google CSE ends 2027-01-01. Plan for an Arctic Shift adapter, cross-platform pickup and user captures (screenshots or pasted text, at most five per scan) waits for the user: research/2026-10-11-reddit-after-the-api.md, plans/2026-10-11-reddit-lane-after-rss.md.
+## [2026-10-11] index | rebuilt (7 entries)
