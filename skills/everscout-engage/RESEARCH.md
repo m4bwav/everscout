@@ -18,9 +18,12 @@ The full evidence is in the repository's research notes: `ai-docs/research/2026-
 ## Open questions
 
 - Answer rates by platform and pace: no study found; collect from the ledger
-- Does Bluesky's automated-account label apply to a person using drafting help (no, by the docs; re-check)
+- What replaces `ES thread` for Reddit after logged-out RSS ends on 2026-11-13: a capture the user saves, or a route the scan skill's Reddit lane plan picks (R-20261011-1)?
+- Does Bluesky's automated-account label apply to a person using drafting help (no, by the docs; re-checked 2026-10-11: still only service bots in a March 2026 report, no official post)
 
 ## Search plan
+
+- Fetch platform rules pages directly (news.ycombinator.com/newsguidelines.html, mastodon.social `/api/v1/instance/rules`, forge.rust-lang.org policies, bsky.social/about/blog); news search is noise for rule changes.
 
 Four tracks; every refresh runs at least one query on each, scoped to the period since the last refresh, with the year.
 
@@ -56,6 +59,13 @@ Testing:
 Best sources: the platforms' own docs and rules pages, r/redditdev, bsky.network docs, docs.joinmastodon.org, the HN guidelines, arXiv and ACM for the studies. Noisy: vendor blogs selling Reddit data access (read with care), SEO lists of "best subreddits".
 
 ## Findings log
+
+### R-20261011-1 · 2026-10-11 · Subject: Reddit's RSS ends 2026-11-13; HN rules cover posts and automation; GitHub projects ban LLM-written comments
+- Summary: Reddit announced (2026-09-30, secondary sources) that logged-out RSS ends 2026-11-13, new Data API requests close 2026-10-31, unregistered apps lose access 2027-01-12 and public access ends March 2027; Step 2 reads Reddit threads through RSS, so after 11-13 a Reddit item can be read only from a capture the user saves (the scan skill's R-20261010-1 and the repository's Reddit lane plan cover the reading side). The live Hacker News guidelines ban generated text in posts and automated posting, not only generated or AI-edited comments. rust-lang/rust adopted a policy (2026-08-05) that LLM-created text may not be posted as GitHub comments, issues or PR descriptions even after editing; Bitcoin Core PR #35386 proposes the same. Discourse forums are moving to automatic AI labels (EA Forum, July 2026; NixOS has a disclosure rule). arXiv 2606.12073: pejorative AI-use accusations rose more than tenfold on HN and Reddit 2023 to 2026, which backs rule 8. Tooling: Reddit "growth" MCP servers automate replies and DMs (the anti-pattern); nothing combines drafting with pace checks and a ledger. Testing: no case proved the "ideas only" branch.
+- Track: subject, practice, tooling, testing
+- Sources: https://decrypt.co/379892/reddit-killing-rss-feeds-public-api-access-ai-scrapers, https://ppc.land/reddit-to-halt-public-data-api-access-in-march-2027-as-14-000-apps-register/, https://news.ycombinator.com/newsguidelines.html, https://forge.rust-lang.org/policies/llm-usage.html, https://blog.rust-lang.org/inside-rust/2026/08/05/rust-langrust-is-adopting-an-llm-policy/, https://forum.effectivealtruism.org/posts/bxA9fsY9Psgarcq6e/ea-forum-llm-use-policy, https://papers.cool/arxiv/2606.12073, https://registry.modelcontextprotocol.io/v0/servers?search=reddit
+- Magnitude: 0.4 (Reddit reading changes on a known date; the conduct table gains a GitHub row)
+- Applied: C-20261011-1 (SKILL.md Step 2; kb/conduct.md Platform notes; evals/evals.json outcome-1 and new outcome-2)
 
 ### R-20260926-1 · 2026-09-26 · Initial research
 - Summary: four parallel research passes on 2026-09-26 (platform access with live endpoint checks; engagement ethics and platform rules; prior art in agents, social listening, horizon scanning and knowledge bases; three sample beats). Findings summarised above; full notes under `ai-docs/research/`.

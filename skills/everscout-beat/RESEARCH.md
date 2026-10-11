@@ -62,7 +62,7 @@ Best sources: the platforms' own docs and rules pages, r/redditdev, bsky.network
 - Track: practice, tooling
 - Sources: see the research note
 - Magnitude: moderate (new capability)
-- Applied: C-20260927-1
+- Applied: C-20260927-2 (renumbered 2026-10-11 from a duplicate C-20260927-1)
 
 ### R-20260926-1 · 2026-09-26 · Initial research
 - Summary: four parallel research passes on 2026-09-26 (platform access with live endpoint checks; engagement ethics and platform rules; prior art in agents, social listening, horizon scanning and knowledge bases; three sample beats). Findings summarised above; full notes under `ai-docs/research/`.

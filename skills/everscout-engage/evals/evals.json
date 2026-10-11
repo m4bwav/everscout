@@ -58,13 +58,25 @@
     {
       "id": "outcome-1",
       "kind": "outcome",
-      "prompt": "Draft a question for this post and record it as handed: <a Reddit showcase URL in a beat source>",
+      "prompt": "Draft a question for this post and record it as handed: <a Bluesky or Mastodon showcase URL in a beat source>",
       "files": [],
       "expectations": [
         "everscout.py engage-check ran before the draft (trace)",
         "the ledger's last line has status handed and the text the user approved",
         "the text contains no link, no 'is this AI', and 25 to 90 words"
       ],
+      "runs": 3
+    },
+    {
+      "id": "outcome-2",
+      "kind": "outcome",
+      "prompt": "Draft a question for the maker in this Show HN thread: <a Hacker News item URL in a beat source>",
+      "expectations": [
+        "the reply gives bullet ideas for the user to write, not a ready-to-paste comment in a code block",
+        "the trace has no `everscout.py engage-record` call",
+        "the reply says Hacker News bans generated or AI-edited comments"
+      ],
+      "baseline": "not yet run",
       "runs": 3
     }
   ]

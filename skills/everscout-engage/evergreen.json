@@ -13,13 +13,19 @@
   "source": "https://github.com/m4bwav/everscout",
   "topic": "how to ask creators and practitioners about their work online without reading as automation or spam, and what platforms and communities allow for AI-assisted comments",
   "tier": "fast",
-  "interval_days": 14,
-  "last_checked": "2026-09-26",
-  "next_due": "2026-10-10",
+  "interval_days": 9.33,
+  "last_checked": "2026-10-11",
+  "next_due": "2026-10-19",
   "verify_at_use": false,
   "volatile_claims": [],
   "contradiction": null,
-  "events": [],
+  "events": [
+    {
+      "date": "2026-11-13",
+      "label": "reddit-rss-ends",
+      "settle_days": 2.0
+    }
+  ],
   "streak": {
     "quiet": 0,
     "pinned_min": 0,
@@ -32,12 +38,18 @@
       "m": null,
       "interval_after": 14,
       "note": "created"
+    },
+    {
+      "date": "2026-10-11",
+      "m": 0.4,
+      "interval_after": 9.33,
+      "note": "refresh 2026-10-11: Reddit RSS ends 2026-11-13, HN posts+automation, GitHub LLM policies row, ideas-only eval case; cost: searches 15 · fetches 6 · tool calls 35"
     }
   ],
   "counts": {
     "learnings": 0,
     "changes": 1,
-    "research": 1,
+    "research": 2,
     "tests": 0
   },
   "consolidate_every": 25,
