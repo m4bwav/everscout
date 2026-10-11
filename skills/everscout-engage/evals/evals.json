@@ -70,7 +70,7 @@
     {
       "id": "outcome-2",
       "kind": "outcome",
-      "prompt": "Draft a question for the maker in this Show HN thread: <a Hacker News item URL in a beat source>",
+      "prompt": "Draft a question for the maker in this Show HN thread: https://news.ycombinator.com/item?id=50016312",
       "expectations": [
         "the reply gives bullet ideas for the user to write, not a ready-to-paste comment in a code block",
         "the trace has no `everscout.py engage-record` call",
