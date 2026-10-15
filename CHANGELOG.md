@@ -2,6 +2,14 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.4.0 · 2026-10-15
+
+- because: Reddit's logged-out feeds end 2026-11-13 and Mark chose the Arctic Shift lane on 2026-10-15 (plan `ai-docs/plans/2026-10-11-reddit-lane-after-rss.md`; a Gemini route was checked first and fails on Google's terms, `ai-docs/research/2026-10-15-reddit-through-gemini.md`).
+- Reddit through the Arctic Shift archive: `fetch`, `thread`, `probe` and `search --community` read `arctic-shift.photon-reddit.com` when config `reddit.reader` is `arcticshift`, or from 2026-11-13 when it is `auto`. The default stays `rss` (the feeds): the archive's legal footing is grey, so each user opts in. After 2026-11-13 a fetch on `rss` says how to switch. `--reddit-reader` overrides it per command. Beats keep their `r/name` rows; item ids are unchanged, so seen state carries over.
+- The fetch window ends `reddit.settle_hours` (36) ago, so scores and comment counts have settled, and runs `--max-age-days` back; one request per 100 posts, paged back to the window's start (`reddit.max_pages`, 10). Items carry points and comment counts, shown in the fetch listing. A failed later page keeps the earlier ones and says what is missing.
+- Fetcher: `x-ratelimit-reset` paces Reddit's own hosts only (Arctic Shift sends it on every answer); on a 429 it is the wait when no `Retry-After` comes. Hosts under `photon-reddit.com` get everscout's own User-Agent, not Reddit's.
+- kb/platforms.md row, conduct rule 17 and the Reddit platform note, README host list and privacy paragraph, scan skill fetch step. 56 offline tests (6 new). Live run 2026-10-15: ai-video's 17 subreddits, 1,904 posts in 48 requests and 2.5 minutes.
+
 ## 0.3.3 · 2026-10-06
 
 - Ready for GitHub Copilot CLI and the awesome-copilot marketplace: a root `plugin.json` (Agent Plugins 1.0), and each skill now links its own copy of the `kb/` files it uses (`references/kb/`), because Agent Skills linters reject links that leave the skill folder. `kb/` stays the one to edit; `python scripts/sync-skill-refs.py` rewrites the copies and `--check` (run by the test suite) fails when one drifts.

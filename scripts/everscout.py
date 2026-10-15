@@ -52,7 +52,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.3.3"
+VERSION = "0.4.0"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -65,6 +65,10 @@ DEFAULT_CONFIG = {
     "beats": {},
     "voice": "~/.everscout/voice.md",
     "pace": {"hosts": {}, "feed_ttl_seconds": 3600, "thread_ttl_seconds": 1800},
+    # reader: rss (Reddit's logged-out feeds, the default), arcticshift (a third-party archive with grey legal footing,
+    # so each user opts in; kb/platforms.md) or auto (the feeds until Reddit ends them, then Arctic Shift).
+    # settle_hours: Arctic Shift windows end this long ago, so scores and comment counts have settled.
+    "reddit": {"reader": "rss", "settle_hours": 36, "max_pages": 10},
     "engage": {
         "min_gap_minutes": 60,
         "max_per_day": 4,
@@ -219,6 +223,55 @@ def reddit_user_agent(cfg):
 def fetcher(cfg):
     return S.Fetcher(local_root(cfg), user_agent(cfg), reddit_user_agent(cfg),
                      host_gaps=(cfg.get("pace") or {}).get("hosts"), log=note)
+
+
+REDDIT_RSS_END = dt.date(2026, 11, 13)  # Reddit's logged-out feeds stop answering (kb/platforms.md)
+
+
+def reddit_reader(cfg):
+    """'rss' (Reddit's logged-out feeds) or 'arcticshift' (the third-party archive); auto switches when the feeds end."""
+    r = str((cfg.get("reddit") or {}).get("reader") or "rss").lower()
+    if r == "auto":
+        return "arcticshift" if dt.datetime.now(UTC).date() >= REDDIT_RSS_END else "rss"
+    if r not in ("rss", "arcticshift"):
+        fail(f"reddit reader {r!r} unknown (auto, rss, arcticshift)")
+    return r
+
+
+def set_reddit_reader(cfg, a):
+    if getattr(a, "reddit_reader", None):
+        cfg.setdefault("reddit", {})["reader"] = a.reddit_reader
+    return reddit_reader(cfg)
+
+
+def arctic_window(f, sub, after_ts, before_ts, max_pages=10, ttl=3600, force=False, query=None):
+    """Every post of one subreddit created in [after_ts, before_ts), paging back 100 at a time (newest first).
+    Returns (items, pages, missing): missing is None, or why the window's oldest posts are not there (pages ran out,
+    or a later page failed; the archive answered 422 to a deep page on 2026-10-15). A failed first page raises."""
+    seen, items, before, pages = set(), [], int(before_ts), 0
+    while pages < max_pages:
+        url = S.arctic_posts_url(sub, after_ts, before, query=query)
+        try:
+            data, _, status = f.get_json(url, ttl=ttl, force=force)
+            if S.arctic_error(data):
+                raise S.FetchError(url, status, S.arctic_error(data))
+        except S.FetchError as e:
+            if not pages:
+                raise
+            return items, pages, f"page {pages + 1} failed ({e.code})"
+        rows = (data or {}).get("data") or []
+        pages += 1
+        for it in S.parse_arctic_posts(data, url):
+            if it["id"] not in seen:
+                seen.add(it["id"])
+                items.append(it)
+        if len(rows) < 100:
+            return items, pages, None
+        oldest = min(int(p.get("created_utc") or before) for p in rows)
+        if oldest + 1 >= before:  # a whole page in one second; give up rather than loop
+            return items, pages, "a page of posts in one second"
+        before = oldest + 1  # the boundary second again; repeats drop out by id
+    return items, pages, f"stopped after {pages} pages of 100 (raise reddit.max_pages)"
 
 
 # ---------------------------------------------------------------- markdown helpers
@@ -470,6 +523,8 @@ def parse_with(parser, text, url, row):
         return S.parse_bsky_feed(json.loads(text) if text.strip() else {}, url)
     if parser == "hf":
         return S.parse_huggingface(json.loads(text) if text.strip() else [], url)
+    if parser == "arctic":
+        return S.parse_arctic_posts(json.loads(text) if text.strip() else {}, url)
     return S.parse_feed(text, url, platform=row["kind"])
 
 
@@ -606,6 +661,7 @@ def cmd_sources(a):
 def cmd_probe(a):
     """Fetch each source once (cache respected unless --force) and report whether it answers with a parseable feed."""
     cfg = config()
+    reader = set_reddit_reader(cfg, a)
     b = get_beat(cfg, a.beat)
     f = fetcher(cfg)
     rows = [r for r in b.sources() if (not a.source or a.source.lower() in r["source"].lower())]
@@ -616,7 +672,7 @@ def cmd_probe(a):
     # Reddit first, ten subreddits per multireddit request: a subreddit that shows up in the shared window is alive;
     # only the ones that do not show up are probed alone (renamed, banned, private, or just quiet)
     done = set()
-    reddit_rows = [r for r in rows if r["kind"] == "reddit"]
+    reddit_rows = [r for r in rows if r["kind"] == "reddit"] if reader == "rss" else []
     for i in range(0, len(reddit_rows), 10):
         batch = reddit_rows[i:i + 10]
         if len(batch) < 2:
@@ -641,7 +697,11 @@ def cmd_probe(a):
     for r in rows:
         if id(r) in done:
             continue
-        for url, listing, parser in feed_urls(r, since_days=30)[:1]:
+        urls = feed_urls(r, since_days=30)
+        if r["kind"] == "reddit" and reader == "arcticshift":
+            end = (int(time.time()) // 3600) * 3600
+            urls = [(S.arctic_posts_url(r["source"], end - 30 * 86400, end, limit=5), "new", "arctic")]
+        for url, listing, parser in urls[:1]:
             try:
                 text, cached, status = f.get(url, ttl=cfg["pace"]["feed_ttl_seconds"], force=a.force)
                 items = parse_with(parser, text, url, r) if text else []
@@ -704,7 +764,33 @@ def cmd_fetch(a):
 
     # jobs: (items, {community lower: row} or a single row, listing)
     jobs = []
-    reddit_new = [r for r in rows if r["kind"] == "reddit" and "new" in listings]
+    reader = set_reddit_reader(cfg, a)
+    as_cutoff = cutoff
+    if reader == "arcticshift":
+        # one window per subreddit that ends settle_hours ago (scores settled), as long as --max-age-days, so weekly
+        # scans with --max-age-days 7 tile without gaps; the top listing is not needed (items carry their scores)
+        rc = cfg.get("reddit") or {}
+        settle = a.settle_hours if a.settle_hours is not None else float(rc.get("settle_hours", 36))
+        end = (int(time.time()) // 3600) * 3600 - int(settle * 3600)  # hour-aligned so the URLs, and the cache, hold
+        start = end - int(a.max_age_days * 86400)
+        as_cutoff = dt.datetime.fromtimestamp(start, UTC)
+        note(f"reddit via Arctic Shift: posts from {iso(as_cutoff)[:16]} to {iso(dt.datetime.fromtimestamp(end, UTC))[:16]} UTC "
+             f"(scores settle after about {settle:g} h)")
+        for r in [r for r in rows if r["kind"] == "reddit"]:
+            try:
+                items, pages, missing = arctic_window(f, r["source"], start, end, max_pages=int(rc.get("max_pages", 10)),
+                                                      ttl=ttl, force=a.force)
+            except S.FetchError as e:
+                errors += 1
+                note(f"reddit {r['source']} (arcticshift): {e}")
+                continue
+            if missing:
+                note(f"reddit {r['source']}: {len(items)} posts kept, but {missing}: the window's oldest posts are missing")
+            jobs.append((items, r, "new"))
+    reddit_new = [r for r in rows if r["kind"] == "reddit" and "new" in listings and reader == "rss"]
+    if reddit_new and dt.datetime.now(UTC).date() >= REDDIT_RSS_END:
+        note("Reddit ended its logged-out feeds on 2026-11-13: set reddit.reader to arcticshift or auto in config.json "
+             "to read Reddit through the Arctic Shift archive (kb/platforms.md), or rely on captures")
     for batch in plan_reddit_batches(reddit_new, rates, a.max_age_days, cfg):
         if len(batch) == 1:
             r = batch[0]
@@ -736,7 +822,7 @@ def cmd_fetch(a):
         jobs.append((items, {re.sub(r"^r/", "", r["source"]).lower(): r for r in batch}, "new"))
     for r in rows:
         for url, listing, parser in feed_urls(r, listings if r["kind"] == "reddit" else ("new",), a.t, a.max_age_days):
-            if r["kind"] == "reddit" and listing == "new":
+            if r["kind"] == "reddit" and (listing == "new" or reader != "rss"):
                 continue  # planned above
             items = get_items(url, parser, r, f"{r['kind']} {r['source']}")
             if items is not None:
@@ -770,7 +856,7 @@ def cmd_fetch(a):
             if it["id"] not in seen:
                 if not a.peek:
                     seen[it["id"]] = {"first_seen": iso(now_utc()), "source": r["source"], "title": it["title"][:120]}
-                if pub is None or pub >= cutoff:
+                if pub is None or pub >= (as_cutoff if it.get("via") == "arcticshift" else cutoff):
                     new.append(it)
     st["fetches"] = (st.get("fetches") or [])[-49:] + [{"at": iso(now_utc()), "sources": len(rows), "fetched": f.fetched,
                                                           "cached": f.cached, "new": len(new), "errors": errors}]
@@ -792,8 +878,9 @@ def cmd_fetch(a):
           f"{len(new)} new items under {a.max_age_days}d")
     for i in out[: a.limit]:
         age = f"{i['age_hours']:>6}h" if i.get("age_hours") is not None else "     ?"
+        score = f"{i['points']}p {i['comments']}c " if i.get("via") == "arcticshift" else ""
         print(f"{(i.get('published') or '')[:16]:<16} {i['source_kind']:<8} {str(i['community'])[:18]:<18} {age} "
-              f"{'M' if i['media'] else ' '} {i['title'][:70]}  {i['url']}")
+              f"{'M' if i['media'] else ' '} {score}{i['title'][:70]}  {i['url']}")
 
 
 def learn_rate(rates, sub, posts, window_days=None):
@@ -858,7 +945,21 @@ def platform_of(url):
 def load_thread(cfg, url, force=False, asked_words=ASKED_WORDS):
     f = fetcher(cfg)
     plat = platform_of(url)
-    if plat == "reddit":
+    hidden = 0
+    if plat == "reddit" and reddit_reader(cfg) == "arcticshift":
+        m = re.search(r"redd\.it/([a-z0-9]+)", url)
+        pid = S.reddit_post_id(url) or (m.group(1) if m else None)
+        if not pid:
+            return None
+        ttl = cfg["pace"]["thread_ttl_seconds"]
+        data, _, _ = f.get_json(S.arctic_ids_url([pid]), ttl=ttl, force=force)
+        posts = S.parse_arctic_posts(data)
+        if not posts:
+            return None
+        tree, _, _ = f.get_json(S.arctic_tree_url(pid), ttl=ttl, force=force)
+        t = S.parse_arctic_tree(tree, posts[0])
+        post, comments, hidden = t["post"], t["comments"], t["hidden"]
+    elif plat == "reddit":
         turl = S.reddit_thread_url(url)
         text, _, status = f.get(turl, ttl=cfg["pace"]["thread_ttl_seconds"], force=force)
         entries = S.parse_reddit(text, turl) if text else []
@@ -904,9 +1005,14 @@ def load_thread(cfg, url, force=False, asked_words=ASKED_WORDS):
     for c in comments:
         c["is_op"] = bool(post.get("author")) and c.get("author") == post.get("author")
     low = " ".join((c.get("text") or "").lower() for c in comments)
-    return {"post": post, "comments": comments, "comment_count": len(comments),
-            "process_asked": any(w in low for w in asked_words), "url": post["url"], "id": post["id"],
-            "platform": plat, "fetched_at": iso(now_utc())}
+    out = {"post": post, "comments": comments, "comment_count": len(comments),
+           "process_asked": any(w in low for w in asked_words), "url": post["url"], "id": post["id"],
+           "platform": plat, "fetched_at": iso(now_utc())}
+    if post.get("via"):
+        out["via"] = post["via"]
+    if hidden:
+        out["collapsed_comments"] = hidden  # Arctic Shift's tree folds long branches; their ids are not fetched
+    return out
 
 
 def thread_cache_path(cfg, tid):
@@ -915,6 +1021,7 @@ def thread_cache_path(cfg, tid):
 
 def cmd_thread(a):
     cfg = config()
+    set_reddit_reader(cfg, a)
     words = ASKED_WORDS
     if a.beat:
         words = tuple(ASKED_WORDS) + tuple(w.lower() for w in get_beat(cfg, a.beat).list_meta("asked_words"))
@@ -927,7 +1034,7 @@ def cmd_thread(a):
         return
     p = t["post"]
     print(f"# {p['title']}\n{t['platform']} {p.get('community', '')} · {p.get('author', '')} · {p.get('published', '')} · "
-          f"{t['comment_count']} comments · process asked: {t['process_asked']}\n{p['url']}\n")
+          f"{t['comment_count']} comments{' (+' + str(t['collapsed_comments']) + ' collapsed)' if t.get('collapsed_comments') else ''} · process asked: {t['process_asked']}\n{p['url']}\n")
     print((p.get("text") or "")[:3000])
     print("\n## Comments")
     for c in t["comments"][: a.limit]:
@@ -938,7 +1045,17 @@ def cmd_thread(a):
 def cmd_search(a):
     cfg = config()
     f = fetcher(cfg)
-    if a.kind == "reddit":
+    if a.kind == "reddit" and set_reddit_reader(cfg, a) == "arcticshift":
+        if not a.community:
+            fail("Arctic Shift searches one subreddit at a time: pass --community r/name "
+                 "(to find threads across Reddit, use the agent's web search for titles)", 2)
+        days = {"day": 1, "week": 7, "month": 31, "year": 366, "all": 3650}.get(a.t, 31)
+        end = (int(time.time()) // 3600 + 1) * 3600
+        items, _, _ = arctic_window(f, a.community, end - days * 86400, end, max_pages=3,
+                                    ttl=cfg["pace"]["feed_ttl_seconds"], force=a.force, query=a.q)
+        if a.sort in ("top", "relevance", "comments"):
+            items.sort(key=lambda i: (i.get("comments") if a.sort == "comments" else i.get("points")) or 0, reverse=True)
+    elif a.kind == "reddit":
         q = urllib.parse.quote(a.q)
         if a.community:
             sub = re.sub(r"^r/", "", a.community)
@@ -2565,16 +2682,21 @@ def main(argv=None):
     p = add("sources", cmd_sources, "list a beat's sources"); p.add_argument("--beat"); p.add_argument("--json", action="store_true")
     p = add("probe", cmd_probe, "fetch each source once and report"); p.add_argument("--beat"); p.add_argument("--source"); p.add_argument("--kinds")
     p.add_argument("--force", action="store_true"); p.add_argument("--save", action="store_true")
+    p.add_argument("--reddit-reader", choices=["auto", "rss", "arcticshift"], help="override config reddit.reader")
     p = add("fetch", cmd_fetch, "fetch a beat's sources (paced, cached) and list new items"); p.add_argument("--beat")
     p.add_argument("--sources"); p.add_argument("--kinds"); p.add_argument("--listing", default="new"); p.add_argument("--t", default="week")
     p.add_argument("--max-age-days", type=float, default=3); p.add_argument("--all", action="store_true"); p.add_argument("--limit", type=int, default=200)
     p.add_argument("--force", action="store_true"); p.add_argument("--json", action="store_true")
     p.add_argument("--peek", action="store_true", help="read without marking items seen or saving fetch state (beat building, questions)")
+    p.add_argument("--reddit-reader", choices=["auto", "rss", "arcticshift"], help="override config reddit.reader")
+    p.add_argument("--settle-hours", type=float, help="Arctic Shift: end the window this long ago (default reddit.settle_hours, 36)")
     p = add("thread", cmd_thread, "a thread with comments (Reddit, HN, Bluesky, Mastodon, Lemmy, Discourse)"); p.add_argument("url"); p.add_argument("--beat")
     p.add_argument("--force", action="store_true"); p.add_argument("--limit", type=int, default=60); p.add_argument("--json", action="store_true")
+    p.add_argument("--reddit-reader", choices=["auto", "rss", "arcticshift"], help="override config reddit.reader")
     p = add("search", cmd_search, "search reddit, hn, news or arxiv"); p.add_argument("--q", required=True)
     p.add_argument("--kind", default="reddit", choices=["reddit", "hn", "news", "arxiv"]); p.add_argument("--community")
     p.add_argument("--sort", default="new"); p.add_argument("--t", default="month"); p.add_argument("--force", action="store_true"); p.add_argument("--json", action="store_true")
+    p.add_argument("--reddit-reader", choices=["auto", "rss", "arcticshift"], help="override config reddit.reader")
     p = add("candidates", cmd_candidates, "rank cached items for an engagement"); p.add_argument("--beat"); p.add_argument("--limit", type=int, default=8); p.add_argument("--json", action="store_true")
     p = add("engage-check", cmd_engage_check, "may we engage now? exit 0 yes, 2 no"); p.add_argument("--platform", default="reddit")
     p.add_argument("--community"); p.add_argument("--author"); p.add_argument("--item"); p.add_argument("--kind", default="ask", choices=["ask", "thanks", "answer"]); p.add_argument("--json", action="store_true")
