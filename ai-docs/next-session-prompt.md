@@ -16,10 +16,14 @@ Written 2026-10-15. Run from `D:\m4bwa\Claude\Projects\Ai`. The everscout repo i
 
 ## The next step and its limits
 
-1. Check for the key: `[Environment]::GetEnvironmentVariable('GEMINI_API_KEY','User')` in PowerShell (also `$env:GEMINI_API_KEY`). If it is missing, ask Mark once for it (aistudio.google.com/apikey, then `setx GEMINI_API_KEY "<key>"` and a VS Code restart) and stop. Never print the key, never put it in a repo file, never run a browser login.
-2. Run Stage 1 of the plan: the scratch probe (standard-library Python in the session scratchpad), six Reddit threads chosen through `everscout.py fetch --reddit-reader arcticshift --peek` and `thread`, plus one non-Reddit control page, paced a few seconds apart. Do not use the `google_search` tool anywhere in this route.
-3. Write the results into `everscout/ai-docs/research/2026-10-<day>-gemini-url-context-reddit-test.md` (statuses, token counts, fidelity against Arctic Shift, fabrication check, free-tier behaviour), a log line, and the plan's status. Docs-only PR, merge it yourself.
-4. If it passes, put the Stage 2 shape question to Mark (standalone public plugin, everscout reader, or both; the plan recommends the standalone plugin) before writing code. If it fails, record why and stop.
+Stage 1 was started on 2026-10-15 and is blocked on the key's project, not on URL context. Read `everscout/ai-docs/notes/2026-10-15-gemini-url-context-probe.md` first: it holds the probe script, the seven test cases, what happened, and what to try.
+
+1. Check the key: `[Environment]::GetEnvironmentVariable('GEMINI_API_KEY','User')` (it was set on 2026-10-15, project 268277778089). Never print it, never put it in a repo file, never run a browser login.
+2. Smoke test first: one plain `generateContent` call ("Say OK.") on `gemini-3.8-flash` with a 180 s timeout, and the same with `curl -m 180`. If it answers 200, go on. If it is still 403 or hangs, follow the note's "If the 403s persist" list; anything that needs the browser (checking the key's project or restrictions, a new key in a new AI Studio project) is Mark's: ask once and stop.
+3. Run Stage 1: copy the probe from the note into the session scratchpad, replace the "fresh" case with a thread under a day old (the note says how), run all cases paced a few seconds apart. Do not use the `google_search` tool anywhere in this route.
+4. Get ground truth with `everscout.py thread <url> --reddit-reader arcticshift --json` and score each case as the plan says (status, tokens, comments returned, exact-sentence match, fabrication, removed text).
+5. Write `everscout/ai-docs/research/2026-10-<day>-gemini-url-context-reddit-test.md`, a log line, the plan's status, and update the note. Docs-only PR, merge it yourself.
+6. If it passes, put the Stage 2 shape question to Mark (standalone public plugin, everscout reader, or both; the plan recommends the standalone plugin) before writing code. If it fails, record why and stop.
 
 ## Rules
 
@@ -30,6 +34,6 @@ Written 2026-10-15. Run from `D:\m4bwa\Claude\Projects\Ai`. The everscout repo i
 
 ## When to stop and ask
 
-When the key is missing; after Stage 1, before any Stage 2 code; if Gemini returns text from deleted or removed posts (decide with Mark how notes treat it); if requests start failing with refusals (record and stop, conduct rule 17).
+When the key is missing or its project still refuses; after Stage 1, before any Stage 2 code; if Gemini returns text from deleted or removed posts (decide with Mark how notes treat it); if requests start failing with refusals (record and stop, conduct rule 17).
 
 When you stop, rewrite this file for the session after you: what to read first, the next step and its limits, the rules, when to stop and ask. Its last paragraph must give that session this same instruction.

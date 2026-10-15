@@ -90,3 +90,6 @@ A checker read 18 of the 159 new notes against their sources: 3 ok, 15 fixed (sm
 ## [2026-10-15] update | next-session-prompt.md written (Reddit lane steps 3-4, then the Gemini backup after asking Mark). Mark relayed a Gemini reply saying only training a competing model is forbidden; the terms section "Grounding with Google Search" says otherwise, so the research note stands.
 ## [2026-10-15] plan | Reddit after 2027: find thread URLs without Gemini search, read them with Gemini URL context, distil in Claude (plans/2026-10-15-reddit-via-gemini-url-context.md); Stage 1 test waits on Mark's GEMINI_API_KEY. next-session-prompt.md rewritten for it.
 ## [2026-10-15] index | rebuilt (9 entries)
+
+## [2026-10-15] note | Gemini URL context Stage 1 started and blocked: key set, but its Cloud project (268277778089) answered 403 SERVICE_DISABLED or "caller does not have permission" for 15 minutes after Mark found the API Enabled, and calls past the permission check hung at 60 s (plain calls too, so not URL context). Probe script, cases and fixes in notes/2026-10-15-gemini-url-context-probe.md; next-session-prompt.md updated.
+## [2026-10-15] index | rebuilt (10 entries)
