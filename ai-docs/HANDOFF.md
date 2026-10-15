@@ -4,7 +4,7 @@ Updated 2026-10-15 (0.4.0: Reddit through Arctic Shift; see the first section). 
 
 ## 0.4.0 state (2026-10-15): Reddit after the feeds
 
-- Mark chose the Arctic Shift lane on 2026-10-15. Built: config `reddit.reader` (`auto` = feeds until 2026-11-13, then Arctic Shift; `rss`; `arcticshift`), `--reddit-reader` on fetch, thread, probe and search; settled-score window (`reddit.settle_hours` 36); points and comments on every Reddit item. Live run on ai-video worked (1,904 posts, 2.5 minutes; one note, `1wzxyaa`, in Mark's data folder).
+- Mark chose the Arctic Shift lane on 2026-10-15. Built: config `reddit.reader` (`rss` default for everyone; `arcticshift`; `auto` = feeds until 2026-11-13, then Arctic Shift; Mark's own `~/.everscout/config.json` is set to `auto`), `--reddit-reader` on fetch, thread, probe and search; settled-score window (`reddit.settle_hours` 36); points and comments on every Reddit item. Live run on ai-video worked (1,904 posts, 2.5 minutes; one note, `1wzxyaa`, in Mark's data folder).
 - Not built yet (plan steps 3 and 4): cross-platform pickup of Reddit links found elsewhere, and capture requests (`captures-wanted`, a beat `captures/` inbox).
 - Rejected: Reddit through Gemini's Google Search grounding (Google's terms forbid handing grounded results to another model; `research/2026-10-15-reddit-through-gemini.md`). Mark keeps the Gemini API as a backup to learn, outside everscout for now.
 - Open: Reddit app registration before 2027-01-12 (Mark's call); Arctic Shift after March 2027 is unknown (maintainer issue #76). `/api/subreddits/rules` on the archive could verify the beats' `~` stances (standing work 3); untried.

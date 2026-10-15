@@ -65,9 +65,10 @@ DEFAULT_CONFIG = {
     "beats": {},
     "voice": "~/.everscout/voice.md",
     "pace": {"hosts": {}, "feed_ttl_seconds": 3600, "thread_ttl_seconds": 1800},
-    # reader: auto (logged-out feeds until Reddit ends them, then Arctic Shift), rss or arcticshift.
+    # reader: rss (Reddit's logged-out feeds, the default), arcticshift (a third-party archive with grey legal footing,
+    # so each user opts in; kb/platforms.md) or auto (the feeds until Reddit ends them, then Arctic Shift).
     # settle_hours: Arctic Shift windows end this long ago, so scores and comment counts have settled.
-    "reddit": {"reader": "auto", "settle_hours": 36, "max_pages": 10},
+    "reddit": {"reader": "rss", "settle_hours": 36, "max_pages": 10},
     "engage": {
         "min_gap_minutes": 60,
         "max_per_day": 4,
@@ -229,7 +230,7 @@ REDDIT_RSS_END = dt.date(2026, 11, 13)  # Reddit's logged-out feeds stop answeri
 
 def reddit_reader(cfg):
     """'rss' (Reddit's logged-out feeds) or 'arcticshift' (the third-party archive); auto switches when the feeds end."""
-    r = str((cfg.get("reddit") or {}).get("reader") or "auto").lower()
+    r = str((cfg.get("reddit") or {}).get("reader") or "rss").lower()
     if r == "auto":
         return "arcticshift" if dt.datetime.now(UTC).date() >= REDDIT_RSS_END else "rss"
     if r not in ("rss", "arcticshift"):
@@ -787,6 +788,9 @@ def cmd_fetch(a):
                 note(f"reddit {r['source']}: {len(items)} posts kept, but {missing}: the window's oldest posts are missing")
             jobs.append((items, r, "new"))
     reddit_new = [r for r in rows if r["kind"] == "reddit" and "new" in listings and reader == "rss"]
+    if reddit_new and dt.datetime.now(UTC).date() >= REDDIT_RSS_END:
+        note("Reddit ended its logged-out feeds on 2026-11-13: set reddit.reader to arcticshift or auto in config.json "
+             "to read Reddit through the Arctic Shift archive (kb/platforms.md), or rely on captures")
     for batch in plan_reddit_batches(reddit_new, rates, a.max_age_days, cfg):
         if len(batch) == 1:
             r = batch[0]

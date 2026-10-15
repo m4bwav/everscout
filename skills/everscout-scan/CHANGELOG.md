@@ -5,7 +5,7 @@ Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with
 ### C-20261015-1 · 2026-10-15 · Reddit through Arctic Shift
 - because: user decision 2026-10-15 (Arctic Shift lane); Reddit RSS ends 2026-11-13 (R-20261010-1)
 - files: SKILL.md (fetch step), references/kb/ (synced)
-- The fetch step says Reddit comes from the Arctic Shift archive from 2026-11-13 or with `reddit.reader` `arcticshift`, that its window ends 36 hours back, and that triage can rank Reddit items by their points and comments. Plugin 0.4.0.
+- The fetch step says Reddit comes from the Arctic Shift archive when `reddit.reader` is `arcticshift` (or `auto` from 2026-11-13), that its window ends 36 hours back, and that triage can rank Reddit items by their points and comments. Plugin 0.4.0.
 
 ### C-20261006-1 · 2026-10-06 · kb links point to this skill's own copies
 - because: user request (list everscout in awesome-copilot; vally lint rejects links outside the skill folder)
