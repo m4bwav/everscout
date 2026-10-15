@@ -26,3 +26,7 @@ Read this before touching the Reddit adapter or the scan procedure's Reddit step
 ## Size
 
 About 150 lines of Python plus tests for steps 1 to 3, and a page of skill text for step 4. One session.
+
+## Checked 2026-10-15: Gemini as a licensed go-between
+
+Mark asked for a Reddit route through Gemini's Google Search grounding instead of Arctic Shift. It fails on Google's own terms (no analysis by third parties, no caching, no mixing, no database) and on the free tier (no grounding for new users). Arctic Shift, cross-platform pickup and user captures above are still the options; a Gemini answer Mark reads and pastes himself is a user capture. Evidence: `../research/2026-10-15-reddit-through-gemini.md`.
