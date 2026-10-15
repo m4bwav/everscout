@@ -1,6 +1,14 @@
 # Handoff
 
-Updated 2026-09-28 (first all-beats scan; 0.3.0: beat statistics built; see the section below). Everscout 0.1.0 was built in one session from indie-ai-scout 0.3.1; 0.2.0 added the everscout-ask skill (interrogate a beat like a reporter) and the tech-hiring beat, the first built from scratch. Read [log.md](log.md) for what happened, `decisions/` for the architecture, and `research/` for the evidence.
+Updated 2026-10-15 (0.4.0: Reddit through Arctic Shift; see the first section). Before that 2026-09-28 (first all-beats scan; 0.3.0: beat statistics built). Everscout 0.1.0 was built in one session from indie-ai-scout 0.3.1; 0.2.0 added the everscout-ask skill (interrogate a beat like a reporter) and the tech-hiring beat, the first built from scratch. Read [log.md](log.md) for what happened, `decisions/` for the architecture, and `research/` for the evidence.
+
+## 0.4.0 state (2026-10-15): Reddit after the feeds
+
+- Mark chose the Arctic Shift lane on 2026-10-15. Built: config `reddit.reader` (`auto` = feeds until 2026-11-13, then Arctic Shift; `rss`; `arcticshift`), `--reddit-reader` on fetch, thread, probe and search; settled-score window (`reddit.settle_hours` 36); points and comments on every Reddit item. Live run on ai-video worked (1,904 posts, 2.5 minutes; one note, `1wzxyaa`, in Mark's data folder).
+- Not built yet (plan steps 3 and 4): cross-platform pickup of Reddit links found elsewhere, and capture requests (`captures-wanted`, a beat `captures/` inbox).
+- Rejected: Reddit through Gemini's Google Search grounding (Google's terms forbid handing grounded results to another model; `research/2026-10-15-reddit-through-gemini.md`). Mark keeps the Gemini API as a backup to learn, outside everscout for now.
+- Open: Reddit app registration before 2027-01-12 (Mark's call); Arctic Shift after March 2027 is unknown (maintainer issue #76). `/api/subreddits/rules` on the archive could verify the beats' `~` stances (standing work 3); untried.
+- The main clone `Ai/everscout` holds another session's uncommitted vocab and scan-skill edits; work in a worktree off origin/main.
 
 ## What Mark wants (2026-09-26)
 

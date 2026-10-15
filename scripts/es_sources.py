@@ -52,6 +52,7 @@ DEFAULT_HOST_GAPS = {
     "musicbrainz.org": 1.1,
     "api.gdeltproject.org": 10,  # GDELT asks for one request every 5 s; reports say 5 s still draws 429s (kb/platforms.md)
     "wikimedia.org": 1,
+    "arctic-shift.photon-reddit.com": 2,  # the maintainer asks for "a couple requests per second" at most
     "default": 3,
 }
 
@@ -217,7 +218,7 @@ class Fetcher:
                 return f.read(), True, meta.get("status", 200)
         host = urllib.parse.urlsplit(url).hostname or "default"
         gap = self.gap_for(host)
-        is_reddit = host.endswith("reddit.com")
+        is_reddit = host == "reddit.com" or host.endswith(".reddit.com")  # not arctic-shift.photon-reddit.com
         headers = {"User-Agent": self.reddit_ua if is_reddit else self.ua, "Accept": accept}
         tries = 0
         while True:
@@ -231,6 +232,11 @@ class Fetcher:
                     body = raw.decode(charset, "replace")
                     wait = gap
                     reset = r.headers.get("x-ratelimit-reset")
+                    remaining = r.headers.get("x-ratelimit-remaining")
+                    # Reddit's feeds want the reset honoured on every answer; elsewhere (Arctic Shift sends it on every
+                    # answer too) it is only a wait once the remaining allowance runs out
+                    if reset and not is_reddit and not (remaining and remaining.replace(".", "", 1).isdigit() and float(remaining) < 1):
+                        reset = None
                     if reset:
                         try:
                             wait = max(gap, float(reset) + 3)
@@ -251,8 +257,8 @@ class Fetcher:
                     self._mark(host, wait)
                     continue
                 if e.code == 429 and tries < 4 and self.retry:
-                    retry = e.headers.get("Retry-After") if e.headers else None
-                    wait = float(retry) if retry and retry.isdigit() else 60 * tries
+                    retry = (e.headers.get("Retry-After") or e.headers.get("X-RateLimit-Reset")) if e.headers else None
+                    wait = float(retry) + 1 if retry and retry.isdigit() else 60 * tries
                     self.log(f"429 from {host}; waiting {wait:.0f}s (try {tries})")
                     self._mark(host, wait)
                     continue
@@ -403,6 +409,92 @@ def parse_reddit(text, feed_url=""):
         if not it["community"] and "/r/" in it["url"]:
             it["community"] = re.sub(r".*/r/([^/]+)/.*", r"\1", it["url"])
     return items
+
+
+# ---------------------------------------------------------------- Reddit through Arctic Shift (third-party archive, read-only)
+# An independent archive of Reddit posts and comments with a public JSON API. Posts arrive within seconds of creation and
+# scores settle after about 1.5 days. One subreddit per request, newest first, at most 100 a page; no score sort, so a
+# window is fetched and sorted locally. Legal footing is grey (ai-docs/research/2026-10-11-reddit-after-the-api.md).
+
+ARCTIC_API = "https://arctic-shift.photon-reddit.com/api"
+ARCTIC_POST_FIELDS = "id,title,author,created_utc,score,num_comments,url,subreddit,selftext,link_flair_text,over_18,post_hint,crosspost_parent"
+
+
+def arctic_posts_url(sub, after_ts, before_ts, limit=100, query=None):
+    """Posts of one subreddit created between two epoch times, newest first."""
+    q = {"subreddit": re.sub(r"^/?r/", "", sub), "after": int(after_ts), "before": int(before_ts), "limit": limit,
+         "sort": "desc", "fields": ARCTIC_POST_FIELDS}
+    if query:
+        q["query"] = query
+    return f"{ARCTIC_API}/posts/search?" + urllib.parse.urlencode(q)
+
+
+def arctic_ids_url(ids):
+    return f"{ARCTIC_API}/posts/ids?" + urllib.parse.urlencode({"ids": ",".join(ids), "fields": ARCTIC_POST_FIELDS})
+
+
+def arctic_tree_url(post_id, limit=200):
+    return f"{ARCTIC_API}/comments/tree?" + urllib.parse.urlencode({"link_id": f"t3_{post_id}", "limit": limit})
+
+
+def arctic_error(data):
+    """The API answers {"data": null, "error": "..."} on a bad request."""
+    return (data or {}).get("error") if isinstance(data, dict) else None
+
+
+def _arctic_post(p, feed_url=""):
+    sub, pid = p.get("subreddit") or "", p.get("id") or ""
+    link = p.get("url") or ""
+    permalink = f"https://www.reddit.com/r/{sub}/comments/{pid}/"
+    media = media_of(link, p.get("selftext") or "")
+    hint = p.get("post_hint") or ""
+    for kind in ("image", "video"):
+        if kind in hint and kind not in media:
+            media.append(kind)
+    created = p.get("created_utc")
+    return {
+        "id": f"reddit:{pid}", "platform": "reddit", "kind": "post", "title": html.unescape(p.get("title") or "").strip(),
+        "author": p.get("author") or "", "url": permalink, "link": link if link.rstrip("/") != permalink.rstrip("/") else "",
+        "published": iso(dt.datetime.fromtimestamp(created, UTC)) if created else "",
+        "text": html.unescape(p.get("selftext") or "")[:6000], "media": media, "community": sub,
+        "comments": p.get("num_comments"), "points": p.get("score"), "flair": p.get("link_flair_text") or "",
+        "post_id": pid, "via": "arcticshift", "feed": feed_url,
+    }
+
+
+def parse_arctic_posts(data, feed_url=""):
+    """/posts/search or /posts/ids JSON to items; removed and deleted bodies stay empty."""
+    rows = (data or {}).get("data") or []
+    return [_arctic_post(p, feed_url) for p in rows if p.get("id")]
+
+
+def parse_arctic_tree(data, post):
+    """/comments/tree JSON (Reddit's listing shape) to a flat comment list in thread order, depth kept.
+    Collapsed branches ("kind": "more") are counted, not fetched."""
+    comments, hidden = [], 0
+
+    def walk(children, depth):
+        nonlocal hidden
+        for ch in children or []:
+            if ch.get("kind") == "more":
+                hidden += len((ch.get("data") or {}).get("children") or [])
+                continue
+            c = ch.get("data") or {}
+            body = c.get("body") or ""
+            if body and body not in ("[deleted]", "[removed]"):
+                created = c.get("created_utc")
+                comments.append({
+                    "id": f"reddit:{c.get('id')}", "platform": "reddit", "kind": "comment", "author": c.get("author") or "",
+                    "published": iso(dt.datetime.fromtimestamp(created, UTC)) if created else "",
+                    "text": html.unescape(body)[:4000], "depth": c.get("depth", depth), "points": c.get("score"),
+                    "parent": "reddit:" + str(c.get("parent_id") or "").split("_", 1)[-1],
+                    "url": post["url"].rstrip("/") + f"/comment/{c.get('id')}/",
+                })
+            replies = c.get("replies")
+            if isinstance(replies, dict):
+                walk((replies.get("data") or {}).get("children"), depth + 1)
+    walk((data or {}).get("data"), 0)
+    return {"post": post, "comments": comments, "hidden": hidden}
 
 
 # ---------------------------------------------------------------- Hacker News (Algolia search API)

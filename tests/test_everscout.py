@@ -12,6 +12,7 @@ import sys
 import tempfile
 import time
 import unittest
+import urllib.parse
 from unittest import mock
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -225,7 +226,8 @@ class WorkspaceTest(unittest.TestCase):
         self.home = os.path.join(self.tmp, "home")
         os.makedirs(os.path.join(self.home, "beats"))
         cfg = {"contact": "test@example.org", "data_root": os.path.join(self.tmp, "data"), "local_root": os.path.join(self.tmp, "local"),
-               "beat_dirs": [os.path.join(self.home, "beats")], "pace": {"hosts": {"default": 0, "www.reddit.com": 0}}}
+               "beat_dirs": [os.path.join(self.home, "beats")], "pace": {"hosts": {"default": 0, "www.reddit.com": 0}},
+               "reddit": {"reader": "rss"}}  # auto turns to Arctic Shift on 2026-11-13; the RSS tests pin the feeds
         with open(os.path.join(self.home, "config.json"), "w", encoding="utf-8") as f:
             json.dump(cfg, f)
         self.env = mock.patch.dict(os.environ, {"EVERSCOUT_HOME": self.home})
@@ -1027,6 +1029,146 @@ class StatsTests(WorkspaceTest):
         m = json.loads(out)[0]
         self.assertEqual((m["points"], m["last_value"]), (2, "5"))
 
+
+
+# ---------------------------------------------------------------- Reddit through Arctic Shift
+
+def arctic_post(pid, title, score, comments, hours, sub="exampleSub", text="", url=None):
+    return {"id": pid, "title": title, "author": "maker_one", "created_utc": int(time.time() - hours * 3600), "score": score,
+            "num_comments": comments, "subreddit": sub, "selftext": text,
+            "url": url or f"https://www.reddit.com/r/{sub}/comments/{pid}/slug/", "post_hint": "image" if url else None}
+
+
+ARCTIC_TREE = {"data": [
+    {"kind": "t1", "data": {"id": "c1", "author": "fan", "body": "How did you light it?", "score": 12, "created_utc": 1791822362,
+                            "parent_id": "t3_p1", "link_id": "t3_p1", "depth": 0,
+                            "replies": {"kind": "Listing", "data": {"children": [
+                                {"kind": "t1", "data": {"id": "c2", "author": "maker_one", "body": "One softbox &amp; a bounce card",
+                                                        "score": 9, "created_utc": 1791822400, "parent_id": "t1_c1", "depth": 1,
+                                                        "replies": ""}}]}}}},
+    {"kind": "t1", "data": {"id": "c3", "author": "[deleted]", "body": "[removed]", "score": 1, "created_utc": 1791822500,
+                            "parent_id": "t3_p1", "depth": 0, "replies": ""}},
+    {"kind": "more", "data": {"count": 7, "id": "c9", "parent_id": "t3_p1", "depth": 0, "children": ["c9", "c10", "c11"]}}]}
+
+
+class ArcticShiftTests(WorkspaceTest):
+    def setUp(self):
+        super().setUp()
+        self.calls = []
+        cfgp = os.path.join(self.home, "config.json")
+        with open(cfgp, encoding="utf-8") as fh:
+            cfg = json.load(fh)
+        cfg["reddit"] = {"reader": "arcticshift"}
+        cfg["pace"]["hosts"]["arctic-shift.photon-reddit.com"] = 0
+        with open(cfgp, "w", encoding="utf-8") as fh:
+            json.dump(cfg, fh)
+
+    def net(self, req, timeout=0):
+        url = req.full_url
+        self.calls.append((url, dict(req.header_items())))
+        q = dict(urllib.parse.parse_qsl(urllib.parse.urlsplit(url).query))
+        if "/api/posts/search" in url:
+            before = int(q["before"])
+            if before > time.time() - 37.5 * 3600:  # first page: a full 100 posts, so the window pages back
+                rows = [arctic_post(f"n{i}", f"Filler post {i}", i, 0, 37 + i * 0.01) for i in range(100)]
+                rows[0] = arctic_post("p1", "I made a short film with Tool X", 806, 44, 37, url="https://i.redd.it/x.png")
+                return FakeResponse(json.dumps({"data": rows}), headers={"x-ratelimit-reset": "52"})
+            return FakeResponse(json.dumps({"data": [arctic_post("old1", "Older showcase", 3, 1, 60)]}))
+        if "/api/posts/ids" in url:
+            return FakeResponse(json.dumps({"data": [arctic_post("p1", "I made a short film with Tool X", 806, 44, 40)]}))
+        if "/api/comments/tree" in url:
+            return FakeResponse(json.dumps(ARCTIC_TREE))
+        if "example.org/feed" in url:
+            return FakeResponse(RSS2)
+        if "hn.algolia.com" in url:
+            return FakeResponse(json.dumps(HN_HITS))
+        raise AssertionError("unexpected URL " + url)
+
+    def test_parsers(self):
+        items = S.parse_arctic_posts({"data": [arctic_post("p1", "A &amp; B", 5, 2, 40, url="https://i.redd.it/x.png")]})
+        it = items[0]
+        self.assertEqual((it["id"], it["title"], it["points"], it["comments"], it["via"]), ("reddit:p1", "A & B", 5, 2, "arcticshift"))
+        self.assertEqual(it["url"], "https://www.reddit.com/r/exampleSub/comments/p1/")
+        self.assertEqual(it["link"], "https://i.redd.it/x.png")
+        self.assertIn("image", it["media"])
+        t = S.parse_arctic_tree(ARCTIC_TREE, it)
+        self.assertEqual([c["id"] for c in t["comments"]], ["reddit:c1", "reddit:c2"], "removed bodies drop out")
+        self.assertEqual(t["comments"][1]["depth"], 1)
+        self.assertEqual(t["comments"][1]["text"], "One softbox & a bounce card")
+        self.assertEqual(t["comments"][1]["parent"], "reddit:c1")
+        self.assertEqual(t["hidden"], 3)
+        self.assertEqual(S.arctic_error({"data": None, "error": "bad field"}), "bad field")
+
+    def test_fetch_window_pages_and_user_agent(self):
+        with mock.patch("urllib.request.urlopen", self.net):
+            code, out, err = self.run_cli("fetch", "--beat", "test-beat", "--max-age-days", "7", "--json")
+        self.assertEqual(code, 0, err)
+        searches = [u for u, _ in self.calls if "/api/posts/search" in u]
+        self.assertEqual(len(searches), 2, "a full page of 100 asks for the next one back")
+        self.assertFalse([u for u, _ in self.calls if "www.reddit.com" in u], "no Reddit feed requests")
+        q = dict(urllib.parse.parse_qsl(urllib.parse.urlsplit(searches[0]).query))
+        end, start = int(q["before"]), int(q["after"])
+        self.assertAlmostEqual(time.time() - end, 36 * 3600, delta=3700)
+        self.assertEqual(end - start, 7 * 86400)
+        self.assertEqual(q["subreddit"], "exampleSub")
+        ua = [h for u, h in self.calls if "/api/posts/search" in u][0]["User-agent"]
+        self.assertIn("test@example.org", ua, "the archive gets everscout's own User-Agent, not Reddit's")
+        items = json.loads(out)
+        reddit = {i["id"]: i for i in items if i["platform"] == "reddit"}
+        self.assertEqual(len(reddit), 101)
+        self.assertEqual(reddit["reddit:p1"]["points"], 806)
+        self.assertEqual(reddit["reddit:p1"]["source"], "r/exampleSub")
+        self.assertIn("reddit:old1", reddit, "posts older than --max-age-days but inside the shifted window count as new")
+        self.assertIn("Arctic Shift", err)
+
+    def test_failed_later_page_keeps_earlier_pages(self):
+        import urllib.error
+
+        def net(req, timeout=0):
+            q = dict(urllib.parse.parse_qsl(urllib.parse.urlsplit(req.full_url).query))
+            if "/api/posts/search" in req.full_url and int(q["before"]) <= time.time() - 37.5 * 3600:
+                raise urllib.error.HTTPError(req.full_url, 422, "Unprocessable Entity", {}, None)
+            return self.net(req, timeout)
+        with mock.patch("urllib.request.urlopen", net):
+            code, out, err = self.run_cli("fetch", "--beat", "test-beat", "--kinds", "reddit", "--max-age-days", "7", "--json")
+        self.assertEqual(code, 0, err)
+        self.assertEqual(len(json.loads(out)), 100)
+        self.assertIn("page 2 failed (422)", err)
+
+    def test_thread_and_search(self):
+        with mock.patch("urllib.request.urlopen", self.net):
+            code, out, err = self.run_cli("thread", "https://www.reddit.com/r/exampleSub/comments/p1/slug/", "--json")
+            self.assertEqual(code, 0, err)
+            t = json.loads(out)
+            self.assertEqual((t["via"], t["comment_count"], t["collapsed_comments"]), ("arcticshift", 2, 3))
+            self.assertTrue(t["comments"][1]["is_op"])
+            code, out, err = self.run_cli("search", "--q", "film", "--json")
+            self.assertEqual(code, 2, "Arctic Shift needs a subreddit")
+            code, out, err = self.run_cli("search", "--q", "film", "--community", "r/exampleSub", "--sort", "top", "--json")
+            self.assertEqual(code, 0, err)
+            self.assertEqual(json.loads(out)[0]["id"], "reddit:p1")
+        self.assertIn("query=film", [u for u, _ in self.calls if "/api/posts/search" in u][-1])
+
+    def test_auto_switches_when_feeds_end(self):
+        cfg = {"reddit": {"reader": "auto"}}
+        with mock.patch.object(E, "REDDIT_RSS_END", dt.date(2000, 1, 1)):
+            self.assertEqual(E.reddit_reader(cfg), "arcticshift")
+        with mock.patch.object(E, "REDDIT_RSS_END", dt.date(2999, 1, 1)):
+            self.assertEqual(E.reddit_reader(cfg), "rss")
+
+    def test_reset_header_paces_reddit_only(self):
+        tmp = tempfile.mkdtemp()
+        try:
+            f = S.Fetcher(tmp, "ua", host_gaps={"default": 0, "www.reddit.com": 0, "arctic-shift.photon-reddit.com": 0},
+                          sleep=lambda s: None, opener=lambda req, timeout=0: FakeResponse("{}", headers={"x-ratelimit-reset": "52"}))
+            f.get("https://arctic-shift.photon-reddit.com/api/posts/search?x=1")
+            f.get("https://www.reddit.com/r/a/new/.rss")
+            with open(os.path.join(tmp, "ratelimit.json"), encoding="utf-8") as fh:
+                st = json.load(fh)
+            self.assertLess(st["arctic-shift.photon-reddit.com"] - time.time(), 5)
+            self.assertGreater(st["www.reddit.com"] - time.time(), 50)
+        finally:
+            shutil.rmtree(tmp, ignore_errors=True)
 
 
 class SkillRefsTest(unittest.TestCase):
