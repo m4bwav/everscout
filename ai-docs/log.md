@@ -84,3 +84,4 @@ A checker read 18 of the 159 new notes against their sources: 3 ok, 15 fixed (sm
 ## [2026-10-11] index | rebuilt (7 entries)
 
 ## [2026-10-15] research | Reddit through Gemini's Google Search grounding: does not hold. The Google-Reddit deal licenses Google, not API callers; the Gemini API terms forbid letting third parties analyse, cache, mix or collect Grounded Results (so Gemini to Claude to notes breaks them at each step); the free tier has no search grounding for new users (Gemini 3+ paid only, 2.5 limited to past users); Reddit v. SerpApi/Perplexity survived dismissal 2026-07-31. `gemini-3.8-flash` is real; `claude-3-5-sonnet-latest` is retired. Plugin build paused for Mark's decision. research/2026-10-15-reddit-through-gemini.md.
+## [2026-10-15] index | rebuilt (7 entries)
