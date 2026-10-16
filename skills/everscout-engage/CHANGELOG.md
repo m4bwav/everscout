@@ -2,6 +2,11 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`.
 
+### C-20261015-1 · 2026-10-15 · The Gemini URL context route through fetchwright
+- because: user decision 2026-10-15 (standalone plugin, named fetchwright), plan Stage 2 step 3, research/2026-10-15-gemini-url-context-reddit-test.md (repository ai-docs)
+- files: references/kb/ (synced from kb/conduct.md rule 17 and kb/platforms.md, keyed sources)
+- Rule 17 allows single public threads through fetchwright with the user's key, never Gemini's Google Search; platforms.md gains a row with the never-search-for-discovery line and the free-tier privacy line.
+
 ### C-20261011-1 · 2026-10-11 · Reddit's RSS end date, HN posts and automation, a GitHub row, an "ideas only" eval case
 - because: R-20261011-1
 - files: SKILL.md (Step 2), ../../kb/conduct.md and its synced copies (Platform notes: Reddit, Hacker News, Discourse rows; new GitHub row), evals/evals.json (outcome-1 uses a Bluesky or Mastodon URL; new outcome-2 for the HN ideas-only branch), RESEARCH.md (one finding, Open questions, Search plan)
