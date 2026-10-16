@@ -971,13 +971,21 @@ def cmd_fetch(a):
             learn_rate(rates, r["source"], [i for i in posts if (i.get("community") or "").lower() == re.sub(r"^r/", "", r["source"]).lower()],
                        window_days=max(0.5, (now_utc() - oldest).total_seconds() / 86400) if oldest else a.max_age_days)
         jobs.append((items, {re.sub(r"^r/", "", r["source"]).lower(): r for r in batch}, "new"))
+    yt_tried = yt_failed = 0
     for r in rows:
         for url, listing, parser in feed_urls(r, listings if r["kind"] == "reddit" else ("new",), a.t, a.max_age_days):
             if r["kind"] == "reddit" and (listing == "new" or reader != "rss"):
                 continue  # planned above
             items = get_items(url, parser, r, f"{r['kind']} {r['source']}")
+            if r["kind"] == "youtube":
+                yt_tried += 1
+                yt_failed += items is None
             if items is not None:
                 jobs.append((items, r, listing))
+    if yt_tried > 1 and yt_failed == yt_tried:
+        # YouTube's feed server has 404ed for every channel at once, on and off, since December 2025 (kb/platforms.md)
+        note(f"youtube: all {yt_tried} channel feeds failed at once, so the endpoint is down, not the channel ids; "
+             "fetch again later (the 404s are cached for the feed ttl) before changing sources.md")
     for items, target, listing in jobs:
         for it in items:
             if it["kind"] != "post":
