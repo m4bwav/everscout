@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## Unreleased
+
+- because: plan `ai-docs/plans/2026-10-15-reddit-via-gemini-url-context.md` Stage 2 step 3; the reader shipped as its own plugin, [fetchwright](https://github.com/m4bwav/fetchwright) (2026-10-15).
+- kb/conduct.md rule 17 and a kb/platforms.md keyed-sources row for Reddit threads through Gemini's URL context: never Google Search for discovery, public threads only (free-tier prompts may be read by Google's reviewers), stop at the first 429. Knowledge only; no CLI change. A minor version when released.
+
 ## 0.4.0 · 2026-10-15
 
 - because: Reddit's logged-out feeds end 2026-11-13 and Mark chose the Arctic Shift lane on 2026-10-15 (plan `ai-docs/plans/2026-10-11-reddit-lane-after-rss.md`; a Gemini route was checked first and fails on Google's terms, `ai-docs/research/2026-10-15-reddit-through-gemini.md`).

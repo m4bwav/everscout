@@ -98,3 +98,4 @@ A checker read 18 of the 159 new notes against their sources: 3 ok, 15 fixed (sm
 ## [2026-10-15] index | rebuilt (10 entries)
 
 ## [2026-10-15] decision | Stage 2 shape: Mark chose the standalone public plugin (reads pages other fetchers cannot; setup skill for key, tiers and privacy; stdlib CLI); everscout stays keyless. Plan, HANDOFF and next-session-prompt.md updated; name to agree with Mark before the repo is created.
+## [2026-10-15] update | Stage 2 built as fetchwright (name agreed with Mark; public repo m4bwav/fetchwright): stdlib CLI check/read, two skills (reader, setup advisor), 37 offline tests, live smoke test, size budget. Here: conduct rule 17 and kb/platforms.md keyed-sources row for the route (never Google Search for discovery; public threads only, free-tier privacy line; stop at the first 429); changelogs; plan status. Found: long word-for-word page copies are blocked as recitation (HTTP 400), so pages default to a digest.
