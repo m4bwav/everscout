@@ -44,6 +44,8 @@ Add a new model version as its own line when people argue about the difference (
 - hunyuanvideo-1.5: HunyuanVideo 1.5, Hunyuan Video 1.5, HunyuanVideo
 - fasth3: FastH3, Fast H3, FastH3 v1, FastH3 V2
 - minimax-h3-hybrid: fl2va-ref2va hybrid, FL2VA REF2VA hybrid, hybrid FL+REF merge, H3 hybrid merge
+- utopai-x: Utopai X, Utopai
+- vidu-q4: Vidu Q4, Vidu Q4 Preview, Vidu
 
 ## Tools
 
@@ -88,6 +90,20 @@ Add a new model version as its own line when people argue about the difference (
 - codex: Codex, Codex CLI
 - blender-mcp: Blender MCP
 - konte: konte
+- comfy-agent: Comfy Agent
+- comfy-cloud: Comfy Cloud
+- comfy-api: Comfy API
+- comfystreamer-h3: ComfyStreamerH3, ComfyStreamer
+- claude-motion: Claude Motion
+- luma: Luma, Luma AI, Luma Dream Machine
+- spark-h3: Spark-H3, Spark H3
+- refmod-pilot: RefMod Pilot
+- refmods-lab: RefMods Lab, ComfyUI-H3-RefMods-Lab, RefMod Lab
+- martinodes: ComfyUI-Martinodes, Martinodes
+- reactor-api: Reactor, comfyui-reactor-api
+- vn-editor: VN Video Editor, VN editor
+- comfy-kitchen: ComfyKitchen, Comfy Kitchen
+- vegas-pro: Vegas Pro
 - h3-motion-context: H3 Motion Context, motion context
 - refmod: RefMod
 - taomate: TaoMate
@@ -143,6 +159,7 @@ Add a new model version as its own line when people argue about the difference (
 - frame-guides: AddGuide, Add Guide, MiniMaxH3AddGuide, guide frames, mid frame reference
 - audio-post: separate audio pass, mix in post, audio in post, AudioRefine
 - sampler-choice: sampler, scheduler, er_sde, beta57, res_multistep, euler simple
+- real-time: real-time generation, live video, realtime video, streaming generation
 
 ## Formats
 

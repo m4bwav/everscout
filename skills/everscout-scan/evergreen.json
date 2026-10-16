@@ -13,15 +13,15 @@
   "source": "https://github.com/m4bwav/everscout",
   "topic": "how public community feeds and APIs can be read politely for continuous subject monitoring, and how findings are distilled, deduplicated and tallied faithfully",
   "tier": "fast",
-  "interval_days": 14,
-  "last_checked": "2026-09-26",
-  "next_due": "2026-10-10",
+  "interval_days": 7.0,
+  "last_checked": "2026-10-10",
+  "next_due": null,
   "verify_at_use": true,
   "volatile_claims": [
     {
-      "claim": "Reddit logged-out Atom feeds answer at about one request a minute",
-      "checked": "2026-09-26",
-      "recheck_days": 30
+      "claim": "Reddit logged-out Atom feeds answer at about one request a minute until RSS ends on 2026-11-13 (announced 2026-09-30)",
+      "checked": "2026-10-10",
+      "recheck_days": 14
     },
     {
       "claim": "Bluesky searchPosts needs login; profile RSS and getFeed are public",
@@ -30,7 +30,18 @@
     }
   ],
   "contradiction": null,
-  "events": [],
+  "events": [
+    {
+      "date": "2026-10-31",
+      "label": "reddit-api-requests-close",
+      "settle_days": 2.0
+    },
+    {
+      "date": "2026-11-13",
+      "label": "reddit-rss-ends",
+      "settle_days": 3.0
+    }
+  ],
   "streak": {
     "quiet": 0,
     "pinned_min": 0,
@@ -43,12 +54,18 @@
       "m": null,
       "interval_after": 14,
       "note": "created"
+    },
+    {
+      "date": "2026-10-10",
+      "m": 0.8,
+      "interval_after": null,
+      "note": "Reddit RSS ends 2026-11-13, public Data API requests close 2026-10-31 (secondary sources); last30days moved to shreddit scraping; injection eval case added; suite not re-run; cost: searches 14 · fetches 7 · tool calls 23"
     }
   ],
   "counts": {
     "learnings": 3,
     "changes": 1,
-    "research": 1,
+    "research": 2,
     "tests": 0
   },
   "consolidate_every": 25,
