@@ -6,7 +6,7 @@ Updated 2026-10-15 (0.4.0: Reddit through Arctic Shift; see the first section). 
 
 - Branch `feat/thread-reader-fetchwright`, PR open and **not merged**: the live gate (four of six threads readable) was not reached. Built: config `reddit.thread_reader` (`same` default, `fetchwright`), `--thread-reader` on `thread` and `new-note`, `fetchwright.cli|models|max_comments|timeout_seconds`; subprocess adapter in `load_thread`; cache, 5 s pace, cool-down from Google's retry time; 65 offline tests. Decision: `decisions/2026-10-15-thread-reader-fetchwright.md`.
 - Live (`research/2026-10-15-fetchwright-thread-reader-live.md`): 20 of 22 and 72 of 76 comments, all real, no handles; a 183-comment thread broke the JSON; then 429: the free tier gives `gemini-3.8-flash` **20 requests a day**. Mark's cool-down runs to 2026-10-17 00:00 UTC; do not call Gemini before then.
-- Waiting on Mark: whether a quota 429 on one model may fall through to the next (a fetchwright change), whether to run flash-lite first via `fetchwright.models`, and the merge and release. Next session prompt: `next-session-prompt.md`.
+- Mark answered on 2026-10-16: yes to quota fall-through (fetchwright PR #2, merged, unreleased), yes to flash-lite first (Mark's config now has `fetchwright.models` = `gemini-3.5-flash-lite,gemini-3.8-flash` and `fetchwright.cli` pointing at the fetchwright clone, which has the fall-through), yes to merging #21 and releasing 0.5.0 once the live gate passes. The cool-down still runs to 2026-10-17 00:00 UTC: shortening it was refused as weakening a safeguard, so the reads wait. Next session prompt: `next-session-prompt.md`.
 
 ## 0.4.0 state (2026-10-15): Reddit after the feeds
 

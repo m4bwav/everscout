@@ -46,6 +46,12 @@ Run on the evening of 2026-10-15 (US time; 2026-10-16 01:56 UTC at the stop) fro
 - fetchwright stops at the first 429 and does not try the next model. That honours rule 17, but a per-model daily quota on the first model blocks the whole route. Whether a quota 429 on one model may fall through to another is Mark's call, and a fetchwright change.
 - Too small a sample to pass the plan's gate (four of six threads readable): two of three attempts read. The wiring is opt-in and off by default, but the gate was not met, so the PR waits for Mark.
 
+## Mark's answers, 2026-10-16
+
+- A quota 429 on one model may move to the next: done in fetchwright (PR #2, merged).
+- flash-lite first: set in Mark's config.
+- Merge #21 and release 0.5.0 once four of six threads read.
+
 ## Next
 
 - After 2026-10-17 00:00 UTC, with Mark's go-ahead, finish the sample with `fetchwright.models` set to `gemini-3.5-flash-lite` (or flash-lite first), and test `fetchwright.max_comments` 100 on the long thread.
