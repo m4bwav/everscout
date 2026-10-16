@@ -5,9 +5,9 @@ Updated 2026-10-15 (0.4.0: Reddit through Arctic Shift; see the first section). 
 ## After 0.5.0 (2026-10-16, later): YouTube outage line, first ai-video radar, discovery plan
 
 - Unreleased on main (PR from `fix/youtube-outage-line`): `fetch` says in one line when every YouTube feed fails, because YouTube's feed server 404s for every channel at once, on and off, since December 2025; the ai-video ids are fine. Evidence and the GDELT findings: `research/2026-10-16-youtube-feeds-and-gdelt-refusals.md`. 66 tests.
-- Mark's ai-video data folder: the first monthly radar, `reports/2026-10-16-radar.md` (96 notes, lint clean); the beat HANDOFF lists what waits for Mark (metric promotions; keep or archive the GDELT metric).
-- Stage 2 step 4 planned, not built: `plans/2026-10-16-reddit-discovery-after-arctic-shift.md` (pickup from fetched items and captures first, agent web search next, at most 10 fetchwright reads a scan).
-- Still waiting on Mark: fetchwright 0.2.0 release, then removing `fetchwright.cli` from his config.
+- Mark's ai-video data folder: the first monthly radar, `reports/2026-10-16-radar.md` (96 notes, lint clean). His answers the same night: `wiki-text-to-video` promoted, `news-ai-video-share` archived as `source-gone` (PR #23).
+- Stage 2 step 4 planned, not built: `plans/2026-10-16-reddit-discovery-after-arctic-shift.md` (pickup from fetched items and captures first, agent web search next, at most 10 fetchwright reads a scan). Mark said build it next session.
+- fetchwright 0.2.0 released 2026-10-16 and installed (fetchwright@mark-local); `fetchwright.cli` removed from Mark's config, and `find_fetchwright` picks the installed 0.2.0.
 
 ## 0.5.0 state (2026-10-16): Reddit threads through fetchwright, opt-in, released
 
