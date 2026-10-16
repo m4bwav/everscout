@@ -1,12 +1,18 @@
 # Handoff
 
-Updated 2026-10-15 (0.4.0: Reddit through Arctic Shift; see the first section). Before that 2026-09-28 (first all-beats scan; 0.3.0: beat statistics built). Everscout 0.1.0 was built in one session from indie-ai-scout 0.3.1; 0.2.0 added the everscout-ask skill (interrogate a beat like a reporter) and the tech-hiring beat, the first built from scratch. Read [log.md](log.md) for what happened, `decisions/` for the architecture, and `research/` for the evidence.
+Updated 2026-10-16 (Reddit discovery built, unreleased; see the first section). Before that 2026-10-15 (0.4.0: Reddit through Arctic Shift). Before that 2026-09-28 (first all-beats scan; 0.3.0: beat statistics built). Everscout 0.1.0 was built in one session from indie-ai-scout 0.3.1; 0.2.0 added the everscout-ask skill (interrogate a beat like a reporter) and the tech-hiring beat, the first built from scratch. Read [log.md](log.md) for what happened, `decisions/` for the architecture, and `research/` for the evidence.
+
+## Reddit discovery built (2026-10-16, night), unreleased
+
+- Branch `feat/reddit-discovery` (PR to main): steps 1 to 6 of `plans/2026-10-16-reddit-discovery-after-arctic-shift.md`. Pickup of Reddit links during `fetch`, `discover list|add|mark`, `captures`, `new-note --capture`, `fetchwright.max_reads_per_scan` (exit 6), scan skill Step 2 and procedure G, kb rows. 74 tests. The plan's Status section lists how the build differs from its shape.
+- Live check: a week of ai-video's non-Reddit sources linked no Reddit thread (`research/2026-10-16-reddit-pickup-coverage-live.md`). Pickup stays on (no requests); web search and captures carry discovery for that beat after the archive.
+- Open: release as 0.6.0 (tag and GitHub Release need Mark's go-ahead); then the coverage line after about four weekly scans; YouTube descriptions once the feeds answer.
 
 ## After 0.5.0 (2026-10-16, later): YouTube outage line, first ai-video radar, discovery plan
 
 - Unreleased on main (PR from `fix/youtube-outage-line`): `fetch` says in one line when every YouTube feed fails, because YouTube's feed server 404s for every channel at once, on and off, since December 2025; the ai-video ids are fine. Evidence and the GDELT findings: `research/2026-10-16-youtube-feeds-and-gdelt-refusals.md`. 66 tests.
 - Mark's ai-video data folder: the first monthly radar, `reports/2026-10-16-radar.md` (96 notes, lint clean). His answers the same night: `wiki-text-to-video` promoted, `news-ai-video-share` archived as `source-gone` (PR #23).
-- Stage 2 step 4 planned, not built: `plans/2026-10-16-reddit-discovery-after-arctic-shift.md` (pickup from fetched items and captures first, agent web search next, at most 10 fetchwright reads a scan). Mark said build it next session.
+- Stage 2 step 4 planned: `plans/2026-10-16-reddit-discovery-after-arctic-shift.md` (pickup from fetched items and captures first, agent web search next, at most 10 fetchwright reads a scan). Built the same night (section above).
 - fetchwright 0.2.0 released 2026-10-16 and installed (fetchwright@mark-local); `fetchwright.cli` removed from Mark's config, and `find_fetchwright` picks the installed 0.2.0.
 
 ## 0.5.0 state (2026-10-16): Reddit threads through fetchwright, opt-in, released

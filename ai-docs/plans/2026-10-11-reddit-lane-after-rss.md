@@ -8,7 +8,7 @@ tags: [reddit, arctic-shift, captures, screenshots, scan]
 
 # Reddit lane after RSS ends
 
-Read this before touching the Reddit adapter or the scan procedure's Reddit steps. Evidence: `../research/2026-10-11-reddit-after-the-api.md`. Mark chose the Arctic Shift lane on 2026-10-15 (with a Gemini API route kept as a backup to explore; it cannot carry Reddit to Claude under Google's terms). Steps 1, 2 and the conduct line of step 5 are built (0.4.0); steps 3 and 4 are not. Their build shape, seen from the fetchwright reader's side, is in `2026-10-16-reddit-discovery-after-arctic-shift.md`.
+Read this before touching the Reddit adapter or the scan procedure's Reddit steps. Evidence: `../research/2026-10-11-reddit-after-the-api.md`. Mark chose the Arctic Shift lane on 2026-10-15 (with a Gemini API route kept as a backup to explore; it cannot carry Reddit to Claude under Google's terms). Steps 1, 2 and the conduct line of step 5 are built (0.4.0). Steps 3 and 4 and the rest of step 5 were built on 2026-10-16 as part of `2026-10-16-reddit-discovery-after-arctic-shift.md` (pickup during `fetch`, `discover`, `captures`, `new-note --capture`; unreleased until Mark's go-ahead).
 
 ## Decisions the user owns
 

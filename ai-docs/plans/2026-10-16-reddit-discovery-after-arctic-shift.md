@@ -17,11 +17,18 @@ Keep finding the Reddit threads a beat needs once nothing lists a subreddit, wit
 
 ## Status
 
-2026-10-16: plan only, nothing built. Mark said build steps 1 to 5 in the next session (2026-10-16).
+2026-10-16: steps 1 to 6 built on branch `feat/reddit-discovery` (unreleased; a minor release waits for Mark). As built, compared with the shape below:
+
+- `reddit_ids_in` lives in `es_sources.py`; feed, Mastodon and Bluesky items also keep `reddit_links` (hrefs and facets), because `strip_html` drops links and Bluesky shortens link text. Share links (`/r/<sub>/s/<token>`) are skipped: only Reddit resolves them.
+- Pickup reads only items inside the fetch window. Without that, feeds that keep posts for months brought back old threads every time their entries were purged.
+- `discover list|add|mark` and `captures`; `new-note --capture FILE --title --posted` writes a note from the user's copy (`source: user-capture`, the file moves to `captures/done/`). A `wanted` status marks a capture asked of the user.
+- Budget: `fetchwright.max_reads_per_scan` (10) counts fresh reads by `thread --beat` and `new-note` between two fetches; past it they exit 6. Cached threads cost nothing.
+- Notes record `via`, `discovered` and `mentions`. Ranking puts distinct sources first, then mentions, vocabulary, showcase words and the beat's own subreddits.
+- First live check: a week of ai-video's non-Reddit sources linked no Reddit thread, 0 of 24 recent Reddit notes (`../research/2026-10-16-reddit-pickup-coverage-live.md`). For that beat, discovery after the archive rests on web search and captures.
 
 ## Next single action
 
-Build step 1 (`reddit_ids_in`) and step 2 (pickup during `fetch`), then compare a week of pickup against Arctic Shift's full listing for ai-video to measure coverage.
+Let pickup run through the weekly scans in Mark's real state, and read the `discover list` coverage line after about four scans (around 2026-11-13). Re-check YouTube descriptions once the feeds answer again.
 
 ## The problem
 
@@ -54,7 +61,7 @@ Discovered threads come with no points or comment counts: fetchwright drops them
 3. the beat's `showcase_words` and `skip_words`, as now;
 4. after the read, the comment count fetchwright returns, kept in the note's `interest` with `via: fetchwright` so tallies can tell it from archive scores.
 
-## Shape of the build (when Mark says go)
+## Shape of the build (built 2026-10-16; see Status for the differences)
 
 1. `es_sources.py`: `reddit_ids_in(text)` returns `(id, sub, url)` from any permalink form, `redd.it` short links and old.reddit links; tests on synthetic text.
 2. `everscout.py fetch`: collect ids from every non-Reddit item into `state["reddit_seen_elsewhere"]` (id, first seen, from, count), purged after 14 days; `ES discover list --beat <slug>` shows ids at least 24 hours old not yet read; `ES discover add <url> --via websearch|capture` records one by hand.

@@ -363,6 +363,7 @@ def parse_feed(text, feed_url="", platform="rss"):
             "comments": None,
             "points": None,
             "feed": feed_url,
+            "reddit_links": [] if platform == "reddit" else reddit_links_of(it["html"]),
         })
     return out
 
@@ -394,6 +395,39 @@ def reddit_thread_url(url_or_id):
 def reddit_post_id(link):
     m = re.search(r"/comments/([a-z0-9]+)", link or "")
     return m.group(1) if m else None
+
+
+# A thread link in any form: www/old/new/np/m.reddit.com (scheme optional), /r/<sub>/comments/<id>/..., /comments/<id>,
+# a comment permalink (its post id), and redd.it/<id> short links. Not i.redd.it or v.redd.it (media), not /r/<sub>/s/<token>
+# share links (a redirect token, not an id, resolved only by asking Reddit). An id cut off by a display ellipsis (Bluesky
+# and Mastodon shorten link text: "reddit.com/r/x/comments/1ab...") is skipped; the full link is in the item's reddit_links.
+REDDIT_THREAD_RE = re.compile(
+    r"(?<![\w.-])(?:https?://)?(?:(?:www|old|new|np|m)\.)?reddit\.com(?:/r/([A-Za-z0-9_]{2,21}))?/comments/([a-z0-9]{1,10})(?![a-z0-9]|\.\.\.|\u2026)"
+    r"|(?<![\w.-])(?:https?://)?redd\.it/([a-z0-9]{1,10})(?![a-z0-9]|\.\.\.|\u2026)", re.I)
+
+
+def reddit_ids_in(text):
+    """[(id, sub, url)] for every Reddit thread linked in text, first mention first, one per id. sub is "" when the
+    link does not say (redd.it, /comments/<id>); url is the canonical permalink, which fetchwright and the archive read."""
+    out, seen = [], set()
+    text = text or ""
+    for chunk in (text, urllib.parse.unquote(text)) if "%2F" in text or "%2f" in text else (text,):
+        for m in REDDIT_THREAD_RE.finditer(chunk):
+            sub, pid = m.group(1) or "", (m.group(2) or m.group(3)).lower()
+            if pid in seen:
+                continue
+            seen.add(pid)
+            url = f"https://www.reddit.com/r/{sub}/comments/{pid}/" if sub else f"https://www.reddit.com/comments/{pid}/"
+            out.append((pid, sub, url))
+    return out
+
+
+def reddit_links_of(*texts):
+    """The Reddit thread links among the hrefs (and bare URLs) of some HTML, kept on items so pickup survives strip_html."""
+    hrefs = []
+    for t in texts:
+        hrefs += re.findall(r"""href=["']([^"']+)""", html.unescape(t or ""))
+    return [u for _, _, u in reddit_ids_in(" ".join(hrefs))][:10]
 
 
 def parse_reddit(text, feed_url=""):
@@ -585,12 +619,16 @@ def _bsky_item(pv, feed_url=""):
     author = (pv.get("author") or {}).get("handle", "")
     text = rec.get("text") or ""
     embed = json.dumps(pv.get("embed") or {})
+    # Bluesky shortens a link's display text; the full URI is in the facets and the external embed
+    uris = [f.get("uri") or "" for fc in rec.get("facets") or [] for f in fc.get("features") or []]
+    uris.append(((pv.get("embed") or {}).get("external") or {}).get("uri") or "")
     return {
         "id": f"bluesky:{pv.get('uri', '').rsplit('/', 1)[-1]}", "platform": "bluesky", "kind": "post",
         "title": (text.split("\n")[0])[:140], "author": author, "url": bsky_web_url(pv.get("uri", ""), author),
         "at_uri": pv.get("uri"), "published": rec.get("createdAt") or pv.get("indexedAt") or "",
         "text": text[:6000], "media": media_of(embed, text) + (["image"] if "images" in embed else []),
         "community": "bluesky", "comments": pv.get("replyCount"), "points": pv.get("likeCount"), "feed": feed_url,
+        "reddit_links": [u for _, _, u in reddit_ids_in(" ".join(uris))][:10],
     }
 
 
@@ -660,6 +698,7 @@ def _masto_item(s, host):
         "author": acct, "url": s.get("url") or s.get("uri") or "", "published": s.get("created_at") or "", "text": text[:6000],
         "media": media_of(json.dumps(s.get("media_attachments") or []), s.get("content") or ""), "community": host,
         "comments": s.get("replies_count"), "points": s.get("favourites_count"),
+        "reddit_links": reddit_links_of(s.get("content") or ""),
     }
 
 

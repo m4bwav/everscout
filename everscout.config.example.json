@@ -21,6 +21,11 @@
     "feed_ttl_seconds": 3600,
     "thread_ttl_seconds": 1800
   },
+  "fetchwright": {
+    "models": "",
+    "max_comments": 100,
+    "max_reads_per_scan": 10
+  },
   "engage": {
     "min_gap_minutes": 60,
     "max_per_day": 4,

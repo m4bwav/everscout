@@ -20,11 +20,15 @@ DATA   (beats.<slug>.data in config, else data_root/<slug>)
   stats/series.csv                 metric values, append only (stats collect); stats/export.csv for charts
   reports/charts/                  charts built from the export by chartwright (optional)
   sources/                         dated snapshots: probes, rules pages, watch lists as used
+  captures/                        the user's own copies of pages the scan could not read (`captures --beat`);
+                                   captures/done/ once a note was written from one
 LEDGER (ledger in config, else data_root/_engage)
   engagements.jsonl, INDEX.md      every ask, thank-you and answer, all beats (pacing is per account)
 LOCAL  (local_root)
   cache/                           raw feeds and threads, purged after retention_hours (48)
   ratelimit.json, state-<slug>.json, drafts/
+                                   state-<slug>.json also holds reddit_seen_elsewhere: Reddit threads found
+                                   without a listing (pickup, web search, captures), kept 14 days
 ```
 
 DATA and LEDGER hold paraphrases and, in the ledger, handles; keep them private (the everlast vault, a private repo, or a local folder). Nothing under DATA, LEDGER or LOCAL belongs in the public repository.
@@ -89,6 +93,11 @@ note_kind: showcase         # showcase, workflow, discussion, release, question,
 interest: 37                # comment count the source showed (0 when unknown)
 top: false                  # appeared in a top-of-week listing
 engaged: false              # the user asked or answered in this thread
+via: fetchwright            # optional: the reader behind interest (arcticshift: settled scores; fetchwright: only the comments it read)
+discovered: pickup          # optional: how a Reddit thread was found without a listing (pickup, websearch, capture)
+mentions: 2                 # optional: items on other platforms that linked the thread
+source: user-capture        # optional: written from the user's own capture, not a fetch
+capture: captures/done/x.html  # optional: that capture file, in DATA
 models: [veo-3.1, kling-3]  # one list per vocab facet, canonical ids only
 tools: [comfyui]
 tags: [ai-video, reddit]
