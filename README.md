@@ -80,7 +80,9 @@ The rules come from research into platform policies, the 2025 r/changemyview AI 
 | `fetch --beat [--kinds] [--sources] [--listing new,top] [--max-age-days N] [--peek] [--json]` | fetch a beat's sources (paced, cached) and list new items; `--peek` reads without marking them seen |
 | `thread <url>` | a thread with comments |
 | `search --kind reddit\|hn\|news\|arxiv --q ...` | search one platform |
-| `new-note <url> --beat --note-kind` | scaffold a note, prefilled with the vocabulary it finds |
+| `new-note <url> --beat --note-kind [--capture FILE --title --posted]` | scaffold a note, prefilled with the vocabulary it finds; `--capture` writes it from a page the user saved |
+| `discover list\|add\|mark --beat` | Reddit threads found without a listing: links picked up from other sources during `fetch`, the agent's web search, captures wanted |
+| `captures --beat` | files the user dropped in the beat's `captures/` inbox, with the thread URLs inside |
 | `vocab-match --beat --text` | canonical entities named in a text |
 | `validate`, `tally`, `index`, `lint` (each `--beat`) | check notes; recount signals; rebuild indexes; check report, study and answer links |
 | `recall --beat --q "question" [--json]` | what the knowledge base holds on a question: ranked notes, answers, reports and study, plus the signals for the entities it names |

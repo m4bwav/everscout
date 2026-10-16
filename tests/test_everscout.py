@@ -1377,6 +1377,169 @@ class FetchwrightReaderTests(WorkspaceTest):
             E.load_thread(self.cfg(), "https://news.ycombinator.com/item?id=1")
         self.assertEqual(self.calls(), [])
 
+    def test_budget_stops_fresh_reads_at_the_cap(self):
+        self.set_cfg(fetchwright={"cli": self.cli, "max_reads_per_scan": 1})
+        code, out, err = self.run_cli("thread", self.URL, "--beat", "test-beat", "--thread-reader", "fetchwright")
+        self.assertEqual(code, 0, err)
+        code, out, err = self.run_cli("thread", self.URL, "--beat", "test-beat", "--thread-reader", "fetchwright")
+        self.assertEqual(code, 0, "a cached thread costs no read")
+        other = "https://www.reddit.com/r/exampleSub/comments/fw2abc/"
+        code, out, err = self.run_cli("thread", other, "--beat", "test-beat", "--thread-reader", "fetchwright")
+        self.assertEqual(code, 6)
+        self.assertIn("captures wanted", err)
+        self.assertEqual(len(self.calls()), 1)
+        code, out, err = self.run_cli("thread", other, "--thread-reader", "fetchwright")  # no beat, no scan budget
+        self.assertEqual(code, 0, err)
+        st = json.load(open(E.state_path(self.cfg(), "test-beat"), encoding="utf-8"))
+        self.assertEqual(st["fetchwright_reads"], 1)
+
+    def test_new_note_from_a_discovered_thread_records_via_and_mentions(self):
+        cfg = self.cfg()
+        st = {"seen": {}, "reddit_seen_elsewhere": {}}
+        E.pickup_reddit_links(st, [{"id": "hn:1", "platform": "hn", "title": "A film made with Tool X", "url": "https://news.ycombinator.com/item?id=1",
+                                    "link": self.URL, "published": ago(40)},
+                                   {"id": "bluesky:2", "platform": "bluesky", "title": "look", "text": "", "reddit_links": [self.URL],
+                                    "published": ago(30)}])
+        E.save_json(E.state_path(cfg, "test-beat"), st)
+        code, out, err = self.run_cli("new-note", self.URL, "--beat", "test-beat", "--thread-reader", "fetchwright")
+        self.assertEqual(code, 0, err)
+        text = open(out.strip(), encoding="utf-8").read()
+        for line in ("via: fetchwright", "discovered: pickup", "mentions: 2", "interest: 2", "posted: " + ago(40)[:10]):
+            self.assertIn(line, text)
+        st = json.load(open(E.state_path(cfg, "test-beat"), encoding="utf-8"))
+        self.assertEqual(st["reddit_seen_elsewhere"]["fw1abc"]["status"], "read")
+        self.assertEqual(st["fetchwright_reads"], 1)
+
+
+class DiscoveryTests(WorkspaceTest):
+    def test_reddit_ids_in_every_link_form(self):
+        text = ("a https://old.reddit.com/r/exampleSub/comments/1abcd2e/my_film/ b www.reddit.com/r/exampleSub/comments/1ABCD2E/x/c0mm3nt/ "
+                "c redd.it/x9y8z7 d i.redd.it/qqqqqq.png v.redd.it/vvvvvv e reddit.com/r/otherSub/comments/1zz… "
+                "f reddit.com/r/otherSub/comments/2yy... g https://www.reddit.com/r/exampleSub/s/AbCdEf "
+                "h https%3A%2F%2Fwww.reddit.com%2Fr%2FsubTwo%2Fcomments%2Fk2k2k2%2F i https://np.reddit.com/comments/qwert1 "
+                "j notreddit.com/comments/aaaaa k https://m.reddit.com/r/subThree/comments/m3m3m3")
+        self.assertEqual(S.reddit_ids_in(text), [
+            ("1abcd2e", "exampleSub", "https://www.reddit.com/r/exampleSub/comments/1abcd2e/"),
+            ("x9y8z7", "", "https://www.reddit.com/comments/x9y8z7/"),
+            ("qwert1", "", "https://www.reddit.com/comments/qwert1/"),
+            ("m3m3m3", "subThree", "https://www.reddit.com/r/subThree/comments/m3m3m3/"),
+            ("k2k2k2", "subTwo", "https://www.reddit.com/r/subTwo/comments/k2k2k2/")])
+        self.assertEqual(S.reddit_ids_in(""), [])
+
+    def test_parsers_keep_the_reddit_links_strip_html_would_lose(self):
+        rss = RSS2.replace("Chart from fred.stlouisfed.org", "&lt;a href=&quot;https://old.reddit.com/r/subOne/comments/lnk111/t/&quot;&gt;a thread&lt;/a&gt;")
+        self.assertEqual(S.parse_feed(rss)[0]["reddit_links"], ["https://www.reddit.com/r/subOne/comments/lnk111/"])
+        self.assertEqual(S.parse_reddit(reddit_atom("exampleSub", [("p1", "a", "t", "x", ago(1))]))[0]["reddit_links"], [])
+        pv = {"uri": "at://did:plc:abc/app.bsky.feed.post/3kx2", "author": {"handle": "someone.bsky.social"},
+              "record": {"text": "worth a read reddit.com/r/subOne/comments/lnk2...", "createdAt": ago(5),
+                         "facets": [{"features": [{"$type": "app.bsky.richtext.facet#link", "uri": "https://www.reddit.com/r/subOne/comments/lnk222/long_slug/"}]}]},
+              "embed": {"external": {"uri": "https://redd.it/lnk333"}}}
+        self.assertEqual(S.parse_bsky_feed({"feed": [{"post": pv}]})[0]["reddit_links"],
+                         ["https://www.reddit.com/r/subOne/comments/lnk222/", "https://www.reddit.com/comments/lnk333/"])
+        m = S._masto_item({"id": "9", "content": '<p>see <a href="https://www.reddit.com/r/subOne/comments/lnk444/x/">reddit.com/r/subOne/comm…</a></p>'}, "example.social")
+        self.assertEqual(m["reddit_links"], ["https://www.reddit.com/r/subOne/comments/lnk444/"])
+
+    def test_pickup_counts_one_mention_per_item_and_purges_after_14_days(self):
+        st = {"reddit_seen_elsewhere": {"old111": {"id": "old111", "first_seen": E.iso(E.now_utc() - dt.timedelta(days=15)), "from": []}}}
+        item = {"id": "rss:1", "platform": "rss", "title": "Tool X roundup", "text": "see redd.it/abc123 and redd.it/abc123",
+                "url": "https://example.org/a", "published": ago(30)}
+        self.assertEqual(E.pickup_reddit_links(st, [item]), {"abc123"})
+        E.pickup_reddit_links(st, [item])
+        disc = st["reddit_seen_elsewhere"]
+        self.assertNotIn("old111", disc)
+        self.assertEqual(disc["abc123"]["mentions"], 1)
+        E.pickup_reddit_links(st, [dict(item, id="hn:2", platform="hn", text="https://www.reddit.com/r/subOne/comments/abc123/x/",
+                                        published=ago(50))])
+        e = disc["abc123"]
+        self.assertEqual((e["mentions"], e["sub"], e["url"]), (2, "subOne", "https://www.reddit.com/r/subOne/comments/abc123/"))
+        self.assertEqual(e["linked_by"][:13], ago(50)[:13])
+        E.pickup_reddit_links(st, [{"id": "reddit:zzz", "platform": "reddit", "title": "x", "text": "redd.it/fromreddit"}])
+        self.assertNotIn("fromreddit", disc, "Reddit's own items are the listing, not pickup")
+
+    def fake_net(self, req, timeout=0):
+        url = req.full_url
+        if "reddit.com/r/exampleSub/new" in url:
+            return FakeResponse(reddit_atom("exampleSub", [("p1", "maker_one", "I made a short film with Tool X", "my workflow", ago(40))]))
+        if "example.org/feed" in url:
+            when = (dt.datetime.now(UTC) - dt.timedelta(hours=30)).strftime("%a, %d %b %Y %H:%M:%S GMT")
+            fresh = (dt.datetime.now(UTC) - dt.timedelta(hours=2)).strftime("%a, %d %b %Y %H:%M:%S GMT")
+            return FakeResponse(RSS2.replace("</channel>",
+                                "<item><title>This week: a Tool X workflow thread</title><link>https://example.org/p/w</link>"
+                                "<description>&lt;a href=&quot;https://old.reddit.com/r/otherSub/comments/zz9zz/x/&quot;&gt;thread&lt;/a&gt; and "
+                                f"https://www.reddit.com/r/exampleSub/comments/p1/slug/</description><pubDate>{when}</pubDate></item>"
+                                "<item><title>Brand new</title><link>https://example.org/p/n</link>"
+                                f"<description>redd.it/new999</description><pubDate>{fresh}</pubDate></item></channel>"))
+        if "hn.algolia.com" in url:
+            return FakeResponse(json.dumps({"hits": [{"objectID": "301", "title": "My first pipeline with Tool X", "url": "https://redd.it/zz9zz",
+                                                      "author": "a", "points": 5, "num_comments": 1, "created_at": ago(28), "_tags": ["story"]}]}))
+        raise AssertionError("unexpected URL " + url)
+
+    def test_fetch_pickup_feeds_discover_list_and_marks_listed_items(self):
+        with mock.patch("urllib.request.urlopen", self.fake_net):
+            code, out, err = self.run_cli("fetch", "--beat", "test-beat", "--max-age-days", "3650", "--json")
+            self.assertEqual(code, 0, err)
+            self.assertIn("pickup: 3 Reddit threads", err)
+            listed = [i for i in json.loads(out) if i["id"] == "reddit:p1"][0]
+            self.assertEqual(listed["elsewhere"], 1)
+            self.run_cli("fetch", "--beat", "test-beat", "--max-age-days", "3650", "--json")  # same items again: no new mentions
+        code, out, err = self.run_cli("discover", "list", "--beat", "test-beat", "--json")
+        ready = json.loads(out)["threads"]
+        self.assertEqual([r["id"] for r in ready], ["zz9zz"], "p1 is listed, new999 is under 24 hours old")
+        self.assertEqual((ready[0]["mentions"], ready[0]["platforms"], ready[0]["in_beat"]), (2, ["hn", "rss"], False))
+        self.assertEqual(ready[0]["vocab"], {"tools": ["toolx"], "techniques": ["pipeline"]})
+        code, out, err = self.run_cli("discover", "list", "--beat", "test-beat")
+        self.assertIn("3 Reddit threads found without a listing", out)
+        self.assertIn("1 also in the listing", out)
+        self.assertIn("1 held under 24 h", out)
+        self.assertIn("outside the beat's subreddits", out)
+        code, out, err = self.run_cli("discover", "list", "--beat", "test-beat", "--all", "--json")
+        self.assertEqual({r["id"] for r in json.loads(out)["threads"]}, {"zz9zz", "p1", "new999"})
+
+    def test_pickup_reads_only_items_inside_the_fetch_window(self):
+        with mock.patch("urllib.request.urlopen", self.fake_net):
+            code, out, err = self.run_cli("fetch", "--beat", "test-beat", "--max-age-days", "1", "--json")
+        self.assertEqual(code, 0, err)
+        self.assertIn("pickup: 1 Reddit threads", err)  # new999 (2 hours old); the 28- and 30-hour items are outside the day
+        st = json.load(open(E.state_path(self.cfg(), "test-beat"), encoding="utf-8"))
+        self.assertEqual(list(st["reddit_seen_elsewhere"]), ["new999"])
+
+    def test_websearch_add_wanted_capture_note(self):
+        cfg = self.cfg()
+        url = "https://www.reddit.com/r/exampleSub/comments/ws1abc/a_slug/"
+        code, out, err = self.run_cli("discover", "add", url, "--beat", "test-beat", "--title", "Tool X settings that worked")
+        self.assertEqual(code, 0, err)
+        code, out, _ = self.run_cli("discover", "add", "https://example.org/not-reddit", "--beat", "test-beat")
+        self.assertEqual(code, 2)
+        code, out, _ = self.run_cli("discover", "list", "--beat", "test-beat", "--json")
+        r = json.loads(out)["threads"][0]
+        self.assertEqual((r["id"], r["via"], r["ready"], r["in_beat"]), ("ws1abc", "websearch", True, True))
+        code, out, err = self.run_cli("discover", "mark", url, "--beat", "test-beat", "--status", "wanted", "--why", "a method thread")
+        self.assertEqual(code, 0, err)
+        code, out, _ = self.run_cli("discover", "list", "--beat", "test-beat")
+        self.assertIn("captures wanted", out)
+        self.assertIn("a method thread", out)
+        inbox = os.path.join(E.data_dir(cfg, "test-beat"), "captures")
+        code, out, _ = self.run_cli("captures", "--beat", "test-beat")
+        self.assertIn("0 captures waiting", out)
+        with open(os.path.join(inbox, "thread.html"), "w", encoding="utf-8") as f:
+            f.write(f'<html><a href="{url}">permalink</a><p>I used a Tool X pipeline</p></html>')
+        code, out, _ = self.run_cli("captures", "--beat", "test-beat", "--json")
+        c = json.loads(out)["captures"][0]
+        self.assertEqual((c["kind"], c["threads"]), ("text", ["https://www.reddit.com/r/exampleSub/comments/ws1abc/"]))
+        code, out, err = self.run_cli("new-note", url, "--beat", "test-beat", "--capture", os.path.join(inbox, "thread.html"))
+        self.assertEqual(code, 2, "a capture needs a title")
+        code, out, err = self.run_cli("new-note", url, "--beat", "test-beat", "--capture", os.path.join(inbox, "thread.html"),
+                                      "--title", "Tool X settings that worked", "--posted", "2026-10-01", "--note-kind", "workflow")
+        self.assertEqual(code, 0, err)
+        text = open(out.strip(), encoding="utf-8").read()
+        for line in ("source: user-capture", "capture: captures/done/thread.html", "discovered: websearch", "posted: 2026-10-01",
+                     "url: https://www.reddit.com/r/exampleSub/comments/ws1abc/", "community: exampleSub", "tools: [toolx]"):
+            self.assertIn(line, text)
+        self.assertTrue(os.path.exists(os.path.join(inbox, "done", "thread.html")))
+        self.assertFalse(os.path.exists(os.path.join(inbox, "thread.html")))
+        code, out, _ = self.run_cli("discover", "list", "--beat", "test-beat", "--json")
+        self.assertEqual(json.loads(out), {"threads": [], "captures_wanted": []})
+
 
 class SkillRefsTest(unittest.TestCase):
     def test_kb_copies_in_sync(self):

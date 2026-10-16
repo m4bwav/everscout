@@ -2,6 +2,11 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`.
 
+### C-20261016-1 · 2026-10-16 · Reddit discovery without a listing, captures, fetchwright budget
+- because: plan `ai-docs/plans/2026-10-16-reddit-discovery-after-arctic-shift.md` (user said build it, 2026-10-16); lane plan `2026-10-11-reddit-lane-after-rss.md` steps 3 and 4
+- files: SKILL.md (Step 2, Output), references/procedure.md (new section G), references/kb/ (synced)
+- Step 2 triages the `discover list` threads (pickup from other platforms during fetch, the agent's own web search, captures) by mentions then vocabulary, runs per-subreddit web searches only when no listing reads Reddit, stops fetchwright reads at the per-scan budget (exit 6) and turns the rest into at most five capture requests; `new-note --capture` writes a note from the user's saved page. The output reports the coverage line and the captures wanted.
+
 ### C-20261015-3 · 2026-10-15 · Reddit threads through fetchwright, opt-in
 - because: user decision 2026-10-15 ("integrate it with everscout now"); decision record `ai-docs/decisions/2026-10-15-thread-reader-fetchwright.md`
 - files: SKILL.md (Step 2)

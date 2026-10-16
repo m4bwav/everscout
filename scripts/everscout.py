@@ -73,8 +73,9 @@ DEFAULT_CONFIG = {
     "reddit": {"reader": "rss", "settle_hours": 36, "max_pages": 10, "thread_reader": "same"},
     # fetchwright's CLI: cli is a path to fetchwright.py (else $FETCHWRIGHT_CLI, else the installed plugin);
     # max_comments > 0 asks for at most that many comments (a 183-comment thread overran the model's answer uncapped
-    # and read at 100 on 2026-10-16); 0 lets fetchwright ask for all
-    "fetchwright": {"cli": "", "timeout_seconds": 400, "models": "", "max_comments": 100},
+    # and read at 100 on 2026-10-16); 0 lets fetchwright ask for all. max_reads_per_scan caps the fresh reads `thread` and
+    # `new-note` make for a beat between two fetches (the free tier allows 20 a day on gemini-3.8-flash); 0 = no cap
+    "fetchwright": {"cli": "", "timeout_seconds": 400, "models": "", "max_comments": 100, "max_reads_per_scan": 10},
     "engage": {
         "min_gap_minutes": 60,
         "max_per_day": 4,
@@ -320,13 +321,24 @@ def fetchwright_cache_path(cfg, url):
     return os.path.join(local_root(cfg), "cache", "fetchwright", hashlib.sha1(url.encode("utf-8")).hexdigest()[:20] + ".json")
 
 
+def fetchwright_cached(cfg, url):
+    """The cached fetchwright record for a URL while younger than thread_ttl_seconds, else None."""
+    cached = load_json(fetchwright_cache_path(cfg, url), None)
+    if cached and time.time() - cached.get("_fetched_at", 0) < cfg["pace"]["thread_ttl_seconds"]:
+        return cached
+    return None
+
+
+FETCHWRIGHT_RUNS = [0]  # fetchwright subprocesses started by this process (the per-scan budget counts them)
+
+
 def read_fetchwright(cfg, url, force=False, run=subprocess.run):
     """fetchwright's record for one thread URL, from the cache when younger than thread_ttl_seconds; None when the
     thread was not read (exit 1 or 5, a timeout, output that is not JSON). Raises ReaderStop on exits 2, 3 and 4, and
     while a 429's cool-down lasts (never retried within the hour, conduct rule 17)."""
     cp = fetchwright_cache_path(cfg, url)
-    cached = load_json(cp, None)
-    if cached and not force and time.time() - cached.get("_fetched_at", 0) < cfg["pace"]["thread_ttl_seconds"]:
+    cached = None if force else fetchwright_cached(cfg, url)
+    if cached:
         return cached
     f = fetcher(cfg)
     cd = f.cooldown(GEMINI_HOST)
@@ -346,6 +358,7 @@ def read_fetchwright(cfg, url, force=False, run=subprocess.run):
     gap = max(FETCHWRIGHT_MIN_GAP, f.gap_for(GEMINI_HOST))
     f._wait(GEMINI_HOST)
     t0 = time.time()
+    FETCHWRIGHT_RUNS[0] += 1
     try:
         r = run(argv, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=timeout,
                 env=dict(os.environ, PYTHONIOENCODING="utf-8"))
@@ -1017,7 +1030,20 @@ def cmd_fetch(a):
                     seen[it["id"]] = {"first_seen": iso(now_utc()), "source": r["source"], "title": it["title"][:120]}
                 if pub is None or pub >= (as_cutoff if it.get("via") == "arcticshift" else cutoff):
                     new.append(it)
-    st["fetches"] = (st.get("fetches") or [])[-49:] + [{"at": iso(now_utc()), "sources": len(rows), "fetched": f.fetched,
+    # pickup: Reddit threads linked from the other platforms' items (discovery without a listing); a listed Reddit item
+    # learns how many of them linked it, which counts toward its importance in triage. Only items inside the fetch window:
+    # a feed's old posts would bring back threads months old every time their entries are purged
+    picked = pickup_reddit_links(st, [i for i in allitems if (S.parse_time(i.get("published")) or now_utc()) >= cutoff])
+    disc = st.get("reddit_seen_elsewhere") or {}
+    for it in allitems:
+        e = disc.get(it["id"].split(":")[-1]) if it.get("platform") == "reddit" else None
+        if e and e.get("mentions"):
+            it["elsewhere"] = e["mentions"]
+    if picked:
+        note(f"pickup: {len(picked)} Reddit threads linked from other sources in this fetch, {len(disc)} kept from the last "
+             f"{DISCOVERY_KEEP_DAYS} days; `discover list --beat {b.slug}` ranks the ones to read")
+    st["fetchwright_reads"] = 0  # a fetch starts a scan: the per-scan fetchwright budget starts again
+    st["fetches"] =(st.get("fetches") or [])[-49:] + [{"at": iso(now_utc()), "sources": len(rows), "fetched": f.fetched,
                                                           "cached": f.cached, "new": len(new), "errors": errors}]
     st["last_fetch"] = iso(now_utc())
     if not a.peek:  # a peek (building a beat, answering a question) must not use up the next scan's new items
@@ -1038,6 +1064,7 @@ def cmd_fetch(a):
     for i in out[: a.limit]:
         age = f"{i['age_hours']:>6}h" if i.get("age_hours") is not None else "     ?"
         score = f"{i['points']}p {i['comments']}c " if i.get("via") == "arcticshift" else ""
+        score += f"linked {i['elsewhere']}x elsewhere " if i.get("elsewhere") else ""
         print(f"{(i.get('published') or '')[:16]:<16} {i['source_kind']:<8} {str(i['community'])[:18]:<18} {age} "
               f"{'M' if i['media'] else ' '} {score}{i['title'][:70]}  {i['url']}")
 
@@ -1192,16 +1219,227 @@ def thread_cache_path(cfg, tid):
     return os.path.join(local_root(cfg), "cache", "threads", re.sub(r"[^\w.-]", "_", tid) + ".json")
 
 
+# ---------------------------------------------------------------- Reddit discovery without a listing
+# Plan: ai-docs/plans/2026-10-16-reddit-discovery-after-arctic-shift.md. Thread URLs come from links in items already
+# fetched from other platforms (pickup, during fetch), the agent's own web search and the user's captures (discover add).
+# Never from Gemini's Google Search (conduct rule 17). Entries live in the beat's state under reddit_seen_elsewhere.
+
+DISCOVERY_KEEP_DAYS = 14
+DISCOVERY_HOLD_HOURS = 24  # a thread under a day old may not be in Google's index yet, so fetchwright cannot read it
+DISCOVERY_VIA = ("pickup", "websearch", "capture")
+DISCOVERY_STATUSES = ("new", "read", "dropped", "wanted")  # wanted: a capture was asked of the user
+
+
+def pickup_reddit_links(st, items, now=None):
+    """Record the Reddit threads linked from non-Reddit items in st['reddit_seen_elsewhere'] (id -> entry), one mention
+    per linking item, after purging entries first seen over DISCOVERY_KEEP_DAYS ago. Returns the ids linked this time."""
+    now = now or now_utc()
+    disc = st.setdefault("reddit_seen_elsewhere", {})
+    cut = now - dt.timedelta(days=DISCOVERY_KEEP_DAYS)
+    for k in [k for k, e in disc.items() if (S.parse_time(e.get("first_seen")) or now) < cut]:
+        del disc[k]
+    found = set()
+    for it in items:
+        if it.get("platform") == "reddit":
+            continue
+        blob = " ".join([it.get("url") or "", it.get("link") or "", it.get("title") or "", it.get("text") or ""]
+                        + list(it.get("reddit_links") or []))
+        for pid, sub, url in S.reddit_ids_in(blob):
+            e = disc.setdefault(pid, {"id": pid, "sub": sub, "url": url, "first_seen": iso(now), "via": "pickup",
+                                      "status": "new", "mentions": 0, "from": []})
+            if sub and not e.get("sub"):
+                e["sub"], e["url"] = sub, url
+            if any(x.get("item") == it["id"] for x in e["from"]):
+                continue  # the same item fetched again is not a second mention
+            pt = S.parse_time(it.get("published"))
+            pub = iso(pt) if pt else iso(now)
+            e["from"] = (e["from"] + [{"item": it["id"], "platform": it.get("platform") or "", "source": it.get("source") or "",
+                                       "title": (it.get("title") or "")[:140], "url": it.get("url") or "", "published": pub}])[-20:]
+            e["mentions"] = e.get("mentions", 0) + 1
+            # the thread is at least as old as the earliest item linking it, which dates the 24-hour hold
+            if not e.get("linked_by") or pub < e["linked_by"]:
+                e["linked_by"] = pub
+            found.add(pid)
+    return found
+
+
+def discovery_rows(cfg, b, st, now=None):
+    """Every discovery entry with what triage ranks it by: mentions across platforms, vocabulary on the linking text,
+    the beat's showcase and skip words, and whether the 24-hour hold is over."""
+    now = now or now_utc()
+    dd = data_dir(cfg, b.slug)
+    noted = {S.reddit_post_id(str(fm.get("url") or "")) for _, fm, _ in all_notes(dd)} - {None}
+    listed = st.get("seen") or {}
+    subs = {re.sub(r"^/?r/", "", r["source"]).lower() for r in b.sources() if r["kind"] == "reddit"}
+    showcase = [w.lower() for w in b.list_meta("showcase_words", ("i made", "my first", "we made", "i built", "released"))]
+    skip = [w.lower() for w in b.list_meta("skip_words", ("megathread", "weekly thread", "hiring", "[meta]", "daily discussion"))]
+    rows = []
+    for e in (st.get("reddit_seen_elsewhere") or {}).values():
+        pid = e["id"]
+        text = " ".join([e.get("title") or ""] + [x.get("title") or "" for x in e.get("from") or []])
+        low = text.lower()
+        if e.get("via") in ("websearch", "capture"):
+            ready_at = S.parse_time(e.get("first_seen")) or now  # a search result is in the index already
+        else:
+            ready_at = (S.parse_time(e.get("linked_by")) or S.parse_time(e.get("first_seen")) or now) + dt.timedelta(hours=DISCOVERY_HOLD_HOURS)
+        vocab = vocab_match(b, text)
+        rows.append(dict(e, in_beat=(e.get("sub") or "").lower() in subs, listed=f"reddit:{pid}" in listed, noted=pid in noted,
+                         ready=ready_at <= now, ready_at=iso(ready_at), vocab=vocab,
+                         showcase=[w for w in showcase if w in low], skip=[w for w in skip if w in low],
+                         platforms=sorted({x.get("platform") or "" for x in e.get("from") or []} - {""})))
+    # mentions first (a thread linked from two sources beats one found by search; two posts of one blog count less than
+    # two sources), then vocabulary, showcase words, home
+    rows.sort(key=lambda r: (len({x.get("source") or x.get("item") for x in r.get("from") or []}), r.get("mentions", 0),
+                             sum(len(v) for v in r["vocab"].values()), len(r["showcase"]), r["in_beat"]), reverse=True)
+    return rows
+
+
+def discovery_entry(cfg, b, ref):
+    """(state, entry or None, id) for an id or a thread URL."""
+    st = load_json(state_path(cfg, b.slug), {"seen": {}, "fetches": []})
+    ids = S.reddit_ids_in(ref)
+    pid = ids[0][0] if ids else ref.strip().lower()
+    return st, (st.get("reddit_seen_elsewhere") or {}).get(pid), pid
+
+
+def cmd_discover(a):
+    cfg = config()
+    b = get_beat(cfg, a.beat)
+    if a.action == "add":
+        ids = S.reddit_ids_in(a.url)
+        if not ids:
+            fail("not a Reddit thread URL (r/<sub>/comments/<id>, /comments/<id> or redd.it/<id>)", 2)
+        pid, sub, url = ids[0]
+        st = load_json(state_path(cfg, b.slug), {"seen": {}, "fetches": []})
+        disc = st.setdefault("reddit_seen_elsewhere", {})
+        e = disc.get(pid)
+        if e is None:
+            e = disc[pid] = {"id": pid, "sub": sub, "url": url, "first_seen": iso(now_utc()), "via": a.via, "status": "new",
+                             "mentions": 0, "from": []}
+        elif e.get("via") == "pickup" and a.via != "pickup":
+            e["also_via"] = a.via  # found by pickup and by hand: keep pickup's mentions
+        if sub and not e.get("sub"):
+            e["sub"], e["url"] = sub, url
+        if a.title:
+            e["title"] = a.title[:140]
+        if a.posted:
+            e["linked_by"] = a.posted[:10] + "T00:00:00+00:00"
+        save_json(state_path(cfg, b.slug), st)
+        print(f"{pid} {e['url']} ({e['via']}{', also ' + e['also_via'] if e.get('also_via') else ''}, {e.get('mentions', 0)} mentions)")
+        return
+    if a.action == "mark":
+        st, e, pid = discovery_entry(cfg, b, a.ref)
+        if e is None:
+            fail(f"{pid} is not in the beat's discovery list (`discover add` it first)", 2)
+        e["status"] = a.status
+        if a.why:
+            e["why"] = a.why[:200]
+        save_json(state_path(cfg, b.slug), st)
+        print(f"{pid} {a.status}")
+        return
+    st = load_json(state_path(cfg, b.slug), {})
+    rows = discovery_rows(cfg, b, st)
+    wanted = [r for r in rows if r.get("status") == "wanted" and not r["noted"]]
+    todo = [r for r in rows if a.all or (r.get("status", "new") == "new" and r["ready"] and not r["noted"] and not r["listed"]
+                                          and not r["skip"])]
+    if a.json:
+        print(json.dumps({"threads": todo[: a.limit], "captures_wanted": wanted}, indent=1, ensure_ascii=False))
+        return
+    # coverage while a listing still exists: how many of the Reddit threads noted lately did pickup also find
+    dd = data_dir(cfg, b.slug)
+    cut = (now_utc() - dt.timedelta(days=DISCOVERY_KEEP_DAYS)).date().isoformat()
+    recent = {S.reddit_post_id(str(fm.get("url") or "")) for _, fm, _ in all_notes(dd)
+              if fm.get("platform") == "reddit" and str(fm.get("posted") or "") >= cut} - {None}
+    found = {r["id"] for r in rows}
+    held = sum(1 for r in rows if not r["ready"] and r.get("status", "new") == "new")
+    print(f"{b.slug}: {len(rows)} Reddit threads found without a listing in the last {DISCOVERY_KEEP_DAYS} days "
+          f"({sum(r['in_beat'] for r in rows)} in the beat's subreddits, {sum(r['listed'] for r in rows)} also in the listing, "
+          f"{sum(r['noted'] for r in rows)} noted, {held} held under {DISCOVERY_HOLD_HOURS} h); "
+          f"pickup found {len(recent & found)} of the {len(recent)} Reddit threads noted in that time")
+    if thread_reader(cfg) == "fetchwright":
+        cap = int((cfg.get("fetchwright") or {}).get("max_reads_per_scan") or 0)
+        print(f"fetchwright reads this scan: {int(st.get('fetchwright_reads') or 0)}" + (f" of {cap}" if cap else ""))
+    for r in todo[: a.limit]:
+        ents = ", ".join(v for vs in r["vocab"].values() for v in vs)
+        print(f"{r.get('mentions', 0):>2}x {r['via']:<9} {('r/' + r['sub']) if r.get('sub') else '?':<22} {r['url']}\n"
+              f"      from {', '.join(r['platforms']) or r['via']}: {(r.get('title') or (r.get('from') or [{}])[0].get('title') or '')[:90]}"
+              + (f"\n      vocab: {ents}" if ents else "") + (f"; showcase: {', '.join(r['showcase'])}" if r["showcase"] else "")
+              + ("" if r["ready"] else f"\n      held until {r['ready_at'][:16]} UTC") + ("" if r["in_beat"] else "; outside the beat's subreddits"))
+    if not todo:
+        print("nothing ready to read")
+    if wanted:
+        print("\ncaptures wanted (asked of the user; their files go in " + os.path.join(dd, "captures") + "):")
+        for r in wanted:
+            print(f"- {r['url']}  {r.get('why') or ''}")
+
+
+def fetchwright_budget(cfg, b, url, force=False):
+    """None, or the run count to compare after the read when it may start fetchwright. Stops (exit 6) once the beat's
+    reads since its last fetch reach fetchwright.max_reads_per_scan: the rest become capture requests."""
+    if platform_of(url) != "reddit" or thread_reader(cfg) != "fetchwright" or (not force and fetchwright_cached(cfg, url)):
+        return None
+    cap = int((cfg.get("fetchwright") or {}).get("max_reads_per_scan") or 0)
+    used = int(load_json(state_path(cfg, b.slug), {}).get("fetchwright_reads") or 0)
+    if cap and used >= cap:
+        fail(f"this scan used its {cap} fetchwright reads (fetchwright.max_reads_per_scan): stop reading Reddit threads "
+             f"through fetchwright, mark the rest `discover mark <url> --status wanted --why ...` (at most five) and list "
+             f"them as captures wanted; `--thread-reader same` still reads through the listing reader", 6)
+    return FETCHWRIGHT_RUNS[0]
+
+
+def count_fetchwright_read(cfg, b, before):
+    if before is not None and FETCHWRIGHT_RUNS[0] > before:
+        st = load_json(state_path(cfg, b.slug), {"seen": {}, "fetches": []})  # reloaded: a fetch may have saved since
+        st["fetchwright_reads"] = int(st.get("fetchwright_reads") or 0) + FETCHWRIGHT_RUNS[0] - before
+        save_json(state_path(cfg, b.slug), st)
+
+
+CAPTURE_TEXT_EXT = (".txt", ".md", ".html", ".htm", ".json", ".eml")
+
+
+def capture_text(path):
+    """The text of a capture file the agent can read itself (pasted text, saved HTML); "" for images and PDFs."""
+    if not path.lower().endswith(CAPTURE_TEXT_EXT):
+        return ""
+    t = read(path)
+    return S.strip_html(t) if path.lower().endswith((".html", ".htm")) else t
+
+
+def cmd_captures(a):
+    cfg = config()
+    b = get_beat(cfg, a.beat)
+    inbox = os.path.join(data_dir(cfg, b.slug), "captures")
+    os.makedirs(inbox, exist_ok=True)
+    files = sorted(f for f in os.listdir(inbox) if os.path.isfile(os.path.join(inbox, f)) and not f.startswith("."))
+    out = []
+    for f in files:
+        p = os.path.join(inbox, f)
+        ids = S.reddit_ids_in(read(p)[:200000] if f.lower().endswith(CAPTURE_TEXT_EXT) else "")  # raw: hrefs hold the URL
+        out.append({"file": p, "kind": "text" if f.lower().endswith(CAPTURE_TEXT_EXT) else "file",
+                    "threads": [u for _, _, u in ids][:5], "bytes": os.path.getsize(p)})
+    if a.json:
+        print(json.dumps({"inbox": inbox, "captures": out}, indent=1))
+        return
+    print(f"{b.slug}: {len(out)} captures waiting in {inbox}")
+    for c in out:
+        print(f"- {os.path.basename(c['file'])} ({c['kind']}, {c['bytes']} bytes)" + (f": {', '.join(c['threads'])}" if c["threads"] else ": no thread URL inside; read it to find one"))
+
+
 def cmd_thread(a):
     cfg = config()
     set_reddit_reader(cfg, a)
-    words = ASKED_WORDS
+    words, b, before = ASKED_WORDS, None, None
     if a.beat:
-        words = tuple(ASKED_WORDS) + tuple(w.lower() for w in get_beat(cfg, a.beat).list_meta("asked_words"))
+        b = get_beat(cfg, a.beat)
+        words = tuple(ASKED_WORDS) + tuple(w.lower() for w in b.list_meta("asked_words"))
+        before = fetchwright_budget(cfg, b, a.url, force=a.force)
     try:
         t = load_thread(cfg, a.url, force=a.force, asked_words=words)
     except ReaderStop as e:
         fail(str(e), e.code)
+    finally:
+        if b:
+            count_fetchwright_read(cfg, b, before)
     if not t:
         if platform_of(a.url) == "reddit" and thread_reader(cfg) == "fetchwright":
             fail("fetchwright could not read this thread (see the line above); try --thread-reader same", 1)
@@ -1613,23 +1851,52 @@ def cmd_new_note(a):
     cfg = config()
     b = get_beat(cfg, a.beat)
     dd = data_dir(cfg, b.slug)
-    fm_extra = {}
-    if platform_of(a.url) != "web":
+    fm_extra, capture, moved = {}, None, None
+    ids = S.reddit_ids_in(a.url)
+    disc = (load_json(state_path(cfg, b.slug), {}).get("reddit_seen_elsewhere") or {}).get(ids[0][0]) if ids else None
+    if a.capture:
+        # the user's own copy of a page the scan could not read (lane plan step 4): no fetch, the agent writes the body
+        capture = os.path.abspath(expand(a.capture))
+        if not os.path.isfile(capture):
+            fail(f"no capture file at {capture}", 2)
+        if not a.title:
+            fail("a note from a capture needs --title (the title as the capture shows it) and, when known, --posted", 2)
+        title, plat, top, interest = a.title, platform_of(a.url), False, a.interest or 0
+        posted = (a.posted or (disc or {}).get("linked_by") or today())[:10]
+        if ids:
+            nid, community, url = ids[0]
+        else:
+            nid, community, url = "cap-" + hashlib.sha1(a.url.encode()).hexdigest()[:8], urllib.parse.urlsplit(a.url).hostname or "", a.url
+        body_text = title + "\n" + capture_text(capture)
+        fm_extra["source"] = "user-capture"
+        inbox = os.path.abspath(os.path.join(dd, "captures"))
+        if os.path.normcase(os.path.dirname(capture)) == os.path.normcase(inbox):
+            moved = os.path.join(inbox, "done", os.path.basename(capture))  # read: out of the inbox, kept for the user
+            fm_extra["capture"] = "captures/done/" + os.path.basename(capture)
+        else:
+            fm_extra["capture"] = os.path.basename(capture)
+    elif platform_of(a.url) != "web":
         set_thread_reader(cfg, a)
+        before = fetchwright_budget(cfg, b, a.url)
         try:
             t = load_thread(cfg, a.url)
         except ReaderStop as e:
             fail(str(e), e.code)
+        finally:
+            count_fetchwright_read(cfg, b, before)
         if not t:
             fail("thread not found")
         p = t["post"]
         items = {i["id"]: i for i in load_json(items_path(cfg, b.slug), [])}
-        # fetchwright returns no date: the fetched listing has it
-        title, posted, plat = p["title"], (p.get("published") or items.get(p["id"], {}).get("published") or today())[:10], t["platform"]
+        # fetchwright returns no date: the fetched listing has it, else the earliest item that linked the thread
+        title, plat = p["title"], t["platform"]
+        posted = (p.get("published") or items.get(p["id"], {}).get("published") or (disc or {}).get("linked_by") or today())[:10]
         community, nid, interest = p.get("community") or "", p["id"].split(":")[-1], t["comment_count"]
         url = p["url"]
         body_text = title + "\n" + (p.get("text") or "") + "\n" + "\n".join(c.get("text") or "" for c in t["comments"])
         top = bool(items.get(p["id"], {}).get("top"))
+        if t.get("via"):
+            fm_extra["via"] = t["via"]  # where interest came from: arcticshift scores, or fetchwright's partial comment count
     else:
         items = {i["url"]: i for i in load_json(items_path(cfg, b.slug), [])}
         it = items.get(a.url, {})
@@ -1653,10 +1920,22 @@ def cmd_new_note(a):
         fm[facet] = matched.get(facet, [])
     fm["tags"] = [b.slug, plat]
     fm["summary"] = "TODO one line saying what this teaches"
+    if disc:
+        fm_extra["discovered"] = disc.get("via") or "pickup"
+        fm_extra["mentions"] = disc.get("mentions", 0)
     fm.update(fm_extra)
     body = f"# {fm['title']}\n\n" + "".join(f"## {s}\n\nTODO\n\n" for s in b.sections()) + \
         f"Related: [beat index](../../INDEX.md)\n"
     write(path, render_frontmatter(fm) + "\n" + body)
+    if moved:
+        os.makedirs(os.path.dirname(moved), exist_ok=True)
+        os.replace(capture, moved)
+    if disc:
+        st = load_json(state_path(cfg, b.slug), {"seen": {}, "fetches": []})
+        e = (st.get("reddit_seen_elsewhere") or {}).get(disc["id"])
+        if e:
+            e["status"] = "read"
+            save_json(state_path(cfg, b.slug), st)
     print(path)
     if matched:
         note("vocabulary found (prefilled, check it): " + "; ".join(f"{k}: {', '.join(v)}" for k, v in matched.items()))
@@ -2887,6 +3166,17 @@ def main(argv=None):
     p.add_argument("--kind", default="reddit", choices=["reddit", "hn", "news", "arxiv"]); p.add_argument("--community")
     p.add_argument("--sort", default="new"); p.add_argument("--t", default="month"); p.add_argument("--force", action="store_true"); p.add_argument("--json", action="store_true")
     p.add_argument("--reddit-reader", choices=["auto", "rss", "arcticshift"], help="override config reddit.reader")
+    p = add("discover", cmd_discover, "Reddit threads found without a listing: pickup from other sources, web search, captures")
+    dsp = p.add_subparsers(dest="action", required=True)
+    q = dsp.add_parser("list", help="ranked threads ready to read (24 h after the first link), coverage, captures wanted"); q.add_argument("--beat")
+    q.add_argument("--all", action="store_true", help="every entry: held, listed, noted, read, dropped"); q.add_argument("--limit", type=int, default=20)
+    q.add_argument("--json", action="store_true")
+    q = dsp.add_parser("add", help="record a thread URL found by the agent's web search or a capture"); q.add_argument("url"); q.add_argument("--beat")
+    q.add_argument("--via", default="websearch", choices=[v for v in DISCOVERY_VIA if v != "pickup"]); q.add_argument("--title"); q.add_argument("--posted")
+    q = dsp.add_parser("mark", help="set an entry's status (wanted: a capture was asked of the user)"); q.add_argument("ref", help="id or thread URL")
+    q.add_argument("--beat"); q.add_argument("--status", required=True, choices=DISCOVERY_STATUSES); q.add_argument("--why")
+    p = add("captures", cmd_captures, "files the user dropped in the beat's captures/ inbox, with the thread URLs inside"); p.add_argument("--beat")
+    p.add_argument("--json", action="store_true")
     p = add("candidates", cmd_candidates, "rank cached items for an engagement"); p.add_argument("--beat"); p.add_argument("--limit", type=int, default=8); p.add_argument("--json", action="store_true")
     p = add("engage-check", cmd_engage_check, "may we engage now? exit 0 yes, 2 no"); p.add_argument("--platform", default="reddit")
     p.add_argument("--community"); p.add_argument("--author"); p.add_argument("--item"); p.add_argument("--kind", default="ask", choices=["ask", "thanks", "answer"]); p.add_argument("--json", action="store_true")
@@ -2908,6 +3198,7 @@ def main(argv=None):
     p.add_argument("--note-kind", default="discussion", choices=NOTE_KINDS); p.add_argument("--title"); p.add_argument("--posted"); p.add_argument("--interest", type=int)
     p.add_argument("--engaged", action="store_true"); p.add_argument("--force", action="store_true")
     p.add_argument("--thread-reader", choices=list(THREAD_READERS), help="override config reddit.thread_reader")
+    p.add_argument("--capture", help="write the note from the user's capture file (no fetch; needs --title); source: user-capture")
     p = add("validate", cmd_validate, "check a beat's notes"); p.add_argument("--beat"); p.add_argument("--strict", action="store_true")
     p = add("tally", cmd_tally, "recount signals from the notes"); p.add_argument("--beat")
     p = add("recall", cmd_recall, "what the knowledge base holds on a question: ranked notes, answers, reports, study, signals"); p.add_argument("--beat")
