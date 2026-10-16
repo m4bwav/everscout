@@ -93,3 +93,6 @@ A checker read 18 of the 159 new notes against their sources: 3 ok, 15 fixed (sm
 
 ## [2026-10-15] note | Gemini URL context Stage 1 started and blocked: key set, but its Cloud project (268277778089) answered 403 SERVICE_DISABLED or "caller does not have permission" for 15 minutes after Mark found the API Enabled, and calls past the permission check hung at 60 s (plain calls too, so not URL context). Probe script, cases and fixes in notes/2026-10-15-gemini-url-context-probe.md; next-session-prompt.md updated.
 ## [2026-10-15] index | rebuilt (10 entries)
+
+## [2026-10-15] research | Gemini URL context Stage 1 passed on gemini-3.5-flash-lite: key works now; all six Reddit threads read with the right title and body (fresh and edited posts match the current post, deleted post empty), 47 real comments in the settled thread, no comment shown invented, placeholders instead of removed text; usernames sometimes come back as comment text; Reddit pages come from Google's index (slug URL success, live fetch error). gemini-3.8-flash overloaded (503 or 60 s drop) and untested. research/2026-10-15-gemini-url-context-reddit-test.md; plan status updated; Stage 2 shape waits for Mark.
+## [2026-10-15] index | rebuilt (10 entries)

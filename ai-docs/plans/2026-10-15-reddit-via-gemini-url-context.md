@@ -1,12 +1,14 @@
 ---
 title: Reddit after 2027 - find thread URLs elsewhere, read them with Gemini's URL context tool
 kind: plan
-status: proposed
+status: active
 date: 2026-10-15
 tags: [reddit, gemini, url-context, arctic-shift, backup, post-2027]
 ---
 
 # Reddit after 2027: find URLs elsewhere, read them with Gemini's URL context
+
+**Status (2026-10-15 evening): Stage 1 passed on `gemini-3.5-flash-lite`** (6 of 6 bodies, 47 real comments in the settled thread, no comment shown invented; `gemini-3.8-flash` was overloaded and untested). Results: `../research/2026-10-15-gemini-url-context-reddit-test.md`. Stage 2 waits for Mark's choice of shape (step 1 below).
 
 Read this before building any Gemini reader for Reddit. Evidence for what is ruled out: `../research/2026-10-15-reddit-through-gemini.md`. Arctic Shift (0.4.0) collects through Reddit's Data API, which ends March 2027, so it is expected to stop then; this plan is the backup Mark asked for on 2026-10-15.
 
@@ -32,7 +34,7 @@ Content-Type: application/json
 {"model": "gemini-3.8-flash", "input": "<instruction with the URL>", "tools": [{"type": "url_context"}]}
 ```
 
-Text comes back in a `model_output` step (`content` blocks of `type: text`, `url_citation` annotations); a `url_context_result` step gives each URL's retrieval `status` (the docs name only `"unsafe"`; record every other value seen). Up to 20 URLs a request, 34 MB a URL, public pages only. Tokens of the fetched page count as input (`usage.tool_use_input_tokens`).
+Text comes back in a `model_output` step (`content` blocks of `type: text`, `url_citation` annotations); a `url_context_result` step gives each URL's retrieval `status` (the docs name only `"unsafe"`; record every other value seen). Up to 20 URLs a request, 34 MB a URL, public pages only. Tokens of the fetched page count as input (seen as `usage.total_tool_use_tokens` on 2026-10-15). Seen in Stage 1: Reddit pages come from Google's index under the slug URL (`success`), while the live fetch of the bare URL gives `error`.
 
 ## Stage 0: key (Mark's hands)
 
@@ -54,7 +56,7 @@ A standard-library Python probe in the session scratchpad, not in the repo. Pick
 
 Instruction per URL: return the post title, body and as many top-level comments as the page shows, word for word, as JSON (`title`, `body`, `comments: [{text, author_is_op}]`), no summary, and say so when the page could not be read. Record per case: HTTP status, the `url_context_result` status, latency, input and output tokens, comments returned against Arctic Shift's count, exact-sentence match rate of the body and of five sampled comments against Arctic Shift's text, any comment not in Arctic Shift's tree (fabrication), and free-tier refusals (429, quota). Pace one request every few seconds.
 
-Pass: at least four of the six Reddit cases return the post body matching Arctic Shift, a settled thread returns ten or more real comments, and no fabricated comment in the sample. Write the results either way into `../research/2026-10-1x-gemini-url-context-reddit-test.md`, with the raw responses kept in the scratchpad, not the repo.
+Pass: at least four of the six Reddit cases return the post body matching Arctic Shift, a settled thread returns ten or more real comments, and no fabricated comment in the sample. Write the results either way into `../research/2026-10-15-gemini-url-context-reddit-test.md`, with the raw responses kept in the scratchpad, not the repo.
 
 ## Stage 2 if it passes: build
 

@@ -1,7 +1,7 @@
 ---
 title: Gemini URL context probe for Reddit threads (Stage 1 script and progress)
 kind: note
-status: active
+status: done
 date: 2026-10-15
 tags: [gemini, url-context, reddit, probe, stage-1]
 ---
@@ -29,6 +29,10 @@ The scratch probe for Stage 1 of `../plans/2026-10-15-reddit-via-gemini-url-cont
 - Key: set at user level (`GEMINI_API_KEY`), visible to the session after a VS Code restart.
 - First call: HTTP 403 `SERVICE_DISABLED`, "Gemini API has not been used in project 268277778089 before or it is disabled": the key was made in a Cloud project without the API switched on. Mark opened the API page and found it already showing Enabled.
 - Calls in the next minutes: the control case with `url_context` hung and the connection dropped at exactly 60 s (`RemoteDisconnected`), twice; plain calls without a tool answered 403, either `SERVICE_DISABLED` again or "The caller does not have permission", flipping from call to call; the models list answered 403 `SERVICE_DISABLED`; `generateContent` on `gemini-3.8-flash`, `gemini-3.5-flash-lite` and `gemini-2.5-flash` all 403. That reads as the switch-on still spreading. No verdict on URL context yet. A last retry about 15 minutes after enabling: a plain `generateContent` "Say OK." on `gemini-3.8-flash` answered 403 "The caller does not have permission" once, then the next try hung until the 60 s read timeout. So the 60 s hangs are not URL context: any call that gets past the permission check hung. Either the new project is still being set up, or something on the network path holds the connection (test with `curl -m 180` and a longer Python timeout before blaming Google).
+
+## Stage 1 run (2026-10-15 evening)
+
+The key works: `gemini-3.5-flash-lite` answers 200; `gemini-3.8-flash` gave 503 "high demand" or a 60 s drop on every call, even with curl, streaming and no tool, so the earlier hangs were Google's overload. All seven cases ran on flash-lite with the fresh case swapped for r/comfyui 1x6p7lt (8.6 h old). Results and scoring: `../research/2026-10-15-gemini-url-context-reddit-test.md`. Changes to the script below for that run: a comma-separated model list in `argv[1]` that moves to the next model on a 503 (`python -I probe.py gemini-3.8-flash,gemini-3.5-flash-lite`), and the model name in each output line. Python's `-I` ignores `PYTHONIOENCODING`, so a scoring script that prints Reddit text needs `sys.stdout.reconfigure(encoding="utf-8")` on Windows.
 
 ## If the 403s persist in the next session
 
