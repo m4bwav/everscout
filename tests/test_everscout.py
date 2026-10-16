@@ -1248,7 +1248,7 @@ class FetchwrightReaderTests(WorkspaceTest):
         code, out, err = self.run_cli("thread", self.URL + "?utm=x", "--thread-reader", "fetchwright", "--json")
         self.assertEqual(code, 0, err)
         t = json.loads(out)
-        self.assertEqual(self.calls()[0], ["read", self.URL + "?utm=x", "--thread", "--json", "--max-chars", "0"])
+        self.assertEqual(self.calls()[0], ["read", self.URL + "?utm=x", "--thread", "--json", "--max-chars", "0", "--max-comments", "100"])
         self.assertEqual((t["via"], t["platform"], t["id"], t["comment_count"]), ("fetchwright", "reddit", "reddit:fw1abc", 2))
         self.assertEqual((t["post"]["kind"], t["post"]["community"], t["post"]["url"]), ("post", "exampleSub", self.URL))
         self.assertTrue(t["post"]["text"].endswith("é"), "UTF-8 survives the subprocess")

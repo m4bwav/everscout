@@ -129,6 +129,14 @@ Add a new model version as its own line when people argue about the difference (
 - lumibelle: Lumibelle
 - omnichar: OmniChar, .char model, .char file
 - h3-face-refine: ComfyUI-H3-FaceRefine, FaceRefine node, Face Refine node
+- longtakenocuts: LongTakeNoCuts, H3-LongTakeNoCuts
+- h3-anti-burn-lora: H3-Anti-Burn-LoRA, anti-burn LoRA, antiburn LoRA
+- obvpm: OBVPM, comfyui-obvpm, obvpm timeline
+- rtx-video: RTX Video, RTX VSR, RTX Video Super Resolution, RTX Video Frame Generation
+- depth-anything: Depth Anything, DepthAnythingV2, Video Depth Anything
+- video-helper-suite: Video Helper Suite, VideoHelperSuite, VHS_VideoCombine
+- h3-audiofirst: AudioFirst X2, ComfyUI-H3-AudioFirst
+- h3-exact-audio-lock: ExactAudioLock, ComfyUI-H3-ExactAudioLock
 
 ## Techniques
 

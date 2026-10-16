@@ -72,8 +72,9 @@ DEFAULT_CONFIG = {
     # Gemini's URL context; needs the user's own Gemini key, so it is opt-in; kb/platforms.md, conduct rule 17)
     "reddit": {"reader": "rss", "settle_hours": 36, "max_pages": 10, "thread_reader": "same"},
     # fetchwright's CLI: cli is a path to fetchwright.py (else $FETCHWRIGHT_CLI, else the installed plugin);
-    # max_comments > 0 asks for at most that many comments (very long threads can overrun the model's answer)
-    "fetchwright": {"cli": "", "timeout_seconds": 400, "models": "", "max_comments": 0},
+    # max_comments > 0 asks for at most that many comments (a 183-comment thread overran the model's answer uncapped
+    # and read at 100 on 2026-10-16); 0 lets fetchwright ask for all
+    "fetchwright": {"cli": "", "timeout_seconds": 400, "models": "", "max_comments": 100},
     "engage": {
         "min_gap_minutes": 60,
         "max_per_day": 4,

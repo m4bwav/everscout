@@ -5,7 +5,7 @@ status: active
 date: 2026-10-15
 verified: 2026-10-16
 tags: [reddit, fetchwright, gemini, thread-reader, quota]
-summary: four live reads through everscout's new fetchwright reader; two read well, one long thread broke the JSON, and the free tier's daily limit for gemini-3.8-flash (20 requests) stopped the run
+summary: ten live threads read through everscout's fetchwright reader on 2026-10-16; nine read (the last seven on flash-lite after the fall-through change), every comment real, about three quarters of the archive's comments; plus a real ai-video scan with 7 of 8 threads read
 ---
 
 # everscout's fetchwright thread reader, first live run
@@ -44,7 +44,32 @@ Run on the evening of 2026-10-15 (US time; 2026-10-16 01:56 UTC at the stop) fro
 - Coverage of long threads is still the weak point, and now a failure mode as well as a shortfall.
 - The free-tier daily limit decides the design. 20 requests a day on `gemini-3.8-flash` is about one weekly scan's worth of kept threads, shared with every other use of the key. `gemini-3.5-flash-lite` has its own limit, a forum claims 500 a day (unverified), and it read every thread in Stage 1.
 - fetchwright stops at the first 429 and does not try the next model. That honours rule 17, but a per-model daily quota on the first model blocks the whole route. Whether a quota 429 on one model may fall through to another is Mark's call, and a fetchwright change.
-- Too small a sample to pass the plan's gate (four of six threads readable): two of three attempts read. The wiring is opt-in and off by default, but the gate was not met, so the PR waits for Mark.
+- First run only: too small a sample for the gate. The second run (below) passed it.
+
+## Second run, 2026-10-16 02:57 UTC (flash-lite first)
+
+After Mark's answers, with fetchwright's quota fall-through merged and `fetchwright.models` set to `gemini-3.5-flash-lite,gemini-3.8-flash`. Each read answered on flash-lite at the first try.
+
+| thread | reference (archive) | feeds | fetchwright | matched archive | not in archive | handles | OP marked (archive) | page / output tokens | seconds |
+|---|---|---|---|---|---|---|---|---|---|
+| r/StableDiffusion, 2 deleted | 75 | 71 | 68 | 67 | 1 | 0 | 11 (11) | 11,623 / 7,667 | 16.1 |
+| r/StableDiffusion | 55 | 55 | 41 | 41 | 0 | 0 | 18 (23) | 8,233 / 5,217 | 10.9 |
+| r/aifilmmaking, image post, 1 deleted | 45 | 44 | 42 | 42 | 0 | 0 | 14 (14) | 6,498 / 3,234 | 7.4 |
+| r/comfyui | 38 | 37 | 31 | 31 | 0 | 0 | 0 (0) | 6,786 / 3,278 | 7.6 |
+| r/aivideo, video post, 5 deleted | 99 | 92 | 76 | 74 | 2 | 0 | 0 (0) | 4,067 / 2,068 | 8.3 |
+| r/generativeAI, 7 deleted | 18 | 15 | 14 | 14 | 0 | 0 | 2 (2) | 5,620 / 1,928 | 5.1 |
+| r/StableDiffusion, 183 + 18 collapsed, `max_comments` 100 | 183 | 190 | 106 | 99 | 7 | 3 | 21 (30) | 17,438 / 6,471 | 13.4 |
+
+- Seven of seven read. Across both runs, 9 of 10 threads read; the gate (four of six) passed.
+- Not in the archive: the 7 on the long thread all appear in Reddit's feed copy (they sit in branches the archive folds); 1 of the other 3 is in the feeds, and the rest are one- or two-word comments too short for the matcher. No comment was shown to be invented.
+- The 3 "handles" on the long thread are comments that name another user in their own text; the archive holds the same text. Not leaked author lines.
+- No placeholders and no deleted text came through. Titles matched on all seven; bodies 0.93 to 1.0.
+- `fetchwright.max_comments` 100 fixed the long thread that broke the JSON without a cap (106 comments, 13 s).
+- Coverage: 378 comments returned against 513 in the archive (74%) on these seven; 272 of 330 (82%) without the capped long thread. Small threads come back nearly whole.
+
+## The scan, 2026-10-16
+
+A real everscout-scan of ai-video (`fetch --max-age-days 6`, Reddit through the feeds), then `thread --thread-reader fetchwright` on the 8 kept Reddit threads: 7 read on flash-lite. The eighth, posted about 6 hours earlier, was not yet in Google's index; Gemini's live fetch met Reddit's bot wall and fetchwright reported "not read", so it was read through the feed. Notes went to Mark's data folder (9 notes with 2 web pages).
 
 ## Mark's answers, 2026-10-16
 

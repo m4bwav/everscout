@@ -2,11 +2,12 @@
 
 Updated 2026-10-15 (0.4.0: Reddit through Arctic Shift; see the first section). Before that 2026-09-28 (first all-beats scan; 0.3.0: beat statistics built). Everscout 0.1.0 was built in one session from indie-ai-scout 0.3.1; 0.2.0 added the everscout-ask skill (interrogate a beat like a reporter) and the tech-hiring beat, the first built from scratch. Read [log.md](log.md) for what happened, `decisions/` for the architecture, and `research/` for the evidence.
 
-## 0.5.0 state (2026-10-16 early UTC): Reddit threads through fetchwright, opt-in
+## 0.5.0 state (2026-10-16): Reddit threads through fetchwright, opt-in, released
 
-- Branch `feat/thread-reader-fetchwright`, PR open and **not merged**: the live gate (four of six threads readable) was not reached. Built: config `reddit.thread_reader` (`same` default, `fetchwright`), `--thread-reader` on `thread` and `new-note`, `fetchwright.cli|models|max_comments|timeout_seconds`; subprocess adapter in `load_thread`; cache, 5 s pace, cool-down from Google's retry time; 65 offline tests. Decision: `decisions/2026-10-15-thread-reader-fetchwright.md`.
-- Live (`research/2026-10-15-fetchwright-thread-reader-live.md`): 20 of 22 and 72 of 76 comments, all real, no handles; a 183-comment thread broke the JSON; then 429: the free tier gives `gemini-3.8-flash` **20 requests a day**. Mark's cool-down runs to 2026-10-17 00:00 UTC; do not call Gemini before then.
-- Mark answered on 2026-10-16: yes to quota fall-through (fetchwright PR #2, merged, unreleased), yes to flash-lite first (Mark's config now has `fetchwright.models` = `gemini-3.5-flash-lite,gemini-3.8-flash` and `fetchwright.cli` pointing at the fetchwright clone, which has the fall-through), yes to merging #21 and releasing 0.5.0 once the live gate passes. The cool-down still runs to 2026-10-17 00:00 UTC: shortening it was refused as weakening a safeguard, so the reads wait. Next session prompt: `next-session-prompt.md`.
+- Released as v0.5.0 (PR #21 merged). Config `reddit.thread_reader` (`same` default, `fetchwright`), `--thread-reader` on `thread` and `new-note`, `fetchwright.cli|models|max_comments (100)|timeout_seconds`; subprocess adapter in `load_thread`; cache, 5 s pace, cool-down from Google's retry time. Decision: `decisions/2026-10-15-thread-reader-fetchwright.md`.
+- Live (`research/2026-10-15-fetchwright-thread-reader-live.md`): 9 of 10 threads read, every comment real, about three quarters of the archive's comments. The free tier gives `gemini-3.8-flash` 20 requests a day; fetchwright now moves to the next model on a per-model quota 429 (fetchwright PR #2, merged, not released). Mark's config runs `gemini-3.5-flash-lite` first and points `fetchwright.cli` at the fetchwright clone until fetchwright 0.2.0 is released and installed.
+- First real scan with it (ai-video, 2026-10-16): 7 of 8 threads read; a thread hours old was not yet in Google's index and was read through the feed.
+- Open: fetchwright 0.2.0 release (needs Mark), then drop `fetchwright.cli` from Mark's config; flash-lite's daily limit is still unverified (about 20 reads this session, no 429).
 
 ## 0.4.0 state (2026-10-15): Reddit after the feeds
 
