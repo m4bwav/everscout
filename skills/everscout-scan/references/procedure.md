@@ -6,7 +6,7 @@ Detail for [SKILL.md](../SKILL.md). `ES` = `python "<plugin root>/scripts/eversc
 
 1. `ES state --beat <slug>`: when was the last fetch, how many notes. Choose `--max-age-days`: days since the last scan, at least 3, at most 7 (older items are stale for engagement and usually already noted).
 2. Background: `ES fetch --beat <slug> --max-age-days N --json > LOCAL/scan-<slug>-<date>.json`. Add `--listing new,top` weekly (Reddit top-of-week is the interest signal and doubles the Reddit time). Do not `--force` unless the user says the cache is wrong.
-3. Background or after: `ES followups --beat <slug>`: each block is an ask with the maker's new replies.
+3. After the fetch finishes (never alongside it; Reddit pacing has no shared lock): `ES followups --beat <slug>`: each block is an ask with the maker's new replies.
 4. While it runs, read `DATA/HANDOFF.md`, `DATA/feedback.md`, `DATA/journal.md` (newest entries) and the newest report's `## Open questions`, so triage knows what matters now.
 5. Triage from the JSON file. One pass over titles and snippets:
    - keep: a maker showing work with a stated or visible method; a release, paper or dataset people react to; a long practitioner discussion (interest 20 or more, or top of week); a rule, policy or platform change; an answer to an open question; anything `feedback.md` asks for;
