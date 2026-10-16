@@ -2,6 +2,11 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`.
 
+### C-20261016-1 · 2026-10-16 · A YouTube 404 on every channel is the endpoint
+- because: ai-video scan 2026-10-16 (seven channel feeds 404 while their pages answered 200; Google's own channel too), research/2026-10-16-youtube-feeds-and-gdelt-refusals.md (repository ai-docs)
+- files: references/kb/platforms.md (synced from kb/platforms.md, youtube row)
+- When every YouTube row fails in one fetch, leave sources.md alone and fetch again later; the CLI's fetch says so.
+
 ### C-20261015-1 · 2026-10-15 · The Gemini URL context route through fetchwright
 - because: user decision 2026-10-15 (standalone plugin, named fetchwright), plan Stage 2 step 3, research/2026-10-15-gemini-url-context-reddit-test.md (repository ai-docs)
 - files: references/kb/ (synced from kb/conduct.md rule 17 and kb/platforms.md, keyed sources)

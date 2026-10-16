@@ -2,6 +2,13 @@
 
 Updated 2026-10-15 (0.4.0: Reddit through Arctic Shift; see the first section). Before that 2026-09-28 (first all-beats scan; 0.3.0: beat statistics built). Everscout 0.1.0 was built in one session from indie-ai-scout 0.3.1; 0.2.0 added the everscout-ask skill (interrogate a beat like a reporter) and the tech-hiring beat, the first built from scratch. Read [log.md](log.md) for what happened, `decisions/` for the architecture, and `research/` for the evidence.
 
+## After 0.5.0 (2026-10-16, later): YouTube outage line, first ai-video radar, discovery plan
+
+- Unreleased on main (PR from `fix/youtube-outage-line`): `fetch` says in one line when every YouTube feed fails, because YouTube's feed server 404s for every channel at once, on and off, since December 2025; the ai-video ids are fine. Evidence and the GDELT findings: `research/2026-10-16-youtube-feeds-and-gdelt-refusals.md`. 66 tests.
+- Mark's ai-video data folder: the first monthly radar, `reports/2026-10-16-radar.md` (96 notes, lint clean); the beat HANDOFF lists what waits for Mark (metric promotions; keep or archive the GDELT metric).
+- Stage 2 step 4 planned, not built: `plans/2026-10-16-reddit-discovery-after-arctic-shift.md` (pickup from fetched items and captures first, agent web search next, at most 10 fetchwright reads a scan).
+- Still waiting on Mark: fetchwright 0.2.0 release, then removing `fetchwright.cli` from his config.
+
 ## 0.5.0 state (2026-10-16): Reddit threads through fetchwright, opt-in, released
 
 - Released as v0.5.0 (PR #21 merged). Config `reddit.thread_reader` (`same` default, `fetchwright`), `--thread-reader` on `thread` and `new-note`, `fetchwright.cli|models|max_comments (100)|timeout_seconds`; subprocess adapter in `load_thread`; cache, 5 s pace, cool-down from Google's retry time. Decision: `decisions/2026-10-15-thread-reader-fetchwright.md`.

@@ -435,6 +435,30 @@ class FetchTests(WorkspaceTest):
         self.assertIn("I used Tool X", out)
 
 
+class YoutubeOutageTests(WorkspaceTest):
+    def write_sources(self, ids):
+        with open(os.path.join(self.bd, "sources.md"), "w", encoding="utf-8") as f:
+            f.write("| source | kind | group | stance | engage | scan | filter | notes |\n|---|---|---|---|---|---|---|---|\n")
+            for i in ids:
+                f.write(f"| {i} | youtube | video | n/a | no | yes | | ~ |\n")
+
+    def fetch(self, ok):
+        def net(req, timeout=0):
+            if any(i in req.full_url for i in ok):
+                return FakeResponse(YT_ATOM)
+            raise urllib.error.HTTPError(req.full_url, 404, "nf", {}, None)
+        with mock.patch("urllib.request.urlopen", net):
+            return self.run_cli("fetch", "--beat", "test-beat", "--max-age-days", "3650", "--force")
+
+    def test_every_channel_404_names_the_endpoint(self):
+        self.write_sources(["UCaaa", "UCbbb", "UCccc"])
+        code, out, err = self.fetch(ok=())
+        self.assertEqual(code, 0, err)
+        self.assertIn("all 3 channel feeds failed at once", err)
+        code, out, err = self.fetch(ok=("UCaaa",))
+        self.assertNotIn("failed at once", err, "one channel answering means the others may really be gone")
+
+
 class MultiredditTests(WorkspaceTest):
     def write_sources(self, subs):
         with open(os.path.join(self.bd, "sources.md"), "w", encoding="utf-8") as f:
