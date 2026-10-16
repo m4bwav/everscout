@@ -17,7 +17,7 @@ Keep finding the Reddit threads a beat needs once nothing lists a subreddit, wit
 
 ## Status
 
-2026-10-16: plan only, nothing built. Waiting for Mark's go to build steps 1 to 5 below.
+2026-10-16: plan only, nothing built. Mark said build steps 1 to 5 in the next session (2026-10-16).
 
 ## Next single action
 
