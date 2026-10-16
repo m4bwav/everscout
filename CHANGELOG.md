@@ -6,6 +6,7 @@ Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELO
 
 - because: the 2026-10-16 ai-video scan flagged seven YouTube channel feeds as 404; every YouTube feed was failing, Google's own channel included (`ai-docs/research/2026-10-16-youtube-feeds-and-gdelt-refusals.md`).
 - `fetch` prints one line when every YouTube feed in the run fails: the endpoint is down, not the channel ids, so fetch again later before changing `sources.md`. kb/platforms.md youtube row says the same. 66 offline tests (1 new). A patch when released.
+- ai-video beat metrics (user's answers, 2026-10-16): `wiki-text-to-video` promoted to active; `news-ai-video-share` archived as `source-gone` (GDELT refuses this address on the first call, three scans running).
 - Plan for Reddit discovery after Arctic Shift (`ai-docs/plans/2026-10-16-reddit-discovery-after-arctic-shift.md`): pickup from items already fetched and user captures first, the agent's own web search next; nothing built.
 
 ## 0.5.0 · 2026-10-16
