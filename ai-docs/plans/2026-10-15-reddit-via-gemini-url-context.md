@@ -8,7 +8,7 @@ tags: [reddit, gemini, url-context, arctic-shift, backup, post-2027]
 
 # Reddit after 2027: find URLs elsewhere, read them with Gemini's URL context
 
-**Status (2026-10-15 evening): Stage 1 passed on `gemini-3.5-flash-lite`** (6 of 6 bodies, 47 real comments in the settled thread, no comment shown invented; `gemini-3.8-flash` was overloaded and untested). Results: `../research/2026-10-15-gemini-url-context-reddit-test.md`. Stage 2 waits for Mark's choice of shape (step 1 below).
+**Status (2026-10-15 evening): Stage 1 passed on `gemini-3.5-flash-lite`** (6 of 6 bodies, 47 real comments in the settled thread, no comment shown invented; `gemini-3.8-flash` was overloaded and untested). Results: `../research/2026-10-15-gemini-url-context-reddit-test.md`. Stage 2 shape chosen by Mark on 2026-10-15: **the standalone public plugin**; everscout stays keyless and may call its CLI later. Not built yet.
 
 Read this before building any Gemini reader for Reddit. Evidence for what is ruled out: `../research/2026-10-15-reddit-through-gemini.md`. Arctic Shift (0.4.0) collects through Reddit's Data API, which ends March 2027, so it is expected to stop then; this plan is the backup Mark asked for on 2026-10-15.
 

@@ -1,4 +1,4 @@
-# Next session: Stage 2 of the Gemini URL context reader for Reddit (after Mark picks its shape)
+# Next session: build the standalone Gemini URL context reader plugin (Stage 2)
 
 Written 2026-10-15 (evening). Run from `D:\m4bwa\Claude\Projects\Ai`. The everscout repo is `Ai\everscout` (public, m4bwav/everscout); its main clone holds another session's uncommitted edits, so work in a worktree off origin/main.
 
@@ -18,8 +18,8 @@ Written 2026-10-15 (evening). Run from `D:\m4bwa\Claude\Projects\Ai`. The eversc
 
 ## The next step and its limits
 
-1. Check whether Mark has chosen the Stage 2 shape: look at the end of `ai-docs/log.md` and the plan's status line. The choices are a standalone public plugin that reads pages other fetchers cannot (the plan recommends it: everscout stays keyless by default and the reader is useful beyond Reddit), a reader inside everscout (`reddit.thread_reader: gemini`), or both, with everscout calling the plugin's CLI. If no choice is recorded, ask him once and stop.
-2. Build what he chose, as the plan's Stage 2 says. The reader must: try `gemini-3.8-flash` and fall back to `gemini-3.5-flash-lite` on 503 or a 60 s drop; never send `google_search`; drop items whose text is a lone username, and drop "Comment removed by moderator" or "Comment deleted by user" placeholders; record each `url_context_result` status; read the key from the environment, never print it or write it to a file.
+1. Mark chose the shape on 2026-10-15: a **standalone public plugin** that reads pages other fetchers cannot, with a setup advisor skill for the key, tiers, quotas and privacy, and a standard-library CLI. Not an everscout reader; everscout stays keyless and may call the plugin's CLI later. Agree a name with Mark before creating the repo (one question, a few options in the house style, such as a -wright name).
+2. Build it as the plan's Stage 2 says. The reader must: try `gemini-3.8-flash` and fall back to `gemini-3.5-flash-lite` on 503 or a 60 s drop; never send `google_search`; drop items whose text is a lone username, and drop "Comment removed by moderator" or "Comment deleted by user" placeholders; record each `url_context_result` status; read the key from the environment, never print it or write it to a file.
 3. Offline tests on recorded responses (key and handles scrubbed) and one live smoke test that skips without a key. Conduct rule 17 and `kb/platforms.md`: a row for the route, the "never Google Search for discovery" line, the free-tier privacy line.
 4. A standalone plugin is a new public repo: README banner, SECURITY.md, size budget with green, yellow and red limits, icon, wiki. Creating the repo was approved in the original kickoff; tagging and releasing need Mark's go-ahead.
 
@@ -32,6 +32,6 @@ Written 2026-10-15 (evening). Run from `D:\m4bwa\Claude\Projects\Ai`. The eversc
 
 ## When to stop and ask
 
-When the shape is not chosen; when the key stops working; if Gemini starts returning text from deleted or removed posts (decide with Mark how notes treat it); if requests start failing with refusals or 429s (record and stop, conduct rule 17); before any release.
+Before naming and creating the repo; when the key stops working; if Gemini starts returning text from deleted or removed posts (decide with Mark how notes treat it); if requests start failing with refusals or 429s (record and stop, conduct rule 17); before any release.
 
 When you stop, rewrite this file for the session after you: what to read first, the next step and its limits, the rules, when to stop and ask. Its last paragraph must give that session this same instruction.
