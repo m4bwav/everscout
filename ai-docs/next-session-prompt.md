@@ -1,6 +1,6 @@
 # Next session: after everscout 0.5.0 (Reddit threads through fetchwright)
 
-Written 2026-10-16 after the 0.5.0 release. Run from `D:\m4bwa\Claude\Projects\Ai`. The everscout repository is `Ai/everscout` (public, m4bwav/everscout); its main clone may hold another session's uncommitted edits, so work in a worktree off origin/main.
+Written 2026-10-16 after the 0.5.0 release. Run from the folder that holds the everscout clones. The everscout repository is `Ai/everscout` (public, m4bwav/everscout); its main clone may hold another session's uncommitted edits, so work in a worktree off origin/main.
 
 ## Where things stand
 
