@@ -96,3 +96,5 @@ A checker read 18 of the 159 new notes against their sources: 3 ok, 15 fixed (sm
 
 ## [2026-10-15] research | Gemini URL context Stage 1 passed on gemini-3.5-flash-lite: key works now; all six Reddit threads read with the right title and body (fresh and edited posts match the current post, deleted post empty), 47 real comments in the settled thread, no comment shown invented, placeholders instead of removed text; usernames sometimes come back as comment text; Reddit pages come from Google's index (slug URL success, live fetch error). gemini-3.8-flash overloaded (503 or 60 s drop) and untested. research/2026-10-15-gemini-url-context-reddit-test.md; plan status updated; Stage 2 shape waits for Mark.
 ## [2026-10-15] index | rebuilt (10 entries)
+
+## [2026-10-15] decision | Stage 2 shape: Mark chose the standalone public plugin (reads pages other fetchers cannot; setup skill for key, tiers and privacy; stdlib CLI); everscout stays keyless. Plan, HANDOFF and next-session-prompt.md updated; name to agree with Mark before the repo is created.
