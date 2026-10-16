@@ -1171,6 +1171,189 @@ class ArcticShiftTests(WorkspaceTest):
             shutil.rmtree(tmp, ignore_errors=True)
 
 
+FAKE_FETCHWRIGHT = r'''
+import json, os, sys
+here = os.path.dirname(os.path.abspath(__file__))
+with open(os.path.join(here, "calls.txt"), "a", encoding="utf-8") as f:
+    f.write(json.dumps(sys.argv[1:]) + "\n")
+with open(os.path.join(here, "mode.txt"), encoding="utf-8") as f:
+    mode = f.read().strip()
+if mode == "ok":
+    print(json.dumps({"fetchwright": "9.9.9", "url": sys.argv[2], "mode": "thread", "style": "verbatim", "model": "model-a",
+                      "models_tried": [], "read_ok": True, "why_not": "", "new_statuses": [], "title": "A synthetic thread about Tool X",
+                      "retrieval": [{"url": sys.argv[2] + "a_synthetic_thread/", "status": "success"}, {"url": sys.argv[2], "status": "error"}],
+                      "usage": {"input": 300, "page": 4000, "output": 900, "total": 5200},
+                      "body": "I tried a new pipeline with Tool X. é", "body_removed": False,
+                      "comments": [{"text": "What settings did you use?", "author_is_op": False},
+                                   {"text": "Mostly defaults, the workflow is in the post.", "author_is_op": True},
+                                   {"text": "  ", "author_is_op": False}],
+                      "dropped": {"placeholder": 1, "lone_token": 2, "empty": 0}}))
+    sys.exit(0)
+if mode == "unread":
+    print(json.dumps({"read_ok": False, "why_not": "a synthetic login wall", "comments": []}))
+print("fake fetchwright says " + mode + (": limit 20 requests per day. Please retry in 5h2m3s" if mode == "rate" else ""), file=sys.stderr)
+sys.exit({"unread": 1, "usage": 2, "rate": 3, "key": 4, "down": 5}[mode])
+'''
+
+
+class FetchwrightReaderTests(WorkspaceTest):
+    URL = "https://www.reddit.com/r/exampleSub/comments/fw1abc/"
+
+    def setUp(self):
+        super().setUp()
+        self.fwdir = os.path.join(self.tmp, "fw")
+        os.makedirs(self.fwdir)
+        self.cli = os.path.join(self.fwdir, "fetchwright.py")
+        with open(self.cli, "w", encoding="utf-8") as f:
+            f.write(FAKE_FETCHWRIGHT)
+        self.mode("ok")
+        self.set_cfg(fetchwright={"cli": self.cli})
+        real = E.fetcher
+        self.patches = [mock.patch.object(E, "fetcher", lambda cfg: self._quiet(real(cfg))),
+                        mock.patch.object(E, "claude_plugins_dir", lambda: os.path.join(self.tmp, "no-plugins")),
+                        mock.patch.dict(os.environ, {"FETCHWRIGHT_CLI": ""})]
+        for p in self.patches:
+            p.start()
+
+    def tearDown(self):
+        for p in reversed(self.patches):
+            p.stop()
+        super().tearDown()
+
+    @staticmethod
+    def _quiet(f):
+        f.sleep = lambda s: None
+        return f
+
+    def mode(self, m):
+        with open(os.path.join(self.fwdir, "mode.txt"), "w", encoding="utf-8") as f:
+            f.write(m)
+
+    def set_cfg(self, **kw):
+        p = os.path.join(self.home, "config.json")
+        with open(p, encoding="utf-8") as fh:
+            cfg = json.load(fh)
+        cfg.update(kw)
+        with open(p, "w", encoding="utf-8") as fh:
+            json.dump(cfg, fh)
+
+    def calls(self):
+        p = os.path.join(self.fwdir, "calls.txt")
+        if not os.path.exists(p):
+            return []
+        with open(p, encoding="utf-8") as f:
+            return [json.loads(line) for line in f if line.strip()]
+
+    def test_maps_fetchwright_record_to_a_thread(self):
+        code, out, err = self.run_cli("thread", self.URL + "?utm=x", "--thread-reader", "fetchwright", "--json")
+        self.assertEqual(code, 0, err)
+        t = json.loads(out)
+        self.assertEqual(self.calls()[0], ["read", self.URL + "?utm=x", "--thread", "--json", "--max-chars", "0", "--max-comments", "100"])
+        self.assertEqual((t["via"], t["platform"], t["id"], t["comment_count"]), ("fetchwright", "reddit", "reddit:fw1abc", 2))
+        self.assertEqual((t["post"]["kind"], t["post"]["community"], t["post"]["url"]), ("post", "exampleSub", self.URL))
+        self.assertTrue(t["post"]["text"].endswith("é"), "UTF-8 survives the subprocess")
+        self.assertEqual([c["kind"] for c in t["comments"]], ["comment", "comment"])
+        self.assertEqual([c["is_op"] for c in t["comments"]], [False, True])
+        self.assertTrue(all(c["author"] == "" for c in t["comments"] + [t["post"]]), "no handles")
+        self.assertTrue(t["process_asked"])
+        fm = t["fetchwright"]
+        self.assertEqual((fm["model"], fm["usage"]["page"], fm["version"], fm["dropped"]["lone_token"]), ("model-a", 4000, "9.9.9", 2))
+        self.assertEqual([r["status"] for r in fm["retrieval"]], ["success", "error"])
+        code, out, err = self.run_cli("thread", self.URL + "?utm=x", "--thread-reader", "fetchwright")
+        self.assertEqual(code, 0, err)
+        self.assertIn("via fetchwright 9.9.9 · model-a · page 4000", out)
+        self.assertEqual(len(self.calls()), 1, "the second read comes from the cache")
+        with open(os.path.join(self.tmp, "local", "ratelimit.json"), encoding="utf-8") as fh:
+            gap = json.load(fh)[E.GEMINI_HOST] - time.time()
+        self.assertGreater(gap, 3, "Gemini is paced at 5 s or more even when the config's default gap is 0")
+
+    def test_config_passes_models_and_comment_cap(self):
+        self.set_cfg(fetchwright={"cli": self.cli, "models": "model-b,model-a", "max_comments": 40})
+        code, out, err = self.run_cli("thread", self.URL, "--thread-reader", "fetchwright", "--json")
+        self.assertEqual(code, 0, err)
+        self.assertEqual(self.calls()[0][-4:], ["--models", "model-b,model-a", "--max-comments", "40"])
+
+    def test_not_read_and_models_down_return_none(self):
+        for mode, words in (("unread", "a synthetic login wall"), ("down", "every Gemini model was unavailable")):
+            self.mode(mode)
+            code, out, err = self.run_cli("thread", self.URL, "--thread-reader", "fetchwright", "--force")
+            self.assertEqual(code, 1, mode)
+            self.assertIn(words, err)
+        cfg = self.cfg()
+        cfg["reddit"]["thread_reader"] = "fetchwright"
+        self.assertIsNone(E.load_thread(cfg, self.URL, force=True))
+
+    def test_rate_limit_sets_cooldown_and_stops_later_reads(self):
+        self.mode("rate")
+        code, out, err = self.run_cli("thread", self.URL, "--thread-reader", "fetchwright")
+        self.assertEqual(code, 3)
+        self.assertIn("rule 17", err)
+        with open(os.path.join(self.tmp, "local", "cooldown.json"), encoding="utf-8") as fh:
+            cd = json.load(fh)[E.GEMINI_HOST]
+        self.assertGreater(cd["until"] - time.time(), 5 * 3600, "Google's own retry time, at least an hour")
+        self.assertEqual((E.retry_after_seconds("Please retry in 41.5s"), E.retry_after_seconds("no hint")), (41, 0))
+        self.mode("ok")
+        code, out, err = self.run_cli("thread", self.URL, "--thread-reader", "fetchwright")
+        self.assertEqual(code, 3)
+        self.assertIn("rate limited earlier", err)
+        self.assertEqual(len(self.calls()), 1, "no call while cooling down")
+
+    def test_key_and_usage_problems_stop(self):
+        self.mode("key")
+        code, out, err = self.run_cli("thread", self.URL, "--thread-reader", "fetchwright")
+        self.assertEqual(code, 4)
+        self.assertIn("fetchwright-setup", err)
+        self.mode("usage")
+        code, out, err = self.run_cli("thread", self.URL, "--thread-reader", "fetchwright")
+        self.assertEqual(code, 2)
+
+    def test_not_installed_message(self):
+        self.set_cfg(fetchwright={"cli": ""})
+        code, out, err = self.run_cli("thread", self.URL, "--thread-reader", "fetchwright")
+        self.assertEqual(code, 2)
+        self.assertIn("fetchwright is not installed", err)
+        self.assertIn("fetchwright-setup", err)
+        self.set_cfg(fetchwright={"cli": os.path.join(self.tmp, "missing.py")})
+        code, out, err = self.run_cli("thread", self.URL, "--thread-reader", "fetchwright")
+        self.assertEqual(code, 2)
+        self.assertIn("config fetchwright.cli points at", err)
+
+    def test_cli_lookup_order(self):
+        plugins = os.path.join(self.tmp, "plugins")
+        tail = os.path.join("skills", "fetchwright", "scripts", "fetchwright.py")
+        for v in ("0.9.0", "0.10.0"):
+            p = os.path.join(plugins, "cache", "some-market", "fetchwright", v, tail)
+            os.makedirs(os.path.dirname(p))
+            open(p, "w").close()
+        env_cli = os.path.join(self.tmp, "env-fw.py")
+        open(env_cli, "w").close()
+        with mock.patch.object(E, "claude_plugins_dir", lambda: plugins):
+            self.assertIn("0.10.0", E.find_fetchwright({})[0], "newest installed version")
+            with mock.patch.dict(os.environ, {"FETCHWRIGHT_CLI": env_cli}):
+                self.assertEqual(E.find_fetchwright({})[0], env_cli)
+                self.assertEqual(E.find_fetchwright({"fetchwright": {"cli": self.cli}})[0], self.cli)
+
+    def test_reader_precedence(self):
+        self.assertEqual(E.thread_reader({}), "same")
+        cfg = {"reddit": {"thread_reader": "fetchwright"}}
+        self.assertEqual(E.thread_reader(cfg), "fetchwright")
+        a = mock.Mock(thread_reader="same", reddit_reader=None)
+        self.assertEqual(E.set_thread_reader(cfg, a), "same", "the flag wins over the config")
+        with self.assertRaises(SystemExit):
+            E.thread_reader({"reddit": {"thread_reader": "gemini"}})
+
+    def test_same_reader_and_other_platforms_never_call_fetchwright(self):
+        self.set_cfg(reddit={"reader": "rss", "thread_reader": "fetchwright"})
+        atom = reddit_thread_atom("fw1abc", replies=[("c1", "someone", "what tools did you use?", ago(20))])
+        with mock.patch.object(S.Fetcher, "get", return_value=(atom, False, 200)):
+            t = E.load_thread(self.cfg(), self.URL, reader="same")
+        self.assertEqual(t["comment_count"], 1)
+        self.assertNotEqual(t.get("via"), "fetchwright")
+        with mock.patch.object(S.Fetcher, "get_json", return_value=({}, False, 200)):
+            E.load_thread(self.cfg(), "https://news.ycombinator.com/item?id=1")
+        self.assertEqual(self.calls(), [])
+
+
 class SkillRefsTest(unittest.TestCase):
     def test_kb_copies_in_sync(self):
         import subprocess

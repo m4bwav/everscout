@@ -2,7 +2,15 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
-## Unreleased
+## 0.5.0 · 2026-10-16
+
+- because: Mark, 2026-10-15: "integrate it with everscout now. I don't want to wait on Arctic Shift, I want to see if it works now." Decision `ai-docs/decisions/2026-10-15-thread-reader-fetchwright.md`.
+- Reddit threads through [fetchwright](https://github.com/m4bwav/fetchwright), opt-in: config `reddit.thread_reader` (`same`, the default, or `fetchwright`) and `--thread-reader` on `thread` and `new-note`. everscout runs fetchwright's CLI as a subprocess (config `fetchwright.cli`, then `FETCHWRIGHT_CLI`, then the installed plugin) and never imports it or reads the key. The thread carries `via: fetchwright`, no handles or dates, the poster's replies marked, and a `fetchwright` block with the model, Google's retrieval statuses and token counts.
+- Paced at 5 s or more, cached for `thread_ttl_seconds` and purged with the cache. A 429 (fetchwright exit 3) sets a cool-down for Google's stated retry time, at least an hour, and later reads refuse at once (exit 3). A key problem exits 4 and names fetchwright-setup; a missing plugin exits 2 and names it. Optional `fetchwright.models`; `fetchwright.max_comments` defaults to 100 (0 asks for every comment). `followups` always uses the listing's reader (it needs authors and times). `new-note` takes the date from the fetched listing when the thread has none.
+- Live on 2026-10-16: 9 of 10 threads read, every comment real, about three quarters of the archive's comments; a real ai-video scan read 7 of 8 kept threads (`ai-docs/research/2026-10-15-fetchwright-thread-reader-live.md`). Run `gemini-3.5-flash-lite` first (`fetchwright.models`). 65 offline tests (9 new).
+- ai-video beat: 8 new tool entries (LongTakeNoCuts, the H3 anti-burn LoRA, OBVPM, RTX Video, Depth Anything, Video Helper Suite, AudioFirst X2, ExactAudioLock).
+
+## Earlier unreleased knowledge (now in 0.5.0)
 
 - because: plan `ai-docs/plans/2026-10-15-reddit-via-gemini-url-context.md` Stage 2 step 3; the reader shipped as its own plugin, [fetchwright](https://github.com/m4bwav/fetchwright) (2026-10-15).
 - kb/conduct.md rule 17 and a kb/platforms.md keyed-sources row for Reddit threads through Gemini's URL context: never Google Search for discovery, public threads only (free-tier prompts may be read by Google's reviewers), stop at the first 429. Knowledge only; no CLI change. A minor version when released.

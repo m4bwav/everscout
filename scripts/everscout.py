@@ -52,7 +52,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.4.0"
+VERSION = "0.5.0"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -68,7 +68,13 @@ DEFAULT_CONFIG = {
     # reader: rss (Reddit's logged-out feeds, the default), arcticshift (a third-party archive with grey legal footing,
     # so each user opts in; kb/platforms.md) or auto (the feeds until Reddit ends them, then Arctic Shift).
     # settle_hours: Arctic Shift windows end this long ago, so scores and comment counts have settled.
-    "reddit": {"reader": "rss", "settle_hours": 36, "max_pages": 10},
+    # thread_reader: same (threads follow `reader`) or fetchwright (a separate plugin that reads a public thread through
+    # Gemini's URL context; needs the user's own Gemini key, so it is opt-in; kb/platforms.md, conduct rule 17)
+    "reddit": {"reader": "rss", "settle_hours": 36, "max_pages": 10, "thread_reader": "same"},
+    # fetchwright's CLI: cli is a path to fetchwright.py (else $FETCHWRIGHT_CLI, else the installed plugin);
+    # max_comments > 0 asks for at most that many comments (a 183-comment thread overran the model's answer uncapped
+    # and read at 100 on 2026-10-16); 0 lets fetchwright ask for all
+    "fetchwright": {"cli": "", "timeout_seconds": 400, "models": "", "max_comments": 100},
     "engage": {
         "min_gap_minutes": 60,
         "max_per_day": 4,
@@ -241,7 +247,152 @@ def reddit_reader(cfg):
 def set_reddit_reader(cfg, a):
     if getattr(a, "reddit_reader", None):
         cfg.setdefault("reddit", {})["reader"] = a.reddit_reader
+    set_thread_reader(cfg, a)
     return reddit_reader(cfg)
+
+
+# ---------------------------------------------------------------- Reddit threads through fetchwright (opt-in)
+# fetchwright is a separate plugin: everscout runs its CLI as a subprocess and never imports its code, so everscout
+# stays keyless and standard-library (ai-docs/decisions/2026-10-15-thread-reader-fetchwright.md).
+
+THREAD_READERS = ("same", "fetchwright")
+GEMINI_HOST = "generativelanguage.googleapis.com"  # the pace and cool-down key for fetchwright reads
+FETCHWRIGHT_MIN_GAP = 5
+
+
+class ReaderStop(Exception):
+    """A thread reader that must not be called again this run. code: 2 not installed, 3 refused or cooling down, 4 key."""
+
+    def __init__(self, msg, code):
+        super().__init__(msg)
+        self.code = code
+
+
+def thread_reader(cfg):
+    """'same' (Reddit threads follow reddit.reader) or 'fetchwright'."""
+    r = str((cfg.get("reddit") or {}).get("thread_reader") or "same").lower()
+    if r not in THREAD_READERS:
+        fail(f"reddit thread reader {r!r} unknown (same, fetchwright)")
+    return r
+
+
+def set_thread_reader(cfg, a):
+    if getattr(a, "thread_reader", None):
+        cfg.setdefault("reddit", {})["thread_reader"] = a.thread_reader
+    return thread_reader(cfg)
+
+
+def claude_plugins_dir():
+    return os.path.expanduser("~/.claude/plugins")
+
+
+def _version_key(path):
+    v = re.findall(r"[\\/](\d+(?:\.\d+)+)[\\/]", path)
+    return tuple(int(x) for x in v[-1].split(".")) if v else ()
+
+
+def find_fetchwright(cfg):
+    """(path to fetchwright.py, None) or (None, why): config fetchwright.cli, then $FETCHWRIGHT_CLI, then the installed plugin."""
+    for where, c in (("config fetchwright.cli", (cfg.get("fetchwright") or {}).get("cli") or ""),
+                     ("FETCHWRIGHT_CLI", os.environ.get("FETCHWRIGHT_CLI") or "")):
+        if c:
+            p = expand(c)
+            return (p, None) if os.path.isfile(p) else (None, f"{where} points at {p}, which does not exist")
+    tail = os.path.join("skills", "fetchwright", "scripts", "fetchwright.py")
+    root = claude_plugins_dir()
+    cands = sorted(glob.glob(os.path.join(root, "cache", "*", "fetchwright", "*", tail)), key=_version_key, reverse=True)
+    cands += glob.glob(os.path.join(root, "marketplaces", "*", tail)) + glob.glob(os.path.join(root, "marketplaces", "*", "fetchwright", tail))
+    for c in cands:
+        if os.path.isfile(c):
+            return c, None
+    return None, ("fetchwright is not installed: the fetchwright thread reader needs the fetchwright plugin "
+                  "(github.com/m4bwav/fetchwright) and a Gemini key (its fetchwright-setup skill), or set config "
+                  "fetchwright.cli or FETCHWRIGHT_CLI to its fetchwright.py; or read threads with --thread-reader same")
+
+
+def retry_after_seconds(text):
+    """Seconds in a quota message's 'retry in 22h3m56s' (or '41.5s'), else 0."""
+    m = re.search(r"retry in (?:(\d+)h)?(?:(\d+)m)?(?:(\d+(?:\.\d+)?)s)?", text or "")
+    return int(m.group(1) or 0) * 3600 + int(m.group(2) or 0) * 60 + int(float(m.group(3) or 0)) if m else 0
+
+
+def fetchwright_cache_path(cfg, url):
+    return os.path.join(local_root(cfg), "cache", "fetchwright", hashlib.sha1(url.encode("utf-8")).hexdigest()[:20] + ".json")
+
+
+def read_fetchwright(cfg, url, force=False, run=subprocess.run):
+    """fetchwright's record for one thread URL, from the cache when younger than thread_ttl_seconds; None when the
+    thread was not read (exit 1 or 5, a timeout, output that is not JSON). Raises ReaderStop on exits 2, 3 and 4, and
+    while a 429's cool-down lasts (never retried within the hour, conduct rule 17)."""
+    cp = fetchwright_cache_path(cfg, url)
+    cached = load_json(cp, None)
+    if cached and not force and time.time() - cached.get("_fetched_at", 0) < cfg["pace"]["thread_ttl_seconds"]:
+        return cached
+    f = fetcher(cfg)
+    cd = f.cooldown(GEMINI_HOST)
+    if cd:
+        raise ReaderStop(f"fetchwright was rate limited earlier: no fetchwright reads until "
+                         f"{iso(dt.datetime.fromtimestamp(cd[0], UTC))[:16]} UTC ({cd[1]}); use --thread-reader same", 3)
+    cli, why = find_fetchwright(cfg)
+    if not cli:
+        raise ReaderStop(why, 2)
+    fw = cfg.get("fetchwright") or {}
+    argv = [sys.executable, cli, "read", url, "--thread", "--json", "--max-chars", "0"]
+    if fw.get("models"):
+        argv += ["--models", str(fw["models"])]
+    if int(fw.get("max_comments") or 0) > 0:
+        argv += ["--max-comments", str(int(fw["max_comments"]))]
+    timeout = float(fw.get("timeout_seconds") or 400)
+    gap = max(FETCHWRIGHT_MIN_GAP, f.gap_for(GEMINI_HOST))
+    f._wait(GEMINI_HOST)
+    t0 = time.time()
+    try:
+        r = run(argv, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=timeout,
+                env=dict(os.environ, PYTHONIOENCODING="utf-8"))
+    except subprocess.TimeoutExpired:
+        note(f"fetchwright: no answer in {timeout:.0f} s, not read: {url}")
+        return None
+    finally:
+        f._mark(GEMINI_HOST, gap)
+    secs = round(time.time() - t0, 1)
+    last = ((r.stderr or "").strip().splitlines() or [""])[-1][:300]
+    if r.returncode == 3:
+        # a daily quota says how long ("Please retry in 22h3m56s"): wait that long, never less than an hour
+        wait = f.set_cooldown(GEMINI_HOST, "fetchwright exit 3: " + last, base=max(3600, retry_after_seconds(r.stderr)))
+        raise ReaderStop(f"fetchwright was rate limited (exit 3): no fetchwright reads for {wait // 60:.0f} min, "
+                         f"so stop this scan's fetchwright reads (conduct rule 17). {last}", 3)
+    if r.returncode == 4:
+        raise ReaderStop(f"fetchwright has no working Gemini key (exit 4): run the fetchwright-setup skill. {last}", 4)
+    if r.returncode == 2:
+        raise ReaderStop(f"fetchwright refused the arguments (exit 2; an older or newer fetchwright?): {last}", 2)
+    try:
+        data = json.loads(r.stdout or "")
+    except ValueError:
+        data = None
+    if r.returncode == 5 or not isinstance(data, dict) or not data.get("read_ok"):
+        why = "every Gemini model was unavailable" if r.returncode == 5 else ((data or {}).get("why_not") if isinstance(data, dict) else "") or last or f"exit {r.returncode}"
+        note(f"fetchwright: not read ({why}): {url}")
+        return None
+    f.clear_cooldown(GEMINI_HOST)
+    data["_fetched_at"], data["_seconds"] = time.time(), secs
+    save_json(cp, data)
+    return data
+
+
+def thread_from_fetchwright(url, pid, r):
+    """everscout's thread shape from a fetchwright record. fetchwright returns no handles, dates or scores."""
+    m = re.search(r"/r/([^/]+)/", url)
+    sub = m.group(1) if m else ""
+    clean = re.sub(r"^https?://(old\.|new\.|np\.)?reddit\.com", "https://www.reddit.com", url.split("?")[0].split("#")[0])
+    post = {"id": f"reddit:{pid}", "platform": "reddit", "kind": "post", "title": r.get("title") or "", "author": "",
+            "url": clean, "published": "", "text": r.get("body") or "", "media": [], "community": sub, "via": "fetchwright"}
+    comments = [{"id": f"reddit:{pid}:fw{i}", "platform": "reddit", "kind": "comment", "author": "", "published": "",
+                 "text": c.get("text") or "", "is_op": bool(c.get("author_is_op")), "via": "fetchwright"}
+                for i, c in enumerate(r.get("comments") or []) if (c.get("text") or "").strip()]
+    meta = {"model": r.get("model"), "retrieval": r.get("retrieval") or [], "usage": r.get("usage") or {},
+            "dropped": r.get("dropped") or {}, "body_removed": bool(r.get("body_removed")), "style": r.get("style"),
+            "version": r.get("fetchwright"), "seconds": r.get("_seconds")}
+    return post, comments, meta
 
 
 def arctic_window(f, sub, after_ts, before_ts, max_pages=10, ttl=3600, force=False, query=None):
@@ -942,11 +1093,22 @@ def platform_of(url):
     return "web"
 
 
-def load_thread(cfg, url, force=False, asked_words=ASKED_WORDS):
+def load_thread(cfg, url, force=False, asked_words=ASKED_WORDS, reader=None):
+    """A thread with its comments, or None. reader overrides reddit.thread_reader ('same' where authors and dates
+    are needed: fetchwright returns neither). Raises ReaderStop when the fetchwright reader must stop."""
     f = fetcher(cfg)
     plat = platform_of(url)
-    hidden = 0
-    if plat == "reddit" and reddit_reader(cfg) == "arcticshift":
+    hidden, fwmeta = 0, None
+    if plat == "reddit" and (reader or thread_reader(cfg)) == "fetchwright":
+        m = re.search(r"redd\.it/([a-z0-9]+)", url)
+        pid = S.reddit_post_id(url) or (m.group(1) if m else None)
+        if not pid:
+            return None
+        r = read_fetchwright(cfg, url, force=force)
+        if not r:
+            return None
+        post, comments, fwmeta = thread_from_fetchwright(url, pid, r)
+    elif plat == "reddit" and reddit_reader(cfg) == "arcticshift":
         m = re.search(r"redd\.it/([a-z0-9]+)", url)
         pid = S.reddit_post_id(url) or (m.group(1) if m else None)
         if not pid:
@@ -1003,7 +1165,8 @@ def load_thread(cfg, url, force=False, asked_words=ASKED_WORDS):
             return None
         post, comments = t["post"], t["comments"]
     for c in comments:
-        c["is_op"] = bool(post.get("author")) and c.get("author") == post.get("author")
+        if "is_op" not in c:  # fetchwright marks the poster's replies itself and returns no handles
+            c["is_op"] = bool(post.get("author")) and c.get("author") == post.get("author")
     low = " ".join((c.get("text") or "").lower() for c in comments)
     out = {"post": post, "comments": comments, "comment_count": len(comments),
            "process_asked": any(w in low for w in asked_words), "url": post["url"], "id": post["id"],
@@ -1012,6 +1175,8 @@ def load_thread(cfg, url, force=False, asked_words=ASKED_WORDS):
         out["via"] = post["via"]
     if hidden:
         out["collapsed_comments"] = hidden  # Arctic Shift's tree folds long branches; their ids are not fetched
+    if fwmeta:
+        out["fetchwright"] = fwmeta  # provenance for the note: model, Google's retrieval statuses, tokens
     return out
 
 
@@ -1025,8 +1190,13 @@ def cmd_thread(a):
     words = ASKED_WORDS
     if a.beat:
         words = tuple(ASKED_WORDS) + tuple(w.lower() for w in get_beat(cfg, a.beat).list_meta("asked_words"))
-    t = load_thread(cfg, a.url, force=a.force, asked_words=words)
+    try:
+        t = load_thread(cfg, a.url, force=a.force, asked_words=words)
+    except ReaderStop as e:
+        fail(str(e), e.code)
     if not t:
+        if platform_of(a.url) == "reddit" and thread_reader(cfg) == "fetchwright":
+            fail("fetchwright could not read this thread (see the line above); try --thread-reader same", 1)
         fail("no thread reader for this URL (Reddit, HN, Bluesky, Mastodon, Lemmy, Discourse); read other pages with the agent's web fetch", 2)
     save_json(thread_cache_path(cfg, t["id"]), t)
     if a.json:
@@ -1035,6 +1205,11 @@ def cmd_thread(a):
     p = t["post"]
     print(f"# {p['title']}\n{t['platform']} {p.get('community', '')} · {p.get('author', '')} · {p.get('published', '')} · "
           f"{t['comment_count']} comments{' (+' + str(t['collapsed_comments']) + ' collapsed)' if t.get('collapsed_comments') else ''} · process asked: {t['process_asked']}\n{p['url']}\n")
+    if t.get("fetchwright"):
+        fm = t["fetchwright"]
+        u = fm.get("usage") or {}
+        print(f"via fetchwright {fm.get('version') or ''} · {fm.get('model')} · page {u.get('page')} and output {u.get('output')} tokens"
+              f" · {sum((fm.get('dropped') or {}).values())} dropped · long threads come back partly; no handles or dates\n")
     print((p.get("text") or "")[:3000])
     print("\n## Comments")
     for c in t["comments"][: a.limit]:
@@ -1237,7 +1412,8 @@ def cmd_followups(a):
         if not ts or ts < cut or platform_of(e.get("url", "")) == "web":
             continue
         try:
-            t = load_thread(cfg, e["url"], force=a.force)
+            # replies are matched by author and time, which fetchwright does not return: always the listing's reader
+            t = load_thread(cfg, e["url"], force=a.force, reader="same")
         except (S.FetchError, ValueError) as ex:
             note(f"{e['url']}: {ex}")
             continue
@@ -1260,7 +1436,7 @@ def cmd_followups(a):
         # otherwise every later comment by the author (thanks to other people) counts as a reply.
         if e.get("comment_url") and platform_of(e["comment_url"]) == "reddit" and e["comment_url"] != e.get("url"):
             try:
-                t = load_thread(cfg, e["comment_url"], force=a.force) or t
+                t = load_thread(cfg, e["comment_url"], force=a.force, reader="same") or t
             except (S.FetchError, ValueError) as ex:
                 note(f"{e['comment_url']}: {ex}")
         have = {r.get("id") for r in e.get("replies") or []}
@@ -1431,15 +1607,20 @@ def cmd_new_note(a):
     dd = data_dir(cfg, b.slug)
     fm_extra = {}
     if platform_of(a.url) != "web":
-        t = load_thread(cfg, a.url)
+        set_thread_reader(cfg, a)
+        try:
+            t = load_thread(cfg, a.url)
+        except ReaderStop as e:
+            fail(str(e), e.code)
         if not t:
             fail("thread not found")
         p = t["post"]
-        title, posted, plat = p["title"], (p.get("published") or today())[:10], t["platform"]
+        items = {i["id"]: i for i in load_json(items_path(cfg, b.slug), [])}
+        # fetchwright returns no date: the fetched listing has it
+        title, posted, plat = p["title"], (p.get("published") or items.get(p["id"], {}).get("published") or today())[:10], t["platform"]
         community, nid, interest = p.get("community") or "", p["id"].split(":")[-1], t["comment_count"]
         url = p["url"]
         body_text = title + "\n" + (p.get("text") or "") + "\n" + "\n".join(c.get("text") or "" for c in t["comments"])
-        items = {i["id"]: i for i in load_json(items_path(cfg, b.slug), [])}
         top = bool(items.get(p["id"], {}).get("top"))
     else:
         items = {i["url"]: i for i in load_json(items_path(cfg, b.slug), [])}
@@ -2693,6 +2874,7 @@ def main(argv=None):
     p = add("thread", cmd_thread, "a thread with comments (Reddit, HN, Bluesky, Mastodon, Lemmy, Discourse)"); p.add_argument("url"); p.add_argument("--beat")
     p.add_argument("--force", action="store_true"); p.add_argument("--limit", type=int, default=60); p.add_argument("--json", action="store_true")
     p.add_argument("--reddit-reader", choices=["auto", "rss", "arcticshift"], help="override config reddit.reader")
+    p.add_argument("--thread-reader", choices=list(THREAD_READERS), help="override config reddit.thread_reader (fetchwright: opt-in, needs that plugin and a Gemini key)")
     p = add("search", cmd_search, "search reddit, hn, news or arxiv"); p.add_argument("--q", required=True)
     p.add_argument("--kind", default="reddit", choices=["reddit", "hn", "news", "arxiv"]); p.add_argument("--community")
     p.add_argument("--sort", default="new"); p.add_argument("--t", default="month"); p.add_argument("--force", action="store_true"); p.add_argument("--json", action="store_true")
@@ -2717,6 +2899,7 @@ def main(argv=None):
     p = add("new-note", cmd_new_note, "scaffold a note for a thread or page"); p.add_argument("url"); p.add_argument("--beat")
     p.add_argument("--note-kind", default="discussion", choices=NOTE_KINDS); p.add_argument("--title"); p.add_argument("--posted"); p.add_argument("--interest", type=int)
     p.add_argument("--engaged", action="store_true"); p.add_argument("--force", action="store_true")
+    p.add_argument("--thread-reader", choices=list(THREAD_READERS), help="override config reddit.thread_reader")
     p = add("validate", cmd_validate, "check a beat's notes"); p.add_argument("--beat"); p.add_argument("--strict", action="store_true")
     p = add("tally", cmd_tally, "recount signals from the notes"); p.add_argument("--beat")
     p = add("recall", cmd_recall, "what the knowledge base holds on a question: ranked notes, answers, reports, study, signals"); p.add_argument("--beat")
