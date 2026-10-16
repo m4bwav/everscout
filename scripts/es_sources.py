@@ -53,6 +53,7 @@ DEFAULT_HOST_GAPS = {
     "api.gdeltproject.org": 10,  # GDELT asks for one request every 5 s; reports say 5 s still draws 429s (kb/platforms.md)
     "wikimedia.org": 1,
     "arctic-shift.photon-reddit.com": 2,  # the maintainer asks for "a couple requests per second" at most
+    "generativelanguage.googleapis.com": 5,  # fetchwright thread reads (Gemini URL context); free-tier quotas are per minute and per day
     "default": 3,
 }
 

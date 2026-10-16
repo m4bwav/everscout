@@ -2,6 +2,12 @@
 
 Updated 2026-10-15 (0.4.0: Reddit through Arctic Shift; see the first section). Before that 2026-09-28 (first all-beats scan; 0.3.0: beat statistics built). Everscout 0.1.0 was built in one session from indie-ai-scout 0.3.1; 0.2.0 added the everscout-ask skill (interrogate a beat like a reporter) and the tech-hiring beat, the first built from scratch. Read [log.md](log.md) for what happened, `decisions/` for the architecture, and `research/` for the evidence.
 
+## 0.5.0 state (2026-10-16 early UTC): Reddit threads through fetchwright, opt-in
+
+- Branch `feat/thread-reader-fetchwright`, PR open and **not merged**: the live gate (four of six threads readable) was not reached. Built: config `reddit.thread_reader` (`same` default, `fetchwright`), `--thread-reader` on `thread` and `new-note`, `fetchwright.cli|models|max_comments|timeout_seconds`; subprocess adapter in `load_thread`; cache, 5 s pace, cool-down from Google's retry time; 65 offline tests. Decision: `decisions/2026-10-15-thread-reader-fetchwright.md`.
+- Live (`research/2026-10-15-fetchwright-thread-reader-live.md`): 20 of 22 and 72 of 76 comments, all real, no handles; a 183-comment thread broke the JSON; then 429: the free tier gives `gemini-3.8-flash` **20 requests a day**. Mark's cool-down runs to 2026-10-17 00:00 UTC; do not call Gemini before then.
+- Waiting on Mark: whether a quota 429 on one model may fall through to the next (a fetchwright change), whether to run flash-lite first via `fetchwright.models`, and the merge and release. Next session prompt: `next-session-prompt.md`.
+
 ## 0.4.0 state (2026-10-15): Reddit after the feeds
 
 - Mark chose the Arctic Shift lane on 2026-10-15. Built: config `reddit.reader` (`rss` default for everyone; `arcticshift`; `auto` = feeds until 2026-11-13, then Arctic Shift; Mark's own `~/.everscout/config.json` is set to `auto`), `--reddit-reader` on fetch, thread, probe and search; settled-score window (`reddit.settle_hours` 36); points and comments on every Reddit item. Live run on ai-video worked (1,904 posts, 2.5 minutes; one note, `1wzxyaa`, in Mark's data folder).

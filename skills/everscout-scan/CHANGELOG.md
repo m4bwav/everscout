@@ -2,6 +2,11 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`.
 
+### C-20261015-3 · 2026-10-15 · Reddit threads through fetchwright, opt-in
+- because: user decision 2026-10-15 ("integrate it with everscout now"); decision record `ai-docs/decisions/2026-10-15-thread-reader-fetchwright.md`
+- files: SKILL.md (Step 2)
+- Step 2 says how to read a thread when the user chose fetchwright (`--thread-reader fetchwright` on `thread` and `new-note`), what such a thread lacks, and what exits 3 and 4 mean for the rest of the scan.
+
 ### C-20261015-2 · 2026-10-15 · stranded 2026-10-10 refresh merged
 - because: R-20261010-1 to R-20261010-3 and C-20261010-1 to -3 sat uncommitted in a local clone; C-20261015-1 already cited R-20261010-1
 - files: SKILL.md (Step 1, Rules), RESEARCH.md (Current understanding, Open questions)
