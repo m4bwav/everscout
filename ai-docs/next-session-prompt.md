@@ -7,7 +7,7 @@ Written 2026-10-16 (rewritten after Mark's answers, about 02:40 UTC). Run from `
 - The everscout wiring is built and tested (65 offline tests). PR #21 (branch `feat/thread-reader-fetchwright`) is open. Decision: `ai-docs/decisions/2026-10-15-thread-reader-fetchwright.md`. Results so far: `ai-docs/research/2026-10-15-fetchwright-thread-reader-live.md`. Two of three threads read well, a 183-comment thread broke the JSON, then the free tier's 20 a day on `gemini-3.8-flash` gave a 429.
 - **Mark answered on 2026-10-16:**
   1. A 429 on one model's quota may move to the next model. Done in fetchwright PR #2 (merged on main, unreleased).
-  2. flash-lite first. Mark's `~/.everscout/config.json` has `fetchwright.models` = `gemini-3.5-flash-lite,gemini-3.8-flash` and `fetchwright.cli` pointing at the clone `Aietchwright\skillsetchwright\scriptsetchwright.py`, which has the fall-through. The installed plugin is still 0.1.0.
+  2. flash-lite first. Mark's `~/.everscout/config.json` has `fetchwright.models` = `gemini-3.5-flash-lite,gemini-3.8-flash` and `fetchwright.cli` pointing at the clone `Ai/fetchwright/skills/fetchwright/scripts/fetchwright.py`, which has the fall-through. The installed plugin is still 0.1.0.
   3. Merge #21 **and** tag and release everscout v0.5.0 once the gate passes. A fetchwright release (0.2.0) was not asked for; ask before tagging it.
 - The cool-down in `~/.everscout/local/cooldown.json` runs to **2026-10-17 00:00 UTC**. Shortening it was refused as weakening a safeguard: never edit it, and wait.
 
