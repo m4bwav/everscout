@@ -17,11 +17,12 @@ Keep canonical ids stable: renaming one splits its history in the tallies. A new
 - behavioral: behavioral interview, behavioural interview, behavioral round, STAR method
 - superday: superday
 - onsite: onsite, on-site, on-site interview, in-person interview, final loop, final loops, final round
-- ai-allowed-interview: AI-assisted interview, AI allowed interview, AI Code Craft, interview with Copilot, interview with Cursor, AI-assisted coding, AI-assisted coding round, AI assisted coding interview, vibe coding interview
+- ai-allowed-interview: AI-assisted interview, AI allowed interview, AI Code Craft, Coding with AI round, interview with Copilot, interview with Cursor, AI-assisted coding, AI-assisted coding round, AI assisted coding interview, vibe coding interview
 - ai-interviewer: AI interviewer, AI interview bot, AI video interview, AI screening call
-- interview-cheating: interview cheating, AI cheating, cheating with AI, cheat in interviews, Interview Coder, cheating tool, Cluely, remote access cheating
+- interview-cheating: interview cheating, AI cheating, cheating with AI, cheat in interviews, Interview Coder, cheating tool, Cluely, remote access cheating, proxy interview, proxy interviewing, stand-in candidate
 - proctoring: proctoring, proctored, proctored assessment, webcam check, webcam photo, lockdown browser, laptop validation
-- code-review-interview: code review interview, PR review interview, review an AI-generated PR, review round
+- code-review-interview: code review interview, PR review interview, review an AI-generated PR, review round, review a PR
+- codebase-interview: codebase walkthrough, codebase round, codebase interview, repository task, repo task
 - work-simulation: work simulation, work style survey, work style assessment, job simulation
 
 ## Screening and channels
@@ -31,7 +32,7 @@ Keep canonical ids stable: renaming one splits its history in the tallies. A new
 - referral: referral, referred, employee referral
 - recruiter-outreach: recruiter reached out, recruiter inmail, agency recruiter, third-party recruiter
 - linkedin: LinkedIn, Easy Apply
-- job-board: Indeed.com, Dice.com, Wellfound, Built In, Otta, Welcome to the Jungle, Jobright, Hiring Cafe
+- job-board: Indeed.com, Dice.com, Wellfound, Built In, Otta, Welcome to the Jungle, Jobright, Hiring Cafe, HeadHunter, hh.ru
 - hn-who-is-hiring: Who is hiring, Who's hiring, Who wants to be hired
 - ghost-job: ghost job, ghost jobs, fake posting, fake job posting
 - ghosting: ghosted, ghosting
@@ -40,7 +41,7 @@ Keep canonical ids stable: renaming one splits its history in the tallies. A new
 
 ## Roles and levels
 
-- new-grad: new grad, new graduate, entry-level, entry level, junior developer, junior dev
+- new-grad: new grad, new graduate, entry-level, entry level, junior developer, junior dev, fresher
 - internship: internship, intern, co-op
 - senior: senior engineer, senior developer, staff engineer, principal engineer
 - engineering-manager: engineering manager, hiring manager
@@ -57,7 +58,7 @@ Keep canonical ids stable: renaming one splits its history in the tallies. A new
 - layoffs: layoff, layoffs, laid off, RIF, reduction in force
 - rehiring: boomerang hire, boomerang hires, rehire, rehiring
 - hiring-freeze: hiring freeze, headcount freeze, no headcount, hiring pause, paused junior hiring
-- offshoring: offshoring, offshore, outsourcing, GCC, global capability center, WITCH
+- offshoring: offshoring, offshore, outsourcing, GCC, global capability center, WITCH, nearshoring, nearshore
 - ai-replacing-jobs: AI replacing, replaced by AI, AI layoffs, jobs lost to AI
 - return-to-office: return to office, RTO, in-office mandate, hybrid mandate
 - remote-work: remote job, fully remote, remote-first, remote role
@@ -73,7 +74,8 @@ Keep canonical ids stable: renaming one splits its history in the tallies. A new
 - h1b: H-1B, H1B, H1-B, H-1B lottery, H-1B fee
 - opt: OPT, STEM OPT, CPT
 - pay-transparency-law: pay transparency law, salary range law
-- ai-hiring-law: AI hiring law, NYC Local Law 144, automated employment decision tool, AEDT, EU AI Act hiring
+- ai-hiring-law: AI hiring law, NYC Local Law 144, automated employment decision tool, AEDT, EU AI Act hiring, automated decision system, ADMT, No Robo Bosses Act
 - non-compete: non-compete, noncompete
 - duration-of-status: duration of status, D/S rule, fixed admission period, fixed period of admission
 - warn-notice: WARN Act, WARN notice, Cal/WARN, mass layoff notice
+- canada-immigration: Express Entry, LMIA, labour market impact assessment, TFW program, temporary foreign worker, Global Talent Stream

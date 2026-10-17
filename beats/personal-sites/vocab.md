@@ -21,6 +21,12 @@ Keep canonical ids stable. A new builder or trend gets its own id when people co
 - resume-page: resume, CV, résumé
 - links-page: link in bio, linktree, links page
 - shrine: shrine, shrines, fansite, fansites, fan site
+- now-playing: now playing, last played song, currently listening, last song I listened to
+- lab-page: lab page, /lab, playground page, creative coding playground
+- side-projects: personal projects, side projects, personal project, side project
+- github-profile: GitHub profile, GitHub portfolio
+- gated-case-study: password protected, password-protected, password protection
+- nda-work: NDA, under NDA, confidential work, white label, white-label
 
 ## Design ideas
 
@@ -48,6 +54,17 @@ Keep canonical ids stable. A new builder or trend gets its own id when people co
 - semantic-html: semantic HTML, HTML semantics
 - progressive-enhancement: progressive enhancement
 - easter-eggs: easter egg, easter eggs, hidden pages, secret pages, hidden documents
+- virtual-room: 3D room, virtual room, room-based interface, desk scene
+- multiplayer: multiplayer, live presence, see other visitors
+- hand-drawn: hand-drawn, hand drawn, hand-drawn illustration
+- deliberate-imperfection: deliberate imperfection, imperfect design, off-centre stickers, random rotation
+- creative-coding: creative coding, canvas animation, canvas 2D
+- isometric: isometric, isometric illustration, isometric figure
+- interactive-diagrams: interactive diagram, interactive figure, explorable explanation
+- skeuomorphism: skeuomorphic, skeuomorphism
+- horizontal-scroll: horizontal scrolling, horizontal scroll, panoramic scroll
+- sound-design: procedural audio, ambient audio, Web Audio API, audio synthesis
+- site-mascot: site pet, virtual pet, site mascot, resident cat, sleeping cat
 
 ## Stacks and hosts
 
@@ -82,6 +99,10 @@ Keep canonical ids stable. A new builder or trend gets its own id when people co
 - uxfolio: UXfolio, UX folio
 - behance: Behance
 - dribbble: Dribbble
+- blender: Blender
+- zola: Zola
+- zotero: Zotero
+- anubis: Anubis
 
 ## AI and design
 
@@ -108,6 +129,12 @@ Keep canonical ids stable. A new builder or trend gets its own id when people co
 - portfolio-chatbot: AI chatbot, ask me anything bot, chat with my resume, AI assistant on my site
 - generative-art: generative art, generative background, shader, AI-generated image, AI art
 - human-made: human-made, handmade, hand-coded, no AI, not by AI
+- impeccable: Impeccable, impeccable.style
+- hallmark: Hallmark design skill
+- claude-cowork: Claude Cowork, Claude Projects
+- ai-agent-spam: iLands, AI agent spam, agent submissions, agent pitches
+- design-taste: design taste, taste in design, taste as a methodology, AI sameness, design convergence
+- ai-crawler-blocking: block AI crawlers, AI crawlers, AI crawler, block AI bots, robots.txt, ai.txt
 
 ## Small web
 
@@ -128,6 +155,9 @@ Keep canonical ids stable. A new builder or trend gets its own id when people co
 - rel-me: rel=me, rel-me
 - indieauth: IndieAuth
 - bridgy: Bridgy, brid.gy
+- blog-carnival: IndieWeb Carnival, blog carnival
+- tiny-awards: Tiny Awards
+- nexus-interlink: Nexus Interlink, Nexus Kit, nexus.json
 
 ## Purposes
 
@@ -135,6 +165,7 @@ Keep canonical ids stable. A new builder or trend gets its own id when people co
 - freelance-clients: clients, freelance
 - writing-in-public: writing in public, learning in public
 - personal-brand: personal brand, personal branding
+- academic-profile: researcher profile, academic website, research profile, self-archiving
 
 ## Notes
 

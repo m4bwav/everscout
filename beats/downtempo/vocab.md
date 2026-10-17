@@ -59,6 +59,7 @@ Short names collide with ordinary words ("Air", "Lamb", "Stone", "Om"), so their
 - anjunachill: Anjunachill
 - bmg-concord: Concord Music, BMG
 - stones-throw: Stones Throw, Stones Throw Records
+- nunorthern-soul: NuNorthern Soul
 
 ## Gear
 
@@ -76,8 +77,14 @@ Short names collide with ordinary words ("Air", "Lamb", "Stone", "Om"), so their
 - elektron-rytm: Analog Rytm
 - elektron-monomachine: Monomachine, Elektron Monomachine, SFX-6, SFX-60
 - elektron-machinedrum: Machinedrum, Elektron Machinedrum, SPS-1
+- elektron-model-cycles: Model:Cycles, Model Cycles, Elektron Model:Cycles
+- elektron-tonverk: Tonverk, Elektron Tonverk
 - op-1: OP-1, OP1
 - polyend-loop: Polyend Loop
+- blackbox-1010: 1010music Blackbox, 1010 Blackbox
+- mutable-instruments: Mutable Instruments, Mutable Beads, Mutable Clouds, Mutable Plaits, Plaits
+- chipsynth-opmz: chipsynth OPMZ, Plogue OPMZ
+- porthole-ios: Porthole (iOS), Porthole app
 - juno: Juno-106, Juno-60, Roland Juno
 - rhodes: Rhodes, electric piano, Fender Rhodes
 - mellotron: Mellotron
@@ -91,6 +98,9 @@ Short names collide with ordinary words ("Air", "Lamb", "Stone", "Om"), so their
 - kontakt: Kontakt
 - splice: Splice
 - tape: tape machine, cassette, 4-track, reel-to-reel
+- slate-and-ash: Slate + Ash, Slate and Ash, Slate & Ash, Choreographs
+- adaptiverb: Adaptiverb, Zynaptiq Adaptiverb
+- soothe2: Soothe2, Soothe 2, oeksound Soothe
 
 ## Subgenres
 
@@ -117,8 +127,11 @@ Short names collide with ordinary words ("Air", "Lamb", "Stone", "Om"), so their
 - sidechain: sidechain, sidechaining, ducking
 - swing: swing, groove, off-grid, humanize
 - resampling: resampling, resample
+- multisampling: multisampling, multisample, multi-sample, multi-samples, auto-sampling, auto-sample
 - stem-separation: stem separation, stem splitter, demucs
+- granular: granular synthesis, granular processor, granular texture, granular
 - field-recording: field recording, field recordings, foley
+- varispeed: varispeed, vari-speed, varispeeded, varispeeding
 - reverb-throws: reverb throw, delay throw, dub delay, space echo
 - bitcrush: bitcrush, bit crusher, lo-fi processing
 - live-instruments: live bass, live guitar, played the keys, live drums
