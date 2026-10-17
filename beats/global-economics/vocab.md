@@ -36,6 +36,13 @@ Indicator aliases include the common abbreviations; watch for false matches on s
 - recession-probability: recession probability, probability of recession
 - financial-conditions: financial conditions index, FCI, systemic stress index, CISS
 - trade-flows: trade flows, bilateral trade, mirror statistics, mirror data
+- ppi: PPI, producer price index, final demand prices
+- household-income: median household income, household income
+- poverty-rate: poverty rate, official poverty measure, Supplemental Poverty Measure, SPM
+- labor-share: labor share, labour share, labor share of output
+- profit-margins: profit margins, operating margin, gross margin, markups
+- r-star: r-star, natural rate of interest, neutral rate of interest, neutral rate
+- national-saving: national saving, gross saving, private saving, government saving, saving-investment gap
 
 ## Institutions
 
@@ -62,6 +69,12 @@ Indicator aliases include the common abbreviations; watch for false matches on s
 - marad: MARAD, Maritime Administration, US Maritime Administration
 - ons: ONS, Office for National Statistics
 - un-comtrade: UN Comtrade, Comtrade
+- crs: CRS, Congressional Research Service
+- census-bureau: Census Bureau, US Census Bureau, CPS ASEC
+- indec: INDEC, Instituto Nacional de Estadística y Censos
+- employ-america: Employ America, Core-Cast, MacroSuite
+- global-linkages-lab: Global Linkages Lab, TiRADE
+- nbs-china: National Bureau of Statistics of China, China's National Bureau of Statistics, NBS China, China Statistical Yearbook
 
 ## Policies
 
@@ -80,8 +93,10 @@ Indicator aliases include the common abbreviations; watch for false matches on s
 - industrial-policy: industrial policy, CHIPS Act, Inflation Reduction Act, IRA subsidies
 - imf-program: IMF program, Extended Credit Facility, Extended Fund Facility, staff-level agreement
 - common-framework: Common Framework, G20 Common Framework
-- forward-guidance: forward guidance
+- forward-guidance: forward guidance, dot plot, Summary of Economic Projections
 - jones-act: Jones Act, Jones Act waiver
+- section-338: Section 338
+- genius-act: GENIUS Act
 
 ## Themes
 
@@ -99,6 +114,9 @@ Indicator aliases include the common abbreviations; watch for false matches on s
 - data-quality: revisions, response rates, data quality, seasonal adjustment
 - trade-truce: trade truce, tariff truce
 - zombie-firms: zombie firms, zombie companies
+- stablecoins: stablecoin, stablecoins, private money
+- text-as-data: text as data, large language model, large language models, natural language processing
+- tariff-uncertainty: tariff uncertainty, trade policy uncertainty, tariff announcements
 
 ## Regions
 
@@ -116,6 +134,9 @@ Indicator aliases include the common abbreviations; watch for false matches on s
 - poland: Poland, Polish economy
 - germany: Germany, German economy
 - russia: Russia, Russian economy
+- canada: Canada, Canadian economy
+- brazil: Brazil, Brazilian economy
+- argentina: Argentina, Argentine economy
 
 ## Notes
 
