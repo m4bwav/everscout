@@ -2,6 +2,11 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`.
 
+### C-20261023-1 · 2026-10-23 · A discovery trigger case; the GitHub row names Bitcoin Core and maintainer limits
+- because: R-20261023-1
+- files: evals/evals.json (new trigger-3: a natural request with a Bluesky URL that names no skill), ../../kb/conduct.md and its synced copies (Platform notes: GitHub row), RESEARCH.md (finding, Current understanding, Open questions, Search plan with an official-forums line)
+- SKILL.md unchanged.
+
 ### C-20261015-1 · 2026-10-15 · The Gemini URL context route through fetchwright
 - because: user decision 2026-10-15 (standalone plugin, named fetchwright), plan Stage 2 step 3, research/2026-10-15-gemini-url-context-reddit-test.md (repository ai-docs)
 - files: references/kb/ (synced from kb/conduct.md rule 17 and kb/platforms.md, keyed sources)
