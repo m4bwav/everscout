@@ -52,7 +52,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.5.0"
+VERSION = "0.6.0"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -726,6 +726,18 @@ def cmd_beats(a):
               f"{'built-in' if builtin else 'private '} last fetch {st.get('last_fetch', 'never')[:16]}  {b.title}")
 
 
+def seed_beat_md(text, scope, questions, feeds):
+    """Fill a fresh beat.md from a caller's scope (an evergreen unit offering a beat, for one)."""
+    if scope:
+        text = re.sub(r"^One paragraph: .*$", lambda _: scope.strip(), text, count=1, flags=re.M)
+    if questions:
+        block = "\n".join(f"{i}. {q.strip()}" for i, q in enumerate(questions, 1))
+        text = re.sub(r"^1\. TODO\n2\. TODO\n3\. TODO$", lambda _: block, text, count=1, flags=re.M)
+    if feeds:
+        text = text.replace("\n---\n", f"\nfeeds: [{feeds}]\n---\n", 1)
+    return text
+
+
 def cmd_beat_new(a):
     cfg = config()
     slug = slugify(a.slug)
@@ -738,6 +750,8 @@ def cmd_beat_new(a):
     for name in os.listdir(dest):
         p = os.path.join(dest, name)
         t = read(p).replace("{{SLUG}}", slug).replace("{{TITLE}}", a.title or slug).replace("{{DATE}}", today())
+        if name == "beat.md":
+            t = seed_beat_md(t, a.scope, a.question or [], a.feeds)
         write(p, t)
     print(dest)
     print("next: fill beat.md (scope), then sources.md, vocab.md, questions.md, searches.md, study.md; "
@@ -2163,6 +2177,42 @@ def kb_status(cfg, b, dd):
             "answers": len([f for f in os.listdir(ad) if f.endswith(".md") and f != "INDEX.md"]) if os.path.isdir(ad) else 0}
 
 
+def cmd_leads(a):
+    """What a beat has seen since a date: notes, then reports, newest first. Leads for a caller to verify, never sources."""
+    cfg = config()
+    b = get_beat(cfg, a.beat)
+    dd = data_dir(cfg, b.slug)
+    since = a.since[:10]
+    notes = []
+    for p, fm, _ in all_notes(dd):
+        when = str(fm.get("posted") or fm.get("date") or "")[:10]
+        if when >= since:
+            notes.append({"date": when, "title": fm.get("title") or os.path.basename(p), "summary": fm.get("summary") or "",
+                          "url": fm.get("url") or "", "path": os.path.relpath(p, dd).replace(os.sep, "/")})
+    notes.sort(key=lambda n: (n["date"], n["path"]), reverse=True)
+    reports = []
+    rd = os.path.join(dd, "reports")
+    if os.path.isdir(rd):
+        for f in sorted(os.listdir(rd), reverse=True):
+            if f.endswith(".md") and f != "INDEX.md":
+                fm, _ = parse_frontmatter(read(os.path.join(rd, f)))
+                when = str(fm.get("date") or f[:10])[:10]
+                if when >= since:
+                    reports.append({"date": when, "title": fm.get("title") or f, "summary": fm.get("summary") or "",
+                                    "path": "reports/" + f})
+    st = load_json(state_path(cfg, b.slug), {})
+    out = {"beat": b.slug, "since": since, "last_fetch": st.get("last_fetch"), "data": dd,
+           "reports": reports, "notes": notes[:a.limit], "notes_total": len(notes)}
+    if a.json:
+        print(json.dumps(out, indent=1))
+        return
+    print(f"{b.slug}: {len(notes)} notes and {len(reports)} reports since {since}; last fetch {out['last_fetch'] or 'never'}; data {dd}")
+    for r in reports:
+        print(f"report {r['date']} {r['path']}: {r['summary'][:160]}")
+    for n in notes[:a.limit]:
+        print(f"note   {n['date']} {n['path']}: {n['title'][:100]}")
+
+
 def cmd_recall(a):
     cfg = config()
     b = get_beat(cfg, a.beat)
@@ -3146,6 +3196,11 @@ def main(argv=None):
     p = add("where", cmd_where, "resolved paths"); p.add_argument("--beat")
     p = add("beats", cmd_beats, "list beats"); p.add_argument("--json", action="store_true")
     p = add("beat-new", cmd_beat_new, "scaffold a beat from the template"); p.add_argument("slug"); p.add_argument("--title"); p.add_argument("--dir")
+    p.add_argument("--scope", help="the beat's opening paragraph, from a caller such as an evergreen unit")
+    p.add_argument("--question", action="append", help="a research question (repeat); replaces the template's TODO list")
+    p.add_argument("--feeds", help="who reads this beat's findings, e.g. evergreen:<unit>; written to beat.md frontmatter")
+    p = add("leads", cmd_leads, "notes and reports since a date, for a caller's refresh (evergreen)"); p.add_argument("--beat", required=True)
+    p.add_argument("--since", required=True, help="YYYY-MM-DD"); p.add_argument("--limit", type=int, default=40); p.add_argument("--json", action="store_true")
     p = add("beat-check", cmd_beat_check, "validate a beat's files"); p.add_argument("beat"); p.add_argument("--strict", action="store_true")
     p = add("sources", cmd_sources, "list a beat's sources"); p.add_argument("--beat"); p.add_argument("--json", action="store_true")
     p = add("probe", cmd_probe, "fetch each source once and report"); p.add_argument("--beat"); p.add_argument("--source"); p.add_argument("--kinds")
