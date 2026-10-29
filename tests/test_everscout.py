@@ -947,12 +947,13 @@ class StatsTests(WorkspaceTest):
 
     def test_unapproved_is_only_proposed_and_approval_can_be_withdrawn(self):
         self.add("good", grade="B2")
-        self.seed("good", [1, 2, 3], start="2026-09-07")
+        recent = (dt.date.today() - dt.timedelta(days=21)).isoformat()  # a fixed date went stale once today moved on
+        self.seed("good", [1, 2, 3], start=recent)
         self.run_cli("stats", "approve", "--beat", "test-beat", "good", "--date", "2026-09-20")
         # approve itself promotes when already ready; undo for the withdraw path
         self.assertEqual(self.status()["good"]["status"], "active")
         self.add("other", grade="B2")
-        self.seed("other", [1, 2, 3], start="2026-09-07")
+        self.seed("other", [1, 2, 3], start=recent)
         self.run_cli("stats", "approve", "--beat", "test-beat", "--withdraw", "other")
         code, out, _ = self.review()
         self.assertIn("promote  other", out)
