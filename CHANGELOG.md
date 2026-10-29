@@ -2,7 +2,9 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
-## Unreleased
+## 0.6.0 · 2026-10-29
+
+- because: evergreen's beat offer (a new evergreen unit may get a beat whose findings feed its refresh). `beat-new` takes `--scope`, repeatable `--question` and `--feeds` (written to beat.md frontmatter) so a caller seeds the beat; `leads --beat --since` lists notes and reports since a date for that caller's refresh. 75 offline tests (1 new). `StatsTests.test_unapproved_is_only_proposed_and_approval_can_be_withdrawn` seeded fixed September dates and went stale as the calendar moved on; it now seeds three weeks before today. All 75 pass.
 
 - because: the 2026-10-16 ai-video scan flagged seven YouTube channel feeds as 404; every YouTube feed was failing, Google's own channel included (`ai-docs/research/2026-10-16-youtube-feeds-and-gdelt-refusals.md`).
 - `fetch` prints one line when every YouTube feed in the run fails: the endpoint is down, not the channel ids, so fetch again later before changing `sources.md`. kb/platforms.md youtube row says the same. 66 offline tests (1 new). A patch when released.

@@ -75,7 +75,8 @@ The rules come from research into platform policies, the 2025 r/changemyview AI 
 | command | does |
 |---|---|
 | `where [--beat]` | resolved paths |
-| `beats`, `beat-new <slug> --title`, `beat-check <slug>` | list, scaffold, validate beats |
+| `beats`, `beat-new <slug> --title [--scope --question ... --feeds]`, `beat-check <slug>` | list, scaffold (a caller such as evergreen can seed the scope and research questions), validate beats |
+| `leads --beat --since YYYY-MM-DD [--json]` | notes and reports since a date, newest first: leads for a caller's refresh to verify (evergreen reads these for a unit linked to a beat) |
 | `sources --beat`, `probe --beat [--save]` | list sources; fetch each once and report which fail |
 | `fetch --beat [--kinds] [--sources] [--listing new,top] [--max-age-days N] [--peek] [--json]` | fetch a beat's sources (paced, cached) and list new items; `--peek` reads without marking them seen |
 | `thread <url>` | a thread with comments |

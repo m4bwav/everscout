@@ -281,6 +281,28 @@ class BeatTests(WorkspaceTest):
         self.assertIn("duplicate source", out)
         self.assertIn("unknown kind", out)
 
+    def test_beat_new_scope_and_leads(self):
+        code, out, err = self.run_cli("beat-new", "craft-x", "--title", "Craft X", "--scope", "Follows craft X and how people use AI for it.",
+                                      "--question", "What do practitioners do now?", "--question", "How do people use AI for craft X?",
+                                      "--feeds", "evergreen:craftwright")
+        self.assertEqual(code, 0, err)
+        text = open(os.path.join(self.home, "beats", "craft-x", "beat.md"), encoding="utf-8").read()
+        self.assertIn("Follows craft X and how people use AI for it.", text)
+        self.assertIn("2. How do people use AI for craft X?", text)
+        self.assertNotIn("1. TODO", text)
+        self.assertIn("feeds: [evergreen:craftwright]", text.split("\n---\n")[0])
+        dd = E.data_dir(self.cfg(), "craft-x")
+        os.makedirs(os.path.join(dd, "notes", "2026-10"))
+        os.makedirs(os.path.join(dd, "reports"))
+        for name, when in (("a-old", "2026-09-01"), ("b-new", "2026-10-20")):
+            open(os.path.join(dd, "notes", "2026-10", name + ".md"), "w", encoding="utf-8").write(
+                f"---\ntitle: {name}\nposted: {when}\nsummary: s\n---\nbody\n")
+        open(os.path.join(dd, "reports", "2026-10-25-radar.md"), "w", encoding="utf-8").write("---\ntitle: Radar\ndate: 2026-10-25\nsummary: rising\n---\n")
+        code, out, _ = self.run_cli("leads", "--beat", "craft-x", "--since", "2026-10-01", "--json")
+        got = json.loads(out)
+        self.assertEqual([n["title"] for n in got["notes"]], ["b-new"])
+        self.assertEqual(got["reports"][0]["path"], "reports/2026-10-25-radar.md")
+
     def test_builtin_beats_pass_check(self):
         for slug in ("ai-video", "global-economics", "downtempo", "tech-hiring"):
             code, out, _ = self.run_cli("beat-check", slug)
@@ -925,12 +947,13 @@ class StatsTests(WorkspaceTest):
 
     def test_unapproved_is_only_proposed_and_approval_can_be_withdrawn(self):
         self.add("good", grade="B2")
-        self.seed("good", [1, 2, 3], start="2026-09-07")
+        recent = (dt.date.today() - dt.timedelta(days=21)).isoformat()  # a fixed date went stale once today moved on
+        self.seed("good", [1, 2, 3], start=recent)
         self.run_cli("stats", "approve", "--beat", "test-beat", "good", "--date", "2026-09-20")
         # approve itself promotes when already ready; undo for the withdraw path
         self.assertEqual(self.status()["good"]["status"], "active")
         self.add("other", grade="B2")
-        self.seed("other", [1, 2, 3], start="2026-09-07")
+        self.seed("other", [1, 2, 3], start=recent)
         self.run_cli("stats", "approve", "--beat", "test-beat", "--withdraw", "other")
         code, out, _ = self.review()
         self.assertIn("promote  other", out)
