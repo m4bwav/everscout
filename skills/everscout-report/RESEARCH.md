@@ -2,7 +2,7 @@
 
 Findings that back [SKILL.md](SKILL.md). Changes they caused are logged in [CHANGELOG.md](CHANGELOG.md); procedural lessons live in [LEARNINGS.md](LEARNINGS.md); test runs and their evidence in [TESTS.md](TESTS.md); schedule and state in `evergreen.json`. Protocol: the installed evergreen plugin.
 
-Topic: how to turn community monitoring into faithful trend reports and a sourced baseline study: horizon-scanning signal methods, radar formats, citation faithfulness. Tier `medium`. Last refresh 2026-09-26; next due 2026-10-26.
+Topic: how to turn community monitoring into faithful trend reports and a sourced baseline study: horizon-scanning signal methods, radar formats, citation faithfulness. Tier `medium`. Last refresh 2026-10-30; next due in `evergreen.json`.
 
 ## Current understanding
 
@@ -54,6 +54,14 @@ Testing:
 Best sources: the platforms' own docs and rules pages, r/redditdev, bsky.network docs, docs.joinmastodon.org, the HN guidelines, arXiv and ACM for the studies. Noisy: vendor blogs selling Reddit data access (read with care), SEO lists of "best subreddits".
 
 ## Findings log
+
+### R-20261030-1 · 2026-10-30 · Quiet check: horizon scanning and radar methods unchanged
+
+- Summary: subject: no new method since 2026-09-26; the Nesta agentic signal scout write-up (score then write, two agents) stays the closest practice reference and repeats that agent behaviour drift must be tracked. Tooling: last30days-skill v3.29 to v3.31 (2026-10-22 to 10-27) are lane fixes (YouTube, TikTok, GitHub metrics vs comments, undated web results kept); nothing to borrow for reports. Testing: nothing new. Reddit RSS still ends 2026-11-13 (the scan skill owns that).
+- Track: subject, tooling
+- Sources: https://www.nesta.org.uk/project-updates/failing-fast-with-ai-lessons-from-building-nestas-agentic-signal-scout/, https://github.com/mvanhorn/last30days-skill/releases/tag/v3.31.0
+- Magnitude: 0.1
+- applied: none (research only)
 
 ### R-20260927-1 · 2026-09-27 · Beat statistics
 - Summary: a beat keeps a metric catalog (`metrics.md`) and an append-only long-form series (`DATA/stats/series.csv`); metrics are chosen from research questions (GQM), pass an actionability test (Lean Analytics), carry an Admiralty grade, and move candidate, active, archived with explicit thresholds; GDELT DOC 2.0 and Wikimedia pageviews are keyless series sources, Google Trends is scrape-only. Full note: `ai-docs/research/2026-09-27-beat-statistics.md`.

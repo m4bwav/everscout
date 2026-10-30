@@ -2,7 +2,7 @@
 
 Findings that back [SKILL.md](SKILL.md). Changes they caused are logged in [CHANGELOG.md](CHANGELOG.md); procedural lessons live in [LEARNINGS.md](LEARNINGS.md); test runs and their evidence in [TESTS.md](TESTS.md); schedule and state in `evergreen.json`. Protocol: the installed evergreen plugin.
 
-Topic: how to ask creators and practitioners about their work online without reading as automation or spam, and what platforms and communities allow for AI-assisted comments. Tier `fast`. Last refresh 2026-10-23.
+Topic: how to ask creators and practitioners about their work online without reading as automation or spam, and what platforms and communities allow for AI-assisted comments. Tier `fast`. Last refresh 2026-10-30.
 
 ## Current understanding
 
@@ -64,6 +64,14 @@ Also: github.blog/changelog for maintainer controls; EUR-Lex for the AI Omnibus 
 Best sources: the platforms' own docs and rules pages, r/redditdev, bsky.network docs, docs.joinmastodon.org, the HN guidelines, arXiv and ACM for the studies. Noisy: vendor blogs selling Reddit data access (read with care), SEO lists of "best subreddits".
 
 ## Findings log
+
+### R-20261030-1 · 2026-10-30 · Subject: r/opensource bans AI projects from 2026-10-24; Reddit dates hold
+
+- Summary: r/opensource moderators barred projects that use, are made by, or are for AI, effective 2026-10-24 (secondary coverage); one more subreddit where an AI-assisted ask must check the sidebar rules first, which the per-community rules check already covers. Bluesky rules on agent replies and DMs remain unclear (Blotato survey, 2026-10-08). Reddit dates unchanged: new Data API requests close 2026-10-31, RSS ends 2026-11-13. Tooling: nothing new. Testing: nothing new.
+- Track: subject
+- Sources: https://letsdatascience.com/news/ropensource-moderators-ban-ai-projects-and-draw-backlash-ac4ed72a, https://www.blotato.com/research/social-media-automation-rulebook, https://www.techwyse.com/news/social-media/reddit-rss-feeds-ending-public-api-shutdown-2027
+- Magnitude: 0.2
+- applied: none (research only)
 
 ### R-20261023-1 · 2026-10-23 · Testing: add a discovery case; GitHub row gains Bitcoin Core and maintainer limits; Reddit dates hold
 - Summary: Expo's skill-eval post (2026-10-08) grades triggering from prompts that never name the skill, three runs each, and warns that crowded catalogs truncate descriptions; the suite had no such case. Bitcoin Core PR #35386 was merged 2026-07-07 (AI text only in a disclosed quote block; human-written replies); GitHub has no platform AI-comment rule but lets maintainers limit issues and comments to collaborators (2026-06). Reddit timeline unchanged (RSS ends 11-13; new API requests close 10-31; update 11-10; porting-bounty registration 11-30; unregistered apps 2027-01-12; public access ends 2027-03); logged-out .json and old.reddit already require login. Rules pages re-read: HN, mastodon.social rule 1008, Bluesky blog, Discourse unchanged. EU AI Omnibus delays only Art. 50(2). Tooling: last30days-skill v3.26 to v3.30 keep keyless Reddit via Arctic Shift (windowed queries for scores); new MCP-registry Reddit servers are monitors, none drafts with pace checks. Practice: LinkedIn added an "AI slop" report button and classifiers for generic AI comments (supports short, specific questions); no new outreach backlash case. Testing: see above.
