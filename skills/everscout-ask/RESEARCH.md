@@ -2,7 +2,7 @@
 
 Findings that back [SKILL.md](SKILL.md). Changes they caused are logged in [CHANGELOG.md](CHANGELOG.md); procedural lessons live in [LEARNINGS.md](LEARNINGS.md); test runs and their evidence in [TESTS.md](TESTS.md); schedule and state in `evergreen.json`. Protocol: the installed evergreen plugin.
 
-Topic: answering questions from a personal monitoring knowledge base with retrieval grading, web fallback and faithful citation. Tier `medium`. Last refresh 2026-09-26; next due 2026-10-26.
+Topic: answering questions from a personal monitoring knowledge base with retrieval grading, web fallback and faithful citation. Tier `medium`. Last refresh 2026-10-30; next due in `evergreen.json`.
 
 ## Current understanding
 
@@ -47,6 +47,14 @@ Testing:
 Best sources: arXiv papers with code, the Tow Center and EBU studies on AI answers, the evergreen protocol. Noisy: vendor "RAG best practices" posts.
 
 ## Findings log
+
+### R-20261030-1 · 2026-10-30 · Quiet check: abstention and citation checking still the consensus
+
+- Summary: subject: recent grounded-QA work agrees with the current design. CiteGuard-RAG (arXiv 2609.15830, September 2026, self-reported) credits a citation-validation step for most of its gain (98.3 percent valid citations, 12.3 percent without it); GRACE (arXiv 2601.04525) trains grounding and abstention together. Both back the cite-or-abstain rule; nothing changes a claim. Tooling: nothing new. Practice: nothing new. Testing: nothing new.
+- Track: subject
+- Sources: https://www.alphaxiv.org/abs/2609.15830, https://arxiv.org/abs/2601.04525v1
+- Magnitude: 0.1
+- applied: none (research only)
 
 ### R-20260927-1 · 2026-09-27 · Beat statistics
 - Summary: a beat keeps a metric catalog (`metrics.md`) and an append-only long-form series (`DATA/stats/series.csv`); metrics are chosen from research questions (GQM), pass an actionability test (Lean Analytics), carry an Admiralty grade, and move candidate, active, archived with explicit thresholds; GDELT DOC 2.0 and Wikimedia pageviews are keyless series sources, Google Trends is scrape-only. Full note: `ai-docs/research/2026-09-27-beat-statistics.md`.

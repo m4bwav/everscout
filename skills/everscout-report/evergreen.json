@@ -13,9 +13,9 @@
   "source": "https://github.com/m4bwav/everscout",
   "topic": "how to turn community monitoring into faithful trend reports and a sourced baseline study: horizon-scanning signal methods, radar formats, citation faithfulness",
   "tier": "medium",
-  "interval_days": 30,
-  "last_checked": "2026-09-26",
-  "next_due": "2026-10-26",
+  "interval_days": 30.0,
+  "last_checked": "2026-10-30",
+  "next_due": "2026-11-30",
   "verify_at_use": false,
   "volatile_claims": [],
   "contradiction": null,
@@ -32,12 +32,18 @@
       "m": null,
       "interval_after": 30,
       "note": "created"
+    },
+    {
+      "date": "2026-10-30",
+      "m": 0.1,
+      "interval_after": 30.0,
+      "note": "quiet: horizon scanning unchanged, last30days lane fixes only; cost: searches 1 · fetches 0 · tool calls 3"
     }
   ],
   "counts": {
     "learnings": 0,
     "changes": 1,
-    "research": 1,
+    "research": 2,
     "tests": 0
   },
   "consolidate_every": 25,

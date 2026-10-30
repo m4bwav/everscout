@@ -13,9 +13,9 @@
   "source": "https://github.com/m4bwav/everscout",
   "topic": "answering questions from a personal monitoring knowledge base with retrieval grading, web fallback and faithful citation",
   "tier": "medium",
-  "interval_days": 30,
-  "last_checked": "2026-09-26",
-  "next_due": "2026-10-26",
+  "interval_days": 30.0,
+  "last_checked": "2026-10-30",
+  "next_due": "2026-12-03",
   "verify_at_use": false,
   "volatile_claims": [],
   "contradiction": null,
@@ -32,12 +32,18 @@
       "m": null,
       "interval_after": 30,
       "note": "created"
+    },
+    {
+      "date": "2026-10-30",
+      "m": 0.1,
+      "interval_after": 30.0,
+      "note": "quiet: abstention and citation checking still consensus; cost: searches 1 · fetches 0 · tool calls 2"
     }
   ],
   "counts": {
     "learnings": 1,
     "changes": 1,
-    "research": 2,
+    "research": 3,
     "tests": 2
   },
   "consolidate_every": 25,
