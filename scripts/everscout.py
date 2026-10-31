@@ -52,7 +52,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.6.0"
+VERSION = "0.7.0"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -90,7 +90,7 @@ DEFAULT_CONFIG = {
 
 STANCES = ("native", "open", "mixed", "hostile", "anti", "n/a", "unknown")
 KINDS = ("reddit", "rss", "youtube", "github", "hn", "news", "arxiv", "mastodon", "bluesky", "lemmy", "discourse", "huggingface", "web")
-NOTE_KINDS = ("showcase", "workflow", "discussion", "release", "question", "postmortem", "analysis", "data", "news", "paper", "web")
+NOTE_KINDS = ("showcase", "workflow", "discussion", "release", "question", "postmortem", "analysis", "data", "news", "paper", "web", "book")
 DEFAULT_SECTIONS = ["What it is", "How it was made", "Reception and interest", "Why it matters", "Questions this raises"]
 ASKED_WORDS = ("how did you make", "how did you do", "what did you use", "what tools", "which tools", "what software",
                "workflow", "what's your process", "whats your process", "your setup", "what setup", "how long did",
@@ -814,6 +814,10 @@ def cmd_beat_check(a):
         me, mw = metric_problems(b, metrics)
         errs += me
         warns += mw
+    if os.path.exists(lit_path(b)) and "{{" not in b.text("literature.md"):
+        le, lw = lit_problems(b, *lit_load(b))
+        errs += ["literature.md: " + e for e in le]
+        warns += ["literature.md: " + w for w in lw]
     for e in errs:
         print("ERROR  " + e)
     for w in warns:
@@ -3181,6 +3185,508 @@ def cmd_stats(a):
      "approve": cmd_stats_approve, "export": cmd_stats_export}[a.action](a)
 
 
+# ---------------------------------------------------------------- literature (books on the beat)
+# literature.md in the beat folder: three tiers of books (canon, recent, latest) and the Open Library searches that find
+# new ones. A book provided by the user is read with readwright into DATA/books/<slug>/, distilled into learnings.md
+# (principles cited by chapter, changes aimed at the beat's files and the units it feeds), then into a `book` note.
+
+LIT_TIERS = ("canon", "recent", "latest")
+LIT_STATUSES = ("lead", "have", "reading", "read", "distilled", "skip")
+LIT_COLUMNS = ["title", "authors", "year", "id", "why", "evidence", "status"]
+LIT_RECHECK_DAYS = {"canon": 365, "recent": 90, "latest": 30}  # a tier whose checked date is older is due for research
+LIT_RECENT_YEARS = 5  # recent: published within this many years of the tier's checked date
+LIT_LATEST_MONTHS = 18
+LIT_MAX_QUOTE_WORDS = 25  # learnings paraphrase; a quoted run longer than this fails lint (copyright, kb/literature.md)
+LIT_CITE = re.compile(r"\((?:[^()]*?)(?:ch\.|chap|chapter|p\.|pp\.|part|sec\.|section|§|loc\.|appendix|intro)[^()]*\)", re.I)
+LIT_TARGET_BEAT_FILES = ("beat.md", "sources.md", "vocab.md", "questions.md", "searches.md", "study.md", "metrics.md", "literature.md")
+
+
+def lit_path(b):
+    return b.file("literature.md")
+
+
+def lit_sections(text):
+    """{heading lower: body} for the `## ` sections of a markdown body."""
+    out, cur, buf = {}, None, []
+    for line in text.splitlines():
+        if line.startswith("## "):
+            if cur is not None:
+                out[cur] = "\n".join(buf)
+            cur, buf = line[3:].strip().lower(), []
+        elif cur is not None:
+            buf.append(line)
+    if cur is not None:
+        out[cur] = "\n".join(buf)
+    return out
+
+
+def lit_load(b):
+    """(meta, {tier: [row]}, [search row]) from literature.md; empty when the beat has none."""
+    text = b.text("literature.md")
+    meta, body = parse_frontmatter(text)
+    secs = lit_sections(body)
+    tiers = {}
+    for t in LIT_TIERS:
+        rows = []
+        for r in parse_table(secs.get(t, "")):
+            r = {k: (r.get(k) or "").strip() for k in LIT_COLUMNS}
+            if r["title"]:
+                r["status"] = (r["status"] or "lead").split()[0].lower()
+                rows.append(r)
+        tiers[t] = rows
+    searches = [r for r in parse_table(secs.get("searches", "")) if (r.get("query") or "").strip()]
+    for r in searches:
+        r["query"] = r["query"].strip().strip("`")
+    return meta, tiers, searches
+
+
+def lit_render(b, meta, tiers, searches):
+    """literature.md text, keeping the file's prose sections (anything that is not a tier or Searches) in place."""
+    old = b.text("literature.md")
+    _, body = parse_frontmatter(old)
+    head = body.split("\n## ", 1)[0].rstrip() if body else f"# Literature: {b.title}"
+    secs = lit_sections(body)
+    out = [render_frontmatter(meta) + "\n" + head + "\n"]
+    names = {"canon": "Canon", "recent": "Recent", "latest": "Latest"}
+    for t in LIT_TIERS:
+        intro = re.split(r"\n\s*\|", "\n" + secs.get(t, ""), maxsplit=1)[0].strip()
+        out.append(f"## {names[t]}\n\n" + (intro + "\n\n" if intro else "") + "| " + " | ".join(LIT_COLUMNS) + " |\n|"
+                   + "---|" * len(LIT_COLUMNS) + "\n"
+                   + "".join("| " + " | ".join(r.get(k, "").replace("|", "/") for k in LIT_COLUMNS) + " |\n" for r in tiers[t]))
+    intro = re.split(r"\n\s*\|", "\n" + secs.get("searches", ""), maxsplit=1)[0].strip()
+    out.append("## Searches\n\n" + (intro + "\n\n" if intro else "") + "| query | notes |\n|---|---|\n"
+               + "".join(f"| `{r['query']}` | {r.get('notes', '')} |\n" for r in searches))
+    for name, text in secs.items():
+        if name not in LIT_TIERS and name != "searches":
+            out.append(f"## {name[:1].upper() + name[1:]}\n{text.rstrip()}\n")
+    return "\n".join(out)
+
+
+def lit_norm_title(t):
+    t = re.sub(r"[*_`]", "", t or "").lower().split(":")[0]
+    return re.sub(r"[^a-z0-9]+", " ", t).strip()
+
+
+def lit_find(tiers, ref):
+    """(tier, row) whose id or title matches ref, else (None, None)."""
+    key = lit_norm_title(ref)
+    for t in LIT_TIERS:
+        for r in tiers[t]:
+            if (ref and r["id"] and r["id"].lower() == ref.lower()) or (key and lit_norm_title(r["title"]) == key):
+                return t, r
+    return None, None
+
+
+def lit_problems(b, meta, tiers, searches, today_d=None):
+    """(errors, warnings) for literature.md."""
+    today_d = today_d or dt.date.today()
+    errs, warns = [], []
+    seen = {}
+    for t in LIT_TIERS:
+        checked = str(meta.get(t + "_checked") or meta.get("checked") or "")
+        try:
+            cd = dt.date.fromisoformat(checked[:10])
+        except ValueError:
+            cd = None
+            if checked == "never":
+                warns.append(f"{t} tier never researched (kb/literature.md)")
+            else:
+                errs.append(f"literature.md frontmatter lacks a date in {t}_checked (or checked)")
+        if cd and (today_d - cd).days > LIT_RECHECK_DAYS[t]:
+            warns.append(f"{t} tier last checked {cd}, over {LIT_RECHECK_DAYS[t]} days ago: due for research (lit due)")
+        for r in tiers[t]:
+            name = r["title"][:60]
+            k = r["id"].lower() if r["id"] not in ("", "-") else lit_norm_title(r["title"])
+            if k in seen:
+                errs.append(f"{name}: listed twice ({seen[k]} and {t})")
+            seen[k] = t
+            if r["status"] not in LIT_STATUSES:
+                errs.append(f"{name}: status {r['status']!r} not in {', '.join(LIT_STATUSES)}")
+            if not re.match(r"https?://", r["evidence"]):
+                errs.append(f"{name}: evidence must be a URL that was fetched or seen in search results")
+            if r["id"] and r["id"] != "-" and not re.fullmatch(r"OL\d+W|isbn:\d{9}[\dX]|isbn:\d{13}", r["id"]):
+                errs.append(f"{name}: id {r['id']!r} is not an Open Library work key (OL...W) or isbn:<number>")
+            if not r["why"]:
+                warns.append(f"{name}: no why")
+            y = re.match(r"\d{4}", r["year"])
+            if not y:
+                warns.append(f"{name}: no year")
+            elif cd and t == "recent" and int(y.group()) < cd.year - LIT_RECENT_YEARS:
+                warns.append(f"{name}: {y.group()} is older than the recent window ({LIT_RECENT_YEARS} years); canon?")
+            elif cd and t == "latest" and int(y.group()) < (cd - dt.timedelta(days=LIT_LATEST_MONTHS * 31)).year:
+                warns.append(f"{name}: {y.group()} is older than the latest window ({LIT_LATEST_MONTHS} months)")
+    if not tiers["canon"]:
+        warns.append("no canon books")
+    if not searches:
+        warns.append("no Open Library searches: `lit new` has nothing to run")
+    return errs, warns
+
+
+def cmd_lit_list(a):
+    cfg = config()
+    b = get_beat(cfg, a.beat)
+    if not os.path.exists(lit_path(b)):
+        fail(f"{b.slug} has no literature.md yet; copy beats/_template/literature.md and follow kb/literature.md")
+    meta, tiers, searches = lit_load(b)
+    if a.json:
+        print(json.dumps({"beat": b.slug, "meta": meta, "tiers": tiers, "searches": searches}, indent=1))
+        return
+    for t in LIT_TIERS:
+        rows = [r for r in tiers[t] if not a.status or r["status"] == a.status]
+        if a.tier and t != a.tier:
+            continue
+        print(f"{t} ({len(rows)}; checked {meta.get(t + '_checked') or meta.get('checked') or 'never'})")
+        for r in rows:
+            print(f"  [{r['status']:<9}] {r['title'][:70]} - {r['authors'][:40]} ({r['year']}) {r['id']}")
+    print(f"{len(searches)} searches")
+
+
+def cmd_lit_check(a):
+    cfg = config()
+    b = get_beat(cfg, a.beat)
+    if not os.path.exists(lit_path(b)):
+        fail(f"{b.slug} has no literature.md")
+    errs, warns = lit_problems(b, *lit_load(b))
+    for e in errs:
+        print("ERROR  " + e)
+    for w in warns:
+        print("warn   " + w)
+    _, tiers, _ = lit_load(b)
+    print(f"{b.slug}: " + ", ".join(f"{len(tiers[t])} {t}" for t in LIT_TIERS) + f"; {len(errs)} errors, {len(warns)} warnings")
+    sys.exit(1 if errs or (a.strict and warns) else 0)
+
+
+def cmd_lit_add(a):
+    """Add a book to a tier, or update one already listed (matched by id, then title): status, tier, fields."""
+    cfg = config()
+    b = get_beat(cfg, a.beat)
+    if not os.path.exists(lit_path(b)):
+        shutil.copy(os.path.join(ROOT, "beats", "_template", "literature.md"), lit_path(b))
+    meta, tiers, searches = lit_load(b)
+    t, r = lit_find(tiers, a.id or a.title)
+    if r is None:
+        if not (a.title and a.tier):
+            fail("a new book needs --title and --tier")
+        r = {k: "" for k in LIT_COLUMNS}
+        r["status"] = "lead"
+        tiers[a.tier].append(r)
+        t, verb = a.tier, "added"
+    else:
+        verb = "updated"
+        if a.tier and a.tier != t:
+            tiers[t].remove(r)
+            tiers[a.tier].append(r)
+            t = a.tier
+    for k in ("title", "authors", "year", "id", "why", "evidence", "status"):
+        v = getattr(a, k, None)
+        if v is not None:
+            r[k] = str(v)
+    if a.status and a.status not in LIT_STATUSES:
+        fail(f"status must be one of {', '.join(LIT_STATUSES)}")
+    write(lit_path(b), lit_render(b, meta, tiers, searches))
+    print(f"{verb} {t}: {r['title']} [{r['status']}]")
+
+
+def lit_clean_query(query):
+    """A query as Open Library takes it: a pasted `q=` and URL encoding undone, fixed year ranges dropped (--since-year sets the window)."""
+    q = re.sub(r"^q=\s*", "", query.strip())
+    if re.search(r"%[0-9A-Fa-f]{2}", q):
+        q = urllib.parse.unquote_plus(q)
+    q = re.sub(r"\s*\bfirst_publish_year:\[[^\]]*\]", "", q)
+    return q.strip()
+
+
+def lit_search(cfg, query, fetch=None, limit=40, force=False):
+    fetch = fetch or fetcher(cfg)
+    query = lit_clean_query(query)
+    url = S.openlibrary_search_url(query, sort="new", limit=limit)
+    text, _, status = fetch.get(url, ttl=86400, force=force, accept="application/json")
+    try:
+        return S.parse_openlibrary(json.loads(text) if text.strip() else {}, url)
+    except ValueError:
+        raise S.FetchError(url, status, "not JSON: " + re.sub(r"\s+", " ", text)[:120])
+
+
+def cmd_lit_new(a):
+    """Recent books from the beat's Open Library searches that literature.md does not list yet: candidates for Latest."""
+    cfg = config()
+    b = get_beat(cfg, a.beat)
+    meta, tiers, searches = lit_load(b)
+    if not searches:
+        fail(f"{b.slug}: literature.md has no searches (a `## Searches` table with a query column)")
+    since = a.since_year or dt.date.today().year - 1
+    seen = {}
+    for s in searches:
+        try:
+            books = lit_search(cfg, s["query"], limit=a.per_search, force=a.force)
+        except S.FetchError as e:
+            note(f"search failed: {s['query']}: {e}")
+            continue
+        for bk in books:
+            if (bk["year"] or 0) < since or (a.language and a.language != "any" and bk["languages"] and a.language not in bk["languages"]):
+                continue
+            if lit_find(tiers, bk["id"])[1] or lit_find(tiers, bk["title"])[1]:
+                continue
+            got = seen.setdefault(bk["id"], dict(bk, queries=[]))
+            got["queries"].append(s["query"])
+    found = sorted(seen.values(), key=lambda x: (len(x["queries"]), x["editions"], x["publish_date"]), reverse=True)[:a.limit]
+    if a.json:
+        print(json.dumps({"beat": b.slug, "since_year": since, "candidates": found}, indent=1))
+        return
+    print(f"{b.slug}: {len(found)} books from {since} on, not yet listed ({len(searches)} searches)")
+    for bk in found:
+        print(f"{bk['id']:<14} {bk['year']} {bk['title'][:70]} - {', '.join(bk['authors'])[:40]}"
+              f" ({bk['publisher'][:30]}; {len(bk['queries'])} searches) {bk['url']}")
+
+
+def lit_due(meta, today_d=None):
+    today_d = today_d or dt.date.today()
+    out = []
+    for t in LIT_TIERS:
+        c = str(meta.get(t + "_checked") or meta.get("checked") or "")
+        try:
+            age = (today_d - dt.date.fromisoformat(c[:10])).days
+        except ValueError:
+            age = None
+        if age is None or age > LIT_RECHECK_DAYS[t]:
+            out.append((t, c or "never"))
+    return out
+
+
+def cmd_lit_due(a):
+    """Which tiers of which beats are due for literature research (exit 2 when any is)."""
+    cfg = config()
+    any_due = False
+    for slug, path in all_beats(cfg).items():
+        if a.beat and slug != a.beat:
+            continue
+        b = Beat(slug, path)
+        if not os.path.exists(lit_path(b)):
+            print(f"{slug}: no literature.md")
+            any_due = True
+            continue
+        meta, _, _ = lit_load(b)
+        due = lit_due(meta)
+        any_due |= bool(due)
+        print(f"{slug}: " + ("; ".join(f"{t} due (checked {c})" for t, c in due) if due else "current"))
+    sys.exit(2 if any_due else 0)
+
+
+def find_readwright(cfg):
+    """Path to readwright's rw.py, or None: $EVERSCOUT_READWRIGHT, config readwright, a sibling clone, the plugin cache."""
+    tail = os.path.join("skills", "readwright", "scripts", "rw.py")
+    cands = [os.environ.get("EVERSCOUT_READWRIGHT") or "", cfg.get("readwright") or "", os.path.join(os.path.dirname(ROOT), "readwright", tail)]
+    root = claude_plugins_dir()
+    cands += sorted(glob.glob(os.path.join(root, "cache", "*", "readwright", "*", tail)), key=_version_key, reverse=True)
+    cands += glob.glob(os.path.join(root, "marketplaces", "*", tail)) + glob.glob(os.path.join(root, "marketplaces", "*", "readwright", tail))
+    for c in cands:
+        if c and os.path.isfile(expand(c)):
+            return expand(c)
+    return None
+
+
+def books_dir(cfg, slug):
+    return os.path.join(data_dir(cfg, slug), "books")
+
+
+LEARNINGS_TEMPLATE = """---
+title: {title}
+kind: learnings
+beat: {beat}
+book_id: {book_id}
+status: reading
+date: {date}
+---
+
+# Learnings: {title}
+
+How it was read: readwright outline in `toc.txt`; sections read and searched are listed below. Paraphrase in fresh words.
+Cite every principle by chapter, section or page in parentheses, like (ch. 3) or (p. 41). Quote at most {quote} words at a time.
+
+## Principles
+
+1. TODO one principle in plain words (ch. N)
+
+## What the beat already has
+
+Run `everscout.py recall --beat {beat} --q "<topic>"` for each principle and note where the beat agrees, lacks it or disagrees.
+
+## Changes
+
+One row per proposed change. target: `beat/<file>` ({beat_files}), `note` (the book note `lit distill` writes),
+or `feed:<unit>/<path>` for a skill or plugin this beat feeds (beat.md `feeds`: {feeds}), or `plugin:<name>/<path>` for
+another plugin. status: proposed, applied, rejected.
+
+| target | change | principle | status |
+|---|---|---|---|
+| beat/vocab.md | TODO | 1 | proposed |
+
+## Verdict
+
+One paragraph: worth it or not, for whom, what to skip.
+"""
+
+
+def cmd_lit_ingest(a):
+    """Set up a provided book for distilling: outline through readwright, a learnings.md to fill, the list row set to reading."""
+    cfg = config()
+    b = get_beat(cfg, a.beat)
+    path = expand(a.file)
+    if not os.path.isfile(path):
+        fail(f"no such file: {path}")
+    rw = find_readwright(cfg)
+    info, toc = "", ""
+    if rw:
+        for args, name in ((["info", path], "info"), (["toc", path], "toc")):
+            p = subprocess.run([sys.executable, rw] + args, capture_output=True, text=True, encoding="utf-8", errors="replace")
+            if p.returncode != 0:
+                note(f"readwright {name} exited {p.returncode}: {(p.stderr or p.stdout).strip()[:300]}")
+            if name == "info":
+                info = p.stdout
+            else:
+                toc = p.stdout
+    else:
+        note("readwright not found (github.com/m4bwav/readwright, or set EVERSCOUT_READWRIGHT): outline the book with your own reader")
+    title = a.title or (re.search(r"^title:\s*(.+)$", info, re.M | re.I).group(1).strip() if re.search(r"^title:\s*(.+)$", info, re.M | re.I)
+                        else os.path.splitext(os.path.basename(path))[0])
+    meta, tiers, searches = lit_load(b) if os.path.exists(lit_path(b)) else ({}, {t: [] for t in LIT_TIERS}, [])
+    tier, row = lit_find(tiers, a.id or title)
+    if row:
+        title = row["title"] or title
+    slug = slugify(title, 40)
+    d = os.path.join(books_dir(cfg, b.slug), slug)
+    os.makedirs(d, exist_ok=True)
+    write(os.path.join(d, "book.md"), render_frontmatter({
+        "title": title, "kind": "book", "beat": b.slug, "book_id": (row or {}).get("id") or a.id or "-", "tier": tier or "-",
+        "file": path.replace(os.sep, "/"), "reader": "readwright" if rw else "none", "date": today()})
+        + f"\n# {title}\n\nThe user's own copy, read for this beat. Never commit or redistribute the text.\n\n## readwright info\n\n```\n{info.strip()}\n```\n")
+    if toc:
+        write(os.path.join(d, "toc.txt"), toc)
+    lp = os.path.join(d, "learnings.md")
+    if not os.path.exists(lp) or a.force:
+        write(lp, LEARNINGS_TEMPLATE.format(title=title, beat=b.slug, book_id=(row or {}).get("id") or a.id or "-", date=today(),
+                                            quote=LIT_MAX_QUOTE_WORDS, beat_files=", ".join(LIT_TARGET_BEAT_FILES),
+                                            feeds=", ".join(b.list_meta("feeds")) or "none"))
+    if row and row["status"] in ("lead", "have"):
+        row["status"] = "reading"
+        write(lit_path(b), lit_render(b, meta, tiers, searches))
+    print(f"book folder {d}")
+    print(f"  learnings.md to fill; toc.txt {'written' if toc else 'not written'}; list row {'set to reading' if row else 'not found (lit add it)'}")
+    if rw:
+        print(f"  read sections with: python {rw} read \"{path}\" --section N   (search: grep \"{path}\" PATTERN)")
+
+
+def lit_learnings_problems(b, text):
+    """(errors, warnings, changes) for a learnings.md."""
+    errs, warns = [], []
+    _, body = parse_frontmatter(text)
+    secs = lit_sections(body)
+    principles = [l for l in secs.get("principles", "").splitlines() if re.match(r"\s*\d+\.\s", l)]
+    if not principles or any("TODO" in l for l in principles):
+        errs.append("Principles: none written yet, or a TODO left")
+    for l in principles:
+        if not LIT_CITE.search(l):
+            errs.append(f"principle without a citation (ch., p., section): {l.strip()[:80]}")
+    for q in re.findall(r"[\"“]([^\"”]+)[\"”]", body):
+        if len(q.split()) > LIT_MAX_QUOTE_WORDS:
+            errs.append(f"quote of {len(q.split())} words (max {LIT_MAX_QUOTE_WORDS}): paraphrase it: {q[:60]}...")
+    changes = parse_table(secs.get("changes", ""))
+    feeds = set(b.list_meta("feeds"))
+    for c in changes:
+        tgt, st = (c.get("target") or "").strip("` "), (c.get("status") or "").strip().lower()
+        if "TODO" in (c.get("change") or ""):
+            errs.append(f"change for {tgt}: TODO left")
+        if st not in ("proposed", "applied", "rejected"):
+            errs.append(f"change for {tgt}: status {st!r} not proposed, applied or rejected")
+        if tgt.startswith("beat/"):
+            if tgt[5:] not in LIT_TARGET_BEAT_FILES:
+                errs.append(f"target {tgt}: not a beat file ({', '.join(LIT_TARGET_BEAT_FILES)})")
+        elif tgt.startswith("feed:"):
+            if tgt[5:].split("/")[0] not in {f.split(":", 1)[-1] for f in feeds} | feeds:
+                warns.append(f"target {tgt}: the beat does not list this unit in beat.md feeds")
+        elif tgt != "note" and not tgt.startswith("plugin:"):
+            errs.append(f"target {tgt!r}: use beat/<file>, note, feed:<unit>/<path> or plugin:<name>/<path>")
+    if not changes:
+        warns.append("Changes: no rows; a book that changes nothing should say why in the Verdict")
+    if "TODO" in secs.get("verdict", "") or not secs.get("verdict", "").strip():
+        warns.append("Verdict: not written")
+    return errs, warns, changes
+
+
+def lit_book(cfg, b, ref):
+    d = os.path.join(books_dir(cfg, b.slug), ref)
+    if not os.path.isdir(d):
+        d = os.path.join(books_dir(cfg, b.slug), slugify(ref, 40))
+    if not os.path.isfile(os.path.join(d, "learnings.md")):
+        have = sorted(os.listdir(books_dir(cfg, b.slug))) if os.path.isdir(books_dir(cfg, b.slug)) else []
+        fail(f"no learnings.md for {ref!r} (books: {', '.join(have) or 'none'}); start with `lit ingest`")
+    return d
+
+
+def cmd_lit_lint(a):
+    cfg = config()
+    b = get_beat(cfg, a.beat)
+    d = lit_book(cfg, b, a.book)
+    errs, warns, changes = lit_learnings_problems(b, read(os.path.join(d, "learnings.md")))
+    for e in errs:
+        print("ERROR  " + e)
+    for w in warns:
+        print("warn   " + w)
+    by = {}
+    for c in changes:
+        by[(c.get("status") or "").strip().lower()] = by.get((c.get("status") or "").strip().lower(), 0) + 1
+    print(f"{os.path.basename(d)}: {len(changes)} changes (" + ", ".join(f"{v} {k}" for k, v in sorted(by.items())) + f"); {len(errs)} errors, {len(warns)} warnings")
+    sys.exit(1 if errs else 0)
+
+
+def cmd_lit_distill(a):
+    """Finish a book: learnings lint clean and no change left proposed, then a `book` note for recall and the row set to distilled."""
+    cfg = config()
+    b = get_beat(cfg, a.beat)
+    d = lit_book(cfg, b, a.book)
+    text = read(os.path.join(d, "learnings.md"))
+    errs, _, changes = lit_learnings_problems(b, text)
+    open_ = [c for c in changes if (c.get("status") or "").strip().lower() == "proposed"]
+    if errs:
+        fail("learnings.md has lint errors; run `lit lint` first")
+    if open_ and not a.allow_open:
+        fail(f"{len(open_)} changes still proposed: apply or reject each (or pass --allow-open to leave them for later)")
+    fm, body = parse_frontmatter(text)
+    bm, _ = parse_frontmatter(read(os.path.join(d, "book.md"))) if os.path.exists(os.path.join(d, "book.md")) else ({}, "")
+    title = fm.get("title") or bm.get("title") or os.path.basename(d)
+    secs = lit_sections(body)
+    url = ""
+    meta, tiers, searches = lit_load(b) if os.path.exists(lit_path(b)) else ({}, {t: [] for t in LIT_TIERS}, [])
+    _, row = lit_find(tiers, fm.get("book_id") if fm.get("book_id") not in (None, "", "-") else title)
+    if row:
+        url = row["evidence"] if row["id"] in ("", "-") else ("https://openlibrary.org/works/" + row["id"] if row["id"].startswith("OL") else row["evidence"])
+    nid = "book-" + os.path.basename(d)
+    summary = re.sub(r"\s+", " ", secs.get("verdict", "")).strip()[:240]
+    note_fm = {"title": title, "kind": "note", "status": "active", "date": today(), "verified": today(), "beat": b.slug,
+               "platform": "book", "community": "-", "url": url or "-", "posted": today(), "note_kind": "book",
+               "interest": 3, "engaged": False, "tags": ["book"], "summary": summary or title}
+    for facet, ents in vocab_match(b, body).items():
+        note_fm[facet] = ents
+    applied = [c for c in changes if (c.get("status") or "").strip().lower() == "applied"]
+    note_body = (f"# {title}\n\nDistilled from the user's copy on {today()}; full learnings in `books/{os.path.basename(d)}/learnings.md`.\n\n"
+                 f"## Principles\n{secs.get('principles', '').rstrip()}\n\n## What changed\n\n"
+                 + "".join(f"- {c.get('target')}: {c.get('change')}\n" for c in applied) + ("- nothing applied\n" if not applied else "")
+                 + f"\n## Verdict\n\n{secs.get('verdict', '').strip()}\n")
+    p = os.path.join(data_dir(cfg, b.slug), "notes", today()[:7], f"{today()}-{nid}.md")
+    write(p, render_frontmatter(note_fm) + "\n" + note_body)
+    fm["status"] = "distilled"
+    write(os.path.join(d, "learnings.md"), render_frontmatter(fm) + "\n" + body)
+    if row:
+        row["status"] = "distilled"
+        write(lit_path(b), lit_render(b, meta, tiers, searches))
+    print(f"note {p}\n{len(applied)} changes applied, {len(open_)} left proposed; list row {'distilled' if row else 'not found'}")
+
+
+def cmd_lit(a):
+    {"list": cmd_lit_list, "check": cmd_lit_check, "add": cmd_lit_add, "new": cmd_lit_new, "due": cmd_lit_due,
+     "ingest": cmd_lit_ingest, "lint": cmd_lit_lint, "distill": cmd_lit_distill}[a.action](a)
+
+
 # ---------------------------------------------------------------- main
 
 def main(argv=None):
@@ -3285,6 +3791,25 @@ def main(argv=None):
     q = ssp.add_parser("export", help="chartwright-ready long-form CSV, and chart commands when chartwright is found")
     q.add_argument("--beat"); q.add_argument("--metric"); q.add_argument("--since"); q.add_argument("--out"); q.add_argument("--include-archived", action="store_true")
     q.add_argument("--charts", action="store_true", help="build the charts into DATA/reports/charts/ with chartwright")
+    p = add("lit", cmd_lit, "books on the beat: canon, recent and latest tiers; Open Library for new ones; a provided book distilled")
+    lsp = p.add_subparsers(dest="action", required=True)
+    q = lsp.add_parser("list", help="the beat's literature by tier"); q.add_argument("--beat"); q.add_argument("--tier", choices=LIT_TIERS)
+    q.add_argument("--status", choices=LIT_STATUSES); q.add_argument("--json", action="store_true")
+    q = lsp.add_parser("check", help="validate literature.md"); q.add_argument("--beat"); q.add_argument("--strict", action="store_true")
+    q = lsp.add_parser("add", help="add a book to a tier, or update a listed one (matched by --id, then --title)"); q.add_argument("--beat")
+    q.add_argument("--tier", choices=LIT_TIERS); q.add_argument("--status", choices=LIT_STATUSES)
+    for f in ("title", "authors", "year", "id", "why", "evidence"):
+        q.add_argument("--" + f)
+    q = lsp.add_parser("new", help="recent books from the beat's Open Library searches that are not listed yet"); q.add_argument("--beat")
+    q.add_argument("--since-year", type=int); q.add_argument("--per-search", type=int, default=40); q.add_argument("--limit", type=int, default=30)
+    q.add_argument("--language", default="eng", help="keep books in this language code (default eng; `any` keeps all); books with no language are kept"); q.add_argument("--force", action="store_true")
+    q.add_argument("--json", action="store_true")
+    q = lsp.add_parser("due", help="tiers due for research (canon yearly, recent quarterly, latest monthly); exit 2 when any"); q.add_argument("--beat")
+    q = lsp.add_parser("ingest", help="set up a provided book: readwright outline, DATA/books/<slug>/learnings.md, row set to reading")
+    q.add_argument("file"); q.add_argument("--beat"); q.add_argument("--title"); q.add_argument("--id"); q.add_argument("--force", action="store_true")
+    q = lsp.add_parser("lint", help="check a book's learnings.md: citations, quote length, change targets"); q.add_argument("book"); q.add_argument("--beat")
+    q = lsp.add_parser("distill", help="finish a book: a `book` note for recall, the row set to distilled"); q.add_argument("book"); q.add_argument("--beat")
+    q.add_argument("--allow-open", action="store_true", help="leave proposed changes for later")
     a = ap.parse_args(argv)
     a.fn(a)
 

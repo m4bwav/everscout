@@ -1,0 +1,55 @@
+{
+  "evergreen": "1.0",
+  "name": "everscout-library",
+  "kind": "skill",
+  "main": "SKILL.md",
+  "files": {
+    "research": "RESEARCH.md",
+    "changelog": "CHANGELOG.md",
+    "learnings": "LEARNINGS.md",
+    "tests": "TESTS.md"
+  },
+  "protocol": "plugin",
+  "source": "https://github.com/m4bwav/everscout",
+  "topic": "keeping up with a subject's books (canon, recent, new releases) and distilling a provided book into a knowledge base and its skills",
+  "tier": "medium",
+  "interval_days": 30.0,
+  "last_checked": "2026-10-30",
+  "next_due": "2026-11-29",
+  "verify_at_use": false,
+  "volatile_claims": [],
+  "contradiction": null,
+  "events": [],
+  "streak": {
+    "quiet": 0,
+    "pinned_min": 0,
+    "pinned_max": 0,
+    "vau_quiet": 0
+  },
+  "history": [
+    {
+      "date": "2026-10-30",
+      "m": null,
+      "interval_after": 30,
+      "note": "created"
+    }
+  ],
+  "counts": {
+    "learnings": 0,
+    "changes": 1,
+    "research": 3,
+    "tests": 0
+  },
+  "consolidate_every": 25,
+  "tests": {
+    "last_run": null,
+    "harness": "claude -p",
+    "env": "win32",
+    "cases": 4,
+    "passed": 0,
+    "failed": 0,
+    "failing": [],
+    "last_failure": null,
+    "research_after_days": null
+  }
+}

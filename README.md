@@ -10,7 +10,7 @@ A beat covers one subject: AI video, global economics, down-tempo music, whateve
 
 It is a Claude Code plugin: five skills, a standard-library Python CLI and a markdown knowledge base. The skills are evergreen units, so their research refreshes on a schedule instead of going stale.
 
-## The five skills
+## The six skills
 
 | skill | does | say |
 |---|---|---|
@@ -19,6 +19,7 @@ It is a Claude Code plugin: five skills, a standard-library Python CLI and a mar
 | everscout-engage | finds a fresh post where nobody has asked about the process, drafts a question, checks the pace and the community's rules, hands the text to you to paste, records it | "find a post to ask", "thank them for the answer" |
 | everscout-report | radar report, weekly digest, or the baseline study, every claim linked to a note and every link checked; the radar reviews the metrics and charts them | "write the radar", "what's rising", "build the study" |
 | everscout-ask | answers any question about a beat's subject: recalls the notes, grades whether they are enough and fresh, researches the gaps, answers with sources, confidence and unknowns, and saves the answer for next time; number questions start from the metrics | "ask my tech-hiring scout...", "what are people saying about X", "brief me on Y" |
+| everscout-library | keeps the beat's books in three tiers (the canon, the important recent ones, new releases found through Open Library), each with evidence, and distils a book you provide (read with [readwright](https://github.com/m4bwav/readwright)) into the beat's files, a book note and the skills the beat feeds | "key books on my beat", "any new books on economics?", "read this book into my scout" |
 
 ## Starter beats
 
@@ -91,7 +92,12 @@ The rules come from research into platform policies, the 2025 r/changemyview AI 
 | `candidates --beat`, `questions --beat` | rank posts for a question; sample question seeds |
 | `engage-check`, `engage-record`, `engage-update`, `ledger`, `followups` | pace rules, the ledger, replies from the people asked |
 | `retention`, `state --beat` | purge the cache; fetch state |
+| `lit list\|check\|add\|new\|due\|ingest\|lint\|distill --beat` | the beat's books: tiers, validation, new releases from Open Library, research due, distilling a provided book (see Books) |
 | `stats list\|add\|collect\|review\|export --beat` | beat metrics: the catalog, collection (tallies, GDELT, Wikimedia pageviews, derived, manual), the lifecycle review, and a chart-ready CSV (see below) |
+
+## Books
+
+Each beat can keep `literature.md`: a canon (the most important books of all time, rechecked yearly), recent (the last five years, quarterly) and latest (new releases, monthly), one row per book with an Open Library id, a one-line reason, a URL as evidence and a status (lead, have, reading, read, distilled, skip). `lit new` runs the beat's Open Library searches for books not yet listed; `lit due` says which tiers need research. Give it a book you own and `lit ingest` outlines it through readwright into `DATA/books/<book>/learnings.md`: principles in fresh words cited by chapter, then changes aimed at the beat's files or at a skill the beat feeds. `lit lint` checks citations, quote length and targets, and `lit distill` turns it into a `book` note that recall and everscout-ask find. The procedure is `kb/literature.md`. Book text never goes into the repository.
 
 ## Statistics
 

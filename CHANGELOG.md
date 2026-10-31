@@ -2,6 +2,13 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.7.0 · 2026-10-30
+
+- because: user request (keep up with each beat's literature: the most important books of all time, the most important recent ones, the latest published; integrate a provided book into the knowledge base and attached skills). Evidence: `ai-docs/research/2026-10-30-beat-literature.md`.
+- New skill everscout-library and `kb/literature.md`. New `literature.md` beat file (canon, recent, latest tiers plus Open Library searches; template in `beats/_template`), validated by `beat-check` when present.
+- CLI `lit list|check|add|new|due|ingest|lint|distill`: Open Library adapter (`es_sources.parse_openlibrary`, 1 s pace, a day's cache), research due per tier (yearly, quarterly, monthly), readwright outline of a provided book into `DATA/books/<book>/learnings.md`, a lint for citations, quote length and change targets (beat files, `feed:` units, `plugin:`), and a `book` note kind written by `distill` so recall finds the book.
+- Every built-in beat has a literature.md (researched 2026-10-30). 79 offline tests (4 new).
+
 ## 0.6.0 · 2026-10-29
 
 - because: evergreen's beat offer (a new evergreen unit may get a beat whose findings feed its refresh). `beat-new` takes `--scope`, repeatable `--question` and `--feeds` (written to beat.md frontmatter) so a caller seeds the beat; `leads --beat --since` lists notes and reports since a date for that caller's refresh. 75 offline tests (1 new). `StatsTests.test_unapproved_is_only_proposed_and_approval_can_be_withdrawn` seeded fixed September dates and went stale as the calendar moved on; it now seeds three weeks before today. All 75 pass.

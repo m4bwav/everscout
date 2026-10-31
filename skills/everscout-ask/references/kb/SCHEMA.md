@@ -44,6 +44,7 @@ DATA and LEDGER hold paraphrases and, in the ledger, handles; keep them private 
 | `questions.md` | seeds under `## Category` headings: `- [tag, tag] question` | `Beat.questions()` |
 | `searches.md` | first table `query, cadence, yields`; then pages and "what not to trust" | `Beat.searches()` |
 | `study.md` | the baseline study's chapter table and the perspectives to research from | the report skill |
+| `literature.md` | the beat's books: `## Canon`, `## Recent`, `## Latest` tables (`title, authors, year, id, why, evidence, status`) and a `## Searches` table (`query, notes`); frontmatter `canon_checked`, `recent_checked`, `latest_checked` (optional; `beat-check` validates it when present; kb/literature.md) | `lit_load()` |
 | `metrics.md` | the metrics catalog: first table with the columns below (optional; `beat-check` validates it when present) | `load_metrics()` |
 
 `beat.md` frontmatter keys: `slug, title, status (active|paused|retired), created, verified, engage (true|false), scan_cadence, report_cadence, half_life_days, showcase_words [..], skip_words [..], asked_words [..], mute_words [..], note_sections [..]`. `showcase_words` raise an item's engagement score; `skip_words` exclude it from candidates; `asked_words` extend the phrases that mark a thread as already asked about process; `mute_words` drop items at fetch time; `note_sections` are the body headings of every note.
@@ -90,7 +91,7 @@ community: aivideo          # subreddit, instance, forum host, feed name
 url: https://...            # filled by new-note from the fetched item; never typed from memory
 also: [https://...]         # optional: the same story elsewhere
 posted: 2026-09-25          # when the source was posted (YYYY-MM-DD)
-note_kind: showcase         # showcase, workflow, discussion, release, question, postmortem, analysis, data, news, paper, web
+note_kind: showcase         # showcase, workflow, discussion, release, question, postmortem, analysis, data, news, paper, web, book (written by `lit distill`)
 interest: 37                # comment count the source showed (0 when unknown)
 top: false                  # appeared in a top-of-week listing
 engaged: false              # the user asked or answered in this thread
@@ -123,3 +124,7 @@ Frontmatter: `title, kind: answer, status, date, verified, beat, question, grade
 ## The ledger (`engagements.jsonl`)
 
 One JSON object per line: `ts, beat, platform, community, item, url, author, title, kind (ask|thanks|answer), questions [..], route (manual|api|browser), status (drafted|handed|posted|dropped), text, text_sha, comment_url, override, replies [{id, when, text, is_op}]`. `handed` means the text was given to the user to paste; it counts for pacing exactly like `posted`. `drafted` and `dropped` do not count. `INDEX.md` is generated.
+
+## Book folders
+
+`DATA/books/<book>/`: `book.md` (frontmatter `title, kind: book, beat, book_id, tier, file, reader, date`; the user's own path stays here), `toc.txt` (readwright's outline), `learnings.md` (frontmatter `title, kind: learnings, beat, book_id, status (reading|distilled), date`; sections Principles, What the beat already has, Changes (`target, change, principle, status`), Verdict). `lit lint` checks it; `lit distill` writes the `book` note.

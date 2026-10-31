@@ -1564,6 +1564,100 @@ class DiscoveryTests(WorkspaceTest):
         self.assertEqual(json.loads(out), {"threads": [], "captures_wanted": []})
 
 
+OL_SEARCH = {"docs": [
+    {"key": "/works/OL1W", "title": "A New Book", "subtitle": "On Craft X", "author_name": ["An Author"], "first_publish_year": 2026,
+     "publish_date": ["Mar 2026"], "publisher": ["Example Press"], "isbn": ["0000000000", "9780000000001"], "edition_count": 1,
+     "language": ["eng"]},
+    {"key": "/works/OL2W", "title": "An Old Classic", "author_name": ["B Writer"], "first_publish_year": 1990, "edition_count": 9},
+    {"key": "/works/OL3W", "title": "Listed Already", "author_name": ["C"], "first_publish_year": 2026}]}
+
+
+class LiteratureTests(WorkspaceTest):
+    def test_parse_openlibrary(self):
+        books = S.parse_openlibrary(OL_SEARCH, "u")
+        self.assertEqual(books[0]["id"], "OL1W")
+        self.assertEqual(books[0]["title"], "A New Book: On Craft X")
+        self.assertEqual(books[0]["isbn13"], "9780000000001")
+        self.assertEqual(books[0]["url"], "https://openlibrary.org/works/OL1W")
+        self.assertIn("sort=new", S.openlibrary_search_url('subject:"craft x"'))
+        self.assertEqual(E.lit_clean_query("q=subject:%22electronic+music%22+first_publish_year:[2020+TO+2026]"), 'subject:"electronic music"')
+        self.assertEqual(E.lit_clean_query("q=ai filmmaking"), "ai filmmaking")
+
+    def add(self, *args):
+        return self.run_cli("lit", "add", "--beat", "test-beat", *args)
+
+    def test_add_check_list_and_new(self):
+        code, out, err = self.add("--tier", "canon", "--title", "The Classic", "--authors", "A. Person", "--year", "1990",
+                                  "--id", "OL9W", "--why", "Founded the field.", "--evidence", "https://example.org/syllabus")
+        self.assertEqual(code, 0, err)
+        self.add("--tier", "latest", "--title", "Listed Already", "--year", "2026", "--id", "OL3W", "--why", "w",
+                 "--evidence", "https://openlibrary.org/works/OL3W")
+        code, out, _ = self.add("--id", "OL9W", "--status", "have")
+        self.assertIn("updated canon", out)
+        lp = os.path.join(self.bd, "literature.md")
+        today = dt.date.today().isoformat()
+        text = open(lp, encoding="utf-8").read().replace("_checked: never", "_checked: " + today)
+        text = text.replace("| query | notes |\n|---|---|\n", "| query | notes |\n|---|---|\n| `subject:\"craft x\"` | test |\n")
+        open(lp, "w", encoding="utf-8").write(text)
+        code, out, _ = self.run_cli("lit", "check", "--beat", "test-beat")
+        self.assertEqual(code, 0, out)
+        code, out, _ = self.run_cli("lit", "list", "--beat", "test-beat", "--json")
+        got = json.loads(out)
+        self.assertEqual(got["tiers"]["canon"][0]["status"], "have")
+        self.assertEqual(got["searches"][0]["query"], 'subject:"craft x"')
+        f = S.Fetcher(os.path.join(self.tmp, "local"), "ua", host_gaps={"default": 0, "openlibrary.org": 0}, sleep=lambda s: None,
+                      opener=lambda req, timeout=0: FakeResponse(json.dumps(OL_SEARCH)))
+        with mock.patch.object(E, "fetcher", return_value=f):
+            code, out, _ = self.run_cli("lit", "new", "--beat", "test-beat", "--since-year", "2025", "--json")
+        ids = [c["id"] for c in json.loads(out)["candidates"]]
+        self.assertEqual(ids, ["OL1W"])  # the old classic is out of the window, OL3W is listed
+        code, out, _ = self.run_cli("lit", "due", "--beat", "test-beat")
+        self.assertEqual(code, 0, out)
+
+    def test_check_catches_bad_rows(self):
+        self.add("--tier", "canon", "--title", "No Evidence", "--year", "2000", "--id", "bogus", "--why", "w", "--evidence", "memory")
+        code, out, _ = self.run_cli("lit", "check", "--beat", "test-beat")
+        self.assertEqual(code, 1)
+        self.assertIn("evidence must be a URL", out)
+        self.assertIn("not an Open Library work key", out)
+
+    def test_ingest_lint_distill(self):
+        self.add("--tier", "canon", "--title", "The Classic", "--year", "1990", "--id", "OL9W", "--why", "w", "--evidence", "https://example.org/s")
+        book = os.path.join(self.tmp, "classic.txt")
+        open(book, "w", encoding="utf-8").write("CHAPTER ONE\nSynthetic text about Tool X.\n")
+        with mock.patch.object(E, "find_readwright", return_value=None):
+            code, out, err = self.run_cli("lit", "ingest", book, "--beat", "test-beat", "--id", "OL9W")
+        self.assertEqual(code, 0, err)
+        d = os.path.join(E.data_dir(self.cfg(), "test-beat"), "books", "the-classic")
+        code, out, _ = self.run_cli("lit", "lint", "the-classic", "--beat", "test-beat")
+        self.assertEqual(code, 1)
+        self.assertIn("TODO", out)
+        lp = os.path.join(d, "learnings.md")
+        text = open(lp, encoding="utf-8").read()
+        text = text.replace("1. TODO one principle in plain words (ch. N)", "1. Tool X pipelines beat one-shot prompts (ch. 1)\n2. Uncited claim")
+        text = text.replace("| beat/vocab.md | TODO | 1 | proposed |",
+                            "| beat/vocab.md | add an alias for Tool X | 1 | applied |\n| beat/nope.md | x | 1 | proposed |")
+        text = text.replace("One paragraph: worth it or not, for whom, what to skip.", "Worth it for makers.")
+        open(lp, "w", encoding="utf-8").write(text)
+        code, out, _ = self.run_cli("lit", "lint", "the-classic", "--beat", "test-beat")
+        self.assertIn("principle without a citation", out)
+        self.assertIn("not a beat file", out)
+        text = text.replace("\n2. Uncited claim", "").replace("| beat/nope.md | x | 1 | proposed |", "| feed:other/x.md | y | 1 | proposed |")
+        open(lp, "w", encoding="utf-8").write(text)
+        code, out, _ = self.run_cli("lit", "distill", "the-classic", "--beat", "test-beat")
+        self.assertEqual(code, 1)  # one change still proposed
+        code, out, err = self.run_cli("lit", "distill", "the-classic", "--beat", "test-beat", "--allow-open")
+        self.assertEqual(code, 0, err)
+        notes = E.all_notes(E.data_dir(self.cfg(), "test-beat"))
+        fm = notes[0][1]
+        self.assertEqual(fm["note_kind"], "book")
+        self.assertEqual(fm["url"], "https://openlibrary.org/works/OL9W")
+        code, out, _ = self.run_cli("lit", "list", "--beat", "test-beat", "--json")
+        self.assertEqual(json.loads(out)["tiers"]["canon"][0]["status"], "distilled")
+        code, out, _ = self.run_cli("validate", "--beat", "test-beat")
+        self.assertEqual(code, 0, out)
+
+
 class SkillRefsTest(unittest.TestCase):
     def test_kb_copies_in_sync(self):
         import subprocess
