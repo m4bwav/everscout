@@ -1,6 +1,13 @@
 # Handoff
 
-Updated 2026-10-16 (Reddit discovery built, unreleased; see the first section). Before that 2026-10-15 (0.4.0: Reddit through Arctic Shift). Before that 2026-09-28 (first all-beats scan; 0.3.0: beat statistics built). Everscout 0.1.0 was built in one session from indie-ai-scout 0.3.1; 0.2.0 added the everscout-ask skill (interrogate a beat like a reporter) and the tech-hiring beat, the first built from scratch. Read [log.md](log.md) for what happened, `decisions/` for the architecture, and `research/` for the evidence.
+Updated 2026-10-30 (0.7.0: beat literature, see the first section). Before that 2026-10-16 (Reddit discovery built, unreleased; see the first section). Before that 2026-10-15 (0.4.0: Reddit through Arctic Shift). Before that 2026-09-28 (first all-beats scan; 0.3.0: beat statistics built). Everscout 0.1.0 was built in one session from indie-ai-scout 0.3.1; 0.2.0 added the everscout-ask skill (interrogate a beat like a reporter) and the tech-hiring beat, the first built from scratch. Read [log.md](log.md) for what happened, `decisions/` for the architecture, and `research/` for the evidence.
+
+
+## 0.7.0 (2026-10-30): beat literature
+
+- `everscout.py lit` and the everscout-library skill: each beat's `literature.md` holds canon, recent and latest books with evidence and status; `lit new` finds new books on Open Library; `lit ingest|lint|distill` turns a provided book (read through readwright) into `DATA/books/<book>/learnings.md`, applied changes and a `book` note. Procedure: `kb/literature.md`.
+- All five built-in beats and Mark's three private beats have literature.md (2026-10-30). About half the rows are "Judgment call" (one source): recheck those first at the next canon pass (`lit due`; canon yearly, recent quarterly, latest monthly).
+- Open: no book has been distilled through `lit ingest` yet; the first real one is the end-to-end test (TESTS.md of everscout-library has no run). Trigger evals need a fresh session after install.
 
 ## Reddit discovery built (2026-10-16, night), unreleased
 

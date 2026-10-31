@@ -52,6 +52,7 @@ DEFAULT_HOST_GAPS = {
     "musicbrainz.org": 1.1,
     "api.gdeltproject.org": 10,  # GDELT asks for one request every 5 s; reports say 5 s still draws 429s (kb/platforms.md)
     "wikimedia.org": 1,
+    "openlibrary.org": 1,  # identified requests may make 3 a second (openlibrary.org/developers/api, 2026-10-30); stay at one
     "arctic-shift.photon-reddit.com": 2,  # the maintainer asks for "a couple requests per second" at most
     "generativelanguage.googleapis.com": 5,  # fetchwright thread reads (Gemini URL context); free-tier quotas are per minute and per day
     "default": 3,
@@ -831,6 +832,38 @@ def google_news_feed(query, hl="en-US", gl="US"):
 def arxiv_query_feed(query, max_results=50):
     params = {"search_query": query, "sortBy": "submittedDate", "sortOrder": "descending", "max_results": str(max_results)}
     return "https://export.arxiv.org/api/query?" + urllib.parse.urlencode(params)
+
+
+# ---------------------------------------------------------------- books (beat literature)
+
+OPENLIBRARY_FIELDS = "key,title,subtitle,author_name,first_publish_year,publish_date,publisher,isbn,edition_count,subject,language"
+
+
+def openlibrary_search_url(query, sort="new", limit=40):
+    """Open Library's documented search API. query is its own syntax: `subject:"labor market"`, `q words`, `author:x`."""
+    params = {"q": query, "limit": str(limit), "fields": OPENLIBRARY_FIELDS}
+    if sort:
+        params["sort"] = sort
+    return "https://openlibrary.org/search.json?" + urllib.parse.urlencode(params)
+
+
+def parse_openlibrary(data, feed_url=""):
+    """search.json docs to book records: id (the work key, OL...W), title, authors, year, isbn13, url."""
+    out = []
+    for d in (data or {}).get("docs") or []:
+        key = (d.get("key") or "").rsplit("/", 1)[-1]
+        if not key:
+            continue
+        title = d.get("title") or ""
+        if d.get("subtitle"):
+            title += ": " + d["subtitle"]
+        isbns = [i for i in d.get("isbn") or [] if len(i) == 13]
+        out.append({"id": key, "title": title, "authors": d.get("author_name") or [], "year": d.get("first_publish_year"),
+                    "publish_date": (d.get("publish_date") or [""])[0], "publisher": (d.get("publisher") or [""])[0],
+                    "isbn13": isbns[0] if isbns else "", "editions": d.get("edition_count") or 0,
+                    "subjects": (d.get("subject") or [])[:8], "languages": d.get("language") or [],
+                    "url": "https://openlibrary.org/works/" + key, "feed": feed_url})
+    return out
 
 
 # ---------------------------------------------------------------- statistics sources (beat metrics)

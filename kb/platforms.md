@@ -23,6 +23,12 @@ What each platform lets a personal scout read without paying, and how to name it
 
 Every request sends `everscout/<version> (+https://github.com/m4bwav/everscout; <contact>)` (Arctic Shift included), and Reddit gets its required `<platform>:everscout:v<version> (by /u/<user>)`. Set `contact` and `reddit_user` in `config.json`. Never swap in a browser User-Agent: a source that only answers a browser string is left out (Bing News was left out for this reason).
 
+## Books (beat literature, `lit new`)
+
+| kind | source | endpoint | pace | key | notes |
+|---|---|---|---|---|---|
+| openlibrary | a `search.json` query in literature.md `## Searches` | `openlibrary.org/search.json?q=...&sort=new&fields=...` | 1 s | no | ✓ 2026-10-30. Guidelines ask for a User-Agent with contact (3 a second identified), caching, no bulk harvesting; results cached a day. Subject queries work for economics and hiring; thin for personal websites. Google Books keyless answered 429 (shared daily quota) on 2026-10-30: not used |
+
 ## Statistics sources (beat metrics, `stats collect`)
 
 Checked 2026-09-27 by live calls; evidence in `ai-docs/research/2026-09-27-beat-statistics.md`.

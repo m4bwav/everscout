@@ -1,0 +1,48 @@
+{
+ "skill": "everscout-library",
+ "_format": "skill-creator evals.json plus evergreen fields. Run with a scratch EVERSCOUT_HOME holding a copy of a built-in beat.",
+ "evals": [
+  {
+   "id": "trigger-1",
+   "kind": "trigger",
+   "prompt": "what are the most important books on my global-economics beat, and anything new this year?",
+   "expectations": [
+    "the everscout-library skill is invoked"
+   ],
+   "runs": 3
+  },
+  {
+   "id": "trigger-2",
+   "kind": "trigger",
+   "prompt": "here's an epub of In the Blink of an Eye, read it into my ai-video scout",
+   "expectations": [
+    "the everscout-library skill is invoked"
+   ],
+   "runs": 3
+  },
+  {
+   "id": "decoy-1",
+   "kind": "trigger",
+   "prompt": "what does my ai-video beat know about lip sync?",
+   "expectations": [
+    "everscout-library is not invoked (everscout-ask is)"
+   ],
+   "runs": 3,
+   "decoy": true
+  },
+  {
+   "id": "action-1",
+   "kind": "action",
+   "prompt": "refresh the latest books on my tech-hiring beat",
+   "expectations": [
+    "`everscout.py lit new --beat tech-hiring` in the trace",
+    "`lit check` exits 0 at the end"
+   ],
+   "evidence": [
+    "trace",
+    "literature.md diff"
+   ],
+   "runs": 1
+  }
+ ]
+}

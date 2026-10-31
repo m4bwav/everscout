@@ -123,3 +123,7 @@ Added the trigger-3 discovery eval case: a natural request that names no skill (
 
 ## [2026-10-29] feature | beat-new scope flags and leads, for evergreen's beat offer
 `beat-new --scope --question --feeds` seeds a beat from a caller; `leads --beat --since` lists notes and reports since a date. Evergreen reads them when it refreshes a unit linked to a beat. Released as 0.6.0 with the Reddit-discovery work that was sitting in Unreleased. A stats test seeded fixed September dates and went red once they aged past the stale rule; it now seeds relative to today. 75 tests pass.
+
+## [2026-10-30] build | 0.7.0: beat literature and the everscout-library skill
+
+Mark asked everscout to keep up with each beat's books (all-time canon, important recent, latest published), with scripts and a procedure to distil a provided book into the beat's knowledge and attached skills, plus the books themselves and books for his other plugins. Built `lit` (list, check, add, new, due, ingest, lint, distill), the Open Library adapter, `kb/literature.md`, the everscout-library skill and a literature.md for every built-in beat; Mark's three private beats got theirs in the indie-ai-scout repo (left uncommitted there: game-design and token-saving are another session's untracked folders). Three research agents did the book tables; quality and gaps in `research/2026-10-30-beat-literature.md`. Live `lit new` showed heavy Open Library noise and found the URL-encoded query bug (fixed: `lit_clean_query`). 79 tests.
