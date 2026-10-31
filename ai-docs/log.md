@@ -143,3 +143,7 @@ lit due: all 8 beats current. Searched C:, E:, F:, G: (depth 7, AppData skipped)
 ## [2026-10-31] library | Spelunky distilled end to end
 
 Mark gave the book folder. `lit ingest`, an agent read all four parts, learnings 24 principles and 14 changes, lint 0, Mark approved all: ludowright 0.1.9 (PR #16 merged, released), indie-ai-games vocab and questions committed in indie-ai-scout, study ch. 12 addition, `lit distill`, tally, index. Recorded as TESTS.md T-20261031-1.
+
+## [2026-10-31] eval | everscout-library trigger cases 3/3
+
+Continue prompt step 4. Added `evals/library-trigger-1`, `library-trigger-2`, `library-decoy-1`; `claude plugin eval . --case 'library-*'` passed 3/3 (baseline delta +0.25 on both triggers). TESTS.md T-20261031-2. Only open item: Mark's pick of the next book.
