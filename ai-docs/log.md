@@ -127,3 +127,7 @@ Added the trigger-3 discovery eval case: a natural request that names no skill (
 ## [2026-10-30] build | 0.7.0: beat literature and the everscout-library skill
 
 Mark asked everscout to keep up with each beat's books (all-time canon, important recent, latest published), with scripts and a procedure to distil a provided book into the beat's knowledge and attached skills, plus the books themselves and books for his other plugins. Built `lit` (list, check, add, new, due, ingest, lint, distill), the Open Library adapter, `kb/literature.md`, the everscout-library skill and a literature.md for every built-in beat; Mark's three private beats got theirs in the indie-ai-scout repo (left uncommitted there: game-design and token-saving are another session's untracked folders). Three research agents did the book tables; quality and gaps in `research/2026-10-30-beat-literature.md`. Live `lit new` showed heavy Open Library noise and found the URL-encoded query bug (fixed: `lit_clean_query`). 79 tests.
+
+## [2026-10-30] research | Rechecked every "Judgment call" book row
+
+`lit due`: all tiers current. Three agents sought a second kind of evidence for the 53 one-source rows across eight beats: 37 kept, 15 dropped, Mark's two `have` books kept as they were (an agent had deleted them; never drop a `have` row). Intro sentences updated. Mark's private beats edited in the indie-ai-scout repo, left uncommitted. Detail and weak keeps: research/2026-10-30-beat-literature.md. First distillation waits for Mark's pick.

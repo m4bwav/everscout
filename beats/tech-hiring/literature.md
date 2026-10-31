@@ -6,7 +6,7 @@ latest_checked: 2026-10-30
 
 # Literature: Developer and tech hiring
 
-The books of this beat, in three tiers, researched 2026-10-30 (kb/literature.md). Rows whose reason starts "Judgment call" rest on one source plus the researcher's view; recheck them first. Status: lead, have, reading, read, distilled, skip.
+The books of this beat, in three tiers, researched 2026-10-30 (kb/literature.md). Every row rests on two kinds of evidence (rechecked 2026-10-30). Status: lead, have, reading, read, distilled, skip.
 
 ## Canon
 
@@ -15,12 +15,11 @@ The most important books of all time for this subject (yearly recheck).
 | title | authors | year | id | why | evidence | status |
 |---|---|---|---|---|---|---|
 | Who: The A Method for Hiring | Geoff Smart, Randy Street | 2008 | OL8748041W | It is the most cited structured interviewing method among hiring managers. | https://medium.com/hiresweet/first-time-hiring-tech-talent-here-are-the-books-you-must-absolutely-read-be4aa4e1c19b | lead |
-| Cracking the Coding Interview | Gayle Laakmann McDowell | 2008 | OL16816263W | Judgment call: it set the candidate side of the whiteboard interview for a generation. | https://openlibrary.org/works/OL16816263W | lead |
+| Cracking the Coding Interview | Gayle Laakmann McDowell | 2008 | OL16816263W | The set textbook of Trinity University's interview course and others at Konstanz and Berkeley; it set the candidate side of the whiteboard interview. | https://sites.google.com/trinity.edu/csci3194-f23 | lead |
 | Smart and Gets Things Done | Joel Spolsky | 2007 | OL8912201W | It is the classic developer-written guide to recruiting and interviewing programmers. | https://www.librarything.com/work/2807626 | lead |
-| Work Rules! | Laszlo Bock | 2015 | OL17104519W | Judgment call: it brought Google's evidence on structured interviews and the weak signal from brainteasers into the mainstream. | https://openlibrary.org/works/OL17104519W | lead |
-| Peopleware | Tom DeMarco, Timothy Lister | 1987 | OL38240W | Judgment call: it is the root text on building and keeping software teams. | https://openlibrary.org/works/OL38240W | lead |
-| The Manager's Path | Camille Fournier | 2017 | OL19860807W | Judgment call: it describes the engineering career ladder that hiring levels are set against. | https://openlibrary.org/works/OL19860807W | lead |
-| What Color Is Your Parachute? | Richard N. Bolles | 1970 | OL3333160W | Judgment call: it is the long-running job-hunting manual that the seeker-side advice comes from. | https://openlibrary.org/works/OL3333160W | lead |
+| Peopleware | Tom DeMarco, Timothy Lister | 1987 | OL38240W | Assigned reading in BYU software engineering courses; the root text on building and keeping software teams. | https://byui-cse.github.io/cse272-course/Prepare/272.01.Prepare.html | lead |
+| The Manager's Path | Camille Fournier | 2017 | OL19860807W | On the reading lists of Gergely Orosz and Jacob Kaplan-Moss; it describes the engineering ladder that hiring levels are set against. | https://blog.pragmaticengineer.com/my-reading-list/ | lead |
+| What Color Is Your Parachute? | Richard N. Bolles | 1970 | OL3333160W | On Time's All-TIME 100 nonfiction list and the Library of Congress list of books that shaped readers' lives; the long-running job-hunting manual. | https://thegreatestbooks.org/v/table/lists/507 | lead |
 | The Holloway Guide to Technical Recruiting and Hiring | Osman (Ozzie) Osman et al. | 2020 | OL28057287W | It is the most complete expert-reviewed guide for the employer side. Its first edition is just before 2021. | https://holloway.com/b/technical-recruiting-hiring | lead |
 
 ## Recent
@@ -29,11 +28,7 @@ The most important books of the last five years (quarterly recheck).
 
 | title | authors | year | id | why | evidence | status |
 |---|---|---|---|---|---|---|
-| Beyond Cracking the Coding Interview | Gayle Laakmann McDowell, Mike Mroczka, Aline Lerner, Nil Mamano | 2025 | OL42570617W | Judgment call: it updates the standard interview prep for today's market and includes interviewing.io data. | https://openlibrary.org/works/OL42570617W | lead |
-| The Software Engineer's Guidebook | Gergely Orosz | 2023 | OL36893254W | Judgment call: it is a career and levels guide from the author of The Pragmatic Engineer newsletter, which tracks hiring. | https://openlibrary.org/works/OL36893254W | lead |
-| The Staff Engineer's Path | Tanya Reilly | 2022 | OL28062031W | Judgment call: it defines the senior IC roles that companies now hire for. | https://openlibrary.org/works/OL28062031W | lead |
-| Never Search Alone | Phyl Terry | 2022 | OL29179944W | Judgment call: it sets out a peer-group method for job seekers in a tight market. | https://openlibrary.org/works/OL29179944W | lead |
-| System Design Interview Vol. 2 | Alex Xu, Sahn Lam | 2022 | OL21947791W | Judgment call: system design rounds now gate senior hires, and this series is the default prep. | https://openlibrary.org/works/OL21947791W | lead |
+| The Staff Engineer's Path | Tanya Reilly | 2022 | OL28062031W | Recommended on Gergely Orosz's Pragmatic Engineer reading list; it defines the senior IC roles companies now hire for. | https://blog.pragmaticengineer.com/my-reading-list/ | lead |
 
 ## Latest
 

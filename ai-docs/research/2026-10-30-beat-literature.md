@@ -20,3 +20,13 @@ Three research agents (web search plus Open Library lookups) built canon and rec
 ## Books for the user's plugins
 
 A separate pass proposed 25 books across 13 plugins (8 for everscout itself: Kozinets *Netnography*, Hines and Bishop on foresight, Webb *The Signals Are Talking*, Heuer *Psychology of Intelligence Analysis* (free), Bazzell *OSINT Techniques*, Portigal *Interviewing Users*, the AoIR ethics guidelines 3.0 (free), Meadows *Thinking in Systems*). The list lives outside this public repository, with the user's other reading lists.
+
+## Recheck of the "Judgment call" rows (2026-10-30, second session)
+
+Three research agents looked for a second kind of evidence (syllabus, award or serious best-of list, practitioner reading list) for every one-source row: 53 rows, 37 kept with new evidence, 15 dropped, 1 restored.
+
+- Built-in beats: global-economics 12 of 12 kept (syllabi, Pulitzer, Gelber, Hayek, FT shortlists); tech-hiring 5 kept, 5 dropped (Work Rules!, Beyond Cracking the Coding Interview, The Software Engineer's Guidebook, Never Search Alone, System Design Interview Vol. 2; Recent now holds one book); ai-video 4 kept, Grammar of the Shot dropped; downtempo 5 of 5 kept; personal-sites 2 kept, Show Your Work!, The Internet Con and Design for Safety dropped.
+- Mark's private beats (indie-ai-scout repo, uncommitted): game-design 6 kept, 3 dropped (Designing Games, Practical Guide to Level Design, How to Make a Video Game All By Yourself); indie-ai-games 3 kept, How to Make a Video Game All By Yourself dropped; token-saving Introduction to Information Retrieval and Prompt Engineering for LLMs kept.
+- Rows with status `have` are Mark's own copies and are never dropped: Press Reset and AI Engineering stay in indie-ai-games with their "Judgment call" reason (an agent deleted them; restored).
+- Weak keeps to look at again at the next canon pass: Making Music and Mixing Secrets for the Small Studio (one aggregator of expert lists), Designing with Web Standards (Wikipedia's uncited "85 colleges"), Characteristics of Games (course page with no course name), What Color Is Your Parachute? (aggregator for Time and Library of Congress lists), Prompt Engineering for LLMs (listed in a syllabus's references, not required).
+- Many evidence URLs were seen in search results, not fetched.

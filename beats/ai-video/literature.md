@@ -6,7 +6,7 @@ latest_checked: 2026-10-30
 
 # Literature: AI video generation
 
-The books of this beat, in three tiers, researched 2026-10-30 (kb/literature.md). Rows whose reason starts "Judgment call" rest on one source plus the researcher's view; recheck them first. Status: lead, have, reading, read, distilled, skip.
+The books of this beat, in three tiers, researched 2026-10-30 (kb/literature.md). Every row rests on two kinds of evidence (rechecked 2026-10-30). Status: lead, have, reading, read, distilled, skip.
 
 ## Canon
 
@@ -19,11 +19,10 @@ The most important books of all time for this subject (yearly recheck).
 | In the Blink of an Eye | Walter Murch | 1992 | OL2973051W | It gives the rules for where a cut works, which AI clip-stitching needs most. | https://www.videomaker.com/how-to/directing/film-history/these-are-the-best-filmmaking-books-you-need-to-read/ | lead |
 | Film Directing Shot by Shot | Steven D. Katz | 1991 | OL4307075W | Storyboard and shot planning maps directly onto keyframe and prompt planning. | https://nofilmschool.com/film-school-books | lead |
 | The Five C's of Cinematography | Joseph V. Mascelli | 1965 | isbn:9781879505414 | It is the standard primer on angles, continuity and cutting that keeps generated shots coherent. | https://filmlifestyle.com/best-books-for-cinematographers/ | lead |
-| Grammar of the Shot | Christopher J. Bowen, Roy Thompson | 2012 | OL19973403W | Judgment call: it names shot types and framing in words a prompt can reuse. | https://openlibrary.org/works/OL19973403W | lead |
 | The Visual Story | Bruce Block | 2001 | OL9292024W | It teaches how space, tone, colour and rhythm carry a story, which helps when judging generated looks. | https://www.readthistwice.com/lists/best-filmmaking-books | lead |
 | Story | Robert McKee | 1997 | OL273896W | It is the standard screenwriting text behind most short-film structure. | https://evercast.us/blog/best-books-on-filmmaking | lead |
 | Master Shots (series) | Christopher Kenworthy | 2009 | OL16414622W | Its ready-made camera setups translate well into camera-motion prompts. | https://filmlifestyle.com/best-books-for-cinematographers/ | lead |
-| Deep Learning | Ian Goodfellow, Yoshua Bengio, Aaron Courville | 2016 | OL17801809W | Judgment call: it is the foundational textbook for the networks that video models are built from. | https://openlibrary.org/works/OL17801809W | lead |
+| Deep Learning | Ian Goodfellow, Yoshua Bengio, Aaron Courville | 2016 | OL17801809W | It is the set or main textbook in university deep learning courses such as Montreal's IFT6135 and Cornell's CS6784, and it underlies the networks video models are built from. | https://sites.google.com/view/ift6135-h2021/course-description | lead |
 
 ## Recent
 
@@ -31,9 +30,9 @@ The most important books of the last five years (quarterly recheck).
 
 | title | authors | year | id | why | evidence | status |
 |---|---|---|---|---|---|---|
-| Hands-On Generative AI with Transformers and Diffusion Models | Omar Sanseviero, Pedro Cuenca, Apolinario Passos, Jonathan Whitaker | 2024 | OL38628850W | Judgment call: it is a practical diffusion text from Hugging Face authors and the closest book to how makers run video models. | https://openlibrary.org/works/OL38628850W | lead |
-| Generative Deep Learning (2nd ed.) | David Foster | 2023 | OL28799243W | Judgment call: it covers diffusion, VAEs and multimodal models clearly for practitioners. | https://openlibrary.org/works/OL28799243W | lead |
-| Understanding Deep Learning | Simon J. D. Prince | 2023 | OL36475079W | Judgment call: it is a widely adopted modern textbook with clear chapters on diffusion and transformers. | https://openlibrary.org/works/OL36475079W | lead |
+| Hands-On Generative AI with Transformers and Diffusion Models | Omar Sanseviero, Pedro Cuenca, Apolinario Passos, Jonathan Whitaker | 2024 | OL38628850W | A University of Toronto generative AI course lists it as a recommended text, and it is the closest book to how makers run diffusion video models. | https://bereyhi-courses.github.io/genai-utoronto/materials | lead |
+| Generative Deep Learning (2nd ed.) | David Foster | 2023 | OL28799243W | Queen Mary University of London's Generative Deep Learning module follows this book for its syllabus, which covers diffusion, VAEs and multimodal models. | https://www.qmul.ac.uk/modules/items/ecs534u-generative-deep-learning.html | lead |
+| Understanding Deep Learning | Simon J. D. Prince | 2023 | OL36475079W | University deep learning courses set it as required reading and build their lecture order on it, including its chapters on diffusion and transformers. | https://oluwatosin-oluwadare.github.io/Teaching/CSCE5218%E2%80%93DeepLearning/files/DeepLearning-Syllabus-Spring2026.pdf | lead |
 
 ## Latest
 
