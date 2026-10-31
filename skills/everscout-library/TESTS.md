@@ -4,4 +4,8 @@ Test runs for [SKILL.md](SKILL.md). Cases live in `evals/evals.json`. A test pas
 
 ## Runs
 
-None yet: trigger cases need a fresh session after the plugin is installed.
+### T-20261031-1: first end-to-end distillation (manual, real book)
+
+Spelunky (Derek Yu, 2016) into a private game-development beat. `lit ingest` (readwright outline, 12 sections), a reading agent read Parts I to IV, `learnings.md` filled (24 principles, 14 changes), `lit lint` exit 0, the user approved all groups, changes applied (a game-design plugin's kb, the beat's vocab and questions, one study chapter), `lit lint` 14 applied, `lit distill` wrote the `book` note and set the row `distilled`, `tally` and `index` ran. Pass. Notes: `(Part I)` citations were accepted by lint; book text copies the reading agent made in its scratch folder were deleted afterwards.
+
+Trigger cases: not run yet (need a fresh session after install).
