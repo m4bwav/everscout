@@ -151,3 +151,7 @@ Continue prompt step 4. Added `evals/library-trigger-1`, `library-trigger-2`, `l
 ## [2026-10-31] library | AI Engineering ingested, changes proposed
 
 Lit due: all current. Picked AI Engineering (a `have` book in two beats; feeds tokenwright, evergreen-test, fetchwright, local-delegate). `lit ingest` into token-saving; an agent read ch. 3-6, 9-10 sections; learnings 25 principles, 18 proposed changes, lint 0. Waiting for Mark's approval before applying.
+
+## [2026-10-31] check | continue prompt: nothing due
+
+lit due: all 8 beats current. Steps 2-4 already done. Waiting on Mark's next book: remaining `have` rows are Press Reset (Schreier) and AI Engineering (Huyen), both indie-ai-games. No code changes.
