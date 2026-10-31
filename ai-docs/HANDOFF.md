@@ -6,7 +6,8 @@ Updated 2026-10-30 (0.7.0: beat literature, see the first section). Before that 
 ## 0.7.0 (2026-10-30): beat literature
 
 - `everscout.py lit` and the everscout-library skill: each beat's `literature.md` holds canon, recent and latest books with evidence and status; `lit new` finds new books on Open Library; `lit ingest|lint|distill` turns a provided book (read through readwright) into `DATA/books/<book>/learnings.md`, applied changes and a `book` note. Procedure: `kb/literature.md`.
-- All five built-in beats and Mark's three private beats have literature.md (2026-10-30). About half the rows are "Judgment call" (one source): recheck those first at the next canon pass (`lit due`; canon yearly, recent quarterly, latest monthly).
+- All five built-in beats and Mark's three private beats have literature.md (2026-10-30). The one-source "Judgment call" rows were rechecked the same day: 37 kept with a second kind of evidence, 15 dropped; only Mark's own books (status `have`) keep the label. Weak keeps are listed in the research note. Rechecks: canon yearly, recent quarterly, latest monthly (`lit due`).
+- Waits on Mark: which book to distil first; he has Spelunky, Press Reset and AI Engineering (status `have`).
 - Open: no book has been distilled through `lit ingest` yet; the first real one is the end-to-end test (TESTS.md of everscout-library has no run). Trigger evals need a fresh session after install.
 
 ## Reddit discovery built (2026-10-16, night), unreleased
