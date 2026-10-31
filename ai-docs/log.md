@@ -167,3 +167,7 @@ lit due: all 8 beats current. Spelunky and Press Reset distilled, trigger evals 
 ## [2026-10-31] library | AI Engineering distilled end to end
 
 Mark approved all 18 changes. Beat token-saving committed to indie-ai-scout (74306d9: questions, vocab, searches, study, metrics). tokenwright 0.2.6 (PR #20, habits Edges not middle and Memory by frequency, levers Result caching), fetchwright 0.2.1 (PR #6, result cache guidance in route.md), evergreen-protocol PR #36 (evergreen-test: pin the judge, label graders, agent efficiency evidence; no bump), local-delegate PR #9 (decide.md cascade rule). Note flags ch. 9 cache prices as 2024-dated. `lit lint` 0, `lit distill`, tally, index. TESTS.md T-20261031-4. The private evergreen fork's `git pull upstream master` conflicts in skills/evergreen-refresh/SKILL.md (not from this work); aborted and left for the fork's owner session.
+
+## [2026-10-31] library | The Gamer's Brain ingested, changes proposed
+
+Agent pick from Mark's downloads folder (Mark asked for the most helpful one). The file is the 2026 second edition. Added to the game-design canon tier, ingested; learnings: 25 principles, 20 proposed changes (beat files, ludowright ux-and-the-brain and playtesting, game-juice principles and juice-scan), lint 0. Waiting for Mark's approval, then apply, distill, tally, index.
