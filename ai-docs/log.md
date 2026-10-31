@@ -155,3 +155,7 @@ Lit due: all current. Picked AI Engineering (a `have` book in two beats; feeds t
 ## [2026-10-31] check | continue prompt: nothing due
 
 lit due: all 8 beats current. Steps 2-4 already done. Waiting on Mark's next book: remaining `have` rows are Press Reset (Schreier) and AI Engineering (Huyen), both indie-ai-games. No code changes.
+
+## [2026-10-31] library | Press Reset distilled end to end
+
+Mark gave the file (AI Engineering went to another session). Ingested into indie-ai-games, read by an agent with three chapter readers, 24 principles, 12 changes, all approved: ludowright 0.1.10 (PR #17 merged, released), indie-ai-games vocab and questions (indie-ai-scout e791632), study ch. 01 and 12, book note. TESTS.md T-20261031-3. Next: Mark's next book pick.
