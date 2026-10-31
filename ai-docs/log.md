@@ -163,3 +163,7 @@ Mark gave the file (AI Engineering went to another session). Ingested into indie
 ## [2026-10-31] check | continue prompt: nothing to do
 
 lit due: all 8 beats current. Spelunky and Press Reset distilled, trigger evals passed, AI Engineering is with another session awaiting Mark's approval of its 18 changes. No `have` book left undistilled; waiting on Mark's next book. No code changes.
+
+## [2026-10-31] library | AI Engineering distilled end to end
+
+Mark approved all 18 changes. Beat token-saving committed to indie-ai-scout (74306d9: questions, vocab, searches, study, metrics). tokenwright 0.2.6 (PR #20, habits Edges not middle and Memory by frequency, levers Result caching), fetchwright 0.2.1 (PR #6, result cache guidance in route.md), evergreen-protocol PR #36 (evergreen-test: pin the judge, label graders, agent efficiency evidence; no bump), local-delegate PR #9 (decide.md cascade rule). Note flags ch. 9 cache prices as 2024-dated. `lit lint` 0, `lit distill`, tally, index. TESTS.md T-20261031-4. The private evergreen fork's `git pull upstream master` conflicts in skills/evergreen-refresh/SKILL.md (not from this work); aborted and left for the fork's owner session.
