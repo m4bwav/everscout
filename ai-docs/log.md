@@ -147,3 +147,7 @@ Mark gave the book folder. `lit ingest`, an agent read all four parts, learnings
 ## [2026-10-31] eval | everscout-library trigger cases 3/3
 
 Continue prompt step 4. Added `evals/library-trigger-1`, `library-trigger-2`, `library-decoy-1`; `claude plugin eval . --case 'library-*'` passed 3/3 (baseline delta +0.25 on both triggers). TESTS.md T-20261031-2. Only open item: Mark's pick of the next book.
+
+## [2026-10-31] library | AI Engineering ingested, changes proposed
+
+Lit due: all current. Picked AI Engineering (a `have` book in two beats; feeds tokenwright, evergreen-test, fetchwright, local-delegate). `lit ingest` into token-saving; an agent read ch. 3-6, 9-10 sections; learnings 25 principles, 18 proposed changes, lint 0. Waiting for Mark's approval before applying.
