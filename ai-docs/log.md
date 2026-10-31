@@ -131,3 +131,15 @@ Mark asked everscout to keep up with each beat's books (all-time canon, importan
 ## [2026-10-30] research | Rechecked every "Judgment call" book row
 
 `lit due`: all tiers current. Three agents sought a second kind of evidence for the 53 one-source rows across eight beats: 37 kept, 15 dropped, Mark's two `have` books kept as they were (an agent had deleted them; never drop a `have` row). Intro sentences updated. Mark's private beats edited in the indie-ai-scout repo, left uncommitted. Detail and weak keeps: research/2026-10-30-beat-literature.md. First distillation waits for Mark's pick.
+
+## 2026-10-30 (second session): Spelunky picked, file not found
+
+lit due: all 8 beats current; Judgment-call recheck already done. Mark picked Spelunky as the first distill. Searched D:, Downloads and Documents for spelunky epub/pdf/mobi/azw: none. Waiting on the file path. No code changes.
+
+## 2026-10-30 (third session): Spelunky file still missing
+
+lit due: all 8 beats current. Searched C:, E:, F:, G: (depth 7, AppData skipped) for spelunky epub/pdf/mobi/azw/txt: none. Still waiting on the file path from Mark. No code changes.
+
+## [2026-10-31] library | Spelunky distilled end to end
+
+Mark gave the book folder. `lit ingest`, an agent read all four parts, learnings 24 principles and 14 changes, lint 0, Mark approved all: ludowright 0.1.9 (PR #16 merged, released), indie-ai-games vocab and questions committed in indie-ai-scout, study ch. 12 addition, `lit distill`, tally, index. Recorded as TESTS.md T-20261031-1.
