@@ -171,3 +171,7 @@ Mark approved all 18 changes. Beat token-saving committed to indie-ai-scout (743
 ## [2026-10-31] library | The Gamer's Brain ingested, changes proposed
 
 Agent pick from Mark's downloads folder (Mark asked for the most helpful one). The file is the 2026 second edition. Added to the game-design canon tier, ingested; learnings: 25 principles, 20 proposed changes (beat files, ludowright ux-and-the-brain and playtesting, game-juice principles and juice-scan), lint 0. Waiting for Mark's approval, then apply, distill, tally, index.
+
+## [2026-10-31] check | continue prompt: waiting on approval
+
+lit due: all 8 beats current. The Gamer's Brain is ingested with 20 proposed changes awaiting Mark's yes (data folder books/the-gamers-brain learnings.md). No code changes.
