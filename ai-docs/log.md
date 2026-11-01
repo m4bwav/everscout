@@ -223,3 +223,7 @@ Mark approved all changes. ai-video vocab (flow-matching, dit, video-vae, video-
 ## [2026-11-01] tools | 0.7.1: three lit frictions fixed
 
 lit due: all 8 beats current; no book waiting on Mark. Judgment-call rows: only Mark's own copies keep the label (Play to Learn, Press Reset, AI Engineering), as the 2026-10-30 recheck intended; nothing to drop. Fixed the open tool items (PR #44, released v0.7.1): `lit_change_status` reads the first word so `applied (v1.2, PR #3)` passes; `lit distill` writes applied `note` rows into the book note; `EVERSCOUT_BEATS` is searched before config beat_dirs so `lit` edits a worktree's literature.md. 81 tests (2 new). No readwright changes needed. Next: Mark's next book.
+
+## [2026-11-01] check | continue prompt: waiting on next book
+
+lit due: all 8 beats current. 0.7.1 left no open tool items; no `have` book undistilled. Waiting on Mark's next book pick (or "choose another"). No code changes.
