@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.8.3 · 2026-11-01
+
+- because: friction from the Graesser distill (skills/everscout-library/TESTS.md T-20261101-9): `lit ingest` cut the book folder name mid-word (`foundations-of-deep-reinforcement-learni`), and `lit pick` still listed other copies of a distilled book whose literature title carries an edition, like "(3rd ed.)", and `lit lint` refused bare section numbers as citations.
+- Book folders are cut at a word; `lit` still finds folders made before. Parentheticals are dropped from title keys. `lit lint` accepts a bare section number like `(10.2.1)` as a citation. 88 offline tests (2 new, the lint test extended).
+
 ## 0.8.2 · 2026-11-01
 
 - because: friction from the Lapan distill (skills/everscout-library/TESTS.md T-20261101-8): `EVERSCOUT_BEATS` named a worktree not yet made, and `lit ingest` quietly used the configured clone ("list row not found").

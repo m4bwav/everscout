@@ -126,6 +126,14 @@ class FakeHeaders(dict):
 
 
 class ParserTests(unittest.TestCase):
+    def test_title_key_drops_edition(self):
+        self.assertEqual(E.lit_norm_title("Deep Reinforcement Learning Hands-On (3rd ed.)"), "deep reinforcement learning hands on")
+
+    def test_book_slug_cuts_at_a_word(self):
+        self.assertEqual(E.slugify("Foundations of Deep Reinforcement Learning", 40, whole=True), "foundations-of-deep-reinforcement")
+        self.assertEqual(E.slugify("Foundations of Deep Reinforcement Learning", 40), "foundations-of-deep-reinforcement-learni")
+        self.assertEqual(E.slugify("Short title", 40, whole=True), "short-title")
+
     def test_reddit_listing(self):
         items = S.parse_reddit(reddit_atom("exampleSub", [("p1", "maker_one", "I made a thing", "body", ago(5))]))
         self.assertEqual(items[0]["id"], "reddit:p1")
@@ -1634,13 +1642,13 @@ class LiteratureTests(WorkspaceTest):
         self.assertIn("TODO", out)
         lp = os.path.join(d, "learnings.md")
         text = open(lp, encoding="utf-8").read()
-        text = text.replace("1. TODO one principle in plain words (ch. N)", "1. Tool X pipelines beat one-shot prompts (ch. 1)\n2. Uncited claim")
+        text = text.replace("1. TODO one principle in plain words (ch. N)", "1. Tool X pipelines beat one-shot prompts (ch. 1)\n2. Uncited claim\n3. A bare section number cites (10.2.1)")
         text = text.replace("| beat/vocab.md | TODO | 1 | proposed |",
                             "| beat/vocab.md | add an alias for Tool X | 1 | applied |\n| beat/nope.md | x | 1 | proposed |")
         text = text.replace("One paragraph: worth it or not, for whom, what to skip.", "Worth it for makers.")
         open(lp, "w", encoding="utf-8").write(text)
         code, out, _ = self.run_cli("lit", "lint", "the-classic", "--beat", "test-beat")
-        self.assertIn("principle without a citation", out)
+        self.assertEqual(out.count("principle without a citation"), 1)
         self.assertIn("not a beat file", out)
         text = text.replace("\n2. Uncited claim", "").replace("| beat/nope.md | x | 1 | proposed |", "| feed:other/x.md | y | 1 | proposed |")
         open(lp, "w", encoding="utf-8").write(text)
