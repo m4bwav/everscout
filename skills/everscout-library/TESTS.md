@@ -21,6 +21,10 @@ Trigger cases: `evals/library-trigger-1`, `library-trigger-2`, `library-decoy-1`
 
 Press Reset (Jason Schreier, 2021, 98k words) into the same private beat. `lit ingest` (30 sections), one agent read the intro and epilogue and split chapters 1 to 9 over three reading agents, `learnings.md` 24 principles and 12 changes, `lit lint` exit 0, the user approved all four groups, changes applied (game-design plugin 0.1.10, beat vocab and questions, study chapters 01 and 12), `lit distill`, `tally`, `index`. Pass. Notes: the principles for chapters 1 to 9 rest on the readers' summaries, and the learnings file says so; the reading agents' book text copies in the scratch folder were deleted.
 
+### T-20261031-5: fourth distillation (manual, real book, second edition, three repositories)
+
+The Gamer's Brain (Celia Hodent, 2026 second edition) into game-design. Ingested and linted earlier the same day; the user approved all 20 changes. Applied: beat vocab, questions, searches and literature row (indie-ai-scout e1155de, its first commit of the beat), ludowright 0.1.11 (PR #18), game-juice 1.3.1 (PR #6), edition line in book.md. `lit lint` 20 applied, `lit distill`, edition line added to the note, `tally` and `index`. Pass.
+
 ### T-20261031-4: third distillation (manual, real book, technical, changes across five repositories)
 
 AI Engineering (Chip Huyen, 2024) into a token-saving beat. `lit ingest`, sectioned reading, `learnings.md` 25 principles and 18 changes, `lit lint` exit 0, the user approved all 18. Applied: the beat's questions, vocab, searches, study and metrics (beat repository), the book note, and four plugins through their own CHANGELOG and RESEARCH files (two patch releases, two docs-only PRs), each on its own worktree and PR. `lit lint` 18 applied, `lit distill` wrote the note and set the row `distilled`, `tally` and `index` ran. Pass. Notes: the `note` row was applied by editing the note after `lit distill`, since distill writes the note from the principles and does not act on `note` rows; the beat had never been committed, so its first commit carried the whole folder.
