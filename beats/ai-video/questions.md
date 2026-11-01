@@ -24,6 +24,8 @@ Two or three seeds from different categories. Name the shot you mean ("the rooft
 - [pipeline, ai] Would you share the ComfyUI workflow, or name the key nodes?
 - [pipeline] Did you storyboard first, and with what?
 - [pipeline] What did you use for upscaling or interpolation on the final?
+- [pipeline, ai] Which sampler, steps and shift, and can you re-render the same take from its seed?
+- [pipeline, ai] Are interactive world models usable for game prototyping yet?
 
 ## Editing and craft
 

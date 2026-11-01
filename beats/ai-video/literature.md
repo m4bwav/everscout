@@ -31,7 +31,7 @@ The most important books of the last five years (quarterly recheck).
 | title | authors | year | id | why | evidence | status |
 |---|---|---|---|---|---|---|
 | Hands-On Generative AI with Transformers and Diffusion Models | Omar Sanseviero, Pedro Cuenca, Apolinario Passos, Jonathan Whitaker | 2024 | OL38628850W | A University of Toronto generative AI course lists it as a recommended text, and it is the closest book to how makers run diffusion video models. | https://bereyhi-courses.github.io/genai-utoronto/materials | lead |
-| Generative Deep Learning (2nd ed.) | David Foster | 2023 | OL28799243W | Queen Mary University of London's Generative Deep Learning module follows this book for its syllabus, which covers diffusion, VAEs and multimodal models. | https://www.qmul.ac.uk/modules/items/ecs534u-generative-deep-learning.html | lead |
+| Generative Deep Learning (2nd ed.) | David Foster | 2023 | OL28799243W | Queen Mary University of London's Generative Deep Learning module follows this book for its syllabus, which covers diffusion, VAEs and multimodal models. | https://www.qmul.ac.uk/modules/items/ecs534u-generative-deep-learning.html | distilled |
 | Understanding Deep Learning | Simon J. D. Prince | 2023 | OL36475079W | University deep learning courses set it as required reading and build their lecture order on it, including its chapters on diffusion and transformers. | https://oluwatosin-oluwadare.github.io/Teaching/CSCE5218%E2%80%93DeepLearning/files/DeepLearning-Syllabus-Spring2026.pdf | lead |
 
 ## Latest

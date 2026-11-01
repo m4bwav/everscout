@@ -10,8 +10,8 @@ Repeating start prompt. State lives in `ai-docs/HANDOFF.md`, never here.
 
 ## Waits on Mark
 
-- Which provided book to distill first (a book with status `have`, or one he names).
-- Approval of the proposed changes from each book's learnings.md before they are applied to a skill in another repo.
+- Which provided book to distill first (a book with status `have`, or one he names). When he says "choose" or "another from my libraries", pick from the folder he names: skip any book already in a beat's `DATA/books/` or in `D:/m4bwa/Claude/Projects/Ai/books/plugin-learnings/INDEX.md`, prefer one a beat's literature.md lists as `lead`, and ingest into that beat.
+- Approval of the proposed changes from each book's learnings.md before they are applied to a skill in another repo. Once approved, apply them with one agent per target repo in parallel (own worktree, PR, merge when checks pass, tag when bumped), and do the beat files yourself.
 
 ## Order of work
 
@@ -23,7 +23,7 @@ Repeating start prompt. State lives in `ai-docs/HANDOFF.md`, never here.
    - everscout (`scripts/everscout.py` `lit`, `skills/everscout-library/SKILL.md`, `kb/literature.md`, tests), in a worktree PR with a test for each fix.
    - readwright (`D:/m4bwa/Claude/Projects/Ai/readwright`, `rw.py` and its skill) for anything about reading the file, same way.
    - Record each fix in the repo's CHANGELOG or LEARNINGS, merge once checks pass, and tag a release when the version is bumped. Say "no tool changes needed" in the log when there were none.
-   - Open items: `lit lint` rejects status cells with notes such as `applied (x 1.2, pr #3)`, so either accept a note after the status or say "bare word only" in the apply-agent brief in the skill (T-20261101-2). `lit distill` does not act on `note` rows, so the edition line is added to the note by hand (T-20261031-4).
+   - Open items: `lit lint` rejects status cells with notes such as `applied (x 1.2, pr #3)`, so either accept a note after the status or say "bare word only" in the apply-agent brief in the skill (T-20261101-2). `lit distill` does not act on `note` rows, so the edition line is added to the note by hand (T-20261031-4). `lit ingest` and `lit distill` write the literature row into the beat dir from the config (the main clone), not your worktree; copy the row into the worktree and restore the main clone until that is fixed (T-20261101-3).
 
 ## Stop points and hand-over
 
