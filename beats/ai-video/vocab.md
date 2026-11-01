@@ -169,6 +169,11 @@ Add a new model version as its own line when people argue about the difference (
 - sampler-choice: sampler, scheduler, er_sde, beta57, res_multistep, euler simple
 - real-time: real-time generation, live video, realtime video, streaming generation
 
+- flow-matching: flow matching, rectified flow
+- dit: diffusion transformer, DiT
+- video-vae: video VAE, causal 3D VAE
+- video-benchmarks: VBench, GenEval, T2I-CompBench, DrawBench
+
 ## Formats
 
 - short-film: short film, short movie
@@ -192,7 +197,8 @@ Add a new model version as its own line when people argue about the difference (
 - leaderboard: leaderboard, arena, Elo, blind vote
 - platform-policy: community guidelines, platform policy, monetization policy
 - deprecation: shutdown, discontinued, sunset, deprecated
-- physics: physics, world model, physical plausibility, world understanding
+- physics: physics, physical plausibility, world understanding
+- world-model: world model, interactive world model, playable video, action-conditioned video, Genie
 - likeness: likeness detection, digital replica, voice likeness
 - combat: fight scene, combat, battle scene, sword fight, melee, battle
 - violence-limits: gore, blood, violence filter, content filter, moderation
