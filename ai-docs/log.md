@@ -191,3 +191,7 @@ Mark said yes to all; a parallel session had already applied the 20 changes (#42
 ## [2026-10-31] check | continue prompt: waiting on next book
 
 lit due: all 8 beats current. Steps 2-4 done; all four `have` books distilled. Waiting on Mark's next book pick. No code changes.
+
+## [2026-10-31] library | Play to Learn ingested, changes proposed
+
+Agent pick (Mark: "choose one"): the only game book in his downloads folder not yet read by everscout or plugin-learnings. Ingested into game-design; learnings 25 principles, 18 proposed changes (beat vocab/questions/searches/literature, ludowright playtesting, balance-and-economy, core-loops-and-goals), lint 0. Ch. 4, 5, 9 read only to the 25k-char cut. Waiting for Mark's approval.
