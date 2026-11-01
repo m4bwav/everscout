@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.8.2 · 2026-11-01
+
+- because: friction from the Lapan distill (skills/everscout-library/TESTS.md T-20261101-8): `EVERSCOUT_BEATS` named a worktree not yet made, and `lit ingest` quietly used the configured clone ("list row not found").
+- A missing `EVERSCOUT_BEATS` folder is now an error. 86 offline tests (1 new).
+
 ## 0.8.1 · 2026-11-01
 
 - because: friction from the Lambshead distill (skills/everscout-library/TESTS.md T-20261101-7): `lit lint` rejected citations by section name like `(Player phase)` though the outline has them, and `lit pick` listed books plugin-learnings had read under a short title (Pixel Logic, Blender Master Class, FilmCraft).

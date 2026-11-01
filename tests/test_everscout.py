@@ -1740,6 +1740,11 @@ class LiteratureTests(WorkspaceTest):
             self.assertEqual(os.path.normcase(E.get_beat(E.config(), "test-beat").path),
                              os.path.normcase(os.path.join(other, "test-beat")))
 
+    def test_everscout_beats_env_missing_folder_fails(self):
+        with mock.patch.dict(os.environ, {"EVERSCOUT_BEATS": os.path.join(self.tmp, "no-such-dir")}):
+            with self.assertRaises(SystemExit):
+                E.beat_dirs(E.config())
+
 
 class SkillRefsTest(unittest.TestCase):
     def test_kb_copies_in_sync(self):
