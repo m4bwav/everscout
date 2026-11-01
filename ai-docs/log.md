@@ -259,3 +259,7 @@ lit due: all 8 beats current; no Judgment-call rows to recheck. Auto-pick: `lit 
 ## [2026-11-01] library | 0.8.3; Foundations of Deep Reinforcement Learning distilled end to end
 
 lit due: all 8 beats current; no Judgment-call rows to recheck. Auto-pick: Graesser & Keng (2019), unread anywhere; Co-Intelligence fit no beat and Brownlee's GAN book had only self-published evidence. Recent-tier row in game-design, one reader: 19 principles, 6 changes, all applied: indie-ai-scout PR #5 (vocab rl-debugging, action-space-design), ludowright 0.1.20 (PR #27, random baseline, reward hacking replay, reward signs), unity-agent 1.2.10 (PR #27, when training fails, action design; also re-encoded its CHANGELOG and log from cp1252 to UTF-8), book note. Tool fixes: everscout 0.8.3 (PR #50, v0.8.3). Slip: a chained `gh pr merge ... | tail` hid a not-yet-mergeable failure and the tag step ran; the wrong release was deleted at once and v0.8.3 re-cut on the merge commit. Never pipe a merge into tail before a tag. Open readwright items in HANDOFF. T-20261101-9. Next: `lit pick` and the next book.
+
+## [2026-11-01] tools | readwright bugs fixed in the same session; continue prompt rule
+
+Mark: fix every readwright bug a run reports in the same session, even at more token cost (continue prompt step 5). Fixed both Graesser items: readwright 0.5.1 (PR #9, v0.5.1): PDF outline sections start at their heading line (numbered headings in capitals or run into a paragraph split it), and a cut-off grep footer names `--section`. 63 tests, CI green. No open readwright items.
