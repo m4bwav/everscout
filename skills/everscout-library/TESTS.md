@@ -41,6 +41,10 @@ The Gamer's Brain (Celia Hodent, 2026 second edition) into game-design. Ingested
 
 AI Engineering (Chip Huyen, 2024) into a token-saving beat. `lit ingest`, sectioned reading, `learnings.md` 25 principles and 18 changes, `lit lint` exit 0, the user approved all 18. Applied: the beat's questions, vocab, searches, study and metrics (beat repository), the book note, and four plugins through their own CHANGELOG and RESEARCH files (two patch releases, two docs-only PRs), each on its own worktree and PR. `lit lint` 18 applied, `lit distill` wrote the note and set the row `distilled`, `tally` and `index` ran. Pass. Notes: the `note` row was applied by editing the note after `lit distill`, since distill writes the note from the principles and does not act on `note` rows; the beat had never been committed, so its first commit carried the whole folder.
 
+## T-20261101-6: Unity 2018 AI Cookbook, `lit pick` auto-pick, distilled end to end
+
+First run of `lit pick` (0.8.0): Palacios, *Unity 2018 Artificial Intelligence Cookbook* (Packt 2018, mobi, 51k words), the top unread plugin-relevant file. `lit ingest` into game-design (no literature row; a cookbook, not canon), one reader agent, 14 principles (7 new), 5 changes, `lit lint` 0, pre-approved and applied: beat vocab (indie-ai-scout PR #2), unity-agent 1.2.8 (PR #25), ludowright 0.1.17 (PR #24), note; `lit distill`. Friction fixed: readwright 0.4.0 (PR #7) names the recipe on generic repeated titles and adds `read --max-words`. Open: `lit pick` matches by file name, so books read under a different name (Azzi, DeSantis) still list; verify each pick. Pass.
+
 ## T-20261101-5: Beginning Game AI with Unity, auto-pick, distilled end to end
 
 Agent auto-pick after every `lead` book in the folder proved already read; the first pick (a scanned PDF, 0 words) was dropped. `lit ingest` into game-design, ch. 1 and 5 read, ch. 2 to 4 by grep; 12 principles, 5 changes, `lit lint` 0; Mark pre-approved; unity-agent 1.2.7 (PR #24), ludowright 0.1.16 (PR #23), note; `lit distill`, tally, index. Friction: ingest accepts a file with no text layer; no `lit pick` to list unread books.

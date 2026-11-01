@@ -10,7 +10,7 @@ Repeating start prompt. State lives in `ai-docs/HANDOFF.md`, never here.
 
 ## Waits on Mark
 
-- Nothing to pick: if the kickoff names no book, choose one yourself (Mark, 2026-11-01: "auto pick one if one wasn't already selected") and say which and why in the log. Order: a `have` book not yet distilled, then a pick from his book folder (the `file:` lines in earlier books' `book.md` show it): skip any book already in a beat's `DATA/books/` or in `D:/m4bwa/Claude/Projects/Ai/books/plugin-learnings/INDEX.md`, prefer one a beat's literature.md lists as `lead`, and ingest into that beat.
+- Nothing to pick: if the kickoff names no book, choose one yourself (Mark, 2026-11-01: "auto pick one if one wasn't already selected") and say which and why in the log. Order: a `have` book not yet distilled, then `python scripts/everscout.py lit pick` (unread files in his book folder, beat-listed first; verify against the notes, it matches by file name) (the `file:` lines in earlier books' `book.md` show it): skip any book already in a beat's `DATA/books/` or in `D:/m4bwa/Claude/Projects/Ai/books/plugin-learnings/INDEX.md`, prefer one a beat's literature.md lists as `lead`, and ingest into that beat.
 - Nothing to approve: Mark pre-approves each book's proposed changes (2026-11-01: "unless a change is controversial in some way, you can assume that I can authorize it"). Stop only for a controversial row (reverses existing guidance, public API, release workflow, registry publish). Otherwise, apply them with one agent per target repo in parallel (own worktree, PR, merge when checks pass, tag when bumped), and do the beat files yourself.
 
 ## Order of work
