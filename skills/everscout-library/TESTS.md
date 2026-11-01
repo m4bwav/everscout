@@ -21,6 +21,10 @@ Trigger cases: `evals/library-trigger-1`, `library-trigger-2`, `library-decoy-1`
 
 Press Reset (Jason Schreier, 2021, 98k words) into the same private beat. `lit ingest` (30 sections), one agent read the intro and epilogue and split chapters 1 to 9 over three reading agents, `learnings.md` 24 principles and 12 changes, `lit lint` exit 0, the user approved all four groups, changes applied (game-design plugin 0.1.10, beat vocab and questions, study chapters 01 and 12), `lit distill`, `tally`, `index`. Pass. Notes: the principles for chapters 1 to 9 rest on the readers' summaries, and the learnings file says so; the reading agents' book text copies in the scratch folder were deleted.
 
+### T-20261101-1: fifth distillation (manual, real book, agent pick, two repositories)
+
+Play to Learn (Sharon Boller, Karl Kapp, 2017) into game-design. Ingested 2026-10-31 (ch. 4, 5, 9 read to the 25k-character cut); the user approved all 18 changes. Applied: beat vocab, questions, searches and literature row (indie-ai-scout de88bdf), ludowright 0.1.12 (PR #19, released v0.1.12), book_id OL20198942W in book.md, reading caveats in the note. `lit lint` 18 applied, `lit distill`, `tally`, `index`. Pass.
+
 ### T-20261031-5: fourth distillation (manual, real book, second edition, three repositories)
 
 The Gamer's Brain (Celia Hodent, 2026 second edition) into game-design. Ingested and linted earlier the same day; the user approved all 20 changes. Applied: beat vocab, questions, searches and literature row (indie-ai-scout e1155de, its first commit of the beat), ludowright 0.1.11 (PR #18), game-juice 1.3.1 (PR #6), edition line in book.md. `lit lint` 20 applied, `lit distill`, edition line added to the note, `tally` and `index`. Pass.

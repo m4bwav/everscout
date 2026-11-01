@@ -195,3 +195,7 @@ lit due: all 8 beats current. Steps 2-4 done; all four `have` books distilled. W
 ## [2026-10-31] library | Play to Learn ingested, changes proposed
 
 Agent pick (Mark: "choose one"): the only game book in his downloads folder not yet read by everscout or plugin-learnings. Ingested into game-design; learnings 25 principles, 18 proposed changes (beat vocab/questions/searches/literature, ludowright playtesting, balance-and-economy, core-loops-and-goals), lint 0. Ch. 4, 5, 9 read only to the 25k-char cut. Waiting for Mark's approval.
+
+## [2026-11-01] library | Play to Learn distilled end to end
+
+Mark approved all 18 changes. game-design beat committed to indie-ai-scout (de88bdf: vocab serious-games, gamification, achievement-design; two questions; three searches; Recent literature row OL20198942W); ludowright 0.1.12 (PR #19, kb playtesting, balance-and-economy, core-loops-and-goals; released v0.1.12). Reading caveats added to the book note. `lit lint` 18 applied, `lit distill`, tally, index. TESTS.md T-20261101-1. Slip: PR #19 was merged before its checks registered; the main run passed afterwards. Wait for `gh pr checks` to list checks before merging. Next: Mark's next book.
