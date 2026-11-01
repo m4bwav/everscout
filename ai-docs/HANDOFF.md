@@ -11,7 +11,7 @@ Updated 2026-10-30 (0.7.0: beat literature, see the first section). Before that 
 - Press Reset (Schreier) distilled 2026-10-31 (T-20261031-3): 24 principles, 12 changes; ludowright 0.1.10 (PR #17), indie-ai-scout e791632, study ch. 01 and 12. AI Engineering distilled too (below).
 - Trigger evals passed 3/3 on 2026-10-31 (TESTS.md T-20261031-2). 
 - AI Engineering (Chip Huyen) distilled 2026-10-31 (T-20261031-4): 25 principles, 18 changes all applied: token-saving beat committed to indie-ai-scout (74306d9), tokenwright 0.2.6 (PR #20), fetchwright 0.2.1 (PR #6), evergreen-protocol PR #36, local-delegate PR #9, book note. Open: the private evergreen fork needs `git pull upstream master` with a conflict in skills/evergreen-refresh/SKILL.md resolved.
-- The Gamer's Brain (Hodent, 2nd ed. 2026) ingested into game-design on 2026-10-31: 25 principles, 20 proposed changes, lint 0 (data folder `books/the-gamer-s-brain`). Open: Mark's yes, then apply and `lit distill`.
+- The Gamer's Brain (Hodent, 2nd ed. 2026) distilled into game-design 2026-10-31 (T-20261031-5): 20 changes all applied: beat files (indie-ai-scout e1155de, 52b3cf0), ludowright 0.1.11 (PR #18), game-juice 1.3.1 (PR #6), book note. No `have` book left undistilled; next is Mark's next pick.
 
 ## Reddit discovery built (2026-10-16, night), unreleased
 

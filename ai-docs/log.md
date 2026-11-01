@@ -175,3 +175,7 @@ Agent pick from Mark's downloads folder (Mark asked for the most helpful one). T
 ## [2026-10-31] check | continue prompt: waiting on approval
 
 lit due: all 8 beats current. The Gamer's Brain is ingested with 20 proposed changes awaiting Mark's yes (data folder books/the-gamers-brain learnings.md). No code changes.
+
+## [2026-10-31] library | The Gamer's Brain distilled end to end
+
+Mark approved all 20 changes. game-design beat committed to indie-ai-scout (e1155de, literature 52b3cf0); ludowright 0.1.11 (PR #18, ux-and-the-brain and playtesting), game-juice 1.3.1 (PR #6, P-18, P-19, juice-scan overlay check); edition line in book.md and the note. `lit lint` 20 applied, `lit distill`, tally, index. TESTS.md T-20261031-5. Next: Mark's next book.
