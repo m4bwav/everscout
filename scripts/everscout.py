@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.8.1"
+VERSION = "0.8.2"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -504,6 +504,9 @@ def parse_table(text):
 def beat_dirs(cfg):
     # EVERSCOUT_BEATS (os.pathsep-separated) goes first, so a worktree's beats shadow the configured clone's
     dirs = [expand(d) for d in (os.environ.get("EVERSCOUT_BEATS") or "").split(os.pathsep) if d.strip()]
+    missing = [d for d in dirs if not os.path.isdir(d)]
+    if missing:  # a typo or a worktree not made yet would silently edit the configured clone instead
+        fail("EVERSCOUT_BEATS names a missing folder: " + ", ".join(missing))
     dirs += [expand(d) for d in cfg.get("beat_dirs") or []]
     dirs.append(os.path.join(ROOT, "beats"))
     return dirs
