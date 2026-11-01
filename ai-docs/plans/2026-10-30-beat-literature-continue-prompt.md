@@ -10,7 +10,7 @@ Repeating start prompt. State lives in `ai-docs/HANDOFF.md`, never here.
 
 ## Waits on Mark
 
-- Which provided book to distill first (a book with status `have`, or one he names). When he says "choose" or "another from my libraries", pick from the folder he names: skip any book already in a beat's `DATA/books/` or in `D:/m4bwa/Claude/Projects/Ai/books/plugin-learnings/INDEX.md`, prefer one a beat's literature.md lists as `lead`, and ingest into that beat.
+- Nothing to pick: if the kickoff names no book, choose one yourself (Mark, 2026-11-01: "auto pick one if one wasn't already selected") and say which and why in the log. Order: a `have` book not yet distilled, then a pick from his book folder (the `file:` lines in earlier books' `book.md` show it): skip any book already in a beat's `DATA/books/` or in `D:/m4bwa/Claude/Projects/Ai/books/plugin-learnings/INDEX.md`, prefer one a beat's literature.md lists as `lead`, and ingest into that beat.
 - Approval of the proposed changes from each book's learnings.md before they are applied to a skill in another repo. Once approved, apply them with one agent per target repo in parallel (own worktree, PR, merge when checks pass, tag when bumped), and do the beat files yourself.
 
 ## Order of work
