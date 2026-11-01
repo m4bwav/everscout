@@ -219,3 +219,7 @@ Agent pick from Mark's downloads folder ("choose another"): Foster, 2nd ed. (202
 ## [2026-11-01] library | Generative Deep Learning distilled end to end
 
 Mark approved all changes. ai-video vocab (flow-matching, dit, video-vae, video-benchmarks, world-model split from physics), two questions, literature row distilled; comfyui-gen PR #121 (no CI), cinewright PR #68 (no bump, local checks), artwright 0.7.4 (PR #28), musicwright 0.1.4 (PR #19; CI 3.9 leg pinned to ubuntu-24.04), ludowright 0.1.14 (PR #21). Continue prompt: rules for an agent pick from Mark's folder and for parallel apply agents. TESTS.md T-20261101-3. Tool friction (open, T-20261101-3): `lit ingest`/`lit distill` edit the literature row in the config's beat dir (main clone), not the worktree; fix by letting `ES` take `--beat-dir` or by honouring an EVERSCOUT_BEATS override.
+
+## [2026-11-01] tools | 0.7.1: three lit frictions fixed
+
+lit due: all 8 beats current; no book waiting on Mark. Judgment-call rows: only Mark's own copies keep the label (Play to Learn, Press Reset, AI Engineering), as the 2026-10-30 recheck intended; nothing to drop. Fixed the open tool items (PR #44, released v0.7.1): `lit_change_status` reads the first word so `applied (v1.2, PR #3)` passes; `lit distill` writes applied `note` rows into the book note; `EVERSCOUT_BEATS` is searched before config beat_dirs so `lit` edits a worktree's literature.md. 81 tests (2 new). No readwright changes needed. Next: Mark's next book.

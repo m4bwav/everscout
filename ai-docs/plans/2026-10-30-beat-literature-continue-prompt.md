@@ -23,7 +23,7 @@ Repeating start prompt. State lives in `ai-docs/HANDOFF.md`, never here.
    - everscout (`scripts/everscout.py` `lit`, `skills/everscout-library/SKILL.md`, `kb/literature.md`, tests), in a worktree PR with a test for each fix.
    - readwright (`D:/m4bwa/Claude/Projects/Ai/readwright`, `rw.py` and its skill) for anything about reading the file, same way.
    - Record each fix in the repo's CHANGELOG or LEARNINGS, merge once checks pass, and tag a release when the version is bumped. Say "no tool changes needed" in the log when there were none.
-   - Open items: `lit lint` rejects status cells with notes such as `applied (x 1.2, pr #3)`, so either accept a note after the status or say "bare word only" in the apply-agent brief in the skill (T-20261101-2). `lit distill` does not act on `note` rows, so the edition line is added to the note by hand (T-20261031-4). `lit ingest` and `lit distill` write the literature row into the beat dir from the config (the main clone), not your worktree; copy the row into the worktree and restore the main clone until that is fixed (T-20261101-3).
+   - Open items: see HANDOFF.md. In a worktree of the beats repo, set `EVERSCOUT_BEATS=<worktree>/beats` before `lit ingest` or `lit distill` (0.7.1).
 
 ## Stop points and hand-over
 

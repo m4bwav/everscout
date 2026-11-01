@@ -14,7 +14,8 @@ Updated 2026-10-30 (0.7.0: beat literature, see the first section). Before that 
 - The Gamer's Brain (Hodent, 2nd ed. 2026) distilled into game-design 2026-10-31 (T-20261031-5): 20 changes all applied: beat files (indie-ai-scout e1155de, 52b3cf0), ludowright 0.1.11 (PR #18), game-juice 1.3.1 (PR #6), book note. No `have` book left undistilled; next is Mark's next pick.
 - Play to Learn (Boller, Kapp 2017) distilled into game-design 2026-11-01 (T-20261101-1): 18 changes all applied: indie-ai-scout de88bdf, ludowright 0.1.12 (PR #19, v0.1.12), book note. Next is Mark's next pick (or an agent pick from his downloads folder).
 - Game Engine Architecture (Gregory, 2nd ed. 2014) distilled into game-design 2026-11-01 (T-20261101-2): 17 changes all applied across the beat, ludowright 0.1.13, game-juice 1.3.2, unity-agent 1.2.5, threewright 0.6.8, roblox-agent 0.1.8 and polywright 0.5.2. Next is Mark's next pick.
-- Generative Deep Learning (Foster, 2nd ed. 2023) ingested into ai-video 2026-11-01: 23 principles, 14 changes all applied 2026-11-01 (T-20261101-3): beat vocab and questions, comfyui-gen #121, cinewright #68, artwright 0.7.4, musicwright 0.1.4, ludowright 0.1.14. Open: `lit` writes the list row to the main clone's beat dir, not a worktree (log). Next is Mark's next pick.
+- Generative Deep Learning (Foster, 2nd ed. 2023) ingested into ai-video 2026-11-01: 23 principles, 14 changes all applied 2026-11-01 (T-20261101-3): beat vocab and questions, comfyui-gen #121, cinewright #68, artwright 0.7.4, musicwright 0.1.4, ludowright 0.1.14. Next is Mark's next pick.
+- 0.7.1 released 2026-11-01 (PR #44, v0.7.1): the three open lit frictions fixed: a note after a change's status word passes lint; applied `note` rows go into the book note; `EVERSCOUT_BEATS=<worktree>/beats` makes `lit` edit the worktree. No open tool items. The repo has no CI; local tests (81) are the gate.
 
 ## Reddit discovery built (2026-10-16, night), unreleased
 
