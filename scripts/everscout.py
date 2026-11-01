@@ -3697,7 +3697,7 @@ def lit_learnings_problems(b, text, toc_titles=()):
     if not principles or any("TODO" in l for l in principles):
         errs.append("Principles: none written yet, or a TODO left")
     for l in principles:
-        if not LIT_CITE.search(l) and not any(t in g.lower() for g in re.findall(r"\(([^()]*)\)", l) for t in toc_titles):
+        if not LIT_CITE.search(l) and not re.search(r"\(\s*\d+(\.\d+)+", l) and not any(t in g.lower() for g in re.findall(r"\(([^()]*)\)", l) for t in toc_titles):
             errs.append(f"principle without a citation (ch., p., section): {l.strip()[:80]}")
     for q in re.findall(r"[\"“]([^\"”]+)[\"”]", body):
         if len(q.split()) > LIT_MAX_QUOTE_WORDS:
