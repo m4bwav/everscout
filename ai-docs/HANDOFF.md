@@ -13,6 +13,7 @@ Updated 2026-10-30 (0.7.0: beat literature, see the first section). Before that 
 - AI Engineering (Chip Huyen) distilled 2026-10-31 (T-20261031-4): 25 principles, 18 changes all applied: token-saving beat committed to indie-ai-scout (74306d9), tokenwright 0.2.6 (PR #20), fetchwright 0.2.1 (PR #6), evergreen-protocol PR #36, local-delegate PR #9, book note. Open: the private evergreen fork needs `git pull upstream master` with a conflict in skills/evergreen-refresh/SKILL.md resolved.
 - The Gamer's Brain (Hodent, 2nd ed. 2026) distilled into game-design 2026-10-31 (T-20261031-5): 20 changes all applied: beat files (indie-ai-scout e1155de, 52b3cf0), ludowright 0.1.11 (PR #18), game-juice 1.3.1 (PR #6), book note. No `have` book left undistilled; next is Mark's next pick.
 - Play to Learn (Boller, Kapp 2017) distilled into game-design 2026-11-01 (T-20261101-1): 18 changes all applied: indie-ai-scout de88bdf, ludowright 0.1.12 (PR #19, v0.1.12), book note. Next is Mark's next pick (or an agent pick from his downloads folder).
+- Game Engine Architecture (Gregory, 2nd ed. 2014) distilled into game-design 2026-11-01 (T-20261101-2): 17 changes all applied across the beat, ludowright 0.1.13, game-juice 1.3.2, unity-agent 1.2.5, threewright 0.6.8, roblox-agent 0.1.8 and polywright 0.5.2. Next is Mark's next pick.
 
 ## Reddit discovery built (2026-10-16, night), unreleased
 
