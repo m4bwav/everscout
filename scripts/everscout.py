@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.8.0"
+VERSION = "0.8.1"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3636,6 +3636,8 @@ def cmd_lit_pick(a):
         words = key.split()
         maybe = next((" ".join(words[i:i + 4]) for i in range(len(words) - 3)
                       if f" {' '.join(words[i:i + 4])} " in f" {elsewhere_keys} "), "")
+        # or a short title ("Pixel Logic") with another word of the file name, like the author, close by in the record
+        maybe = maybe or lit_short_title_hit(words, elsewhere_keys)
         out.append({"file": name, "listed": [{"beat": h[2], "tier": h[3], "status": h[4]} for h in hits], "maybe_read": maybe})
     out.sort(key=lambda r: (bool(r["maybe_read"]), not r["listed"], r["file"].lower()))
     if a.json:
@@ -3651,14 +3653,37 @@ def cmd_lit_pick(a):
           f"{maybe} maybe read elsewhere{'' if a.all else ' (--all shows them)'}; check the topic fits a beat before ingesting")
 
 
+def lit_short_title_hit(words, text, near=150):
+    """Two long file-name words in a row found in `text` with a third, rare one (an author's name, say) within `near` characters, or ''."""
+    padded = f" {text} "
+    for i in range(len(words) - 1):
+        pair = f" {words[i]} {words[i + 1]} "
+        if min(len(words[i]), len(words[i + 1])) < 5:
+            continue
+        # rare in the records: "python" or "theory" sits near any title, a surname does not
+        others = {w for w in words if len(w) >= 4 and padded.count(f" {w} ") <= 8} - {words[i], words[i + 1]}
+        for m in re.finditer(re.escape(pair), padded):
+            window = padded[max(0, m.start() - near):m.end() + near]
+            if any(f" {w} " in window for w in others):
+                return pair.strip()
+    return ""
+
+
 def lit_change_status(c):
     """A change row's status word; a note after it, like `applied (x 1.2, PR #3)`, is allowed."""
     m = re.match(r"\s*\**([a-z]+)", (c.get("status") or "").lower())
     return m.group(1) if m else ""
 
 
-def lit_learnings_problems(b, text):
-    """(errors, warnings, changes) for a learnings.md."""
+def lit_toc_titles(d):
+    """Section titles from a book folder's toc.txt (`  12.   Cards  (344 w)`), lower case, four letters or more."""
+    p = os.path.join(d, "toc.txt")
+    titles = [m.group(1).strip().lower() for m in re.finditer(r"^\s*\d+\.\s+(.+?)\s+\([\d,]+ w\)\s*$", read(p) if os.path.isfile(p) else "", re.M)]
+    return {t for t in titles if len(t) >= 4}
+
+
+def lit_learnings_problems(b, text, toc_titles=()):
+    """(errors, warnings, changes) for a learnings.md. A parenthesis naming a section title from toc.txt counts as a citation."""
     errs, warns = [], []
     _, body = parse_frontmatter(text)
     secs = lit_sections(body)
@@ -3666,7 +3691,7 @@ def lit_learnings_problems(b, text):
     if not principles or any("TODO" in l for l in principles):
         errs.append("Principles: none written yet, or a TODO left")
     for l in principles:
-        if not LIT_CITE.search(l):
+        if not LIT_CITE.search(l) and not any(t in g.lower() for g in re.findall(r"\(([^()]*)\)", l) for t in toc_titles):
             errs.append(f"principle without a citation (ch., p., section): {l.strip()[:80]}")
     for q in re.findall(r"[\"“]([^\"”]+)[\"”]", body):
         if len(q.split()) > LIT_MAX_QUOTE_WORDS:
@@ -3708,7 +3733,7 @@ def cmd_lit_lint(a):
     cfg = config()
     b = get_beat(cfg, a.beat)
     d = lit_book(cfg, b, a.book)
-    errs, warns, changes = lit_learnings_problems(b, read(os.path.join(d, "learnings.md")))
+    errs, warns, changes = lit_learnings_problems(b, read(os.path.join(d, "learnings.md")), lit_toc_titles(d))
     for e in errs:
         print("ERROR  " + e)
     for w in warns:
@@ -3726,7 +3751,7 @@ def cmd_lit_distill(a):
     b = get_beat(cfg, a.beat)
     d = lit_book(cfg, b, a.book)
     text = read(os.path.join(d, "learnings.md"))
-    errs, _, changes = lit_learnings_problems(b, text)
+    errs, _, changes = lit_learnings_problems(b, text, lit_toc_titles(d))
     open_ = [c for c in changes if lit_change_status(c) == "proposed"]
     if errs:
         fail("learnings.md has lint errors; run `lit lint` first")

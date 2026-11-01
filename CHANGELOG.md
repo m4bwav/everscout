@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.8.1 · 2026-11-01
+
+- because: friction from the Lambshead distill (skills/everscout-library/TESTS.md T-20261101-7): `lit lint` rejected citations by section name like `(Player phase)` though the outline has them, and `lit pick` listed books plugin-learnings had read under a short title (Pixel Logic, Blender Master Class, FilmCraft).
+- `lit lint` and `lit distill` accept a parenthesis naming a section title from the book's `toc.txt` as a citation. `lit pick` also flags a file as maybe read when two long title words appear in the read index with a rare third file-name word (an author's name) within 150 characters. 87 offline tests (2 new).
+
 ## 0.8.0 · 2026-11-01
 
 - because: friction from the Cossu auto-pick (skills/everscout-library/TESTS.md T-20261101-5): several manual greps to find an unread book, and a scan with no text layer got a book folder.
