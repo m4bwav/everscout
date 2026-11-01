@@ -227,3 +227,7 @@ lit due: all 8 beats current; no book waiting on Mark. Judgment-call rows: only 
 ## [2026-11-01] check | continue prompt: waiting on next book
 
 lit due: all 8 beats current. 0.7.1 left no open tool items; no `have` book undistilled. Waiting on Mark's next book pick (or "choose another"). No code changes.
+
+## [2026-11-01] library | AI for Games ingested, changes proposed
+
+Agent auto-pick (Mark: auto pick when the kickoff names none; continue prompt updated, 130225a): Millington, AI for Games, the only plugin-relevant book in his folder not yet read by everscout or plugin-learnings. Canon row in game-design (SDU DM810 textbook, Wrexham GME706 core reference; indie-ai-scout branch lit/millington), ingested, read by three part readers. Learnings: 25 principles, 12 proposed changes (beat vocab and questions, ludowright game-ai-for-designers, procgen and review, unity-agent and roblox-agent game-design references, note), lint 0. Waiting for Mark's approval. Tool friction (open, readwright): the PDF outline puts 3.4.5 to the end into one 1.85M-char section, and `rw.py grep` prints paragraph numbers, not character offsets, so readers binary-searched `--offset`; wanted: grep offsets or `read --at-para`, and splitting oversized PDF sections by printed headings.
