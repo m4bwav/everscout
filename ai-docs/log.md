@@ -243,3 +243,7 @@ lit due: all 8 beats current. Agent auto-pick: every `lead` book in Mark's folde
 ## [2026-11-01] library | Beginning Game AI with Unity distilled end to end
 
 Mark approved all 5 and pre-approved future book changes unless controversial (continue prompt updated). unity-agent 1.2.7 (PR #24: NavMeshAgent traps, sight-check order, legacy bake), ludowright 0.1.16 (PR #23: principle 27, player verbs that feed AI senses), book note. `lit lint` 5 applied, `lit distill`, tally, index. TESTS.md T-20261101-5. Tool changes still open: `lit ingest` refusing text-less files, and a `lit pick`.
+
+## [2026-11-01] library | 0.8.0 lit pick; Unity 2018 AI Cookbook distilled end to end
+
+lit due: all 8 beats current; no Judgment-call rows to recheck. Built the two open tool items (PR #45, v0.8.0): `lit pick` lists unread book files (config `books_folder`, `books_read_index` set in Mark's config), and `lit ingest` refuses a file with no text. Auto-pick from it: Palacios, Unity 2018 AI Cookbook (unread anywhere, feeds unity-agent). Ingested into game-design, one reader: 14 principles, 5 changes, all applied: indie-ai-scout PR #2 (vocab n-gram, regret-matching), unity-agent 1.2.8 (PR #25, carving vs avoidance, manual NavMeshLink traversal), ludowright 0.1.17 (PR #24, principles 28-29), book note. Tool fix: readwright 0.4.0 (PR #7). T-20261101-6. Next: `lit pick` and the next book.
