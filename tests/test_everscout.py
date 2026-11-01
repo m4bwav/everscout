@@ -1692,6 +1692,24 @@ class LiteratureTests(WorkspaceTest):
         self.assertTrue(out.splitlines()[0].startswith("Ann Writer"))
         self.assertNotIn("Big River", out)
 
+    def test_short_title_needs_a_rare_word_nearby(self):
+        text = "pixel logic by azzi was read " + "deep learning hands on python " * 12
+        self.assertEqual(E.lit_short_title_hit("pixel logic michael azzi".split(), text), "pixel logic")
+        self.assertEqual(E.lit_short_title_hit("pixel logic michael smith".split(), text), "")
+        # "python" sits near "deep learning" a dozen times: too common to count as the author
+        self.assertEqual(E.lit_short_title_hit("deep learning with python".split(), text), "")
+
+    def test_lint_accepts_toc_section_names(self):
+        d = os.path.join(self.tmp, "bk")
+        os.makedirs(d)
+        open(os.path.join(d, "toc.txt"), "w", encoding="utf-8").write("# x\n   1. Cover  (6 w)\n  16.   The Player Phase  (362 w)\n")
+        self.assertEqual(E.lit_toc_titles(d), {"cover", "the player phase"})
+        text = "---\ntitle: t\n---\n## Principles\n\n1. Costs rise per repeat action. (The Player Phase)\n"
+        errs, _, _ = E.lit_learnings_problems(E.get_beat(self.cfg(), "test-beat"), text, E.lit_toc_titles(d))
+        self.assertFalse([e for e in errs if "citation" in e])
+        errs, _, _ = E.lit_learnings_problems(E.get_beat(self.cfg(), "test-beat"), text)
+        self.assertTrue([e for e in errs if "citation" in e])
+
     def test_status_notes_and_note_rows(self):
         self.add("--tier", "canon", "--title", "The Classic", "--year", "1990", "--id", "OL9W", "--why", "w", "--evidence", "https://example.org/s")
         book = os.path.join(self.tmp, "classic.txt")
