@@ -17,6 +17,7 @@ Updated 2026-10-30 (0.7.0: beat literature, see the first section). Before that 
 - Generative Deep Learning (Foster, 2nd ed. 2023) ingested into ai-video 2026-11-01: 23 principles, 14 changes all applied 2026-11-01 (T-20261101-3): beat vocab and questions, comfyui-gen #121, cinewright #68, artwright 0.7.4, musicwright 0.1.4, ludowright 0.1.14. Next is Mark's next pick.
 - AI for Games (Millington, 3rd ed.) distilled into game-design 2026-11-01 (auto-pick, T-20261101-4): 12 changes all applied: indie-ai-scout PR #1, ludowright 0.1.15, unity-agent 1.2.6, roblox-agent 0.1.9, book note. readwright 0.3.0 fixed the big-section reading friction. Next session auto-picks the next book (continue prompt rule).
 - 0.7.1 released 2026-11-01 (PR #44, v0.7.1): the three open lit frictions fixed: a note after a change's status word passes lint; applied `note` rows go into the book note; `EVERSCOUT_BEATS=<worktree>/beats` makes `lit` edit the worktree. No open tool items. The repo has no CI; local tests (81) are the gate.
+- Beginning Game AI with Unity (Cossu 2021) ingested into game-design 2026-11-01 (auto-pick): 12 principles, 5 proposed changes (unity-agent, ludowright, note) waiting for Mark's yes. Open tool items: `lit ingest` should refuse a file with no text layer; a `lit pick` to list unread books in Mark's folder.
 
 ## Reddit discovery built (2026-10-16, night), unreleased
 
