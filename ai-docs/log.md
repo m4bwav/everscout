@@ -199,3 +199,7 @@ Agent pick (Mark: "choose one"): the only game book in his downloads folder not 
 ## [2026-11-01] library | Play to Learn distilled end to end
 
 Mark approved all 18 changes. game-design beat committed to indie-ai-scout (de88bdf: vocab serious-games, gamification, achievement-design; two questions; three searches; Recent literature row OL20198942W); ludowright 0.1.12 (PR #19, kb playtesting, balance-and-economy, core-loops-and-goals; released v0.1.12). Reading caveats added to the book note. `lit lint` 18 applied, `lit distill`, tally, index. TESTS.md T-20261101-1. Slip: PR #19 was merged before its checks registered; the main run passed afterwards. Wait for `gh pr checks` to list checks before merging. Next: Mark's next book.
+
+## [2026-11-01] check | continue prompt: waiting on next book
+
+lit due: all 8 beats current. Play to Learn already distilled (entry above); no `have` book left. Waiting on Mark's next book pick. No code changes.
