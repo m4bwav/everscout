@@ -1657,6 +1657,36 @@ class LiteratureTests(WorkspaceTest):
         code, out, _ = self.run_cli("validate", "--beat", "test-beat")
         self.assertEqual(code, 0, out)
 
+    def test_status_notes_and_note_rows(self):
+        self.add("--tier", "canon", "--title", "The Classic", "--year", "1990", "--id", "OL9W", "--why", "w", "--evidence", "https://example.org/s")
+        book = os.path.join(self.tmp, "classic.txt")
+        open(book, "w", encoding="utf-8").write("CHAPTER ONE\nText.\n")
+        with mock.patch.object(E, "find_readwright", return_value=None):
+            self.run_cli("lit", "ingest", book, "--beat", "test-beat", "--id", "OL9W")
+        lp = os.path.join(E.data_dir(self.cfg(), "test-beat"), "books", "the-classic", "learnings.md")
+        text = open(lp, encoding="utf-8").read()
+        text = text.replace("1. TODO one principle in plain words (ch. N)", "1. Pipelines beat one-shot prompts (ch. 1)")
+        text = text.replace("| beat/vocab.md | TODO | 1 | proposed |",
+                            "| beat/vocab.md | add an alias | 1 | applied (x 1.2, PR #3) |\n| note | Edition read: 2nd ed. | - | applied |")
+        text = text.replace("One paragraph: worth it or not, for whom, what to skip.", "Worth it.")
+        open(lp, "w", encoding="utf-8").write(text)
+        code, out, _ = self.run_cli("lit", "lint", "the-classic", "--beat", "test-beat")
+        self.assertEqual(code, 0, out)
+        self.assertIn("2 applied", out)
+        code, out, err = self.run_cli("lit", "distill", "the-classic", "--beat", "test-beat")
+        self.assertEqual(code, 0, err)
+        body = open(E.all_notes(E.data_dir(self.cfg(), "test-beat"))[0][0], encoding="utf-8").read()
+        self.assertIn("Edition read: 2nd ed.", body.split("## Principles")[0])
+        self.assertNotIn("- note:", body)
+
+    def test_everscout_beats_env_shadows_config(self):
+        other = os.path.join(self.tmp, "wt-beats")
+        shutil.copytree(os.path.dirname(E.get_beat(self.cfg(), "test-beat").path.rstrip(os.sep)) + os.sep + "test-beat",
+                        os.path.join(other, "test-beat"))
+        with mock.patch.dict(os.environ, {"EVERSCOUT_BEATS": other}):
+            self.assertEqual(os.path.normcase(E.get_beat(E.config(), "test-beat").path),
+                             os.path.normcase(os.path.join(other, "test-beat")))
+
 
 class SkillRefsTest(unittest.TestCase):
     def test_kb_copies_in_sync(self):

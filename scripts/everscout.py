@@ -19,6 +19,7 @@ engagement route is draft, approve, paste, record.
 
 Paths (`everscout.py where` prints them):
   HOME   = $EVERSCOUT_HOME or ~/.everscout        config.json, private beats, voice.md
+  BEATS  = $EVERSCOUT_BEATS, then beat_dirs, then ./beats   first match of a slug wins
   DATA   = beats.<slug>.data or data_root/<slug>  notes/, reports/, study/, signals/, sources/, log.md, HANDOFF.md
   LEDGER = ledger or data_root/_engage            engagements.jsonl, INDEX.md (all beats: pacing is per account)
   LOCAL  = local_root                             cache/, ratelimit.json, state-<slug>.json, drafts/
@@ -52,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.7.0"
+VERSION = "0.7.1"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -501,7 +502,9 @@ def parse_table(text):
 # ---------------------------------------------------------------- beats
 
 def beat_dirs(cfg):
-    dirs = [expand(d) for d in cfg.get("beat_dirs") or []]
+    # EVERSCOUT_BEATS (os.pathsep-separated) goes first, so a worktree's beats shadow the configured clone's
+    dirs = [expand(d) for d in (os.environ.get("EVERSCOUT_BEATS") or "").split(os.pathsep) if d.strip()]
+    dirs += [expand(d) for d in cfg.get("beat_dirs") or []]
     dirs.append(os.path.join(ROOT, "beats"))
     return dirs
 
@@ -3576,6 +3579,12 @@ def cmd_lit_ingest(a):
         print(f"  read sections with: python {rw} read \"{path}\" --section N   (search: grep \"{path}\" PATTERN)")
 
 
+def lit_change_status(c):
+    """A change row's status word; a note after it, like `applied (x 1.2, PR #3)`, is allowed."""
+    m = re.match(r"\s*\**([a-z]+)", (c.get("status") or "").lower())
+    return m.group(1) if m else ""
+
+
 def lit_learnings_problems(b, text):
     """(errors, warnings, changes) for a learnings.md."""
     errs, warns = [], []
@@ -3593,7 +3602,7 @@ def lit_learnings_problems(b, text):
     changes = parse_table(secs.get("changes", ""))
     feeds = set(b.list_meta("feeds"))
     for c in changes:
-        tgt, st = (c.get("target") or "").strip("` "), (c.get("status") or "").strip().lower()
+        tgt, st = (c.get("target") or "").strip("` "), lit_change_status(c)
         if "TODO" in (c.get("change") or ""):
             errs.append(f"change for {tgt}: TODO left")
         if st not in ("proposed", "applied", "rejected"):
@@ -3634,7 +3643,7 @@ def cmd_lit_lint(a):
         print("warn   " + w)
     by = {}
     for c in changes:
-        by[(c.get("status") or "").strip().lower()] = by.get((c.get("status") or "").strip().lower(), 0) + 1
+        by[lit_change_status(c)] = by.get(lit_change_status(c), 0) + 1
     print(f"{os.path.basename(d)}: {len(changes)} changes (" + ", ".join(f"{v} {k}" for k, v in sorted(by.items())) + f"); {len(errs)} errors, {len(warns)} warnings")
     sys.exit(1 if errs else 0)
 
@@ -3646,7 +3655,7 @@ def cmd_lit_distill(a):
     d = lit_book(cfg, b, a.book)
     text = read(os.path.join(d, "learnings.md"))
     errs, _, changes = lit_learnings_problems(b, text)
-    open_ = [c for c in changes if (c.get("status") or "").strip().lower() == "proposed"]
+    open_ = [c for c in changes if lit_change_status(c) == "proposed"]
     if errs:
         fail("learnings.md has lint errors; run `lit lint` first")
     if open_ and not a.allow_open:
@@ -3667,9 +3676,13 @@ def cmd_lit_distill(a):
                "interest": 3, "engaged": False, "tags": ["book"], "summary": summary or title}
     for facet, ents in vocab_match(b, body).items():
         note_fm[facet] = ents
-    applied = [c for c in changes if (c.get("status") or "").strip().lower() == "applied"]
+    applied = [c for c in changes if lit_change_status(c) == "applied"]
+    # `note` rows are text for the book note itself (an edition line, reading caveats), not a change elsewhere
+    for_note = [c for c in applied if (c.get("target") or "").strip("` ") == "note"]
+    applied = [c for c in applied if c not in for_note]
     note_body = (f"# {title}\n\nDistilled from the user's copy on {today()}; full learnings in `books/{os.path.basename(d)}/learnings.md`.\n\n"
-                 f"## Principles\n{secs.get('principles', '').rstrip()}\n\n## What changed\n\n"
+                 + "".join(f"{c.get('change')}\n\n" for c in for_note)
+                 + f"## Principles\n{secs.get('principles', '').rstrip()}\n\n## What changed\n\n"
                  + "".join(f"- {c.get('target')}: {c.get('change')}\n" for c in applied) + ("- nothing applied\n" if not applied else "")
                  + f"\n## Verdict\n\n{secs.get('verdict', '').strip()}\n")
     p = os.path.join(data_dir(cfg, b.slug), "notes", today()[:7], f"{today()}-{nid}.md")
@@ -3679,7 +3692,7 @@ def cmd_lit_distill(a):
     if row:
         row["status"] = "distilled"
         write(lit_path(b), lit_render(b, meta, tiers, searches))
-    print(f"note {p}\n{len(applied)} changes applied, {len(open_)} left proposed; list row {'distilled' if row else 'not found'}")
+    print(f"note {p}\n{len(applied)} changes applied ({len(for_note)} written into the note), {len(open_)} left proposed; list row {'distilled' if row else 'not found'}")
 
 
 def cmd_lit(a):

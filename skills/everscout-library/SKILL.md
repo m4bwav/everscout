@@ -36,7 +36,7 @@ Follow the procedure section of [references/kb/literature.md](references/kb/lite
 1. `ES lit ingest <file> --beat <slug> [--id OL...W]`, then read the outline it prints.
 2. Read the parts that bear on the beat's research questions through readwright (`rw.py read --section`, `rw.py grep`), never the whole text into the context.
 3. Fill `learnings.md`: cited principles in fresh words, what the beat already has (`ES recall`), the Changes table with targets, the Verdict.
-4. `ES lit lint <book> --beat <slug>` until it exits 0. Show the user the proposed changes grouped by target and ask which to apply. Apply them through each target's own rules; mark rows `applied` or `rejected`.
+4. `ES lit lint <book> --beat <slug>` until it exits 0. Show the user the proposed changes grouped by target and ask which to apply. Apply them through each target's own rules; mark rows `applied` or `rejected` (a note after the word is fine: `applied (v1.2, PR #3)`). A `note` row's change text (an edition line, reading caveats) is written into the book note by `lit distill`. Working in a worktree of the beats repo: set `EVERSCOUT_BEATS=<worktree>/beats` so `lit` edits the worktree's literature.md, not the main clone's.
 5. `ES lit distill <book> --beat <slug>`, then `ES tally --beat <slug>` and `ES index --beat <slug>`. Append `library | <book>: N principles, M changes applied` to `DATA/log.md`.
 
 ## Rules
