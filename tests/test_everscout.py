@@ -1657,6 +1657,41 @@ class LiteratureTests(WorkspaceTest):
         code, out, _ = self.run_cli("validate", "--beat", "test-beat")
         self.assertEqual(code, 0, out)
 
+    def test_ingest_refuses_file_without_text(self):
+        book = os.path.join(self.tmp, "scan.pdf")
+        open(book, "wb").write(b"%PDF-1.4")
+        rw = os.path.join(self.tmp, "rw.py")
+        open(rw, "w", encoding="utf-8").write("print('format: pdf\\nwords: 0\\nnote: no text layer')\n")
+        with mock.patch.object(E, "find_readwright", return_value=rw):
+            code, out, err = self.run_cli("lit", "ingest", book, "--beat", "test-beat", "--title", "Scan")
+        self.assertEqual(code, 1)
+        self.assertIn("no text", err + out)
+        self.assertFalse(os.path.isdir(os.path.join(E.data_dir(self.cfg(), "test-beat"), "books", "scan")))
+
+    def test_pick_lists_unread_books(self):
+        self.add("--tier", "canon", "--title", "The Classic Craft Book", "--authors", "Ann Writer", "--year", "1990", "--id", "OL9W",
+                 "--why", "w", "--evidence", "https://example.org/s")
+        folder = os.path.join(self.tmp, "shelf")
+        os.makedirs(folder)
+        for n in ("Ann Writer - The Classic Craft Book.epub", "Done Already.pdf", "Read Elsewhere Volume One.epub",
+                  "Notes On Big River Boats 2nd.pdf", "Fresh Title.mobi", "cover.jpg"):
+            open(os.path.join(folder, n), "w").write("x")
+        done = os.path.join(E.data_dir(self.cfg(), "test-beat"), "books", "done-already")
+        os.makedirs(done)
+        open(os.path.join(done, "book.md"), "w", encoding="utf-8").write(f"---\ntitle: Done\nfile: {folder}/Done Already.pdf\n---\n")
+        idx = os.path.join(self.tmp, "index")
+        os.makedirs(idx)
+        open(os.path.join(idx, "n.md"), "w", encoding="utf-8").write("Path: shelf/Read Elsewhere Volume One.epub\nAlso *Notes on Big River Boats*.\n")
+        code, out, _ = self.run_cli("lit", "pick", "--dir", folder, "--read-index", idx, "--json")
+        self.assertEqual(code, 0, out)
+        got = {r["file"]: r for r in json.loads(out)}
+        self.assertEqual(set(got), {"Ann Writer - The Classic Craft Book.epub", "Notes On Big River Boats 2nd.pdf", "Fresh Title.mobi"})
+        self.assertEqual(got["Ann Writer - The Classic Craft Book.epub"]["listed"][0]["status"], "lead")
+        self.assertEqual(got["Notes On Big River Boats 2nd.pdf"]["maybe_read"], "notes on big river")
+        code, out, _ = self.run_cli("lit", "pick", "--dir", folder, "--read-index", idx)
+        self.assertTrue(out.splitlines()[0].startswith("Ann Writer"))
+        self.assertNotIn("Big River", out)
+
     def test_status_notes_and_note_rows(self):
         self.add("--tier", "canon", "--title", "The Classic", "--year", "1990", "--id", "OL9W", "--why", "w", "--evidence", "https://example.org/s")
         book = os.path.join(self.tmp, "classic.txt")

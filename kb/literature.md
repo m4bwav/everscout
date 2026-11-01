@@ -47,7 +47,9 @@ Open Library asks API users to identify themselves with a User-Agent and contact
 
 When the user provides a book file (EPUB, PDF, DOCX, text), or names one they own:
 
-1. `lit ingest <file> --beat <slug> [--id OL...W]`. It runs readwright (`info`, `toc`) when installed, writes `DATA/books/<book>/book.md`, `toc.txt` and a `learnings.md` to fill, and sets the list row to `reading`. Without readwright, outline the book with your own reader. readwright never removes DRM, and neither do you.
+0. **No book named?** `lit pick --dir <folder> [--read-index <notes folder>]` lists the folder's book files that no beat has read, beat-listed ones first, and hides files whose name (or a four-word run of it) appears in the read index (`--all` shows those). Config keys `books_folder` and `books_read_index` set the defaults. It matches file names, so check the pick against the beats' book notes before ingesting.
+
+1. `lit ingest <file> --beat <slug> [--id OL...W]`. It runs readwright (`info`, `toc`) when installed, writes `DATA/books/<book>/book.md`, `toc.txt` and a `learnings.md` to fill, and sets the list row to `reading`. It refuses a file readwright finds no text in (a scan without a text layer); OCR it first or pass `--force`. Without readwright, outline the book with your own reader. readwright never removes DRM, and neither do you.
 2. **Plan the read from the outline.** Read the introduction and the conclusion first, then the chapters that bear on the beat's research questions (`beat.md`). Use `rw.py grep` for the beat's vocabulary before reading whole chapters. A long book is read in sections, never dumped into the context.
 3. **Write principles**, one numbered line each, in fresh words, each cited `(ch. 3)`, `(p. 41)` or `(sec. 2.4)`. A quote is at most 25 words and rare. Say where the book is wrong or dated.
 4. **Compare with the beat.** For each principle run `recall` and note what the beat already has, lacks or contradicts.
