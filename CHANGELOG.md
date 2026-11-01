@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.8.0 · 2026-11-01
+
+- because: friction from the Cossu auto-pick (skills/everscout-library/TESTS.md T-20261101-5): several manual greps to find an unread book, and a scan with no text layer got a book folder.
+- New `lit pick`: book files in a folder (`--dir` or config `books_folder`) that no beat's `book.md` names, beat-listed ones first; `--read-index` (or config `books_read_index`), a file or folder of notes, hides files named there and flags ones whose four-word run appears there as maybe read (`--all`). `lit ingest` refuses a file readwright reports 0 words for, unless `--force`. 83 offline tests (2 new).
+
 ## 0.7.1 · 2026-11-01
 
 - because: friction recorded over four distilled books (skills/everscout-library/TESTS.md T-20261031-4, T-20261101-2, T-20261101-3).

@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.7.1"
+VERSION = "0.8.0"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3550,6 +3550,9 @@ def cmd_lit_ingest(a):
                 toc = p.stdout
     else:
         note("readwright not found (github.com/m4bwav/readwright, or set EVERSCOUT_READWRIGHT): outline the book with your own reader")
+    m = re.search(r"^words:\s*(\d+)\s*$", info, re.M)
+    if m and int(m.group(1)) == 0 and not a.force:
+        fail("readwright found no text in this file (a scan without a text layer?); OCR it first, or pass --force to set it up anyway")
     title = a.title or (re.search(r"^title:\s*(.+)$", info, re.M | re.I).group(1).strip() if re.search(r"^title:\s*(.+)$", info, re.M | re.I)
                         else os.path.splitext(os.path.basename(path))[0])
     meta, tiers, searches = lit_load(b) if os.path.exists(lit_path(b)) else ({}, {t: [] for t in LIT_TIERS}, [])
@@ -3577,6 +3580,75 @@ def cmd_lit_ingest(a):
     print(f"  learnings.md to fill; toc.txt {'written' if toc else 'not written'}; list row {'set to reading' if row else 'not found (lit add it)'}")
     if rw:
         print(f"  read sections with: python {rw} read \"{path}\" --section N   (search: grep \"{path}\" PATTERN)")
+
+
+LIT_BOOK_EXTS = (".pdf", ".epub", ".mobi", ".azw3", ".azw", ".djvu", ".txt")
+
+
+def lit_file_key(path):
+    return re.sub(r"[^a-z0-9]+", " ", os.path.splitext(os.path.basename(path.replace("\\", "/")))[0].lower()).strip()
+
+
+def cmd_lit_pick(a):
+    """Book files in a folder that no beat has read yet, the ones a beat's literature lists first."""
+    cfg = config()
+    folder = expand(a.dir or cfg.get("books_folder") or "")
+    if not folder or not os.path.isdir(folder):
+        fail("give the folder of book files with --dir, or set books_folder in config.json")
+    read_keys, listed = set(), []
+    for slug, path in all_beats(cfg).items():
+        bd = books_dir(cfg, slug)
+        for name in (os.listdir(bd) if os.path.isdir(bd) else []):
+            bm = os.path.join(bd, name, "book.md")
+            if os.path.isfile(bm):
+                f = parse_frontmatter(read(bm))[0].get("file")
+                if f:
+                    read_keys.add(lit_file_key(f))
+        b = Beat(slug, path)
+        if os.path.exists(lit_path(b)):
+            for tier, rows in lit_load(b)[1].items():
+                for r in rows:
+                    t = lit_norm_title(r["title"])
+                    names = [w for w in re.sub(r"[^a-z ]+", " ", (r.get("authors") or "").lower()).split() if len(w) > 3]
+                    if len(t) >= 8:
+                        listed.append((t, names, slug, tier, r["status"]))
+    # other records of books already read (a notes index, say): a file whose name appears there counts as read
+    idx = []
+    for p in (a.read_index or []) + list(cfg.get("books_read_index") or []):
+        p = expand(p)
+        idx += sorted(glob.glob(os.path.join(p, "**", "*.md"), recursive=True)) if os.path.isdir(p) else [p] if os.path.isfile(p) else []
+    elsewhere = " ".join(read(p) for p in idx)
+    elsewhere_keys = re.sub(r"[^a-z0-9]+", " ", elsewhere.lower())
+    out = []
+    for name in sorted(os.listdir(folder)):
+        if not name.lower().endswith(LIT_BOOK_EXTS):
+            continue
+        key = lit_file_key(name)
+        if key in read_keys:
+            continue
+        if len(key) >= 8 and f" {key} " in f" {elsewhere_keys} ":
+            continue
+        # a short title (two words or fewer) also needs an author's name in the file name: "Deep Learning" is in many titles
+        hits = [l for l in listed if f" {l[0]} " in f" {key} " and (len(l[0].split()) > 2 or any(n in key.split() for n in l[1]))]
+        if any(h[4] == "distilled" for h in hits):
+            continue
+        # a run of four title words found in the other records: probably read there under a different file name
+        words = key.split()
+        maybe = next((" ".join(words[i:i + 4]) for i in range(len(words) - 3)
+                      if f" {' '.join(words[i:i + 4])} " in f" {elsewhere_keys} "), "")
+        out.append({"file": name, "listed": [{"beat": h[2], "tier": h[3], "status": h[4]} for h in hits], "maybe_read": maybe})
+    out.sort(key=lambda r: (bool(r["maybe_read"]), not r["listed"], r["file"].lower()))
+    if a.json:
+        print(json.dumps(out, indent=1))
+        return
+    for r in out:
+        if r["maybe_read"] and not a.all:
+            continue
+        tag = "; ".join(f"{l['beat']} {l['tier']} {l['status']}" for l in r["listed"])
+        print(r["file"] + (f"   [{tag}]" if tag else "") + (f"   (maybe read: '{r['maybe_read']}' in the read index)" if r["maybe_read"] else ""))
+    maybe = sum(1 for r in out if r["maybe_read"])
+    print(f"{len(out) - maybe} unread ({sum(1 for r in out if r['listed'] and not r['maybe_read'])} listed by a beat), "
+          f"{maybe} maybe read elsewhere{'' if a.all else ' (--all shows them)'}; check the topic fits a beat before ingesting")
 
 
 def lit_change_status(c):
@@ -3697,7 +3769,7 @@ def cmd_lit_distill(a):
 
 def cmd_lit(a):
     {"list": cmd_lit_list, "check": cmd_lit_check, "add": cmd_lit_add, "new": cmd_lit_new, "due": cmd_lit_due,
-     "ingest": cmd_lit_ingest, "lint": cmd_lit_lint, "distill": cmd_lit_distill}[a.action](a)
+     "ingest": cmd_lit_ingest, "lint": cmd_lit_lint, "distill": cmd_lit_distill, "pick": cmd_lit_pick}[a.action](a)
 
 
 # ---------------------------------------------------------------- main
@@ -3819,7 +3891,13 @@ def main(argv=None):
     q.add_argument("--json", action="store_true")
     q = lsp.add_parser("due", help="tiers due for research (canon yearly, recent quarterly, latest monthly); exit 2 when any"); q.add_argument("--beat")
     q = lsp.add_parser("ingest", help="set up a provided book: readwright outline, DATA/books/<slug>/learnings.md, row set to reading")
-    q.add_argument("file"); q.add_argument("--beat"); q.add_argument("--title"); q.add_argument("--id"); q.add_argument("--force", action="store_true")
+    q.add_argument("file"); q.add_argument("--beat"); q.add_argument("--title"); q.add_argument("--id")
+    q.add_argument("--force", action="store_true", help="rewrite learnings.md; set up a file with no text layer anyway")
+    q = lsp.add_parser("pick", help="book files in a folder no beat has read yet, beat-listed ones first")
+    q.add_argument("--dir", help="folder of book files (default: config books_folder)")
+    q.add_argument("--all", action="store_true", help="also list books that are maybe read elsewhere")
+    q.add_argument("--read-index", action="append", help="a file or folder of .md files recording books read elsewhere; a book whose file name appears there counts as read (repeatable; config books_read_index)")
+    q.add_argument("--json", action="store_true")
     q = lsp.add_parser("lint", help="check a book's learnings.md: citations, quote length, change targets"); q.add_argument("book"); q.add_argument("--beat")
     q = lsp.add_parser("distill", help="finish a book: a `book` note for recall, the row set to distilled"); q.add_argument("book"); q.add_argument("--beat")
     q.add_argument("--allow-open", action="store_true", help="leave proposed changes for later")
