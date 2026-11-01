@@ -187,3 +187,7 @@ lit due: all 8 beats current. The Gamer's Brain's 20 proposed changes still awai
 ## [2026-10-31] check | Gamer's Brain approval already applied
 
 Mark said yes to all; a parallel session had already applied the 20 changes (#42, ludowright v0.1.11, game-juice v1.3.1, indie-ai-scout 52b3cf0, book note). The entry above saying "still waiting" is out of date. Added the missing data-folder log line. Next: Mark's next book pick.
+
+## [2026-10-31] check | continue prompt: waiting on next book
+
+lit due: all 8 beats current. Steps 2-4 done; all four `have` books distilled. Waiting on Mark's next book pick. No code changes.
