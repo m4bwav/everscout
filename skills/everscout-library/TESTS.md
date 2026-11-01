@@ -21,6 +21,10 @@ Trigger cases: `evals/library-trigger-1`, `library-trigger-2`, `library-decoy-1`
 
 Press Reset (Jason Schreier, 2021, 98k words) into the same private beat. `lit ingest` (30 sections), one agent read the intro and epilogue and split chapters 1 to 9 over three reading agents, `learnings.md` 24 principles and 12 changes, `lit lint` exit 0, the user approved all four groups, changes applied (game-design plugin 0.1.10, beat vocab and questions, study chapters 01 and 12), `lit distill`, `tally`, `index`. Pass. Notes: the principles for chapters 1 to 9 rest on the readers' summaries, and the learnings file says so; the reading agents' book text copies in the scratch folder were deleted.
 
+### T-20261101-2: sixth distillation (manual, real book, three part readers, six repositories)
+
+Game Engine Architecture (Jason Gregory, 2nd ed. 2014) into game-design. Canon row added with two syllabi, `lit ingest`, three reader agents (Parts I-II, III, IV-V), 25 principles, 17 changes, `lit lint` 0, the user approved all 17. Applied: beat vocab, question, literature (indie-ai-scout e36a0d2, a2dd567), ludowright 0.1.13 (PR #20, R-58 to R-61), game-juice 1.3.2 (PR #7), unity-agent 1.2.5 (PR #22), threewright 0.6.8 (PR #17), roblox-agent 0.1.8 (PR #20), polywright 0.5.2 (PR #42), edition line in the note. `lit lint` 17 applied, `lit distill`, `tally`, `index`. Pass. Finding: apply agents wrote statuses like `applied (unity-agent 1.2.5, pr #22)`, which `lit lint` rejects; the status cell must be the bare word, with versions kept in the log.
+
 ### T-20261101-1: fifth distillation (manual, real book, agent pick, two repositories)
 
 Play to Learn (Sharon Boller, Karl Kapp, 2017) into game-design. Ingested 2026-10-31 (ch. 4, 5, 9 read to the 25k-character cut); the user approved all 18 changes. Applied: beat vocab, questions, searches and literature row (indie-ai-scout de88bdf), ludowright 0.1.12 (PR #19, released v0.1.12), book_id OL20198942W in book.md, reading caveats in the note. `lit lint` 18 applied, `lit distill`, `tally`, `index`. Pass.

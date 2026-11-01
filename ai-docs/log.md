@@ -207,3 +207,7 @@ lit due: all 8 beats current. Play to Learn already distilled (entry above); no 
 ## [2026-11-01] library | Game Engine Architecture ingested, changes proposed
 
 Mark picked Gregory (2nd ed., 2014; the 853-page copy is likely the 1st) as the most useful unread book for his plugins. Canon row added to game-design (Chalmers and CTU syllabi), ingested, read by three part readers. Learnings: 25 principles, 17 proposed changes (beat vocab/questions, ludowright R-58 to R-61 and three kb files, game-juice, unity-agent, threewright, roblox-agent, polywright-finish). Waiting for Mark's approval.
+
+## [2026-11-01] library | Game Engine Architecture distilled end to end
+
+Mark approved all 17 changes. Beat vocab, question and literature (indie-ai-scout e36a0d2, a2dd567); ludowright 0.1.13 (PR #20, rubric R-58 to R-61, three kb files; rubric now yellow at about 6,100 tokens), game-juice 1.3.2 (PR #7, P-28 barks, juice-scan input and lag checks), unity-agent 1.2.5 (PR #22, debug time controls and architecture traps; CI Linux leg pinned to ubuntu-24.04), threewright 0.6.8 (PR #17, Timer over Clock note), roblox-agent 0.1.8 (PR #20, streamed-instance references; merged with the failing Python 3.9 job, fixed by roblox-agent PR #21), polywright 0.5.2 (PR #42, clip conventions). Edition line in the note. TESTS.md T-20261101-2. Slip: apply agents annotated status cells, which lit lint rejects; keep the bare word. Next: Mark's next book.
