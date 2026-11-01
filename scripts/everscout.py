@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.8.2"
+VERSION = "0.8.3"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -122,8 +122,10 @@ def iso(ts):
     return S.iso(ts)
 
 
-def slugify(text, n=48):
+def slugify(text, n=48, whole=False):
     s = re.sub(r"[^a-z0-9]+", "-", (text or "").lower()).strip("-")
+    if whole and len(s) > n and s[n] != "-" and "-" in s[:n]:
+        return s[:n].rsplit("-", 1)[0]  # cut at a word, not mid-word
     return s[:n].rstrip("-") or "untitled"
 
 
@@ -3270,6 +3272,7 @@ def lit_render(b, meta, tiers, searches):
 
 def lit_norm_title(t):
     t = re.sub(r"[*_`]", "", t or "").lower().split(":")[0]
+    t = re.sub(r"\([^)]*\)", " ", t)  # "(3rd ed.)", "(series)" are not in file names
     return re.sub(r"[^a-z0-9]+", " ", t).strip()
 
 
@@ -3562,7 +3565,7 @@ def cmd_lit_ingest(a):
     tier, row = lit_find(tiers, a.id or title)
     if row:
         title = row["title"] or title
-    slug = slugify(title, 40)
+    slug = slugify(title, 40, whole=True)
     d = os.path.join(books_dir(cfg, b.slug), slug)
     os.makedirs(d, exist_ok=True)
     write(os.path.join(d, "book.md"), render_frontmatter({
@@ -3724,8 +3727,9 @@ def lit_learnings_problems(b, text, toc_titles=()):
 
 def lit_book(cfg, b, ref):
     d = os.path.join(books_dir(cfg, b.slug), ref)
-    if not os.path.isdir(d):
-        d = os.path.join(books_dir(cfg, b.slug), slugify(ref, 40))
+    for cut in (True, False):  # folders from before 0.8.3 were cut mid-word
+        if not os.path.isdir(d):
+            d = os.path.join(books_dir(cfg, b.slug), slugify(ref, 40, whole=cut))
     if not os.path.isfile(os.path.join(d, "learnings.md")):
         have = sorted(os.listdir(books_dir(cfg, b.slug))) if os.path.isdir(books_dir(cfg, b.slug)) else []
         fail(f"no learnings.md for {ref!r} (books: {', '.join(have) or 'none'}); start with `lit ingest`")

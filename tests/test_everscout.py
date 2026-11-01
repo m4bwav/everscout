@@ -126,6 +126,14 @@ class FakeHeaders(dict):
 
 
 class ParserTests(unittest.TestCase):
+    def test_title_key_drops_edition(self):
+        self.assertEqual(E.lit_norm_title("Deep Reinforcement Learning Hands-On (3rd ed.)"), "deep reinforcement learning hands on")
+
+    def test_book_slug_cuts_at_a_word(self):
+        self.assertEqual(E.slugify("Foundations of Deep Reinforcement Learning", 40, whole=True), "foundations-of-deep-reinforcement")
+        self.assertEqual(E.slugify("Foundations of Deep Reinforcement Learning", 40), "foundations-of-deep-reinforcement-learni")
+        self.assertEqual(E.slugify("Short title", 40, whole=True), "short-title")
+
     def test_reddit_listing(self):
         items = S.parse_reddit(reddit_atom("exampleSub", [("p1", "maker_one", "I made a thing", "body", ago(5))]))
         self.assertEqual(items[0]["id"], "reddit:p1")
