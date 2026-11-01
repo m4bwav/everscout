@@ -21,12 +21,12 @@ Repeating start prompt. State lives in `ai-docs/HANDOFF.md`, never here.
 4. Run the everscout-library trigger evals in a fresh session after install.
 5. Improve the tools after every book. Review the run for friction, slips and workarounds: lint refusals, manual steps, agent mistakes, reading limits like the 25k-character cut, big outputs. Fix them where they live:
    - everscout (`scripts/everscout.py` `lit`, `skills/everscout-library/SKILL.md`, `kb/literature.md`, tests), in a worktree PR with a test for each fix.
-   - readwright (`D:/m4bwa/Claude/Projects/Ai/readwright`, `rw.py` and its skill) for anything about reading the file, same way.
+   - readwright (`D:/m4bwa/Claude/Projects/Ai/readwright`, `rw.py` and its skill) for anything about reading the file, same way. Every book run also adds to readwright (Mark, 2026-11-01): put any book-distillation tip the run taught into its skill's distilling section, and build the reader feature the run lacked (a new view, filter or format fix), with a test. Say "no readwright changes needed" in the log only when the run truly taught nothing.
    - Record each fix in the repo's CHANGELOG or LEARNINGS, merge once checks pass, and tag a release when the version is bumped. Say "no tool changes needed" in the log when there were none.
    - Open items: see HANDOFF.md. In a worktree of the beats repo, set `EVERSCOUT_BEATS=<worktree>/beats` before `lit ingest` or `lit distill` (0.7.1).
 
 ## Stop points and hand-over
 
 - Stop before a controversial change and before any registry publish; apply the rest without asking.
-- Work in a worktree off origin/main (shared clone). Tests: `python -m unittest discover -s tests`. Merge your own PR once tests pass; tag and release when the version is bumped.
+- Work in a worktree off origin's default branch (shared clones; everscout is `main`, the beats repo indie-ai-scout is `master`); create the beats worktree before setting `EVERSCOUT_BEATS`. Tests: `python -m unittest discover -s tests`. Merge your own PR once tests pass; tag and release when the version is bumped.
 - At the end, update `ai-docs/HANDOFF.md` and `ai-docs/log.md`, and print the same start command: `Execute ai-docs/plans/2026-10-30-beat-literature-continue-prompt.md` (start in `D:\m4bwa\Claude\Projects\Ai\everscout`).
