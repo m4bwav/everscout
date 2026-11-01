@@ -11,7 +11,7 @@ Repeating start prompt. State lives in `ai-docs/HANDOFF.md`, never here.
 ## Waits on Mark
 
 - Nothing to pick: if the kickoff names no book, choose one yourself (Mark, 2026-11-01: "auto pick one if one wasn't already selected") and say which and why in the log. Order: a `have` book not yet distilled, then a pick from his book folder (the `file:` lines in earlier books' `book.md` show it): skip any book already in a beat's `DATA/books/` or in `D:/m4bwa/Claude/Projects/Ai/books/plugin-learnings/INDEX.md`, prefer one a beat's literature.md lists as `lead`, and ingest into that beat.
-- Approval of the proposed changes from each book's learnings.md before they are applied to a skill in another repo. Once approved, apply them with one agent per target repo in parallel (own worktree, PR, merge when checks pass, tag when bumped), and do the beat files yourself.
+- Nothing to approve: Mark pre-approves each book's proposed changes (2026-11-01: "unless a change is controversial in some way, you can assume that I can authorize it"). Stop only for a controversial row (reverses existing guidance, public API, release workflow, registry publish). Otherwise, apply them with one agent per target repo in parallel (own worktree, PR, merge when checks pass, tag when bumped), and do the beat files yourself.
 
 ## Order of work
 
@@ -27,6 +27,6 @@ Repeating start prompt. State lives in `ai-docs/HANDOFF.md`, never here.
 
 ## Stop points and hand-over
 
-- Stop before applying any change to another plugin's repository without Mark's yes, and before any registry publish.
+- Stop before a controversial change and before any registry publish; apply the rest without asking.
 - Work in a worktree off origin/main (shared clone). Tests: `python -m unittest discover -s tests`. Merge your own PR once tests pass; tag and release when the version is bumped.
 - At the end, update `ai-docs/HANDOFF.md` and `ai-docs/log.md`, and print the same start command: `Execute ai-docs/plans/2026-10-30-beat-literature-continue-prompt.md` (start in `D:\m4bwa\Claude\Projects\Ai\everscout`).

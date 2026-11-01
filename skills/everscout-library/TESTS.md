@@ -41,6 +41,10 @@ The Gamer's Brain (Celia Hodent, 2026 second edition) into game-design. Ingested
 
 AI Engineering (Chip Huyen, 2024) into a token-saving beat. `lit ingest`, sectioned reading, `learnings.md` 25 principles and 18 changes, `lit lint` exit 0, the user approved all 18. Applied: the beat's questions, vocab, searches, study and metrics (beat repository), the book note, and four plugins through their own CHANGELOG and RESEARCH files (two patch releases, two docs-only PRs), each on its own worktree and PR. `lit lint` 18 applied, `lit distill` wrote the note and set the row `distilled`, `tally` and `index` ran. Pass. Notes: the `note` row was applied by editing the note after `lit distill`, since distill writes the note from the principles and does not act on `note` rows; the beat had never been committed, so its first commit carried the whole folder.
 
+## T-20261101-5: Beginning Game AI with Unity, auto-pick, distilled end to end
+
+Agent auto-pick after every `lead` book in the folder proved already read; the first pick (a scanned PDF, 0 words) was dropped. `lit ingest` into game-design, ch. 1 and 5 read, ch. 2 to 4 by grep; 12 principles, 5 changes, `lit lint` 0; Mark pre-approved; unity-agent 1.2.7 (PR #24), ludowright 0.1.16 (PR #23), note; `lit distill`, tally, index. Friction: ingest accepts a file with no text layer; no `lit pick` to list unread books.
+
 ## T-20261101-4: AI for Games, auto-pick, distilled end to end
 
 Agent auto-pick (no book named in the kickoff). Canon row (SDU DM810, Wrexham GME706), `lit ingest`, three part readers, 25 principles, 12 changes, `lit lint` 0, all approved and applied: beat vocab and questions (indie-ai-scout PR #1), ludowright 0.1.15 (PR #22), unity-agent 1.2.6 (PR #23), roblox-agent 0.1.9 (PR #22), book note; `lit distill`, tally, index. Friction fixed: readwright 0.3.0 (PR #6) prints grep offsets, adds `read --at-para` and flags giant PDF sections in `toc`. Pass.
