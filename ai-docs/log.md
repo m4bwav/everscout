@@ -203,3 +203,7 @@ Mark approved all 18 changes. game-design beat committed to indie-ai-scout (de88
 ## [2026-11-01] check | continue prompt: waiting on next book
 
 lit due: all 8 beats current. Play to Learn already distilled (entry above); no `have` book left. Waiting on Mark's next book pick. No code changes.
+
+## [2026-11-01] library | Game Engine Architecture ingested, changes proposed
+
+Mark picked Gregory (2nd ed., 2014; the 853-page copy is likely the 1st) as the most useful unread book for his plugins. Canon row added to game-design (Chalmers and CTU syllabi), ingested, read by three part readers. Learnings: 25 principles, 17 proposed changes (beat vocab/questions, ludowright R-58 to R-61 and three kb files, game-juice, unity-agent, threewright, roblox-agent, polywright-finish). Waiting for Mark's approval.
