@@ -134,7 +134,7 @@ Scanning a beat is network traffic by design. The CLI sends plain HTTP GET reque
 
 The skills also ask your agent to use its own web search and web fetch tools for beat research, the beat's web searches and pages the CLI has no reader for. Those requests go through your agent and fall under its privacy terms. Everscout never posts or sends messages: comment drafts are shown to you, and you paste them yourself.
 
-Everscout reads no credentials, tokens or API keys. The only environment variables it reads are EVERSCOUT_HOME, EVERSCOUT_DATA, EVERSCOUT_LOCAL and EVERSCOUT_CHARTWRIGHT, all of them local paths. When chartwright is installed, `stats export --charts` runs it on your machine to draw charts. Questions or problems go to the [issue tracker](https://github.com/m4bwav/everscout/issues).
+Everscout reads no credentials, tokens or API keys. The only environment variables it reads are EVERSCOUT_HOME, EVERSCOUT_DATA, EVERSCOUT_LOCAL, EVERSCOUT_BEATS, EVERSCOUT_READWRIGHT and EVERSCOUT_CHARTWRIGHT, all of them local paths. When chartwright is installed, `stats export --charts` runs it on your machine to draw charts. Questions or problems go to the [issue tracker](https://github.com/m4bwav/everscout/issues).
 
 ## Prior art
 

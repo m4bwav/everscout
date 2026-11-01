@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.7.1 · 2026-11-01
+
+- because: friction recorded over four distilled books (skills/everscout-library/TESTS.md T-20261031-4, T-20261101-2, T-20261101-3).
+- `lit lint` and `lit distill` read the first word of a change's status, so `applied (v1.2, PR #3)` passes. `lit distill` writes applied `note` rows (an edition line, reading caveats) into the book note instead of listing them as changes. `EVERSCOUT_BEATS` (path list) is searched before the configured beat dirs, so `lit` in a worktree edits that worktree's beats. 81 offline tests (2 new).
+
 ## 0.7.0 · 2026-10-30
 
 - because: user request (keep up with each beat's literature: the most important books of all time, the most important recent ones, the latest published; integrate a provided book into the knowledge base and attached skills). Evidence: `ai-docs/research/2026-10-30-beat-literature.md`.
