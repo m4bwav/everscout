@@ -183,3 +183,7 @@ Mark approved all 20 changes. game-design beat committed to indie-ai-scout (e115
 ## [2026-10-31] check | continue prompt: still waiting on approval
 
 lit due: all 8 beats current. The Gamer's Brain's 20 proposed changes still await Mark's yes. No code changes.
+
+## [2026-10-31] check | Gamer's Brain approval already applied
+
+Mark said yes to all; a parallel session had already applied the 20 changes (#42, ludowright v0.1.11, game-juice v1.3.1, indie-ai-scout 52b3cf0, book note). The entry above saying "still waiting" is out of date. Added the missing data-folder log line. Next: Mark's next book pick.
