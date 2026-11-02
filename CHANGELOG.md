@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.8.6 · 2026-11-01
+
+- because: the open item from the Co-Intelligence and Making Music runs (T-20261101-14: `lit pick` hid DeSantis as read elsewhere while downtempo still listed it `lead`), and the Color & Light run (T-20261101-15: a scanned PDF stopped the previous session at `lit ingest`).
+- `lit pick` ends with `read elsewhere, still lead|have in <beat> <tier>: <title>` for a beat row whose title the read index names (a two-word title also needs an author's name within 150 characters). The no-text refusal in `lit ingest` names readwright 0.9's `rw.py ocr FILE`. 91 offline tests (1 new).
+
 ## 0.8.5 · 2026-11-01
 
 - because: friction from the Kenworthy distill (skills/everscout-library/TESTS.md T-20261101-12): on a US evening `lit ingest` dated the learnings the next day, since it wrote the UTC date while `lit due` reads the local calendar.

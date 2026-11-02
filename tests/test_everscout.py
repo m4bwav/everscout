@@ -1714,6 +1714,21 @@ class LiteratureTests(WorkspaceTest):
         self.assertTrue(out.splitlines()[0].startswith("Ann Writer"))
         self.assertNotIn("Big River", out)
 
+    def test_pick_flags_a_lead_row_read_elsewhere(self):   # DeSantis hid as read while downtempo still listed it `lead`
+        for n, (title, author) in enumerate((("Making Music Strategies", "Dennis Santis"), ("Pixel Logic", "Michael Azzi"),
+                                             ("Deep Learning", "Ian Goodfellow")), 1):
+            self.add("--tier", "canon", "--title", title, "--authors", author, "--year", "2015", "--id", f"OL{n}W",
+                     "--why", "w", "--evidence", "https://example.org/s")
+        folder, idx = os.path.join(self.tmp, "shelf"), os.path.join(self.tmp, "index.md")
+        os.makedirs(folder)
+        open(idx, "w", encoding="utf-8").write("Read *Making Music Strategies* in October. Pixel Logic by Azzi too. "
+                                               "Deep learning comes up in every chapter.\n")
+        code, out, _ = self.run_cli("lit", "pick", "--dir", folder, "--read-index", idx)
+        self.assertEqual(code, 0, out)
+        self.assertIn("still `lead` in test-beat canon: Making Music Strategies", out)
+        self.assertIn("Pixel Logic", out)
+        self.assertNotIn("Deep Learning", out, "a short title with no author nearby is not a hit")
+
     def test_short_title_needs_a_rare_word_nearby(self):
         text = "pixel logic by azzi was read " + "deep learning hands on python " * 12
         self.assertEqual(E.lit_short_title_hit("pixel logic michael azzi".split(), text), "pixel logic")

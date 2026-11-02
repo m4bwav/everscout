@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.8.5"
+VERSION = "0.8.6"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3574,7 +3574,8 @@ def cmd_lit_ingest(a):
         note("readwright not found (github.com/m4bwav/readwright, or set EVERSCOUT_READWRIGHT): outline the book with your own reader")
     m = re.search(r"^words:\s*(\d+)\s*$", info, re.M)
     if m and int(m.group(1)) == 0 and not a.force:
-        fail("readwright found no text in this file (a scan without a text layer?); OCR it first, or pass --force to set it up anyway")
+        fail("readwright found no text in this file (a scan without a text layer?); OCR it first (readwright 0.9+: `rw.py ocr FILE`, "
+             "then ingest again), or pass --force to set it up anyway")
     title = a.title or (re.search(r"^title:\s*(.+)$", info, re.M | re.I).group(1).strip() if re.search(r"^title:\s*(.+)$", info, re.M | re.I)
                         else os.path.splitext(os.path.basename(path))[0])
     meta, tiers, searches = lit_load(b) if os.path.exists(lit_path(b)) else ({}, {t: [] for t in LIT_TIERS}, [])
@@ -3633,7 +3634,7 @@ def cmd_lit_pick(a):
                     t = lit_norm_title(r["title"])
                     names = [w for w in re.sub(r"[^a-z ]+", " ", (r.get("authors") or "").lower()).split() if len(w) > 3]
                     if len(t) >= 8:
-                        listed.append((t, names, slug, tier, r["status"]))
+                        listed.append((t, names, slug, tier, r["status"], r["title"]))
     # other records of books already read (a notes index, say): a file whose name appears there counts as read
     idx = []
     for p in (a.read_index or []) + list(cfg.get("books_read_index") or []):
@@ -3641,6 +3642,16 @@ def cmd_lit_pick(a):
         idx += sorted(glob.glob(os.path.join(p, "**", "*.md"), recursive=True)) if os.path.isdir(p) else [p] if os.path.isfile(p) else []
     elsewhere = " ".join(read(p) for p in idx)
     elsewhere_keys = re.sub(r"[^a-z0-9]+", " ", elsewhere.lower())
+    # a beat row still `lead` or `have` for a book the other records show was read: distil it from that read
+    stale, padded = [], f" {elsewhere_keys} "
+    for t, names, slug, tier, status, title in listed:
+        if status not in ("lead", "have") or f" {t} " not in padded:
+            continue
+        # a short title also needs an author's name close by, as for file names
+        near = [padded[max(0, m.start() - 150):m.end() + 150] for m in re.finditer(re.escape(f" {t} "), padded)]
+        if len(t.split()) <= 2 and not any(f" {n} " in w for w in near for n in names):
+            continue
+        stale.append((slug, tier, status, title))
     out = []
     for name in sorted(os.listdir(folder)):
         if not name.lower().endswith(LIT_BOOK_EXTS):
@@ -3673,6 +3684,8 @@ def cmd_lit_pick(a):
     maybe = sum(1 for r in out if r["maybe_read"])
     print(f"{len(out) - maybe} unread ({sum(1 for r in out if r['listed'] and not r['maybe_read'])} listed by a beat), "
           f"{maybe} maybe read elsewhere{'' if a.all else ' (--all shows them)'}; check the topic fits a beat before ingesting")
+    for slug, tier, status, title in stale:
+        print(f"read elsewhere, still `{status}` in {slug} {tier}: {title} (distil it from that read, or ingest the file)")
 
 
 def lit_short_title_hit(words, text, near=150):
