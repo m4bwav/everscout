@@ -1,4 +1,5 @@
 <!-- Copy of kb/literature.md, written by scripts/sync-skill-refs.py. Edit kb/literature.md and run the script. -->
+<!-- Copy of kb/literature.md, written by scripts/sync-skill-refs.py. Edit kb/literature.md and run the script. -->
 # Literature: the books of a beat
 
 How a beat keeps up with its books, and how a book the user provides becomes knowledge in the beat and in the skills the beat feeds. The everscout-library skill follows this file. Formats are in [SCHEMA.md](SCHEMA.md); the CLI is `everscout.py lit`.
