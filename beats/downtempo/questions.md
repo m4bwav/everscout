@@ -34,6 +34,8 @@ One observation about the sound, then one or two questions. Producers answer gea
 - [composition] What tempo and key, and how did the track start?
 - [composition] How do you keep a slow track moving over five minutes?
 - [composition] Which records were you using as references?
+- [composition, space] What fills the space between the notes here, silence or a bed of noise and ambience, and how did you choose?
+- [composition, form] With no big drop, how does the track change from one section to the next?
 
 ## Release
 
