@@ -21,3 +21,4 @@ Written by everscout-report in study mode after the person approves this outline
 - A central bank watcher at a bank or fund.
 - An academic macroeconomist.
 - A development economist looking from outside the rich economies.
+- An industrial-organisation economist watching market power, platforms and antitrust.

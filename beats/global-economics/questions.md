@@ -13,6 +13,7 @@ Two or three seeds from different categories. Economists answer data and method 
 - [data] Which vintage is this, before or after the latest revision?
 - [data] How did you deflate it: CPI, PCE or the GDP deflator?
 - [data] Why that base year or starting point?
+- [data] Which series separates platform drivers from taxi and livery work (CPS Contingent Worker Supplement, 1099 counts)?
 
 ## Method
 
@@ -28,6 +29,8 @@ Two or three seeds from different categories. Economists answer data and method 
 - [interpretation] How much of the move is composition?
 - [interpretation] Is the tariff pass-through measured at the border or at retail?
 - [interpretation] How does it compare across countries, given the definitions differ?
+- [interpretation] Is the fine compared with the firm's revenue or with the gain from the violation?
+- [interpretation] Is the gig pay figure net of vehicle, fuel and insurance costs?
 
 ## Tools and craft
 
@@ -40,3 +43,4 @@ Two or three seeds from different categories. Economists answer data and method 
 - [research] Is the paper a working paper or through review, and is there a replication package?
 - [research] What surprised you most in the data?
 - [research] Who else is working on this that I should read?
+- [research] Is the concentration measure national or global, and by sales or by users?
