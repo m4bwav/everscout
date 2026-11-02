@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.9.5"
+VERSION = "0.9.6"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3305,6 +3305,23 @@ def lit_find(tiers, ref):
 
 # PDF producer or template titles that name no book ("ISO 15930 ... (PDF/X)", "Microsoft Word - draft.doc")
 LIT_JUNK_TITLE = re.compile(r"^(untitled|iso \d|pdf/?x|microsoft word|adobe |document\d*$|\S+\.(docx?|indd|qxd|pdf)$)|electronic document file|prepress", re.I)
+LIT_RELEASE_PUBLISHER = re.compile(r"^(oxford university press( usa)?|cambridge university press|princeton university press|"
+                                   r"mit press|wiley|packt( publishing)?|o ?reilly|springer|apress|manning|no starch( press)?|"
+                                   r"mcgraw hill|pearson|routledge|addison wesley|elsevier|crc press) ", re.I)
+LIT_RELEASE_TAIL = re.compile(r"( (jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]* (19|20)\d\d| (19|20)\d\d| retail| ebook| repack)+$", re.I)
+
+
+def lit_title_from_stem(stem):
+    """A readable title from a release-style file name ("0198237901.Oxford.University.Press.USA.Epistemic.Injustice...Aug.2007"):
+    dots and underscores become spaces, then a leading ISBN, a leading publisher and a trailing month and year go.
+    Other file names come back unchanged."""
+    if " " in stem or stem.count(".") + stem.count("_") < 3:
+        return stem
+    t = re.sub(r"[._]+", " ", re.sub(r"-[A-Za-z]{1,10}$", "", stem)).strip()   # "...EBOOK-kE": a release group's tag
+    t = re.sub(r"^(97[89])?\d{9}[\dXx] ", "", t)
+    t = LIT_RELEASE_PUBLISHER.sub("", t)
+    t = LIT_RELEASE_TAIL.sub("", t).strip()
+    return t or stem
 
 
 def lit_find_in_name(tiers, name):
@@ -3635,10 +3652,10 @@ def cmd_lit_ingest(a):
     if m and 0 < int(m.group(1)) < LIT_SHORT_BOOK_WORDS and toc and not LIT_APPARATUS.search(toc):
         note(f"short book ({int(m.group(1)):,} words) with no notes, sources or index in its outline: check who wrote and published it "
              "and spot-check three facts before distilling (kb/literature.md step 1a); a book that fails is `skip`")
-    stem =os.path.splitext(os.path.basename(path))[0]
+    stem = os.path.splitext(os.path.basename(path))[0]
     mt = re.search(r"^title:\s*(.+)$", info, re.M | re.I)
     mt = mt.group(1).strip() if mt else ""
-    title = a.title or (stem if not mt or LIT_JUNK_TITLE.search(mt) else mt)
+    title = a.title or (lit_title_from_stem(stem) if not mt or LIT_JUNK_TITLE.search(mt) else mt)
     meta, tiers, searches = lit_load(b) if os.path.exists(lit_path(b)) else ({}, {t: [] for t in LIT_TIERS}, [])
     tier, row = lit_find(tiers, a.id or title)
     if not row and not a.id:
@@ -3673,8 +3690,9 @@ LIT_BOOK_EXTS = (".pdf", ".epub", ".mobi", ".azw3", ".azw", ".djvu", ".txt")
 
 def lit_file_key(path):
     stem = os.path.splitext(os.path.basename(path.replace("\\", "/")))[0]
-    # "GenerativeDeepLearning" is three words
-    stem = re.sub(r"(?<=[a-z])(?=[A-Z])", " ", stem)
+    # "GenerativeDeepLearning" is three words; a name with separators keeps its coined words ("FilmCraft Cinematography")
+    if not re.search(r"[\s._-]", stem):
+        stem = re.sub(r"(?<=[a-z])(?=[A-Z])", " ", stem)
     return re.sub(r"[^a-z0-9]+", " ", stem.lower()).strip()
 
 

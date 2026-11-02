@@ -40,6 +40,9 @@ Two to four seeds from at least two categories. Lead with a short, true thanks f
 - [hiring] In promotion or level calibration, what evidence counts for incidents someone prevented, against incidents they fixed?
 - [hiring, ai] If your screen or AI ranker uses signals from outside the CV (GitHub activity, open-source work, side projects), have you measured who passes by group and by whether they have care duties?
 - [hiring] Who records why each raise or promotion was given, and does anyone review those decisions as a set?
+- [hiring] When you suspect a rating reflects a candidate's accent, style or background more than the answer, what do you do: re-score, hold the verdict, or ask for a work sample or a second interviewer?
+- [hiring] Which résumé signals make a candidate feel credible at once (an employer, a school, a GitHub profile), and how often has that first impression turned out wrong?
+- [hiring, ai] For an AI screener or interviewer, whose way of speaking was it taught to treat as clear, and who checks whether a weak answer is a gap in the rubric rather than in the candidate?
 
 ## Market and data
 
@@ -62,3 +65,4 @@ Two to four seeds from at least two categories. Lead with a short, true thanks f
 
 - [outcome] What did the offer look like against what you expected, and did you negotiate?
 - [outcome] Looking back, what mattered most in getting the job?
+- [outcome] Was there an interview that felt unfair before you had a word for why, and what term later named it?
