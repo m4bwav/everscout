@@ -66,3 +66,8 @@ Two or three seeds from different categories. Name the shot you mean ("the rooft
 - [craft] Does your model tint a subject's edges with the surrounding colour, or do characters look pasted onto the plate? What fixes it: prompt, relight pass or comp?
 - [craft] Does "backlit" skin give red subsurface glow at the ears and fingers, or an orange cast over the whole face?
 - [craft] In a high-contrast shot, which end do you expose for, and does the model respect "blown window" or "silhouetted foreground"?
+
+## Visual structure (The Visual Story, 2026-11-01)
+
+- [craft] Does your model keep flat staging (frontal planes, parallel movement) or deep staging (figures near and far, movement toward the lens) when the prompt asks for it, and does a pan read flatter than a dolly in its output?
+- [craft] Did you plan the intensity of a sequence (where contrast peaks, where it calms) before generating the shots, and how did you carry that plan into the prompts?

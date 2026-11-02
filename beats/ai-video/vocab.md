@@ -175,6 +175,10 @@ Add a new model version as its own line when people argue about the difference (
 - coverage: coverage, triangle system, master shot, protection shot
 - axis-of-action: 180-degree rule, crossing the line, axis of action
 - clearing-the-frame: clearing the frame, clean entrance, clean exit
+- visual-structure: visual structure, visual components, Bruce Block
+- contrast-affinity: contrast and affinity, visual intensity
+- story-intensity: story intensity graph, intensity curve
+- space-type: deep space, flat space, limited space, ambiguous space
 
 - flow-matching: flow matching, rectified flow
 - dit: diffusion transformer, DiT

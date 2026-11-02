@@ -1679,6 +1679,18 @@ class LiteratureTests(WorkspaceTest):
         lp = os.path.join(E.data_dir(self.cfg(), "test-beat"), "books", "the-classic", "learnings.md")
         self.assertIn("date: 2026-11-01", open(lp, encoding="utf-8").read())
 
+    def test_ingest_ignores_junk_pdf_title_and_finds_row_by_file_name(self):
+        self.add("--tier", "canon", "--title", "The Visual Story", "--year", "2021", "--id", "OL7W", "--why", "w", "--evidence", "https://example.org/s")
+        book = os.path.join(self.tmp, "Bruce Block - The visual story _ creating structure (2021).pdf")
+        open(book, "wb").write(b"%PDF-1.4")
+        rw = os.path.join(self.tmp, "rw.py")
+        open(rw, "w", encoding="utf-8").write("print('format: pdf\\ntitle: ISO 15930 - Electronic document file format (PDF/X)\\nwords: 900')\n")
+        with mock.patch.object(E, "find_readwright", return_value=rw):
+            code, out, err = self.run_cli("lit", "ingest", book, "--beat", "test-beat")
+        self.assertEqual(code, 0, err)
+        self.assertIn("set to reading", out)
+        self.assertTrue(os.path.isdir(os.path.join(E.data_dir(self.cfg(), "test-beat"), "books", "the-visual-story")))
+
     def test_ingest_refuses_file_without_text(self):
         book = os.path.join(self.tmp, "scan.pdf")
         open(book, "wb").write(b"%PDF-1.4")
