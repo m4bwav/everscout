@@ -22,6 +22,7 @@ Two or three seeds from different categories. Economists answer data and method 
 - [method] How did you handle the pandemic-era outliers?
 - [method] Does the relationship hold with a different sample window?
 - [method] What is the identification here: a difference in differences, an event study?
+- [method] Is the growth figure per person, and is it annualised from one quarter?
 
 ## Interpretation
 
@@ -34,6 +35,8 @@ Two or three seeds from different categories. Economists answer data and method 
 - [interpretation] How much of the reported AI cloud revenue is the investor's own credits coming back?
 - [interpretation] What useful life is assumed for the GPUs, and what do earnings look like at three years?
 - [interpretation] Are the firms that cut staff for AI now rehiring?
+- [interpretation] How much of the decision was already priced in, and what was the surprise?
+- [interpretation] Did the jobless rate fall because people found work or because they stopped looking?
 
 ## Tools and craft
 

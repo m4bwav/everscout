@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.9.4"
+VERSION = "0.9.5"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3672,7 +3672,10 @@ LIT_BOOK_EXTS = (".pdf", ".epub", ".mobi", ".azw3", ".azw", ".djvu", ".txt")
 
 
 def lit_file_key(path):
-    return re.sub(r"[^a-z0-9]+", " ", os.path.splitext(os.path.basename(path.replace("\\", "/")))[0].lower()).strip()
+    stem = os.path.splitext(os.path.basename(path.replace("\\", "/")))[0]
+    # "GenerativeDeepLearning" is three words
+    stem = re.sub(r"(?<=[a-z])(?=[A-Z])", " ", stem)
+    return re.sub(r"[^a-z0-9]+", " ", stem.lower()).strip()
 
 
 LIT_WISHLIST = re.compile(r"reading[-_ ]?list|to[-_ ]?read|wish[-_ ]?list", re.I)
