@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.9.1"
+VERSION = "0.9.2"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3714,10 +3714,8 @@ def cmd_lit_pick(a):
             continue
         stale.append((slug, tier, status, title))
     out = []
-    for name in sorted(os.listdir(folder)):
-        if not name.lower().endswith(LIT_BOOK_EXTS):
-            continue
-        key = lit_file_key(name)
+    for name in lit_book_files(folder):
+        key = lit_file_key(os.path.basename(name))
         if key in read_keys:
             continue
         if len(key) >= 8 and f" {key} " in f" {elsewhere_keys} ":
@@ -3747,6 +3745,20 @@ def cmd_lit_pick(a):
           f"{maybe} maybe read elsewhere{'' if a.all else ' (--all shows them)'}; check the topic fits a beat before ingesting")
     for slug, tier, status, title in stale:
         print(f"read elsewhere, still `{status}` in {slug} {tier}: {title} (distil it from that read, or ingest the file)")
+
+
+def lit_book_files(folder, depth=2):
+    """Book files in `folder` and its subfolders down to `depth` levels ("Title/Title.epub"), as paths relative to it."""
+    out = []
+    for root, dirs, files in os.walk(folder):
+        rel = os.path.relpath(root, folder)
+        level = 0 if rel == "." else rel.count(os.sep) + 1
+        if level >= depth:
+            dirs[:] = []
+        for f in files:
+            if f.lower().endswith(LIT_BOOK_EXTS):
+                out.append(f if rel == "." else os.path.join(rel, f).replace(os.sep, "/"))
+    return sorted(out, key=str.lower)
 
 
 def lit_short_title_hit(words, text, near=150):

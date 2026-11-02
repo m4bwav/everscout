@@ -2,6 +2,10 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.9.2 · 2026-11-02
+
+- `lit pick` lists book files in subfolders (two levels), so a beat-listed book saved as `Title/Title.epub` is found (skills/everscout-library/TESTS.md T-20261102-3).
+
 ## 0.9.0 · 2026-11-02
 
 - because: the Inside Palantir ingest (skills/everscout-library/TESTS.md T-20261102-1): a 14,000-word self-published book with no notes got the same treatment as a sourced history, and spot checks found misdated lawsuits and a Senate hearing that did not happen.

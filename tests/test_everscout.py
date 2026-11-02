@@ -1773,6 +1773,19 @@ class LiteratureTests(WorkspaceTest):
         self.assertTrue(out.splitlines()[0].startswith("Ann Writer"))
         self.assertNotIn("Big River", out)
 
+    def test_pick_looks_in_subfolders(self):   # "Prompt Engineering for LLMs/Prompt Engineering for LLMs.epub" was missed 2026-11-02
+        self.add("--tier", "recent", "--title", "Prompt Engineering for LLMs", "--authors", "John Berryman", "--year", "2024", "--id", "OL1W",
+                 "--why", "w", "--evidence", "https://example.org/s")
+        folder = os.path.join(self.tmp, "shelf2")
+        os.makedirs(os.path.join(folder, "Prompt Engineering for LLMs", "deep", "deeper"))
+        open(os.path.join(folder, "Prompt Engineering for LLMs", "Prompt Engineering for LLMs.epub"), "w").write("x")
+        open(os.path.join(folder, "Prompt Engineering for LLMs", "deep", "deeper", "Too Deep Book.pdf"), "w").write("x")
+        code, out, _ = self.run_cli("lit", "pick", "--dir", folder, "--json")
+        self.assertEqual(code, 0, out)
+        got = {r["file"]: r for r in json.loads(out)}
+        self.assertEqual(set(got), {"Prompt Engineering for LLMs/Prompt Engineering for LLMs.epub"})
+        self.assertEqual(got["Prompt Engineering for LLMs/Prompt Engineering for LLMs.epub"]["listed"][0]["status"], "lead")
+
     def test_pick_flags_a_lead_row_read_elsewhere(self):   # DeSantis hid as read while downtempo still listed it `lead`
         for n, (title, author) in enumerate((("Making Music Strategies", "Dennis Santis"), ("Pixel Logic", "Michael Azzi"),
                                              ("Deep Learning", "Ian Goodfellow")), 1):

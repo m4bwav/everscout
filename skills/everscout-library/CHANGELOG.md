@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`.
 
+### C-20261102-2 · 2026-11-02 · lit pick looks in subfolders
+- because: T-20261102-3 (Mark's pick, Prompt Engineering for LLMs, sat in a folder of its own in the books folder; `lit pick` said no beat-listed file was unread)
+- files: scripts/everscout.py (`lit_book_files`, two levels deep, relative paths); 1 test. Plugin 0.9.2.
+
 ### C-20261102-1 · 2026-11-02 · lit add links an already-ingested book
 - because: T-20261102-2 (`lit ingest` found no row, `lit add` then left it `lead` and book.md's book_id `-`; fixed by hand)
 - files: scripts/everscout.py (`lit_link_ingested`, ingest message); 1 test. Plugin 0.9.1; `VERSION` in everscout.py had lagged at 0.8.9 and now matches plugin.json.

@@ -116,3 +116,7 @@ Agent auto-pick after every `lead` book in the folder proved already read; the f
 ## T-20261101-4: AI for Games, auto-pick, distilled end to end
 
 Agent auto-pick (no book named in the kickoff). Canon row (SDU DM810, Wrexham GME706), `lit ingest`, three part readers, 25 principles, 12 changes, `lit lint` 0, all approved and applied: beat vocab and questions (indie-ai-scout PR #1), ludowright 0.1.15 (PR #22), unity-agent 1.2.6 (PR #23), roblox-agent 0.1.9 (PR #22), book note; `lit distill`, tally, index. Friction fixed: readwright 0.3.0 (PR #6) prints grep offsets, adds `read --at-para` and flags giant PDF sections in `toc`. Pass.
+
+### T-20261102-3: Prompt Engineering for LLMs, Mark's pick, distilled end to end
+
+The session auto-picked Phoenix and Taylor, *Prompt Engineering for Generative AI* (ingested, row `reading`, not read further) before Mark named Berryman and Ziegler, *Prompt Engineering for LLMs* (O'Reilly 2024, EPUB, 89k words), a `lead` row in token-saving recent. `lit pick` had missed it: the file sat in a subfolder (fixed in 0.9.2). `lit ingest --id OL38627018W` set the row `reading`; 14 sections read with `rw.py read --max-chars`; 15 principles, 4 changes, `lit lint` 0 on first try; applied: beat vocab and questions (indie-ai-scout PR #7, #8), tokenwright 0.2.13 (PR #41; habits.md budget forced folding two rows into levers.md), note. `lit distill` wrote the book note. readwright 0.10.1 (PR #19) fixed the Phoenix PDF's split hyphens and running heads. Pass.
