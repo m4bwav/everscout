@@ -1747,6 +1747,12 @@ class LiteratureTests(WorkspaceTest):
         errs, _, _ = E.lit_learnings_problems(E.get_beat(self.cfg(), "test-beat"), text)
         self.assertTrue([e for e in errs if "citation" in e])
 
+    def test_toc_match_tolerates_ocr_symbols(self):
+        # the Murch EPUB's own OCR titles a section "Seeing Around the €dge of the Frame"
+        self.assertTrue(E.lit_toc_match("seeing around the €dge of the frame", "see (seeing around the edge of the frame)"))
+        self.assertTrue(E.lit_toc_match("don't worry", "(don't worry, it's only a movie)"))
+        self.assertFalse(E.lit_toc_match("seeing around the €dge of the frame", "seeing around the frame"))
+
     def test_status_notes_and_note_rows(self):
         self.add("--tier", "canon", "--title", "The Classic", "--year", "1990", "--id", "OL9W", "--why", "w", "--evidence", "https://example.org/s")
         book = os.path.join(self.tmp, "classic.txt")

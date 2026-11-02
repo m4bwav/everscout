@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.8.6"
+VERSION = "0.8.7"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3717,6 +3717,12 @@ def lit_toc_titles(d):
     return {t for t in titles if len(t) >= 4}
 
 
+def lit_toc_match(title, text):
+    """True when a toc title appears in text; a symbol in the title (OCR misreads like `€dge`) matches any one character."""
+    pat = "".join(re.escape(c) if c.isascii() and (c.isalnum() or c in " '-,.:?!&") else "." for c in title)
+    return re.search(pat, text) is not None
+
+
 def lit_learnings_problems(b, text, toc_titles=()):
     """(errors, warnings, changes) for a learnings.md. A parenthesis naming a section title from toc.txt counts as a citation."""
     errs, warns = [], []
@@ -3726,7 +3732,7 @@ def lit_learnings_problems(b, text, toc_titles=()):
     if not principles or any("TODO" in l for l in principles):
         errs.append("Principles: none written yet, or a TODO left")
     for l in principles:
-        if not LIT_CITE.search(l) and not re.search(r"\(\s*\d+(\.\d+)+", l) and not any(t in g.lower() for g in re.findall(r"\(([^()]*)\)", l) for t in toc_titles):
+        if not LIT_CITE.search(l) and not re.search(r"\(\s*\d+(\.\d+)+", l) and not any(lit_toc_match(t, g.lower()) for g in re.findall(r"\(([^()]*)\)", l) for t in toc_titles):
             errs.append(f"principle without a citation (ch., p., section): {l.strip()[:80]}")
     for q in re.findall(r"[\"“]([^\"”]+)[\"”]", body):
         if len(q.split()) > LIT_MAX_QUOTE_WORDS:

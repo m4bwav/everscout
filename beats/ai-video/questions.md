@@ -35,6 +35,10 @@ Two or three seeds from different categories. Name the shot you mean ("the rooft
 - [craft] How did you handle pacing with the clip-length limits?
 - [craft] Is there any real footage or compositing in there?
 - [craft] What was the hardest shot to get, and why?
+- [craft] Where do your cuts fall: on a look, a reaction or the action? Did the generated motion match across them? (Murch)
+- [craft] Did you check the rhythm with a picture-only cut before adding sound? (Murch)
+- [craft] Whose point of view does each scene follow, and did that change how you prompted the shots? (Katz)
+- [craft] How did you hide the seam between two generated clips: a cleared frame, a foreground wipe, a short dissolve? (Katz)
 
 ## Sound
 

@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.8.7 · 2026-11-01
+
+- because: the Murch distill (skills/everscout-library/TESTS.md T-20261101-16): the EPUB's own OCR titles a section `Seeing Around the €dge of the Frame`, so `lit lint` refused the correct citation `(Seeing Around the Edge of the Frame)`.
+- `lit lint` matches toc section names with any non-ASCII symbol in the title standing for one character. 92 offline tests (1 new).
+
 ## 0.8.6 · 2026-11-01
 
 - because: the open item from the Co-Intelligence and Making Music runs (T-20261101-14: `lit pick` hid DeSantis as read elsewhere while downtempo still listed it `lead`), and the Color & Light run (T-20261101-15: a scanned PDF stopped the previous session at `lit ingest`).
