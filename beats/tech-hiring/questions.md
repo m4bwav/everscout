@@ -24,6 +24,8 @@ Two to four seeds from at least two categories. Lead with a short, true thanks f
 - [interviews] How did you prepare, and how much time did preparation take a week?
 - [interviews] Did any company tell you why you were turned down, and was it useful?
 - [interviews, ai] Did any interview happen in person because of cheating worries, and how did that change the day?
+- [interviews] Did you ever play down something you had done because claiming it felt like bragging, and did it seem to cost you?
+- [interviews] When you pushed back on an interviewer in a design round, did it read as engagement or as attitude?
 
 ## Hiring side (managers and recruiters)
 
@@ -34,6 +36,8 @@ Two to four seeds from at least two categories. Lead with a short, true thanks f
 - [hiring] What signal do you look for in a junior candidate now that you did not look for three years ago?
 - [hiring] How do you tell a real candidate from a fake or proxy one?
 - [hiring] What would you tell candidates about referrals: do they still move the needle?
+- [hiring] When a candidate says "we built X", how does your loop find out what they did themselves, and does it work as well for modest talkers?
+- [hiring] In promotion or level calibration, what evidence counts for incidents someone prevented, against incidents they fixed?
 
 ## Market and data
 
