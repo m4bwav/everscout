@@ -16,8 +16,8 @@ The most important books of all time for this subject (yearly recheck).
 
 | title | authors | year | id | why | evidence | status |
 |---|---|---|---|---|---|---|
-| In the Blink of an Eye | Walter Murch | 1992 | OL2973051W | It gives the rules for where a cut works, which AI clip-stitching needs most. | https://www.videomaker.com/how-to/directing/film-history/these-are-the-best-filmmaking-books-you-need-to-read/ | lead |
-| Film Directing Shot by Shot | Steven D. Katz | 1991 | OL4307075W | Storyboard and shot planning maps directly onto keyframe and prompt planning. | https://nofilmschool.com/film-school-books | lead |
+| In the Blink of an Eye | Walter Murch | 1992 | OL2973051W | It gives the rules for where a cut works, which AI clip-stitching needs most. | https://www.videomaker.com/how-to/directing/film-history/these-are-the-best-filmmaking-books-you-need-to-read/ | distilled |
+| Film Directing Shot by Shot | Steven D. Katz | 1991 | OL4307075W | Storyboard and shot planning maps directly onto keyframe and prompt planning. | https://nofilmschool.com/film-school-books | distilled |
 | The Five C's of Cinematography | Joseph V. Mascelli | 1965 | isbn:9781879505414 | It is the standard primer on angles, continuity and cutting that keeps generated shots coherent. | https://filmlifestyle.com/best-books-for-cinematographers/ | lead |
 | The Visual Story | Bruce Block | 2001 | OL9292024W | It teaches how space, tone, colour and rhythm carry a story, which helps when judging generated looks. | https://www.readthistwice.com/lists/best-filmmaking-books | lead |
 | Story | Robert McKee | 1997 | OL273896W | It is the standard screenwriting text behind most short-film structure. | https://evercast.us/blog/best-books-on-filmmaking | lead |

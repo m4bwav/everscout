@@ -169,6 +169,12 @@ Add a new model version as its own line when people argue about the difference (
 - audio-post: separate audio pass, mix in post, audio in post, AudioRefine
 - sampler-choice: sampler, scheduler, er_sde, beta57, res_multistep, euler simple
 - real-time: real-time generation, live video, realtime video, streaming generation
+- rule-of-six: rule of six, Murch's rule of six
+- jump-cut: jump cut, jump cuts
+- cut-on-the-look: cut on the look, cut to the reaction, cut on a blink
+- coverage: coverage, triangle system, master shot, protection shot
+- axis-of-action: 180-degree rule, crossing the line, axis of action
+- clearing-the-frame: clearing the frame, clean entrance, clean exit
 
 - flow-matching: flow matching, rectified flow
 - dit: diffusion transformer, DiT
