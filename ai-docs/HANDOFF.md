@@ -1,6 +1,6 @@
 # Handoff
 
-Updated 2026-10-30 (0.7.0: beat literature, see the first section). Before that 2026-10-16 (Reddit discovery built, unreleased; see the first section). Before that 2026-10-15 (0.4.0: Reddit through Arctic Shift). Before that 2026-09-28 (first all-beats scan; 0.3.0: beat statistics built). Everscout 0.1.0 was built in one session from indie-ai-scout 0.3.1; 0.2.0 added the everscout-ask skill (interrogate a beat like a reporter) and the tech-hiring beat, the first built from scratch. Read [log.md](log.md) for what happened, `decisions/` for the architecture, and `research/` for the evidence.
+Updated 2026-11-02 (0.9.1, Invisible Women; 0.7.0: beat literature, see the first section). Before that 2026-10-16 (Reddit discovery built, unreleased; see the first section). Before that 2026-10-15 (0.4.0: Reddit through Arctic Shift). Before that 2026-09-28 (first all-beats scan; 0.3.0: beat statistics built). Everscout 0.1.0 was built in one session from indie-ai-scout 0.3.1; 0.2.0 added the everscout-ask skill (interrogate a beat like a reporter) and the tech-hiring beat, the first built from scratch. Read [log.md](log.md) for what happened, `decisions/` for the architecture, and `research/` for the evidence.
 
 
 ## 0.7.0 (2026-10-30): beat literature
@@ -37,6 +37,8 @@ Updated 2026-10-30 (0.7.0: beat literature, see the first section). Before that 
 - Lalka, The Venture Alchemists distilled into global-economics 2026-11-01 (auto-pick, T-20261101-20): the beat's first book; market-power, antitrust, gig-work, venture-capital and dual-class vocab, four question seeds. readwright 0.9.3 (PR #17): EPUB note references print as `[40]`; `outline` aliases `toc`. No open tool items. Next: `ES lit pick`, then the next book (global-economics still has no canon book read; the folder's business and accounting files fit no beat).
 
 - 0.9.0 released 2026-11-02 (PRs #67, #68; installed): `lit ingest` warns on short books with no notes or index; kb step 1a reliability check; `lit distill` keeps `skip`. Elsen, Inside Palantir (auto-pick, T-20261102-1) failed the check (misdated lawsuits, a Senate hearing with no record): row `skip`, nothing fed to the beat. Mark's tip (kb "Beyond books"): for how-to beats, tutorial sites, product and open-source forums hold know-how and undocumented options; add them to sources.md and searches.md. No open tool items. Next: `ES lit pick`, then the next book; run the reliability check first. global-economics still has no canon book read (all canon rows `lead`, none in the folder).
+
+- 0.9.1 released 2026-11-02 (PR #70; installed): `lit add` after `lit ingest` links the ingested folder (row `reading`, book_id and tier filled); `VERSION` in everscout.py now matches plugin.json. Criado Perez, Invisible Women distilled into tech-hiring (auto-pick, T-20261102-2): canon row, a "Bias in screening and evaluation" vocab section, four question seeds, a screening-auditor study perspective. readwright 0.10.0 (PR #18, installed): untocced notes files are titled `Endnotes: Chapter N`; `rw.py note FILE N --section S` prints the note a marker points at. No open tool items. Next: `ES lit pick`, then the next book (global-economics still has no canon book; tech-hiring now has three distilled).
 
 ## Reddit discovery built (2026-10-16, night), unreleased
 
