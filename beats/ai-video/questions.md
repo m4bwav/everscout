@@ -12,6 +12,8 @@ Two or three seeds from different categories. Name the shot you mean ("the rooft
 - [models, ai] Did you go image-to-video or text-to-video, and what made the keyframes?
 - [models, ai] Roughly how many generations did you roll per usable shot?
 - [models, ai] Local or cloud? If local, which GPU, and how long per clip?
+- [lora, ai] Did you rebuild the trainer's latent cache after changing clips or captions?
+- [wan, ai] Did you put the LoRA on both Wan 2.2 experts or only one?
 
 ## Consistency
 

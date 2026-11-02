@@ -203,6 +203,8 @@ Add a new model version as its own line when people argue about the difference (
 - combat: fight scene, combat, battle scene, sword fight, melee, battle
 - violence-limits: gore, blood, violence filter, content filter, moderation
 - crowds: crowd, extras, army, armies, cavalry
+- cfg-cost: CFG 1, guidance 1, no CFG, cfg distilled
+- wan-moe-experts: high noise expert, low noise expert, Wan 2.2 MoE, A14B experts, high noise model, low noise model
 
 ## Notes
 

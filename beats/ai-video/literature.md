@@ -42,6 +42,7 @@ Searched 2026-10-30 with `lit new`; most hits were self-published, reports or of
 |---|---|---|---|---|---|---|
 | AI-Generated Image and Video Synthesis | Arvind Mewada, Mohd. Aquib Ansari et al. | 2026 | OL45910443W | An academic Wiley volume on image and video synthesis methods; check its chapters on video models before reading. | https://openlibrary.org/works/OL45910443W | lead |
 | AI for Independent Filmmakers | Taylor Lee | 2025 | OL44592819W | One of the first books on AI in indie film practice, from a small press; unvetted. | https://openlibrary.org/works/OL44592819W | lead |
+| Video Generation with AI | Joseph Enochs | 2026 | isbn:9798341653344 | O'Reilly's intermediate-to-advanced text on video diffusion transformers, training and open toolchains (LTX-2, Wan, ComfyUI, InvokeAI); a major technical publisher, though no independent review yet. | https://www.oreilly.com/library/view/video-generation-with/9798341653337/ch01.html ; https://www.thenile.co.nz/books/joseph-enochs/video-generation-with-ai/9798341653344 | distilled |
 
 ## Searches
 
