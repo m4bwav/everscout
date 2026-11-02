@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.9.4 · 2026-11-02
+
+- `lit pick` flags a file whose name is a slug that dropped the small words of a title read elsewhere (`procedural-3d-modeling-geometry-blender` for *Procedural 3D Modeling Using Geometry Nodes in Blender*): four or more file-name words in order on one line of the read index, with few words between.
+- `lit lint` says when an over-long quote sits in a change row (change text needs no quote marks); the learnings template says so too.
+
 ## 0.9.3 · 2026-11-02
 
 - because: the Five C's run (skills/everscout-library/TESTS.md T-20261102-5).
