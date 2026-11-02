@@ -7,9 +7,9 @@ The history and guide the everscout-report skill writes in baseline mode, one ch
 | 00-overview.md | what the study is, a one-page summary, the eras table, reading order |
 | 01-eras.md | from the 2010s boom through the 2021-22 peak, the 2022-24 correction and layoffs, to the AI-era market of 2025-26 |
 | 02-demand-now.md | where demand is: postings indexes, seniority tilt, AI-titled roles, regions, remote share |
-| 03-entry-level.md | the new-grad and junior market: what changed, what routes still work |
-| 04-interviews.md | interview formats and how AI assistants changed them: LeetCode, take-homes, system design, in-person returns, AI-allowed rounds, cheating and detection |
-| 05-screening.md | how applications are screened: ATS, AI filters, referrals, application volume, ghost jobs, fake candidates |
+| 03-entry-level.md | the new-grad and junior market: what changed, what routes still work; the apprenticeship mechanism (seniors give AI the work juniors learned on; Mollick 2024, ch. 8) as a hypothesis to test against the search data |
+| 04-interviews.md | interview formats and how AI assistants changed them: LeetCode, take-homes, system design, in-person returns, AI-allowed rounds, cheating, detector false positives and the "AI allowed, defend your answer" format (Mollick 2024, ch. 7) and detection |
+| 05-screening.md | how applications are screened: ATS, AI filters, referrals, application volume, ghost jobs, fake candidates, reviewers over-relying on AI picks (Dell'Acqua 2021, via Mollick ch. 6) |
 | 06-search-playbook.md | the practical guide for a candidate, from the search reports with numbers |
 | 07-hiring-playbook.md | the practical guide for a hiring manager or recruiter |
 | 08-layoffs-and-rehiring.md | layoffs, boomerang hires, offshoring and GCCs, visas |
