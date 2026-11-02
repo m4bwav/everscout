@@ -1849,6 +1849,15 @@ class LiteratureTests(WorkspaceTest):
         # "python" sits near "deep learning" a dozen times: too common to count as the author
         self.assertEqual(E.lit_short_title_hit("deep learning with python".split(), text), "")
 
+    def test_slug_that_dropped_small_words_counts_as_maybe_read(self):
+        lines = ["| procedural 3d modeling using geometry nodes in blender packt 2023 | 3 3 |".split()]
+        words = "procedural 3d modeling geometry blender".split()
+        self.assertEqual(E.lit_gapped_title_hit(words, lines), "procedural 3d modeling geometry blender")
+        # words spread over a long line do not count, nor do short names
+        far = [("procedural " + "x " * 20 + "3d modeling geometry blender").split()]
+        self.assertEqual(E.lit_gapped_title_hit(words, far), "")
+        self.assertEqual(E.lit_gapped_title_hit("deep learning python".split(), lines), "")
+
     def test_lint_accepts_toc_section_names(self):
         d = os.path.join(self.tmp, "bk")
         os.makedirs(d)

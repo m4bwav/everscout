@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.9.3"
+VERSION = "0.9.4"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3594,7 +3594,7 @@ Run `everscout.py recall --beat {beat} --q "<topic>"` for each principle and not
 
 One row per proposed change. target: `beat/<file>` ({beat_files}), `note` (the book note `lit distill` writes),
 or `feed:<unit>/<path>` for a skill or plugin this beat feeds (beat.md `feeds`: {feeds}), or `plugin:<name>/<path>` for
-another plugin. status: proposed, applied, rejected.
+another plugin. status: proposed, applied, rejected. Write change text without quote marks: lint reads quoted text as a book quote.
 
 | target | change | principle | status |
 |---|---|---|---|
@@ -3732,6 +3732,7 @@ def cmd_lit_pick(a):
     idx = lit_read_index((a.read_index or []) + list(cfg.get("books_read_index") or []))
     elsewhere = " ".join(text for _, text in idx)
     elsewhere_keys = re.sub(r"[^a-z0-9]+", " ", elsewhere.lower())
+    elsewhere_lines = [re.sub(r"[^a-z0-9]+", " ", ln.lower()).split() for ln in elsewhere.splitlines()]
     # a beat row still `lead` or `have` for a book the other records show was read: distil it from that read
     stale, padded = [], f" {elsewhere_keys} "
     for t, names, slug, tier, status, title in listed:
@@ -3762,6 +3763,8 @@ def cmd_lit_pick(a):
                       for i in range(len(w) - 3) if f" {' '.join(w[i:i + 4])} " in f" {elsewhere_keys} "), "")
         # or a short title ("Pixel Logic") with another word of the file name, like the author, close by in the record
         maybe = maybe or lit_short_title_hit(words, elsewhere_keys)
+        # or a slug that dropped the small words ("procedural-3d-modeling-geometry-blender" for "Procedural 3D Modeling Using Geometry Nodes in Blender")
+        maybe = maybe or lit_gapped_title_hit(words, elsewhere_lines)
         out.append({"file": name, "listed": [{"beat": h[2], "tier": h[3], "status": h[4]} for h in hits], "maybe_read": maybe})
     out.sort(key=lambda r: (bool(r["maybe_read"]), not r["listed"], r["file"].lower()))
     if a.json:
@@ -3791,6 +3794,25 @@ def lit_book_files(folder, depth=2):
             if f.lower().endswith(LIT_BOOK_EXTS):
                 out.append(f if rel == "." else os.path.join(rel, f).replace(os.sep, "/"))
     return sorted(out, key=str.lower)
+
+
+def lit_gapped_title_hit(words, lines):
+    """The file-name words when four or more appear in order on one line of the records with at most as many other words between them, or ''."""
+    if len(words) < 4:
+        return ""
+    for toks in lines:
+        for start in (i for i, t in enumerate(toks) if t == words[0]):
+            j, gaps = start + 1, 0
+            for w in words[1:]:
+                while j < len(toks) and toks[j] != w and gaps <= len(words):
+                    j, gaps = j + 1, gaps + 1
+                if j >= len(toks) or toks[j] != w:
+                    break
+                j += 1
+            else:
+                if gaps <= len(words):
+                    return " ".join(words)
+    return ""
 
 
 def lit_short_title_hit(words, text, near=150):
@@ -3841,7 +3863,7 @@ def lit_learnings_problems(b, text, toc_titles=()):
             errs.append(f"principle without a citation (ch., p., section): {l.strip()[:80]}")
     for q in re.findall(r"[\"“]([^\"”]+)[\"”]", body):
         if len(q.split()) > LIT_MAX_QUOTE_WORDS:
-            errs.append(f"quote of {len(q.split())} words (max {LIT_MAX_QUOTE_WORDS}): paraphrase it: {q[:60]}...")
+            errs.append(f"quote of {len(q.split())} words (max {LIT_MAX_QUOTE_WORDS}): paraphrase it{' (change text needs no quote marks)' if q in secs.get('changes', '') else ''}: {q[:60]}...")
     changes = parse_table(secs.get("changes", ""))
     feeds = set(b.list_meta("feeds"))
     for c in changes:
