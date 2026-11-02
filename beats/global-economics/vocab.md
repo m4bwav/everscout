@@ -122,6 +122,11 @@ Indicator aliases include the common abbreviations; watch for false matches on s
 - gig-work: gig work, gig economy, independent contractor, worker classification, Prop 22, AB5
 - venture-capital: venture capital, VC funding, 2 and 20, carried interest, unicorn
 - dual-class-shares: dual-class shares, dual-class, multi-class shares
+- ai-bubble: AI bubble, circular deals, circular financing, vendor financing, AI capex boom
+- gpu-depreciation: GPU depreciation, useful life of GPUs, data center depreciation
+- surveillance-pricing: surveillance pricing, personalized pricing, algorithmic pricing
+- algorithmic-wage-discrimination: algorithmic wage discrimination, algorithmic wage setting
+- enshittification: enshittification
 
 ## Regions
 
