@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.9.2"
+VERSION = "0.9.3"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3628,8 +3628,10 @@ def cmd_lit_ingest(a):
         note("readwright not found (github.com/m4bwav/readwright, or set EVERSCOUT_READWRIGHT): outline the book with your own reader")
     m = re.search(r"^words:\s*(\d+)\s*$", info, re.M)
     if m and int(m.group(1)) == 0 and not a.force:
+        # readwright's note names the way in, such as a DjVu twin with OCR text beside an image-only EPUB
+        rn = re.search(r"^note:\s*(.+)$", info, re.M)
         fail("readwright found no text in this file (a scan without a text layer?); OCR it first (readwright 0.9+: `rw.py ocr FILE`, "
-             "then ingest again), or pass --force to set it up anyway")
+             "then ingest again), or pass --force to set it up anyway" + (f"\nreadwright: {rn.group(1).strip()}" if rn else ""))
     if m and 0 < int(m.group(1)) < LIT_SHORT_BOOK_WORDS and toc and not LIT_APPARATUS.search(toc):
         note(f"short book ({int(m.group(1)):,} words) with no notes, sources or index in its outline: check who wrote and published it "
              "and spot-check three facts before distilling (kb/literature.md step 1a); a book that fails is `skip`")
@@ -3673,6 +3675,36 @@ def lit_file_key(path):
     return re.sub(r"[^a-z0-9]+", " ", os.path.splitext(os.path.basename(path.replace("\\", "/")))[0].lower()).strip()
 
 
+LIT_WISHLIST = re.compile(r"reading[-_ ]?list|to[-_ ]?read|wish[-_ ]?list", re.I)
+
+
+def lit_read_index(entries):
+    """(path, text) of each .md record of books read. An entry is a file, a folder, or `<folder>@<git ref>`
+    to read a folder of a git checkout as that ref has it (a shared clone may sit on another branch)."""
+    out = []
+    for e in entries:
+        folder, ref = e.rsplit("@", 1) if "@" in e and os.path.isdir(expand(e.rsplit("@", 1)[0])) else (e, "")
+        p = expand(folder)
+        if ref:
+            top = subprocess.run(["git", "-C", p, "rev-parse", "--show-prefix"], capture_output=True, text=True)
+            ls = subprocess.run(["git", "-C", p, "ls-tree", "-r", "--name-only", "--full-name", ref, "--", "."], capture_output=True, text=True,
+                                encoding="utf-8", errors="replace")
+            if top.returncode or ls.returncode:
+                note(f"read index {e}: not readable as a git ref, skipped")
+                continue
+            for name in ls.stdout.splitlines():
+                if name.endswith(".md"):
+                    rel = name[len(top.stdout.strip()):] if name.startswith(top.stdout.strip()) else name
+                    show = subprocess.run(["git", "-C", p, "show", f"{ref}:{name}"], capture_output=True, text=True,
+                                          encoding="utf-8", errors="replace")
+                    out.append((os.path.join(p, rel), show.stdout))
+            continue
+        files = sorted(glob.glob(os.path.join(p, "**", "*.md"), recursive=True)) if os.path.isdir(p) else [p] if os.path.isfile(p) else []
+        out += [(f, read(f)) for f in files]
+    # a reading list names books to read, not books read
+    return [(f, t) for f, t in out if not LIT_WISHLIST.search(os.path.basename(f))]
+
+
 def cmd_lit_pick(a):
     """Book files in a folder that no beat has read yet, the ones a beat's literature lists first."""
     cfg = config()
@@ -3697,11 +3729,8 @@ def cmd_lit_pick(a):
                     if len(t) >= 8:
                         listed.append((t, names, slug, tier, r["status"], r["title"]))
     # other records of books already read (a notes index, say): a file whose name appears there counts as read
-    idx = []
-    for p in (a.read_index or []) + list(cfg.get("books_read_index") or []):
-        p = expand(p)
-        idx += sorted(glob.glob(os.path.join(p, "**", "*.md"), recursive=True)) if os.path.isdir(p) else [p] if os.path.isfile(p) else []
-    elsewhere = " ".join(read(p) for p in idx)
+    idx = lit_read_index((a.read_index or []) + list(cfg.get("books_read_index") or []))
+    elsewhere = " ".join(text for _, text in idx)
     elsewhere_keys = re.sub(r"[^a-z0-9]+", " ", elsewhere.lower())
     # a beat row still `lead` or `have` for a book the other records show was read: distil it from that read
     stale, padded = [], f" {elsewhere_keys} "
@@ -3712,7 +3741,8 @@ def cmd_lit_pick(a):
         near = [padded[max(0, m.start() - 150):m.end() + 150] for m in re.finditer(re.escape(f" {t} "), padded)]
         if len(t.split()) <= 2 and not any(f" {n} " in w for w in near for n in names):
             continue
-        stale.append((slug, tier, status, title))
+        src = next((os.path.basename(p) for p, text in idx if f" {t} " in " " + re.sub(r"[^a-z0-9]+", " ", text.lower()) + " "), "")
+        stale.append((slug, tier, status, title, src))
     out = []
     for name in lit_book_files(folder):
         key = lit_file_key(os.path.basename(name))
@@ -3725,9 +3755,11 @@ def cmd_lit_pick(a):
         if any(h[4] == "distilled" for h in hits):
             continue
         # a run of four title words found in the other records: probably read there under a different file name
+        # (the folder a book sits in often keeps the full title its file name shortened)
         words = key.split()
-        maybe = next((" ".join(words[i:i + 4]) for i in range(len(words) - 3)
-                      if f" {' '.join(words[i:i + 4])} " in f" {elsewhere_keys} "), "")
+        parent = os.path.dirname(name)
+        maybe = next((" ".join(w[i:i + 4]) for w in (words, lit_file_key(os.path.basename(parent)).split() if parent else [])
+                      for i in range(len(w) - 3) if f" {' '.join(w[i:i + 4])} " in f" {elsewhere_keys} "), "")
         # or a short title ("Pixel Logic") with another word of the file name, like the author, close by in the record
         maybe = maybe or lit_short_title_hit(words, elsewhere_keys)
         out.append({"file": name, "listed": [{"beat": h[2], "tier": h[3], "status": h[4]} for h in hits], "maybe_read": maybe})
@@ -3743,8 +3775,8 @@ def cmd_lit_pick(a):
     maybe = sum(1 for r in out if r["maybe_read"])
     print(f"{len(out) - maybe} unread ({sum(1 for r in out if r['listed'] and not r['maybe_read'])} listed by a beat), "
           f"{maybe} maybe read elsewhere{'' if a.all else ' (--all shows them)'}; check the topic fits a beat before ingesting")
-    for slug, tier, status, title in stale:
-        print(f"read elsewhere, still `{status}` in {slug} {tier}: {title} (distil it from that read, or ingest the file)")
+    for slug, tier, status, title, src in stale:
+        print(f"read elsewhere, still `{status}` in {slug} {tier}: {title} (in {src}; distil it from that read, or ingest the file)")
 
 
 def lit_book_files(folder, depth=2):
@@ -4039,7 +4071,7 @@ def main(argv=None):
     q = lsp.add_parser("pick", help="book files in a folder no beat has read yet, beat-listed ones first")
     q.add_argument("--dir", help="folder of book files (default: config books_folder)")
     q.add_argument("--all", action="store_true", help="also list books that are maybe read elsewhere")
-    q.add_argument("--read-index", action="append", help="a file or folder of .md files recording books read elsewhere; a book whose file name appears there counts as read (repeatable; config books_read_index)")
+    q.add_argument("--read-index", action="append", help="a file or folder of .md files recording books read elsewhere; a book whose file name appears there counts as read; FOLDER@REF reads a git checkout's folder at that ref (repeatable; config books_read_index)")
     q.add_argument("--json", action="store_true")
     q = lsp.add_parser("lint", help="check a book's learnings.md: citations, quote length, change targets"); q.add_argument("book"); q.add_argument("--beat")
     q = lsp.add_parser("distill", help="finish a book: a `book` note for recall, the row set to distilled"); q.add_argument("book"); q.add_argument("--beat")
