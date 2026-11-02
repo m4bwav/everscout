@@ -20,6 +20,7 @@ The most important books of all time for this subject (yearly recheck).
 | Responsive Web Design | Ethan Marcotte | 2011 | OL15692545W | The University of Bergen set it as mandatory reading for its Web Design I course, and it defined the layout approach every site now assumes. | https://lticanvas.uib.no/lti-reading-list/download/en/DIKULT105/2016h | lead |
 | Designing with Web Standards | Jeffrey Zeldman | 2003 | OL6045343W | It has been adopted as a textbook in more than 85 college courses and made the case for the semantic, standards-based pages a hand-built site still rests on. | https://en.wikipedia.org/wiki/Designing_with_Web_Standards | lead |
 | Web Typography | Richard Rutter | 2017 | OL27054557W | It condenses typography practice for the browser. | https://www.goodreads.com/book/show/35429034-web-typography | lead |
+| User Friendly | Cliff Kuang, Robert Fabricant | 2019 | - | It is the history of user-centred design, from the 1920s to the iPhone, behind the 'start with the user' rule; an Amazon Best Book of 2019 praised in the New York Times Book Review. | https://ebr.overdrive.com/library/world-languages/media/4297414 https://harvard.com/book/9781250758200 | distilled |
 
 ## Recent
 
