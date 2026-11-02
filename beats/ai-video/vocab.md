@@ -146,7 +146,7 @@ Add a new model version as its own line when people argue about the difference (
 - reference-to-video: reference to video, reference-to-video, ref2v, reference images
 - video-to-video: video to video, video-to-video, V2V, restyle
 - video-extension: extender, latent continuation, clip chaining, extend a clip, video extension
-- lora-training: LoRA training, trained a LoRA, character LoRA, lora
+- lora-training: LoRA training, trained a LoRA, character LoRA, lora, LoRA rank, network alpha
 - character-consistency: character consistency, consistent character, consistency
 - multi-shot: multi-shot, multishot, storyboard mode, multiple shots
 - lip-sync: lip sync, lip-sync, lipsync
@@ -179,11 +179,17 @@ Add a new model version as its own line when people argue about the difference (
 - contrast-affinity: contrast and affinity, visual intensity
 - story-intensity: story intensity graph, intensity curve
 - space-type: deep space, flat space, limited space, ambiguous space
+- guidance-scale: classifier-free guidance, CFG scale, guidance scale, negative prompt
+- noise-shift: sigma shift, SigmaShift, timestep shift, shift value
+- img2img-strength: img2img, image to image, denoise strength
+- inpainting: inpainting, inpaint, outpainting, outpaint
+- refiner-pass: refiner, hires pass, hires fix, second pass
+- dreambooth: DreamBooth, prior preservation, trigger word
 
 - flow-matching: flow matching, rectified flow
 - dit: diffusion transformer, DiT
 - video-vae: video VAE, causal 3D VAE
-- video-benchmarks: VBench, GenEval, T2I-CompBench, DrawBench
+- video-benchmarks: VBench, GenEval, T2I-CompBench, DrawBench, FID, KID
 
 ## Formats
 

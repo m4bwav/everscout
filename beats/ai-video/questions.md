@@ -71,3 +71,10 @@ Two or three seeds from different categories. Name the shot you mean ("the rooft
 
 - [craft] Does your model keep flat staging (frontal planes, parallel movement) or deep staging (figures near and far, movement toward the lens) when the prompt asks for it, and does a pan read flatter than a dolly in its output?
 - [craft] Did you plan the intensity of a sequence (where contrast peaks, where it calms) before generating the shots, and how did you carry that plan into the prompts?
+
+## Diffusion settings (Hands-On Generative AI, 2026-11-01)
+
+- [ai] When a take came out fried, oversaturated or doubled, what did you trace it to: guidance, stacked LoRA strength, or a canvas far from the model's trained size?
+- [ai] Did you change the shift when you changed the resolution, and what value held up?
+- [ai] How did you choose between takes: same seed and steps side by side, a blind pick, or a metric?
+- [ai] How did you keep a character LoRA from bleeding into everything: alpha and rank, a prompt without the trigger, prior images?
