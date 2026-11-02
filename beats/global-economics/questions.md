@@ -31,6 +31,9 @@ Two or three seeds from different categories. Economists answer data and method 
 - [interpretation] How does it compare across countries, given the definitions differ?
 - [interpretation] Is the fine compared with the firm's revenue or with the gain from the violation?
 - [interpretation] Is the gig pay figure net of vehicle, fuel and insurance costs?
+- [interpretation] How much of the reported AI cloud revenue is the investor's own credits coming back?
+- [interpretation] What useful life is assumed for the GPUs, and what do earnings look like at three years?
+- [interpretation] Are the firms that cut staff for AI now rehiring?
 
 ## Tools and craft
 
