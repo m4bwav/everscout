@@ -36,6 +36,8 @@ Updated 2026-10-30 (0.7.0: beat literature, see the first section). Before that 
 
 - Lalka, The Venture Alchemists distilled into global-economics 2026-11-01 (auto-pick, T-20261101-20): the beat's first book; market-power, antitrust, gig-work, venture-capital and dual-class vocab, four question seeds. readwright 0.9.3 (PR #17): EPUB note references print as `[40]`; `outline` aliases `toc`. No open tool items. Next: `ES lit pick`, then the next book (global-economics still has no canon book read; the folder's business and accounting files fit no beat).
 
+- 0.9.0 released 2026-11-02 (PRs #67, #68; installed): `lit ingest` warns on short books with no notes or index; kb step 1a reliability check; `lit distill` keeps `skip`. Elsen, Inside Palantir (auto-pick, T-20261102-1) failed the check (misdated lawsuits, a Senate hearing with no record): row `skip`, nothing fed to the beat. Mark's tip (kb "Beyond books"): for how-to beats, tutorial sites, product and open-source forums hold know-how and undocumented options; add them to sources.md and searches.md. No open tool items. Next: `ES lit pick`, then the next book; run the reliability check first. global-economics still has no canon book read (all canon rows `lead`, none in the folder).
+
 ## Reddit discovery built (2026-10-16, night), unreleased
 
 - Branch `feat/reddit-discovery` (PR to main): steps 1 to 6 of `plans/2026-10-16-reddit-discovery-after-arctic-shift.md`. Pickup of Reddit links during `fetch`, `discover list|add|mark`, `captures`, `new-note --capture`, `fetchwright.max_reads_per_scan` (exit 6), scan skill Step 2 and procedure G, kb rows. 74 tests. The plan's Status section lists how the build differs from its shape.
