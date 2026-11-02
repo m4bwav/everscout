@@ -2,6 +2,13 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.9.0 · 2026-11-02
+
+- because: the Inside Palantir ingest (skills/everscout-library/TESTS.md T-20261102-1): a 14,000-word self-published book with no notes got the same treatment as a sourced history, and spot checks found misdated lawsuits and a Senate hearing that did not happen.
+- `lit ingest` warns when a book is under 30,000 words and its outline has no notes, sources or index: check the author and three facts first (kb/literature.md step 1a).
+- `lit distill` keeps a row set to `skip`: before, it turned the skipped book's row into `distilled`, which hid the warning against reading it again.
+- kb/literature.md: step 1a (reliability check), and tutorials, forums and community threads as a source beside books for how-to beats (Mark, 2026-11-02).
+
 ## 0.8.9 · 2026-11-01
 
 - because: the Tannen ingest (skills/everscout-library/TESTS.md T-20261101-19): the 40-character cut of "Talking From 9 to 5: Women and Men at Work" left the book folder ending on "at".

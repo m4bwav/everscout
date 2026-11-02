@@ -3219,6 +3219,8 @@ LIT_COLUMNS = ["title", "authors", "year", "id", "why", "evidence", "status"]
 LIT_RECHECK_DAYS = {"canon": 365, "recent": 90, "latest": 30}  # a tier whose checked date is older is due for research
 LIT_RECENT_YEARS = 5  # recent: published within this many years of the tier's checked date
 LIT_LATEST_MONTHS = 18
+LIT_SHORT_BOOK_WORDS = 30000  # below this, with no notes or index in the outline, ingest warns to check the book's reliability
+LIT_APPARATUS = re.compile(r"\b(notes|endnotes|bibliography|references|sources|index|further reading|works cited)\b", re.I)
 LIT_MAX_QUOTE_WORDS = 25  # learnings paraphrase; a quoted run longer than this fails lint (copyright, kb/literature.md)
 LIT_CITE = re.compile(r"\((?:[^()]*?)(?:ch\.|chap|chapter|p\.|pp\.|part|sec\.|section|§|loc\.|appendix|intro)[^()]*\)", re.I)
 LIT_TARGET_BEAT_FILES = ("beat.md", "sources.md", "vocab.md", "questions.md", "searches.md", "study.md", "metrics.md", "literature.md")
@@ -3602,7 +3604,10 @@ def cmd_lit_ingest(a):
     if m and int(m.group(1)) == 0 and not a.force:
         fail("readwright found no text in this file (a scan without a text layer?); OCR it first (readwright 0.9+: `rw.py ocr FILE`, "
              "then ingest again), or pass --force to set it up anyway")
-    stem = os.path.splitext(os.path.basename(path))[0]
+    if m and 0 < int(m.group(1)) < LIT_SHORT_BOOK_WORDS and toc and not LIT_APPARATUS.search(toc):
+        note(f"short book ({int(m.group(1)):,} words) with no notes, sources or index in its outline: check who wrote and published it "
+             "and spot-check three facts before distilling (kb/literature.md step 1a); a book that fails is `skip`")
+    stem =os.path.splitext(os.path.basename(path))[0]
     mt = re.search(r"^title:\s*(.+)$", info, re.M | re.I)
     mt = mt.group(1).strip() if mt else ""
     title = a.title or (stem if not mt or LIT_JUNK_TITLE.search(mt) else mt)
@@ -3859,10 +3864,12 @@ def cmd_lit_distill(a):
     write(p, render_frontmatter(note_fm) + "\n" + note_body)
     fm["status"] = "distilled"
     write(os.path.join(d, "learnings.md"), render_frontmatter(fm) + "\n" + body)
-    if row:
+    # a row set to `skip` (the book failed its reliability check) keeps that status: the note records the read, the row warns off a reread
+    if row and row["status"] != "skip":
         row["status"] = "distilled"
         write(lit_path(b), lit_render(b, meta, tiers, searches))
-    print(f"note {p}\n{len(applied)} changes applied ({len(for_note)} written into the note), {len(open_)} left proposed; list row {'distilled' if row else 'not found'}")
+    print(f"note {p}\n{len(applied)} changes applied ({len(for_note)} written into the note), {len(open_)} left proposed; "
+          f"list row {(row['status'] if row['status'] == 'skip' else 'distilled') if row else 'not found'}")
 
 
 def cmd_lit(a):
