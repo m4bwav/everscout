@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.8.4 · 2026-11-01
+
+- because: friction from the Morales distill (skills/everscout-library/TESTS.md T-20261101-10): run from a worktree under `_wt/`, `lit ingest` found no sibling readwright clone and pointed at the stale installed 0.2.0 in the plugin cache.
+- `find_readwright` also looks beside the main checkout of a git worktree. 89 offline tests (1 new).
+
 ## 0.8.3 · 2026-11-01
 
 - because: friction from the Graesser distill (skills/everscout-library/TESTS.md T-20261101-9): `lit ingest` cut the book folder name mid-word (`foundations-of-deep-reinforcement-learni`), and `lit pick` still listed other copies of a distilled book whose literature title carries an edition, like "(3rd ed.)", and `lit lint` refused bare section numbers as citations.

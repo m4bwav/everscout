@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.8.3"
+VERSION = "0.8.4"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3481,10 +3481,21 @@ def cmd_lit_due(a):
     sys.exit(2 if any_due else 0)
 
 
+def main_checkout(root):
+    """The main clone of a git worktree at root (a worktree under _wt/ has no sibling clones), else root."""
+    try:
+        p = subprocess.run(["git", "-C", root, "rev-parse", "--path-format=absolute", "--git-common-dir"], capture_output=True, text=True, timeout=10)
+    except (OSError, subprocess.SubprocessError):
+        return root
+    common = p.stdout.strip()
+    return os.path.dirname(os.path.normpath(common)) if p.returncode == 0 and common else root
+
+
 def find_readwright(cfg):
     """Path to readwright's rw.py, or None: $EVERSCOUT_READWRIGHT, config readwright, a sibling clone, the plugin cache."""
     tail = os.path.join("skills", "readwright", "scripts", "rw.py")
-    cands = [os.environ.get("EVERSCOUT_READWRIGHT") or "", cfg.get("readwright") or "", os.path.join(os.path.dirname(ROOT), "readwright", tail)]
+    cands = [os.environ.get("EVERSCOUT_READWRIGHT") or "", cfg.get("readwright") or ""]
+    cands += [os.path.join(os.path.dirname(r), "readwright", tail) for r in dict.fromkeys([ROOT, main_checkout(ROOT)])]
     root = claude_plugins_dir()
     cands += sorted(glob.glob(os.path.join(root, "cache", "*", "readwright", "*", tail)), key=_version_key, reverse=True)
     cands += glob.glob(os.path.join(root, "marketplaces", "*", tail)) + glob.glob(os.path.join(root, "marketplaces", "*", "readwright", tail))
