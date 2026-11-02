@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.8.5 · 2026-11-01
+
+- because: friction from the Kenworthy distill (skills/everscout-library/TESTS.md T-20261101-12): on a US evening `lit ingest` dated the learnings the next day, since it wrote the UTC date while `lit due` reads the local calendar.
+- `lit ingest` and `lit distill` write local dates (`local_today`). 90 offline tests (1 new).
+
 ## 0.8.4 · 2026-11-01
 
 - because: friction from the Morales distill (skills/everscout-library/TESTS.md T-20261101-10): run from a worktree under `_wt/`, `lit ingest` found no sibling readwright clone and pointed at the stale installed 0.2.0 in the plugin cache.

@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.8.4"
+VERSION = "0.8.5"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -116,6 +116,11 @@ def now_utc():
 
 def today():
     return now_utc().strftime("%Y-%m-%d")
+
+
+def local_today():
+    # lit dates follow the user's calendar, as lit due does (UTC wrote tomorrow on US evenings)
+    return dt.date.today().isoformat()
 
 
 def iso(ts):
@@ -3581,13 +3586,13 @@ def cmd_lit_ingest(a):
     os.makedirs(d, exist_ok=True)
     write(os.path.join(d, "book.md"), render_frontmatter({
         "title": title, "kind": "book", "beat": b.slug, "book_id": (row or {}).get("id") or a.id or "-", "tier": tier or "-",
-        "file": path.replace(os.sep, "/"), "reader": "readwright" if rw else "none", "date": today()})
+        "file": path.replace(os.sep, "/"), "reader": "readwright" if rw else "none", "date": local_today()})
         + f"\n# {title}\n\nThe user's own copy, read for this beat. Never commit or redistribute the text.\n\n## readwright info\n\n```\n{info.strip()}\n```\n")
     if toc:
         write(os.path.join(d, "toc.txt"), toc)
     lp = os.path.join(d, "learnings.md")
     if not os.path.exists(lp) or a.force:
-        write(lp, LEARNINGS_TEMPLATE.format(title=title, beat=b.slug, book_id=(row or {}).get("id") or a.id or "-", date=today(),
+        write(lp, LEARNINGS_TEMPLATE.format(title=title, beat=b.slug, book_id=(row or {}).get("id") or a.id or "-", date=local_today(),
                                             quote=LIT_MAX_QUOTE_WORDS, beat_files=", ".join(LIT_TARGET_BEAT_FILES),
                                             feeds=", ".join(b.list_meta("feeds")) or "none"))
     if row and row["status"] in ("lead", "have"):
@@ -3786,8 +3791,8 @@ def cmd_lit_distill(a):
         url = row["evidence"] if row["id"] in ("", "-") else ("https://openlibrary.org/works/" + row["id"] if row["id"].startswith("OL") else row["evidence"])
     nid = "book-" + os.path.basename(d)
     summary = re.sub(r"\s+", " ", secs.get("verdict", "")).strip()[:240]
-    note_fm = {"title": title, "kind": "note", "status": "active", "date": today(), "verified": today(), "beat": b.slug,
-               "platform": "book", "community": "-", "url": url or "-", "posted": today(), "note_kind": "book",
+    note_fm = {"title": title, "kind": "note", "status": "active", "date": local_today(), "verified": local_today(), "beat": b.slug,
+               "platform": "book", "community": "-", "url": url or "-", "posted": local_today(), "note_kind": "book",
                "interest": 3, "engaged": False, "tags": ["book"], "summary": summary or title}
     for facet, ents in vocab_match(b, body).items():
         note_fm[facet] = ents
@@ -3795,12 +3800,12 @@ def cmd_lit_distill(a):
     # `note` rows are text for the book note itself (an edition line, reading caveats), not a change elsewhere
     for_note = [c for c in applied if (c.get("target") or "").strip("` ") == "note"]
     applied = [c for c in applied if c not in for_note]
-    note_body = (f"# {title}\n\nDistilled from the user's copy on {today()}; full learnings in `books/{os.path.basename(d)}/learnings.md`.\n\n"
+    note_body = (f"# {title}\n\nDistilled from the user's copy on {local_today()}; full learnings in `books/{os.path.basename(d)}/learnings.md`.\n\n"
                  + "".join(f"{c.get('change')}\n\n" for c in for_note)
                  + f"## Principles\n{secs.get('principles', '').rstrip()}\n\n## What changed\n\n"
                  + "".join(f"- {c.get('target')}: {c.get('change')}\n" for c in applied) + ("- nothing applied\n" if not applied else "")
                  + f"\n## Verdict\n\n{secs.get('verdict', '').strip()}\n")
-    p = os.path.join(data_dir(cfg, b.slug), "notes", today()[:7], f"{today()}-{nid}.md")
+    p = os.path.join(data_dir(cfg, b.slug), "notes", local_today()[:7], f"{local_today()}-{nid}.md")
     write(p, render_frontmatter(note_fm) + "\n" + note_body)
     fm["status"] = "distilled"
     write(os.path.join(d, "learnings.md"), render_frontmatter(fm) + "\n" + body)
