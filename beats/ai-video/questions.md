@@ -50,3 +50,9 @@ Two or three seeds from different categories. Name the shot you mean ("the rooft
 
 - [reception] Where has it been shown, and how did people react?
 - [reception] What would you do differently with the models available now?
+
+## Camera recipes (Master Shots, 2026-11-01)
+
+- [craft] Can your model hold a fixed-distance lead or follow on a runner for a whole 5-10 s clip without drifting?
+- [craft] Does "telephoto, fist passes behind his head, he snaps back" give a believable faked hit, or do you cut the contact in the edit?
+- [craft] In a chase, does pairing a handheld card on the hero with a smooth card on the pursuer read as the pursuer gaining?

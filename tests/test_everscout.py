@@ -1666,6 +1666,19 @@ class LiteratureTests(WorkspaceTest):
         code, out, _ = self.run_cli("validate", "--beat", "test-beat")
         self.assertEqual(code, 0, out)
 
+    def test_ingest_dates_learnings_in_local_time(self):
+        self.add("--tier", "canon", "--title", "The Classic", "--year", "1990", "--id", "OL9W", "--why", "w", "--evidence", "https://example.org/s")
+        book = os.path.join(self.tmp, "classic.txt")
+        open(book, "w", encoding="utf-8").write("CHAPTER ONE\nSynthetic text.\n")
+        late = E.dt.datetime(2026, 11, 2, 1, 30, tzinfo=E.UTC)  # 19:30 the day before in US Central
+        with mock.patch.object(E, "find_readwright", return_value=None), \
+                mock.patch.object(E, "now_utc", return_value=late), \
+                mock.patch.object(E, "local_today", return_value="2026-11-01"):
+            code, out, err = self.run_cli("lit", "ingest", book, "--beat", "test-beat", "--id", "OL9W")
+        self.assertEqual(code, 0, err)
+        lp = os.path.join(E.data_dir(self.cfg(), "test-beat"), "books", "the-classic", "learnings.md")
+        self.assertIn("date: 2026-11-01", open(lp, encoding="utf-8").read())
+
     def test_ingest_refuses_file_without_text(self):
         book = os.path.join(self.tmp, "scan.pdf")
         open(book, "wb").write(b"%PDF-1.4")
