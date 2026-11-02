@@ -275,3 +275,10 @@ Mark: "how about a recent book on video generation? anything with comfyui would 
 ## [2026-11-01] library | 0.8.5; Master Shots Vol. 1 (Kenworthy) distilled end to end
 
 Auto-pick (no book named): Master Shots (series) is a `lead` in ai-video, unread anywhere, and a move off three RL books; Mark's copy is Vol. 1 only. One reader agent read ch. 1-2, 9, 11 (fights, chases, cars, arguments); ch. 3-8, 10, 12 unread. 18 principles, 9 changes, all applied: cinewright PR #74 (new cinewright-shots scene-setups.md, rules in camera-moves via shared/vocab, move-grammar, lens-choice, blocking, cutting-on-action; no bump), ai-video vocab and questions, book note. everscout 0.8.5: `lit` writes local dates (ingest had dated the learnings 2026-11-02 at 19:47 CST). readwright 0.8.0 (PR #12, v0.8.0, installed): `read --drop-repeated` drops recurring credit lines (212 on this book, off by default), and the distilling section now teaches `--section N-M --quiet --max-words`. cinewright's scrub found 9 hits in older ai-docs files (log, wiki note, a research note); the agent did not open the log and wiki-note ones. T-20261101-12. Next: `lit pick` and the next book.
+
+## 2026-11-01: Co-Intelligence and Making Music
+
+- Auto-pick: `lit pick` listed no beat-listed book. DeSantis (downtempo lead) was already in plugin-learnings, so Mollick, Co-Intelligence went to tech-hiring (AI and skilled work, apprenticeship; RL books skipped as over-represented). Added as a recent row (Forbes 2024 list).
+- Two reader agents. 17 principles, 4 changes applied (PR #56). One reader's friction list was mostly wrong (toc already shows word counts, `--offset` and `grep --width` exist); the real bug, endnote back-links surviving `--drop-repeated`, was fixed in readwright 0.8.1 (PR #13), with a distilling tip on endnotes. Installed.
+- Mark: "don't forget musicwright". Distilled DeSantis into downtempo from the 2026-10-22 read; five strategies never applied went into musicwright 0.1.5 (PR #20, tag v0.1.5). Installed. Tool item: `lit pick` should warn when a read-index book still has a `lead` row.
+- No other everscout tool changes needed.

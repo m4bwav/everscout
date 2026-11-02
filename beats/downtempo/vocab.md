@@ -136,6 +136,9 @@ Short names collide with ordinary words ("Air", "Lamb", "Stone", "Om"), so their
 - bitcrush: bitcrush, bit crusher, lo-fi processing
 - live-instruments: live bass, live guitar, played the keys, live drums
 - mastering-loudness: LUFS, loudness, mastering
+- polyrhythmic-loops: polyrhythmic loops, polyrhythmic loop, asynchronous loops, odd-length loop
+- tresillo: tresillo, 3+3+2, 3-3-2 rhythm
+- ghost-notes: ghost notes, ghost note
 
 ## Notes
 
