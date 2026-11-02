@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.8.7"
+VERSION = "0.8.8"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3291,6 +3291,22 @@ def lit_find(tiers, ref):
     return None, None
 
 
+# PDF producer or template titles that name no book ("ISO 15930 ... (PDF/X)", "Microsoft Word - draft.doc")
+LIT_JUNK_TITLE = re.compile(r"^(untitled|iso \d|pdf/?x|microsoft word|adobe |document\d*$|\S+\.(docx?|indd|qxd|pdf)$)|electronic document file|prepress", re.I)
+
+
+def lit_find_in_name(tiers, name):
+    """(tier, row) whose title appears whole in a file name, else (None, None); the longest title wins."""
+    key = f" {lit_norm_title(name)} "
+    best, best_len = (None, None), 0
+    for t in LIT_TIERS:
+        for r in tiers[t]:
+            rt = lit_norm_title(r["title"])
+            if len(rt) >= 8 and f" {rt} " in key and len(rt) > best_len:
+                best, best_len = (t, r), len(rt)
+    return best
+
+
 def lit_problems(b, meta, tiers, searches, today_d=None):
     """(errors, warnings) for literature.md."""
     today_d = today_d or dt.date.today()
@@ -3576,10 +3592,14 @@ def cmd_lit_ingest(a):
     if m and int(m.group(1)) == 0 and not a.force:
         fail("readwright found no text in this file (a scan without a text layer?); OCR it first (readwright 0.9+: `rw.py ocr FILE`, "
              "then ingest again), or pass --force to set it up anyway")
-    title = a.title or (re.search(r"^title:\s*(.+)$", info, re.M | re.I).group(1).strip() if re.search(r"^title:\s*(.+)$", info, re.M | re.I)
-                        else os.path.splitext(os.path.basename(path))[0])
+    stem = os.path.splitext(os.path.basename(path))[0]
+    mt = re.search(r"^title:\s*(.+)$", info, re.M | re.I)
+    mt = mt.group(1).strip() if mt else ""
+    title = a.title or (stem if not mt or LIT_JUNK_TITLE.search(mt) else mt)
     meta, tiers, searches = lit_load(b) if os.path.exists(lit_path(b)) else ({}, {t: [] for t in LIT_TIERS}, [])
     tier, row = lit_find(tiers, a.id or title)
+    if not row and not a.id:
+        tier, row = lit_find_in_name(tiers, stem)
     if row:
         title = row["title"] or title
     slug = slugify(title, 40, whole=True)

@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.8.8 · 2026-11-01
+
+- because: The Visual Story ingest (skills/everscout-library/TESTS.md T-20261101-17): the PDF's metadata title is its prepress standard (`ISO 15930 - Electronic document file format ... (PDF/X)`), so `lit ingest` named the book folder after it and missed the beat's `lead` row.
+- `lit ingest` ignores producer and template titles (ISO, PDF/X, Microsoft Word, untitled) and falls back to the file name; with no `--id`, it finds the list row whose title appears whole in the file name. 93 offline tests (1 new).
+
 ## 0.8.7 · 2026-11-01
 
 - because: the Murch distill (skills/everscout-library/TESTS.md T-20261101-16): the EPUB's own OCR titles a section `Seeing Around the €dge of the Frame`, so `lit lint` refused the correct citation `(Seeing Around the Edge of the Frame)`.
