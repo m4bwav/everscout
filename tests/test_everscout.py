@@ -1668,6 +1668,25 @@ class LiteratureTests(WorkspaceTest):
         code, out, _ = self.run_cli("validate", "--beat", "test-beat")
         self.assertEqual(code, 0, out)
 
+    def test_distill_keeps_a_skip_row(self):
+        self.add("--tier", "recent", "--title", "The Thin Book", "--year", "2025", "--id", "OL8W", "--why", "w",
+                 "--evidence", "https://example.org/s", "--status", "skip")
+        book = os.path.join(self.tmp, "thin.txt")
+        open(book, "w", encoding="utf-8").write("CHAPTER ONE\nText.\n")
+        with mock.patch.object(E, "find_readwright", return_value=None):
+            self.run_cli("lit", "ingest", book, "--beat", "test-beat", "--id", "OL8W")
+        lp = os.path.join(E.data_dir(self.cfg(), "test-beat"), "books", "the-thin-book", "learnings.md")
+        text = open(lp, encoding="utf-8").read()
+        text = text.replace("1. TODO one principle in plain words (ch. N)", "1. Its dates are wrong (ch. 1)")
+        text = text.replace("| beat/vocab.md | TODO | 1 | proposed |", "| note | failed spot checks | 1 | applied |")
+        text = text.replace("One paragraph: worth it or not, for whom, what to skip.", "Not worth it.")
+        open(lp, "w", encoding="utf-8").write(text)
+        code, out, err = self.run_cli("lit", "distill", "the-thin-book", "--beat", "test-beat")
+        self.assertEqual(code, 0, err + out)
+        self.assertIn("list row skip", out)
+        code, out, _ = self.run_cli("lit", "list", "--beat", "test-beat", "--json")
+        self.assertEqual(json.loads(out)["tiers"]["recent"][0]["status"], "skip")
+
     def test_ingest_dates_learnings_in_local_time(self):
         self.add("--tier", "canon", "--title", "The Classic", "--year", "1990", "--id", "OL9W", "--why", "w", "--evidence", "https://example.org/s")
         book = os.path.join(self.tmp, "classic.txt")
@@ -1703,6 +1722,18 @@ class LiteratureTests(WorkspaceTest):
         self.assertEqual(code, 1)
         self.assertIn("no text", err + out)
         self.assertFalse(os.path.isdir(os.path.join(E.data_dir(self.cfg(), "test-beat"), "books", "scan")))
+
+    def test_ingest_warns_on_short_book_without_notes(self):
+        book = os.path.join(self.tmp, "thin.epub")
+        open(book, "wb").write(b"x")
+        rw = os.path.join(self.tmp, "rw.py")
+        for toc, warned in (("1. Introduction\\n2. Chapter 1", True), ("1. Chapter 1\\n2. Notes", False)):
+            open(rw, "w", encoding="utf-8").write(
+                f"import sys\nprint('format: epub\\nwords: 14346' if sys.argv[1] == 'info' else '{toc}')\n")
+            with mock.patch.object(E, "find_readwright", return_value=rw):
+                code, out, err = self.run_cli("lit", "ingest", book, "--beat", "test-beat", "--title", "Thin", "--force")
+            self.assertEqual(code, 0, err)
+            self.assertEqual("spot-check" in err + out, warned, toc)
 
     def test_pick_lists_unread_books(self):
         self.add("--tier", "canon", "--title", "The Classic Craft Book", "--authors", "Ann Writer", "--year", "1990", "--id", "OL9W",

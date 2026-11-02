@@ -37,6 +37,7 @@ The most important books of the last five years (quarterly recheck).
 | The Price of Time | Edward Chancellor | 2022 | OL26352669W | Won the 2023 Hayek Book Prize and was longlisted for the 2022 FT business book award; a history of interest rates as the zero-rate era ended. | https://www.libraryjournal.com/story/barbara-kingsolver-wins-womens-prize-for-fiction-book-pulse?page=home | lead |
 | Material World | Ed Conway | 2023 | OL29046628W | Shortlisted for the 2023 FT and Schroders Business Book of the Year; it traces the physical commodities that underpin trade and energy. | https://www.schroders.com/en-us/us/institutional/media-center/financial-times-and-schroders-announce-the-shortlist-for-the-2023-business-book-of-the-year-award/ | lead |
 | The Venture Alchemists | Rob Lalka | 2024 | isbn:9780231210263 | Judgment call: Mark's copy. Columbia University Press history of how venture-backed tech turned profits into market and political power, reviewed by MIT Technology Review and Publishers Weekly; read beside Power and Progress. | https://freemannews.tulane.edu/2024/12/13/mit-technology-review-how-silicon-valley-is-disrupting-democracy | distilled |
+| Inside Palantir | J. Hayden Elsen | 2025 | - | Skip: Mark's copy; self-published, 14k words, no sources, and spot checks found misdated lawsuits and an invented Senate hearing (learnings 2026-11-02). | https://fortune.com/2017/04/25/palantir-settles-federal-discrimination-lawsuit | skip |
 
 ## Latest
 
