@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.8.9 · 2026-11-01
+
+- because: the Tannen ingest (skills/everscout-library/TESTS.md T-20261101-19): the 40-character cut of "Talking From 9 to 5: Women and Men at Work" left the book folder ending on "at".
+- `slugify(..., whole=True)` drops stop words (a, and, at, for, of, the, to...) left at the end of a cut title. `lit_book` still finds folders made before this (and before 0.8.3) by their old slug.
+
 ## 0.8.8 · 2026-11-01
 
 - because: The Visual Story ingest (skills/everscout-library/TESTS.md T-20261101-17): the PDF's metadata title is its prepress standard (`ISO 15930 - Electronic document file format ... (PDF/X)`), so `lit ingest` named the book folder after it and missed the beat's `lead` row.

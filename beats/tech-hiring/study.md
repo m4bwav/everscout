@@ -23,3 +23,4 @@ The history and guide the everscout-report skill writes in baseline mode, one ch
 - A hiring manager with one opening and hundreds of applications
 - A recruiter (in-house and agency)
 - A labour economist reading the postings and JOLTS data
+- An interviewer reading candidates' talk: confidence inferred from style, "we" versus "I", pushback (Tannen 1994 as the hypothesis; test it against structured-interview and calibration evidence in 04-interviews and 07-hiring-playbook)

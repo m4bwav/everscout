@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.8.8"
+VERSION = "0.8.9"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -127,11 +127,21 @@ def iso(ts):
     return S.iso(ts)
 
 
-def slugify(text, n=48, whole=False):
+SLUG_STOP = {"a", "an", "and", "at", "by", "for", "from", "in", "of", "on", "or", "the", "to", "with"}
+
+
+def slugify(text, n=48, whole=False, trim=True):
     s = re.sub(r"[^a-z0-9]+", "-", (text or "").lower()).strip("-")
     if whole and len(s) > n and s[n] != "-" and "-" in s[:n]:
-        return s[:n].rsplit("-", 1)[0]  # cut at a word, not mid-word
-    return s[:n].rstrip("-") or "untitled"
+        s = s[:n].rsplit("-", 1)[0]  # cut at a word, not mid-word
+    elif whole and len(s) > n:
+        s = s[:n].rstrip("-")
+    else:
+        return s[:n].rstrip("-") or "untitled"
+    words = s.split("-")
+    while trim and len(words) > 1 and words[-1] in SLUG_STOP:
+        words.pop()  # a cut title should not end on "at" or "for"
+    return "-".join(words)
 
 
 def read(path):
@@ -3782,9 +3792,10 @@ def lit_learnings_problems(b, text, toc_titles=()):
 
 def lit_book(cfg, b, ref):
     d = os.path.join(books_dir(cfg, b.slug), ref)
-    for cut in (True, False):  # folders from before 0.8.3 were cut mid-word
+    # folders from before 0.8.3 were cut mid-word, and before 0.8.9 could end on a stop word
+    for cut, trim in ((True, True), (True, False), (False, False)):
         if not os.path.isdir(d):
-            d = os.path.join(books_dir(cfg, b.slug), slugify(ref, 40, whole=cut))
+            d = os.path.join(books_dir(cfg, b.slug), slugify(ref, 40, whole=cut, trim=trim))
     if not os.path.isfile(os.path.join(d, "learnings.md")):
         have = sorted(os.listdir(books_dir(cfg, b.slug))) if os.path.isdir(books_dir(cfg, b.slug)) else []
         fail(f"no learnings.md for {ref!r} (books: {', '.join(have) or 'none'}); start with `lit ingest`")

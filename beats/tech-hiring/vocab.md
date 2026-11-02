@@ -25,6 +25,13 @@ Keep canonical ids stable: renaming one splits its history in the tallies. A new
 - codebase-interview: codebase walkthrough, codebase round, codebase interview, repository task, repo task
 - work-simulation: work simulation, work style survey, work style assessment, job simulation
 
+## Interview judgement (Tannen 1994)
+
+- interview-communication-style: communication style in interviews, conversational style, hedging, confidence signals, sounding confident, underselling yourself
+- we-vs-i-attribution: "we" vs "I", individual contribution, who did what
+- invisible-work: glue work, invisible work, preventive work, credit for prevention
+- ritual-opposition: pushback in interviews, adversarial interview, arguing with the interviewer
+
 ## Screening and channels
 
 - ats: ATS, applicant tracking system, Workday, Greenhouse ATS, Lever ATS

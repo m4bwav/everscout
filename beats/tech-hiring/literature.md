@@ -21,6 +21,7 @@ The most important books of all time for this subject (yearly recheck).
 | The Manager's Path | Camille Fournier | 2017 | OL19860807W | On the reading lists of Gergely Orosz and Jacob Kaplan-Moss; it describes the engineering ladder that hiring levels are set against. | https://blog.pragmaticengineer.com/my-reading-list/ | lead |
 | What Color Is Your Parachute? | Richard N. Bolles | 1970 | OL3333160W | On Time's All-TIME 100 nonfiction list and the Library of Congress list of books that shaped readers' lives; the long-running job-hunting manual. | https://thegreatestbooks.org/v/table/lists/507 | lead |
 | The Holloway Guide to Technical Recruiting and Hiring | Osman (Ozzie) Osman et al. | 2020 | OL28057287W | It is the most complete expert-reviewed guide for the employer side. Its first edition is just before 2021. | https://holloway.com/b/technical-recruiting-hiring | lead |
+| Talking From 9 to 5 | Deborah Tannen | 1994 | OL2725605W | Taught in The Evergreen State College's Art of Conversation programme and still in print (7 editions, Open Road ebook); the standard account of how conversational style shapes who gets credit, hired and promoted. | https://archives.evergreen.edu/webpages/curricular/2008-2009/artofconversation/node/10/index.html https://openroadmedia.com/ebook/talking-from-9-to-5/9780062210104 | distilled |
 
 ## Recent
 

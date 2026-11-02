@@ -134,6 +134,8 @@ class ParserTests(unittest.TestCase):
         self.assertEqual(E.slugify("Foundations of Deep Reinforcement Learning", 40, whole=True), "foundations-of-deep-reinforcement")
         self.assertEqual(E.slugify("Foundations of Deep Reinforcement Learning", 40), "foundations-of-deep-reinforcement-learni")
         self.assertEqual(E.slugify("Short title", 40, whole=True), "short-title")
+        self.assertEqual(E.slugify("Talking From 9 to 5: Women and Men at Work", 40, whole=True), "talking-from-9-to-5-women-and-men")
+        self.assertEqual(E.slugify("Talking From 9 to 5: Women and Men at Work", 40, whole=True, trim=False), "talking-from-9-to-5-women-and-men-at")
 
     def test_reddit_listing(self):
         items = S.parse_reddit(reddit_atom("exampleSub", [("p1", "maker_one", "I made a thing", "body", ago(5))]))
