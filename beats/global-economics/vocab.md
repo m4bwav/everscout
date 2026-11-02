@@ -43,6 +43,9 @@ Indicator aliases include the common abbreviations; watch for false matches on s
 - profit-margins: profit margins, operating margin, gross margin, markups
 - r-star: r-star, natural rate of interest, neutral rate of interest, neutral rate
 - national-saving: national saving, gross saving, private saving, government saving, saving-investment gap
+- participation-rate: labor force participation, labour force participation, LFPR, participation rate, prime-age employment
+- u6: U-6, underemployment, discouraged workers, involuntary part-time
+- long-term-unemployment: long-term unemployed, long-term unemployment
 
 ## Institutions
 
@@ -127,6 +130,8 @@ Indicator aliases include the common abbreviations; watch for false matches on s
 - surveillance-pricing: surveillance pricing, personalized pricing, algorithmic pricing
 - algorithmic-wage-discrimination: algorithmic wage discrimination, algorithmic wage setting
 - enshittification: enshittification
+- crowding-out: crowding out, crowd out, crowds out
+- policy-lags: policy lags, long and variable lags, recognition lag
 
 ## Regions
 

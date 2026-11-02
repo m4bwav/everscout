@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.9.5 · 2026-11-02
+
+- `lit pick` splits CamelCase file names (`GenerativeDeepLearning.pdf` is three words), so a file whose title a beat already distilled is no longer listed as unread.
+- because: the Essentials of Economics run (skills/everscout-library/TESTS.md T-20261102-9).
+
 ## 0.9.4 · 2026-11-02
 
 - `lit pick` flags a file whose name is a slug that dropped the small words of a title read elsewhere (`procedural-3d-modeling-geometry-blender` for *Procedural 3D Modeling Using Geometry Nodes in Blender*): four or more file-name words in order on one line of the read index, with few words between.

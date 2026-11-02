@@ -1786,6 +1786,17 @@ class LiteratureTests(WorkspaceTest):
         self.assertEqual(set(got), {"Prompt Engineering for LLMs/Prompt Engineering for LLMs.epub"})
         self.assertEqual(got["Prompt Engineering for LLMs/Prompt Engineering for LLMs.epub"]["listed"][0]["status"], "lead")
 
+    def test_pick_splits_camelcase_file_names(self):   # GenerativeDeepLearning.pdf listed as unread 2026-11-02 though its 2nd ed. was distilled
+        self.add("--tier", "canon", "--title", "Generative Deep Learning (2nd ed.)", "--authors", "David Foster", "--year", "2023", "--id", "OL2W",
+                 "--why", "w", "--evidence", "https://example.org/s", "--status", "distilled")
+        folder = os.path.join(self.tmp, "shelf3")
+        os.makedirs(folder)
+        for n in ("GenerativeDeepLearning.pdf", "FreshCamelTitle.pdf"):
+            open(os.path.join(folder, n), "w").write("x")
+        code, out, _ = self.run_cli("lit", "pick", "--dir", folder, "--json")
+        self.assertEqual(code, 0, out)
+        self.assertEqual([r["file"] for r in json.loads(out)], ["FreshCamelTitle.pdf"])
+
     def test_pick_flags_a_lead_row_read_elsewhere(self):   # DeSantis hid as read while downtempo still listed it `lead`
         for n, (title, author) in enumerate((("Making Music Strategies", "Dennis Santis"), ("Pixel Logic", "Michael Azzi"),
                                              ("Deep Learning", "Ian Goodfellow")), 1):
