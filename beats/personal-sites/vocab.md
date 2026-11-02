@@ -66,6 +66,13 @@ Keep canonical ids stable. A new builder or trend gets its own id when people co
 - sound-design: procedural audio, ambient audio, Web Audio API, audio synthesis
 - site-mascot: site pet, virtual pet, site mascot, resident cat, sleeping cat
 
+## Usability
+
+- skeuomorphism: skeuomorphic, skeuomorphism
+- dark-patterns: dark pattern, dark patterns, deceptive design
+- usability-testing: usability test, usability testing, user testing
+- curb-cut: curb-cut effect, curb cut effect
+
 ## Stacks and hosts
 
 - astro: Astro, astro.build

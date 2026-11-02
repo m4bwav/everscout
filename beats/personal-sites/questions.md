@@ -28,6 +28,8 @@ Two to four seeds from at least two categories. Lead with a short, specific than
 - [design] How did you balance personality against getting to the work quickly?
 - [design] Did you test it with anyone before launching, and what changed?
 - [design] How did you handle dark mode and accessibility?
+- [design] What did a first-time visitor misread or miss, and what did you change?
+- [design] Which links open a new tab, download a file or open mail, and how does the site say so first?
 
 ## Build
 
@@ -48,3 +50,4 @@ Two to four seeds from at least two categories. Lead with a short, specific than
 - [ai, design] How did you keep the site from looking like every other AI-built one?
 - [ai, design] Did you write down a design direction (tokens, fonts, rules) for the tool to follow, and did it stick to it?
 - [ai] Has anyone used the chat or AI feature on your site, and what do they ask it?
+- [ai] Does the AI feature say it is an AI, and what does it do when it cannot answer?
