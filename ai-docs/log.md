@@ -353,3 +353,9 @@ Tool changes: readwright 0.11.1 (PR #22, v0.11.1, installed): a `--max-chars` cu
 lit due: all beats current; no Judgment-call rows to recheck. No book named and no beat-listed file unread; auto-picked Doctorow's 2026 book for global-economics (AI-investment economics, labour substitution; the beat had one distilled book and none of its canon is in Mark's folder). Reliability check passed 3/3. 18 principles; vocab (5 themes), questions (3), note applied (T-20261102-7). It is polemic, not data: treat its crash forecast and "every lab loses money" as claims to test.
 
 Tool changes: readwright 0.12.0 (PR #23): `read --out-dir DIR` writes one file per selected section. No everscout tool changes needed.
+
+## [2026-11-02] library | Guerrilla Marketing (Levinson, 4th ed.) distilled into indie-ai-games; everscout 0.9.4, readwright 0.13.0, sitewright 0.2.0
+
+lit due: all current. Auto-pick (none beat-listed in the folder): Guerrilla Marketing, for indie-ai-games' reception and marketing questions. 17 principles, 7 changes applied: owned-audience and cross-promotion vocab, three Reception questions (indie-ai-scout PR #10), sitewright-audit one-action-per-landing-page check (sitewright PR #9, released 0.2.0 with its unreleased work, installed), dated-parts note. Verdict: ch. 1-6, 8 and the online sections are worth two hours for a solo dev; Parts II-III are 2007 tactics.
+
+Tool changes: everscout 0.9.4 (PR #79, installed): `lit pick` flags slug file names of books read elsewhere; lint hint for quoted change text. readwright 0.13.0 (PR #24, installed): `read --compact`; distilling tip on briefing reader agents with `--out`. readwright's CI was still pending at merge (watching). Leftover undeletable empty worktree folders: everscout-wt-pickslug, readwright-wt-compact, indie-ai-scout-wt-guerrilla.

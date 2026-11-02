@@ -50,6 +50,8 @@ Updated 2026-11-02 (Reverse Centaur distilled; readwright 0.12.0; before that Us
 
 - 2026-11-02 (late): Doctorow, *The Reverse Centaur's Guide to Life After AI* distilled into global-economics (auto-pick, T-20261102-7): recent row, five AI-economics vocab themes, three interpretation questions, book note. readwright 0.12.0 (PR #23): `read --out-dir` writes one file per section. Open readwright items: PDF tables, definition lists and sidebars (see readwright HANDOFF). No open everscout items. Next: `ES lit pick`, then the next book (global-economics now has two distilled but still no canon book in the folder; the folder's remaining non-fiction is mostly accounting, prompt-engineering how-tos and feminist theory).
 
+- 2026-11-02 (latest): Levinson, *Guerrilla Marketing* distilled into indie-ai-games (auto-pick, T-20261102-8; indie-ai-scout PR #10, sitewright 0.2.0). everscout 0.9.4 and readwright 0.13.0 released and installed. Open readwright items: PDF tables, definition lists and sidebars (see readwright HANDOFF). Leftover undeletable empty folders: Ai/everscout-wt-pickslug, Ai/readwright-wt-compact, Ai/indie-ai-scout-wt-guerrilla. Next: `ES lit pick`, then the next book (the folder's beat-fitting non-fiction is thinning: business/accounting fits no beat; consider asking Mark for a new beat or books).
+
 ## Reddit discovery built (2026-10-16, night), unreleased
 
 - Branch `feat/reddit-discovery` (PR to main): steps 1 to 6 of `plans/2026-10-16-reddit-discovery-after-arctic-shift.md`. Pickup of Reddit links during `fetch`, `discover list|add|mark`, `captures`, `new-note --capture`, `fetchwright.max_reads_per_scan` (exit 6), scan skill Step 2 and procedure G, kb rows. 74 tests. The plan's Status section lists how the build differs from its shape.
