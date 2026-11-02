@@ -56,3 +56,9 @@ Two or three seeds from different categories. Name the shot you mean ("the rooft
 - [craft] Can your model hold a fixed-distance lead or follow on a runner for a whole 5-10 s clip without drifting?
 - [craft] Does "telephoto, fist passes behind his head, he snaps back" give a believable faked hit, or do you cut the contact in the edit?
 - [craft] In a chase, does pairing a handheld card on the hero with a smooth card on the pursuer read as the pursuer gaining?
+
+## Light and material (Color & Light, 2026-11-01)
+
+- [craft] Does your model tint a subject's edges with the surrounding colour, or do characters look pasted onto the plate? What fixes it: prompt, relight pass or comp?
+- [craft] Does "backlit" skin give red subsurface glow at the ears and fingers, or an orange cast over the whole face?
+- [craft] In a high-contrast shot, which end do you expose for, and does the model respect "blown window" or "silhouetted foreground"?

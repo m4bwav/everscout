@@ -154,6 +154,7 @@ Add a new model version as its own line when people argue about the difference (
 - motion-control: motion brush, motion transfer, motion control, camera control
 - upscaling: upscale, upscaling, upscaler, interpolation, frame interpolation
 - distillation: distilled, 4-step, 8-step, turbo lora, lightning lora
+- relighting: relight, relighting, IC-Light, light transfer
 - quantization: GGUF, fp8, quantized, nf4
 - controlnet: ControlNet, depth control, pose control
 - keyframes-first: keyframes, keyframe first, storyboard frames
@@ -205,6 +206,7 @@ Add a new model version as its own line when people argue about the difference (
 - crowds: crowd, extras, army, armies, cavalry
 - cfg-cost: CFG 1, guidance 1, no CFG, cfg distilled
 - wan-moe-experts: high noise expert, low noise expert, Wan 2.2 MoE, A14B experts, high noise model, low noise model
+- light-physics: Fresnel, subsurface scattering, SSS, specular highlight, blown highlights, crushed blacks, value key
 
 ## Notes
 
