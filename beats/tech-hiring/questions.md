@@ -38,14 +38,18 @@ Two to four seeds from at least two categories. Lead with a short, true thanks f
 - [hiring] What would you tell candidates about referrals: do they still move the needle?
 - [hiring] When a candidate says "we built X", how does your loop find out what they did themselves, and does it work as well for modest talkers?
 - [hiring] In promotion or level calibration, what evidence counts for incidents someone prevented, against incidents they fixed?
+- [hiring, ai] If your screen or AI ranker uses signals from outside the CV (GitHub activity, open-source work, side projects), have you measured who passes by group and by whether they have care duties?
+- [hiring] Who records why each raise or promotion was given, and does anyone review those decisions as a set?
 
 ## Market and data
 
 - [data] Where did the numbers come from, and how did you count them?
 - [data] What would change your mind about the trend you describe?
+- [data] Are the numbers split by sex (or another group) at each stage: applied, screened, interviewed, offered, accepted?
 - [data] Does what you see match the postings data (Indeed, TrueUp, JOLTS), or does it disagree?
 - [market] Which specialties or levels are you seeing demand for right now, and which have gone quiet?
 - [market] Has remote, hybrid or return-to-office changed which offers people take?
+- [market] Was the remote or flexible option in the job ad, or did you have to ask for it, and did asking cost you anything?
 
 ## AI at work (managers and juniors)
 

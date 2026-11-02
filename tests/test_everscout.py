@@ -1632,6 +1632,20 @@ class LiteratureTests(WorkspaceTest):
         self.assertIn("evidence must be a URL", out)
         self.assertIn("not an Open Library work key", out)
 
+    def test_add_after_ingest_links_the_book(self):
+        book = os.path.join(self.tmp, "Unlisted Book - Some Author.txt")
+        open(book, "w", encoding="utf-8").write("CHAPTER ONE\nSynthetic text.\n")
+        with mock.patch.object(E, "find_readwright", return_value=None):
+            code, out, err = self.run_cli("lit", "ingest", book, "--beat", "test-beat", "--title", "Unlisted Book: A Subtitle")
+        self.assertIn("not found (lit add it;", out)
+        code, out, err = self.add("--tier", "canon", "--title", "Unlisted Book", "--year", "2019", "--id", "OL7W", "--why", "w",
+                                  "--evidence", "https://example.org/s")
+        self.assertIn("[reading]; linked to the ingested unlisted-book-a-subtitle", out)
+        d = os.path.join(E.data_dir(self.cfg(), "test-beat"), "books", "unlisted-book-a-subtitle")
+        for fn in ("book.md", "learnings.md"):
+            self.assertIn("book_id: OL7W", open(os.path.join(d, fn), encoding="utf-8").read())
+        self.assertIn("tier: canon", open(os.path.join(d, "book.md"), encoding="utf-8").read())
+
     def test_ingest_lint_distill(self):
         self.add("--tier", "canon", "--title", "The Classic", "--year", "1990", "--id", "OL9W", "--why", "w", "--evidence", "https://example.org/s")
         book = os.path.join(self.tmp, "classic.txt")
