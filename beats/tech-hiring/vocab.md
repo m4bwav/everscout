@@ -32,6 +32,17 @@ Keep canonical ids stable: renaming one splits its history in the tallies. A new
 - invisible-work: glue work, invisible work, preventive work, credit for prevention
 - ritual-opposition: pushback in interviews, adversarial interview, arguing with the interviewer
 
+## Bias in screening and evaluation (Criado Perez 2019)
+
+- sex-disaggregated-data: sex-disaggregated data, gender data gap, data split by sex, funnel by gender, adverse impact ratio
+- meritocracy-paradox: paradox of meritocracy, myth of meritocracy, objective hiring bias
+- blind-screening: blind audition, blind hiring, anonymised shortlist, anonymized resume, blind work sample, GapJumpers
+- gendered-job-ad: gendered job ad, gender-coded wording, job ad wording, inclusive job description
+- review-language-bias: abrasiveness trap, performance review bias, recommendation letter bias, reference letter bias
+- brilliance-bias: brilliance bias, rockstar developer, 10x engineer, raw talent
+- proxy-signal-screening: proxy signals, social data hiring, GitHub activity as signal, Gild, off-CV signals
+- culture-fit: culture fit, pattern matching candidates, looks like our team
+
 ## Screening and channels
 
 - ats: ATS, applicant tracking system, Workday, Greenhouse ATS, Lever ATS

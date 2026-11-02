@@ -24,3 +24,4 @@ The history and guide the everscout-report skill writes in baseline mode, one ch
 - A recruiter (in-house and agency)
 - A labour economist reading the postings and JOLTS data
 - An interviewer reading candidates' talk: confidence inferred from style, "we" versus "I", pushback (Tannen 1994 as the hypothesis; test it against structured-interview and calibration evidence in 04-interviews and 07-hiring-playbook)
+- A screening-and-evaluation auditor: who a résumé screen, AI ranker, job ad or review process lets through (Criado Perez 2019 as the hypothesis source; test it against audit studies, NYC Local Law 144 bias audits and the blind-audition dispute)

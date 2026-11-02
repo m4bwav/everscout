@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.8.9"
+VERSION = "0.9.1"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3425,8 +3425,34 @@ def cmd_lit_add(a):
             r[k] = str(v)
     if a.status and a.status not in LIT_STATUSES:
         fail(f"status must be one of {', '.join(LIT_STATUSES)}")
+    linked = lit_link_ingested(cfg, b, r, t) if verb == "added" else ""
+    if linked and not a.status:
+        r["status"] = "reading"
     write(lit_path(b), lit_render(b, meta, tiers, searches))
-    print(f"{verb} {t}: {r['title']} [{r['status']}]")
+    print(f"{verb} {t}: {r['title']} [{r['status']}]" + (f"; linked to the ingested {linked}" if linked else ""))
+
+
+def lit_link_ingested(cfg, b, row, tier):
+    """A row added after `lit ingest` said 'list row not found': fill book_id and tier in that book's book.md and learnings.md."""
+    bd = books_dir(cfg, b.slug)
+    want = slugify(row["title"], 40, whole=True)
+    for name in sorted(os.listdir(bd)) if os.path.isdir(bd) else []:
+        bm = os.path.join(bd, name, "book.md")
+        if not os.path.exists(bm):
+            continue
+        fm = parse_frontmatter(read(bm))[0]
+        if name != want and not slugify(fm.get("title", ""), 40, whole=True).startswith(want):
+            continue
+        for fn in ("book.md", "learnings.md"):
+            p = os.path.join(bd, name, fn)
+            if os.path.exists(p):
+                s = read(p)
+                if row.get("id"):
+                    s = re.sub(r"^book_id: -\s*$", f"book_id: {row['id']}", s, count=1, flags=re.M)
+                s = re.sub(r"^tier: -\s*$", f"tier: {tier}", s, count=1, flags=re.M)
+                write(p, s)
+        return name
+    return ""
 
 
 def lit_clean_query(query):
@@ -3635,7 +3661,7 @@ def cmd_lit_ingest(a):
         row["status"] = "reading"
         write(lit_path(b), lit_render(b, meta, tiers, searches))
     print(f"book folder {d}")
-    print(f"  learnings.md to fill; toc.txt {'written' if toc else 'not written'}; list row {'set to reading' if row else 'not found (lit add it)'}")
+    print(f"  learnings.md to fill; toc.txt {'written' if toc else 'not written'}; list row {'set to reading' if row else 'not found (lit add it; the new row links to this folder and reads reading)'}")
     if rw:
         print(f"  read sections with: python {rw} read \"{path}\" --section N   (search: grep \"{path}\" PATTERN)")
 
