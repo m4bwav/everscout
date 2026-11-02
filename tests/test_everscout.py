@@ -1800,6 +1800,47 @@ class LiteratureTests(WorkspaceTest):
         self.assertIn("still `lead` in test-beat canon: Making Music Strategies", out)
         self.assertIn("Pixel Logic", out)
         self.assertNotIn("Deep Learning", out, "a short title with no author nearby is not a hit")
+        self.assertIn("(in index.md;", out, "the line names the record that showed the read")
+
+    def test_read_index_reads_a_git_ref(self):   # comfyui-gen's book notes sat on master while its clone was on another branch
+        repo = os.path.join(self.tmp, "repo")
+        notes = os.path.join(repo, "ai-docs", "notes")
+        os.makedirs(notes)
+        git = lambda *a: subprocess.run(["git", "-C", repo, "-c", "user.name=t", "-c", "user.email=t@t", *a], check=True, capture_output=True)
+        git("init", "-q", "-b", "master")
+        open(os.path.join(notes, "books-progress.md"), "w", encoding="utf-8").write("Using Stable Diffusion with Python: read\n")
+        open(os.path.join(notes, "other.txt"), "w", encoding="utf-8").write("kept on both branches\n")
+        git("add", ".")
+        git("commit", "-qm", "notes")
+        git("update-ref", "refs/remotes/origin/master", "master")   # a ref with a slash, as in Mark's config
+        git("checkout", "-qb", "other")
+        git("rm", "-q", os.path.join("ai-docs", "notes", "books-progress.md"))
+        git("commit", "-qm", "gone")
+        self.assertEqual(E.lit_read_index([notes]), [])
+        got = E.lit_read_index([notes + "@origin/master"])
+        self.assertEqual([os.path.basename(p) for p, _ in got], ["books-progress.md"])
+        self.assertIn("Stable Diffusion", got[0][1])
+        # the file name drops "with"; the folder name keeps the title the notes use
+        shelf = os.path.join(self.tmp, "shelf", "Using Stable Diffusion with Python")
+        os.makedirs(shelf)
+        open(os.path.join(shelf, "using-stable-diffusion-python-leverage.epub"), "w").write("x")
+        code, out, _ = self.run_cli("lit", "pick", "--dir", os.path.dirname(shelf), "--read-index", notes + "@master", "--json")
+        self.assertEqual(code, 0, out)
+        self.assertEqual(json.loads(out)[0]["maybe_read"], "using stable diffusion with")
+
+    def test_pick_ignores_reading_lists(self):   # Krug, Don't Make Me Think, was "read elsewhere" from a reading list 2026-11-02
+        self.add("--tier", "canon", "--title", "Dont Make Me Think", "--authors", "Steve Krug", "--year", "2000", "--id", "OL1W",
+                 "--why", "w", "--evidence", "https://example.org/s")
+        folder, idx = os.path.join(self.tmp, "shelf"), os.path.join(self.tmp, "notes")
+        os.makedirs(folder)
+        os.makedirs(idx)
+        open(os.path.join(idx, "plugin-reading-list-2026-10-29.md"), "w", encoding="utf-8").write("| sitewright | Krug, *Dont Make Me Think* |\n")
+        open(os.path.join(folder, "Dont Make Me Think - Steve Krug.epub"), "w").write("x")
+        code, out, _ = self.run_cli("lit", "pick", "--dir", folder, "--read-index", idx)
+        self.assertEqual(code, 0, out)
+        self.assertNotIn("read elsewhere, still", out)
+        self.assertNotIn("maybe read:", out)
+        self.assertIn("Dont Make Me Think - Steve Krug.epub", out, "a book only on a reading list is still unread")
 
     def test_short_title_needs_a_rare_word_nearby(self):
         text = "pixel logic by azzi was read " + "deep learning hands on python " * 12

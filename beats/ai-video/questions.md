@@ -72,6 +72,12 @@ Two or three seeds from different categories. Name the shot you mean ("the rooft
 - [craft] Does your model keep flat staging (frontal planes, parallel movement) or deep staging (figures near and far, movement toward the lens) when the prompt asks for it, and does a pan read flatter than a dolly in its output?
 - [craft] Did you plan the intensity of a sequence (where contrast peaks, where it calms) before generating the shots, and how did you carry that plan into the prompts?
 
+## Continuity across clips (The Five C's, 2026-11-02)
+
+- [craft] How did you keep screen direction across separately generated clips: a direction written into every prompt, a first-frame reference, or flips fixed in the edit?
+- [craft] Did you generate the end of one action again at the head of the next clip so you had room to choose the cut, or did both clips end and start mid-motion?
+- [craft] For a dialogue, did you get matched over-the-shoulder pairs from the model, and did you set up the two-shot first?
+
 ## Diffusion settings (Hands-On Generative AI, 2026-11-01)
 
 - [ai] When a take came out fried, oversaturated or doubled, what did you trace it to: guidance, stacked LoRA strength, or a canvas far from the model's trained size?

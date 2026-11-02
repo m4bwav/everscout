@@ -175,6 +175,13 @@ Add a new model version as its own line when people argue about the difference (
 - coverage: coverage, triangle system, master shot, protection shot
 - axis-of-action: 180-degree rule, crossing the line, axis of action
 - clearing-the-frame: clearing the frame, clean entrance, clean exit
+- screen-direction: screen direction, direction of travel, comings and goings, neutral shot, head-on shot, tail-away
+- overlapping-action: overlapping action, overlap the action, triple-take, triple take, action overlap
+- cut-in-cut-away: cut-in, cutaway, cut-away, insert shot
+- pov-shot: POV shot, point-of-view shot, subjective camera, looking into the lens
+- over-the-shoulder: over-the-shoulder, over the shoulder, OTS shot, reverse shot
+- dutch-angle: dutch angle, dutch tilt, canted angle, canted frame
+- three-quarter-angle: three-quarter angle, three-quarter view, angle-plus-angle
 - visual-structure: visual structure, visual components, Bruce Block
 - contrast-affinity: contrast and affinity, visual intensity
 - story-intensity: story intensity graph, intensity curve

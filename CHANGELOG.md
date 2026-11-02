@@ -2,6 +2,15 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.9.3 · 2026-11-02
+
+- because: the Five C's run (skills/everscout-library/TESTS.md T-20261102-5).
+- `lit pick` ignores reading lists (files named reading-list, to-read or wishlist) in the read index: a book someone plans to read was shown as read elsewhere.
+- `lit pick`'s "read elsewhere" line names the record file that shows the read.
+- `lit pick` read-index entries may be `<folder>@<git ref>` (Mark's config: comfyui-gen's `ai-docs/notes@origin/master`): the folder is read as that ref has it, so notes on a branch the shared clone is not on still count. It had listed *Using Stable Diffusion with Python*, read on 2026-10-31 in comfyui-gen's notes.
+- `lit pick` also matches the folder a book sits in: the folder kept the full title its file name shortened.
+- `lit ingest` passes readwright's note on when it refuses a file with no text, so the way in (a DjVu twin, `rw.py ocr`) shows.
+
 ## 0.9.2 · 2026-11-02
 
 - `lit pick` lists book files in subfolders (two levels), so a beat-listed book saved as `Title/Title.epub` is found (skills/everscout-library/TESTS.md T-20261102-3).
