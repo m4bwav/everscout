@@ -304,3 +304,9 @@ lit due: all beats current; no Judgment-call rows. No book named: of the four re
 lit due: all beats current; no Judgment-call rows. No book named and no beat-listed file unread, so auto-picked Tannen (1994): off the RL and ai-video run, and tech-hiring had nothing on how interviewers read candidates' talk. Added a canon row (Evergreen State College programme, in print). Two parallel reader agents; 17 principles; 4 changes applied (vocab Interview judgement section, four question seeds, a study perspective, note) in PR #64. TESTS.md T-20261101-19.
 
 Tool changes: everscout 0.8.9 (cut book slugs no longer end on a stop word; old folders still resolve). readwright 0.9.2 (PR #16): the character-cut footer offers `--max-chars N`, and the skill tells book runs to give reader agents that flag (both readers had sampled long chapters). Both released and updated in the plugin manager. Chapters 5, 6 and 9 were read only in part; a later pass could finish them.
+
+## [2026-11-01] library | The Venture Alchemists (Lalka) distilled into global-economics; readwright 0.9.3
+
+lit due: all beats current; no Judgment-call rows to recheck. No book named and no beat-listed file unread, so auto-picked Lalka (2024): global-economics had no distilled book, and the beat had nothing on market power, venture finance or gig work. Added a recent row (`have`, Judgment call: Mark's copy). Two parallel reader agents; 15 principles; 4 changes applied (five Themes vocab entries, four question seeds, an IO-economist study perspective, note). Verdict: skim ch. 4, 7, 14 and the Epilogue; argued from personalities and press numbers, dated by Uber's and Palantir's profits and the 2024 Google ruling. TESTS.md T-20261101-20.
+
+Tool changes: readwright 0.9.3 (PR #17): EPUB note references print as `[40]` instead of fusing with the sentence; `rw.py outline` aliases `toc`; distilling tip in the skill. No everscout tool changes needed.

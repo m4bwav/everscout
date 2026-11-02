@@ -36,6 +36,7 @@ The most important books of the last five years (quarterly recheck).
 | Shutdown | Adam Tooze | 2021 | OL21698298W | Named best economics book of 2021 by strategy+business and an Orwell Prize finalist; it records how the pandemic reshaped the world economy. | https://strategy-business.com/article/Best-Business-Books-2021-The-pandemic-rewrites-geopolitics | lead |
 | The Price of Time | Edward Chancellor | 2022 | OL26352669W | Won the 2023 Hayek Book Prize and was longlisted for the 2022 FT business book award; a history of interest rates as the zero-rate era ended. | https://www.libraryjournal.com/story/barbara-kingsolver-wins-womens-prize-for-fiction-book-pulse?page=home | lead |
 | Material World | Ed Conway | 2023 | OL29046628W | Shortlisted for the 2023 FT and Schroders Business Book of the Year; it traces the physical commodities that underpin trade and energy. | https://www.schroders.com/en-us/us/institutional/media-center/financial-times-and-schroders-announce-the-shortlist-for-the-2023-business-book-of-the-year-award/ | lead |
+| The Venture Alchemists | Rob Lalka | 2024 | isbn:9780231210263 | Judgment call: Mark's copy. Columbia University Press history of how venture-backed tech turned profits into market and political power, reviewed by MIT Technology Review and Publishers Weekly; read beside Power and Progress. | https://freemannews.tulane.edu/2024/12/13/mit-technology-review-how-silicon-valley-is-disrupting-democracy | distilled |
 
 ## Latest
 

@@ -117,6 +117,11 @@ Indicator aliases include the common abbreviations; watch for false matches on s
 - stablecoins: stablecoin, stablecoins, private money
 - text-as-data: text as data, large language model, large language models, natural language processing
 - tariff-uncertainty: tariff uncertainty, trade policy uncertainty, tariff announcements
+- market-concentration: market concentration, market power, winner-take-most, network effects, HHI
+- antitrust: antitrust, US v. Google, monopolization, merger review
+- gig-work: gig work, gig economy, independent contractor, worker classification, Prop 22, AB5
+- venture-capital: venture capital, VC funding, 2 and 20, carried interest, unicorn
+- dual-class-shares: dual-class shares, dual-class, multi-class shares
 
 ## Regions
 
