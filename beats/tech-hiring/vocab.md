@@ -69,6 +69,17 @@ Keep canonical ids stable: renaming one splits its history in the tallies. A new
 - ai-exposure: AI exposure, AI-exposed occupations, GenAI exposure, exposure to AI
 - job-cuts-data: Challenger report, Challenger Gray, job cut announcements, layoffs tracker, Layoffs.fyi, TrueUp layoffs
 
+## AI at work
+
+Added 2026-11-01 from Mollick, Co-Intelligence (2024): the names later reporting uses for what AI does to skilled work.
+
+- jagged-frontier: jagged frontier, jagged technological frontier
+- ai-productivity-study: BCG study, BCG consultants study, Navigating the Jagged Technological Frontier, Generative AI at Work, Copilot study, Noy and Zhang, METR study, AI productivity study
+- skill-leveling: skill leveling, levels the playing field, low performers gain most, skill compression
+- secret-ai-use: secret cyborg, secret cyborgs, shadow AI, hidden AI use, BYOAI
+- apprenticeship-gap: apprenticeship, shadow learning, junior pipeline, who trains the juniors, training pipeline
+- ai-overreliance: falling asleep at the wheel, rubber-stamping AI, automation bias, over-reliance on AI
+
 ## Policy
 
 - h1b: H-1B, H1B, H1-B, H-1B lottery, H-1B fee

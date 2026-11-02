@@ -43,6 +43,13 @@ Two to four seeds from at least two categories. Lead with a short, true thanks f
 - [market] Which specialties or levels are you seeing demand for right now, and which have gone quiet?
 - [market] Has remote, hybrid or return-to-office changed which offers people take?
 
+## AI at work (managers and juniors)
+
+- [ai-work, juniors] Which work that used to go to juniors do seniors now hand to AI, and how do you plan to grow your next mid-level engineers?
+- [ai-work, screening] If AI narrows the gap between strong and weak performers, what do you screen for now, and has it changed what experience or a degree is worth in your offers?
+- [ai-work, screening] When AI ranks the résumés or grades the tests, how do reviewers keep from just accepting its picks?
+- [ai-work, interviews] With take-homes impossible to police, what replaced them: a live round, a supervised one, or AI allowed and you defend the answer?
+
 ## Outcomes and reception
 
 - [outcome] What did the offer look like against what you expected, and did you negotiate?
