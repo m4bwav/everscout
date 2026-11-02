@@ -8,6 +8,7 @@ import io
 import json
 import os
 import shutil
+import subprocess
 import sys
 import tempfile
 import time
@@ -1752,6 +1753,24 @@ class LiteratureTests(WorkspaceTest):
         with mock.patch.dict(os.environ, {"EVERSCOUT_BEATS": os.path.join(self.tmp, "no-such-dir")}):
             with self.assertRaises(SystemExit):
                 E.beat_dirs(E.config())
+
+
+class ReadwrightLookupTests(unittest.TestCase):
+    def test_worktree_finds_clone_beside_main_checkout(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            main = os.path.join(tmp, "everscout")
+            os.makedirs(main)
+            subprocess.run(["git", "init", "-q", main], check=True)
+            subprocess.run(["git", "-C", main, "-c", "user.email=t@t", "-c", "user.name=t", "commit", "-q", "--allow-empty", "-m", "x"], check=True)
+            wt = os.path.join(tmp, "_wt", "es")
+            subprocess.run(["git", "-C", main, "worktree", "add", "-q", wt], check=True)
+            self.assertEqual(os.path.normcase(os.path.realpath(E.main_checkout(wt))), os.path.normcase(os.path.realpath(main)))
+            rw = os.path.join(tmp, "readwright", "skills", "readwright", "scripts", "rw.py")
+            os.makedirs(os.path.dirname(rw))
+            open(rw, "w").close()
+            env = {"EVERSCOUT_READWRIGHT": ""}
+            with mock.patch.object(E, "ROOT", wt), mock.patch.object(E, "claude_plugins_dir", return_value=os.path.join(tmp, "none")), mock.patch.dict(os.environ, env):
+                self.assertEqual(os.path.normcase(os.path.realpath(E.find_readwright({}))), os.path.normcase(os.path.realpath(rw)))
 
 
 class SkillRefsTest(unittest.TestCase):
