@@ -43,6 +43,15 @@ Keep canonical ids stable: renaming one splits its history in the tallies. A new
 - proxy-signal-screening: proxy signals, social data hiring, GitHub activity as signal, Gild, off-CV signals
 - culture-fit: culture fit, pattern matching candidates, looks like our team
 
+## Interviewer credibility (Fricker 2007)
+
+- credibility-deficit: credibility deficit, not believed, discounted answer, doubted candidate, accent bias in interviews
+- credibility-excess: credibility excess, pedigree signal, big-tech halo, elite school halo, FAANG halo
+- identity-prejudice: identity prejudice, stereotype in screening, affinity bias
+- testimonial-injustice: testimonial injustice, epistemic injustice
+- hermeneutical-injustice: hermeneutical injustice, no word for it, could not name what happened
+- pre-emptive-exclusion: never interviewed, never asked, screened out before a call
+
 ## Screening and channels
 
 - ats: ATS, applicant tracking system, Workday, Greenhouse ATS, Lever ATS

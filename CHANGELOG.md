@@ -2,6 +2,12 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.9.6 · 2026-11-02
+
+- `lit pick` splits CamelCase only in file names with no separators: 0.9.5 turned `FilmCraft Cinematography - Mike Goodridge.epub` into "film craft", so a book read on 2026-10-22 listed as unread. It now shows as maybe read.
+- `lit ingest` turns a release-style file name (`0198237901.Oxford.University.Press.USA.Epistemic.Injustice...Aug.2007`) into a title (leading ISBN, publisher, trailing date and release tag dropped) when the PDF's own title is junk, so the book folder is `epistemic-injustice-power-and-the-ethics`, not `0198237901-oxford-university-press-usa`.
+- because: the Epistemic Injustice run (skills/everscout-library/TESTS.md T-20261102-10).
+
 ## 0.9.5 · 2026-11-02
 
 - `lit pick` splits CamelCase file names (`GenerativeDeepLearning.pdf` is three words), so a file whose title a beat already distilled is no longer listed as unread.

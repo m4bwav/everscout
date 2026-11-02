@@ -1594,6 +1594,13 @@ class LiteratureTests(WorkspaceTest):
         self.assertEqual(E.lit_clean_query("q=subject:%22electronic+music%22+first_publish_year:[2020+TO+2026]"), 'subject:"electronic music"')
         self.assertEqual(E.lit_clean_query("q=ai filmmaking"), "ai filmmaking")
 
+    def test_title_from_release_style_file_name(self):   # Fricker's PDF ingested as "0198237901-oxford-university-press-usa"
+        self.assertEqual(E.lit_title_from_stem("0198237901.Oxford.University.Press.USA.Epistemic.Injustice.Power.and.the.Ethics.of.Knowing.Aug.2007"),
+                         "Epistemic Injustice Power and the Ethics of Knowing")
+        self.assertEqual(E.lit_title_from_stem("OREILLY.PYTHON.FOR.FINANCE.2014.RETAIL.EBOOK-kE"), "PYTHON FOR FINANCE")
+        self.assertEqual(E.lit_title_from_stem("Some Book - Author"), "Some Book - Author")
+        self.assertEqual(E.lit_title_from_stem("GenerativeDeepLearning"), "GenerativeDeepLearning")
+
     def add(self, *args):
         return self.run_cli("lit", "add", "--beat", "test-beat", *args)
 
@@ -1796,6 +1803,10 @@ class LiteratureTests(WorkspaceTest):
         code, out, _ = self.run_cli("lit", "pick", "--dir", folder, "--json")
         self.assertEqual(code, 0, out)
         self.assertEqual([r["file"] for r in json.loads(out)], ["FreshCamelTitle.pdf"])
+
+    def test_file_key_keeps_coined_words_in_spaced_names(self):   # "FilmCraft" became "film craft" and hid a read book (2026-11-02)
+        self.assertEqual(E.lit_file_key("FilmCraft Cinematography - Mike Goodridge.epub"), "filmcraft cinematography mike goodridge")
+        self.assertEqual(E.lit_file_key("GenerativeDeepLearning.pdf"), "generative deep learning")
 
     def test_pick_flags_a_lead_row_read_elsewhere(self):   # DeSantis hid as read while downtempo still listed it `lead`
         for n, (title, author) in enumerate((("Making Music Strategies", "Dennis Santis"), ("Pixel Logic", "Michael Azzi"),
