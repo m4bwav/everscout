@@ -550,3 +550,9 @@ Auto-pick, as the prompt asks, though the last two sessions had stopped to ask f
 Tools: readwright 0.32.0 (PR #48): PDF drop-cap digits and glued running heads cleaned; skill tip on section versus chapter numbers. No everscout changes needed.
 Trigger evals (step 4) run: 3/3 on 0.11.3, baseline delta +0.25 on both triggers. T-20261103-9.
 Next: the folder is thin for the beats; buy from the leads in each beat's literature.md, or keep auto-picking with lower yield.
+
+## [2026-11-03] library | Raff, Farris and Biderman, How Large Language Models Work distilled into token-saving; readwright 0.32.1
+
+Auto-pick: no beat-listed file left; a Manning primer with a tokenizer chapter beat the self-published prompt books. Nothing due; no Judgment-call rows. Read about 6k of 69k words. 11 principles, 8 changes applied, 1 rejected (indie-ai-scout PR #30). Verdict: sound but mostly off-beat; no token saving is measured. The spot check caught an error: the book puts GPT-NeoX's vocabulary at about 10 GB, and its tokenizer.json is 2.1 MB. The row rests on one kind of evidence, reason stated; no independent review found.
+Tools: readwright 0.32.1 (PR #49): skill tip only, since the glued words were in the EPUB source. No everscout changes needed. Step 4 not rerun; no skill change since the 3/3 run. T-20261103-10.
+Next: yield keeps falling; the leads in each literature.md are the shopping list.
