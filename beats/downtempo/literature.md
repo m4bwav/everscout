@@ -32,6 +32,7 @@ The most important books of the last five years (quarterly recheck).
 | Futuromania | Simon Reynolds | 2024 | OL37589501W | The Irish Examiner put it on its 12 best music books of 2024, and it gathers Reynolds's writing on electronic music's futurist side. | https://www.irishexaminer.com/lifestyle/artsandculture/arid-41533190.html?type=app | lead |
 | Renegade Snares | Ben Murphy, Carl Loben | 2021 | OL25485104W | It is the first full history of jungle and drum and bass, a neighbour of trip-hop. | https://openlibrary.org/works/OL25485104W | lead |
 | Balearic | (author not checked) | 2021 | OL27127856W | It covers Ibiza's Balearic scene, where chillout was born. | https://openlibrary.org/works/OL27127856W | lead |
+| An Introduction to Audio Content Analysis | Alexander Lerch | 2023 | isbn:9781119890942 | User's copy; the Wiley-IEEE Press graduate text on music information retrieval by a Georgia Tech professor, held by university libraries; feeds musicwright's measures more than the beat | https://libcat.library.tamu.edu/Record/in00004688426 https://audiocontentanalysis.org/ | distilled |
 
 ## Latest
 

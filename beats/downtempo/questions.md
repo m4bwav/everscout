@@ -16,6 +16,7 @@ One observation about the sound, then one or two questions. Producers answer gea
 - [sampling] Is the main loop a sample or played?
 - [sampling] How did you chop it: slices, pitch, time-stretch?
 - [sampling] Where do you dig for source material?
+- [sampling] Did you retune the sample to A440, or build the track around its own tuning?
 
 ## Sound design
 
