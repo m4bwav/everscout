@@ -440,3 +440,7 @@ Mark asked how to read servers like r/StableDiffusion with no admin. Tested: inv
 Auto-pick: nothing due; Mark added indie-game-marketing canon leads to the book folder (Kleon's Show Your Work!, Bacon's The Art of Community; Vogl's Art of Community and a Video Game Marketing textbook are there too, per marketwright's HANDOFF). Took Kleon: canon lead, short, about sharing the build. Essays, no data. Changes: marketwright reach.md devlog step (what to post per stage, capture as you build, time box, stock and flow onto an owned page, opt-in mailing list; PR #3 merged, unreleased: marketwright's own session plans a minor release after its book list), beat vocab build-in-public and mailing-list, three question seeds, a study perspective (indie-ai-scout PR #15). everscout 0.10.7: lint accepts toc titles cited without their final period or number. readwright: `--drop-epigraphs` and a short-book tip handed to an agent. T-20261102-17.
 
 readwright 0.19.0 (PR #33, installed): `read --drop-epigraphs` (40 pairs dropped on Show Your Work!) and a short-book tip in Distilling a book. Trigger evals (step 4) not run.
+
+## [2026-11-02] discord | Follow feeds live
+
+Mark made a fresh server (1567019559620186263) and followed Comfy Org #announcements and #events, Stability #announcements, SwarmUI #announcements. Bot reads all three; only follow notices so far. Rows added to ai-video sources.md. r/StableDiffusion has no announcement channels.
