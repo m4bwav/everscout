@@ -506,3 +506,7 @@ Auto-pick (no beat-listed file left; an unlisted RAG book fits token-saving). 15
 ## [2026-11-03] beat | ai-video: ComfyUI tutorials sweep folded in; kb/method.md sweep section (0.11.0)
 
 Two rss rows (Comfy-Org/docs tutorials commits, workflow_templates releases), a monthly `sweep` row for docs.comfy.org/_llms/en/tutorials.txt, keep-list line; everscout-scan follows the method for `sweep` rows. From the comfyui-gen tutorials track (2026-10-30 to 11-03). The tutorials feed showed commits on 11-02 and 11-03, after the last sweep: the next ai-video scan should sweep.
+
+## [2026-11-03] library | Indie Video Game Development Work (Styhre) distilled into indie-game-marketing; readwright 0.28.0
+
+Auto-pick: no beat-listed file left; Doan already read (marketwright), Financial Shenanigans is only an audiobook, so took the last unread indie-games book. Nothing due; Judgment-call rows rechecked 2026-11-02. Two reader agents, ~30k of 94k words (Preface, ch. 1, 4-6, 8). 14 principles, 5 changes applied (indie-ai-scout PR #27: studio-funding and money-norm vocab, launch-day and funding seeds; edition note). readwright 0.28.0 (PR #44, released, installed): the readers disagreed on the page offset because it drifts 10 to 7 across chapters; toc now labels each page `(p. N)` and `read --section pN` reads by printed page. A first v0.28.0 release was cut before the PR merged (merge conflict with the refresh PR #43); deleted and re-tagged on the merge commit. No everscout changes needed. Trigger evals (step 4) not run. T-20261103-6.
