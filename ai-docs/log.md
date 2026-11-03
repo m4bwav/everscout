@@ -490,3 +490,11 @@ Book 3 of the 2026-11-02 distill order (token-saving canon lead). Nothing due. A
 - Read about 9k of 73k words myself (outsourcing, base projects, Early Access, two post-mortems); 2015 tool and portal lists skipped. 10 principles; applied four question seeds and an edition note (indie-ai-scout PR #24, merged), note via `lit distill`.
 - Tools: everscout 0.10.12 (PR #109, released, installed): `lit lint` accepts the part of a toc title before a dash. No readwright changes needed: the EPUB outline and `--max-chars` served.
 - Trigger evals (step 4) not run.
+
+## 2026-11-03 Alammar and Grootendorst, Hands-On Large Language Models
+
+- Auto-pick: first beat lead in `lit pick` (token-saving recent `lead`). `lit due`: nothing due. Judgment-call rows were rechecked 2026-11-02.
+- Three copies in the book folder; read the final 2024 PDF, not the early-access EPUBs. About 14k of 92k words (tokenizers, KV cache, conversation memory, chunking, reranking, query rewriting, RAG evaluation). 17 principles; four vocab levers and four question seeds applied (indie-ai-scout PR #25, merged), edition note via `lit distill`.
+- Tools: no everscout changes needed (`lit pick` hides every copy once the row is distilled). readwright 0.26.0 (PR #41, released, installed): `--skip-code` now drops Python listings in PDFs; skill tip on reading the final edition.
+- `lit pick` now lists no beat-listed files: the next pick is by topic fit from the unlisted files, or a `lit` research pass to add leads the folder holds.
+- Trigger evals (step 4) not run.
