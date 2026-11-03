@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.10.9 · 2026-11-02
+
+- `lit ingest` puts swapped EPUB metadata right: a title that is a person's name and an author field holding the book title (both in the file name) are swapped back, and the name becomes the author.
+- because: Tannen, *Conversational Style*: the EPUB's title read `Deborah Tannen`, so the book folder was named `deborah-tannen`.
+
 ## 0.10.8 · 2026-11-02
 
 - `lit add --id -` no longer matches another row whose id is also `-`; a placeholder id falls back to the title.

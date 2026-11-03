@@ -32,6 +32,14 @@ Keep canonical ids stable: renaming one splits its history in the tallies. A new
 - invisible-work: glue work, invisible work, preventive work, credit for prevention
 - ritual-opposition: pushback in interviews, adversarial interview, arguing with the interviewer
 
+## Interview pacing (Tannen 1984)
+
+- high-involvement-style: high-involvement style, fast talker, latching, rapid-fire questions
+- high-considerateness-style: high-considerateness style, waits for silence, long pauses, soft-spoken candidate
+- pause-length-mismatch: wait time, pause length, cut off, talked over, interrupted the candidate
+- machine-gun-questions: machine-gun questions, rapid-fire questioning, grilling, put on the spot
+- cooperative-overlap: cooperative overlap, finishing sentences, back-channel, talking over to agree
+
 ## Bias in screening and evaluation (Criado Perez 2019)
 
 - sex-disaggregated-data: sex-disaggregated data, gender data gap, data split by sex, funnel by gender, adverse impact ratio

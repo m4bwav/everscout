@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.10.8"
+VERSION = "0.10.9"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3367,6 +3367,16 @@ def lit_split_stem(stem):
     return lit_title_from_stem(t), authors
 
 
+def lit_unswap_meta(title, author, stem, authors):
+    """(title, authors) with EPUB metadata put right when its title and author fields are swapped: the title is a
+    person's name ("Deborah Tannen") and the author field is the book title, both found in the file name."""
+    key = f" {lit_norm_title(stem)} "
+    if (title and author and LIT_PAREN_NAME.match(title) and len(author.split()) > len(title.split())
+            and f" {lit_norm_title(title)} " in key and lit_norm_title(author.split(":")[0]) in key):
+        return author, authors or [title]
+    return title, authors
+
+
 def lit_find_in_name(tiers, name):
     """(tier, row) whose title appears whole in a file name, else (None, None); the longest title wins."""
     key = f" {lit_norm_title(name)} "
@@ -3699,6 +3709,8 @@ def cmd_lit_ingest(a):
     mt = re.search(r"^title:\s*(.+)$", info, re.M | re.I)
     mt = mt.group(1).strip() if mt else ""
     stem_title, stem_authors = lit_split_stem(stem)
+    ma = re.search(r"^author:\s*(.+)$", info, re.M | re.I)
+    mt, stem_authors = lit_unswap_meta(mt, ma.group(1).strip() if ma else "", stem, stem_authors)
     from_stem = not a.title and (not mt or LIT_JUNK_TITLE.search(mt))
     title = a.title or (stem_title if from_stem else mt)
     meta, tiers, searches = lit_load(b) if os.path.exists(lit_path(b)) else ({}, {t: [] for t in LIT_TIERS}, [])
