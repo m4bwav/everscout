@@ -542,3 +542,11 @@ Auto-pick: no beat-listed file left; global-economics had the fewest distilled b
 ## 2026-11-03: downtempo recent tier pass
 
 `lit due` all current; `lit pick` still holds nothing fitting a beat, so no book distilled. Rechecked downtempo's Recent rows that rested on one source: Bedroom Beats & B-Sides (+ Reverb, DJ Mag), Renegade Snares (+ Brooklyn Rail review, Attack interview), Balearic (authors filled: Luis Costa Plans, Christian Len; + Ibiza Spotlight launch, Substack review). All stay leads. No tool changes needed; no readwright changes needed (no book read). Next: ask Mark for books; the leads in each beat's literature.md are the shopping list.
+
+
+## [2026-11-03] library | Zhai and Massung, Text Data Management and Analysis distilled into token-saving; tokenwright 0.2.16, readwright 0.32.0
+
+Auto-pick, as the prompt asks, though the last two sessions had stopped to ask for books: an academic retrieval text (ACM Books, 2016) fills classical groundwork the beat's LLM books skip. Nothing due; no Judgment-call rows. Read about 6k of 188k words. 12 principles, 5 changes applied (indie-ai-scout PR #29, tokenwright PR #44, note). Verdict: trustworthy but mostly off-beat. Canon row rests on one kind of evidence, reason stated; the search found no syllabus. The tokenwright lever is unmeasured for token savings.
+Tools: readwright 0.32.0 (PR #48): PDF drop-cap digits and glued running heads cleaned; skill tip on section versus chapter numbers. No everscout changes needed.
+Trigger evals (step 4) run: 3/3 on 0.11.3, baseline delta +0.25 on both triggers. T-20261103-9.
+Next: the folder is thin for the beats; buy from the leads in each beat's literature.md, or keep auto-picking with lower yield.

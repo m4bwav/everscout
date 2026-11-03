@@ -237,3 +237,8 @@ Fourth of the 2026-11-02 distill order; marketwright had not taken it. Bithell G
 ### T-20261103-8: Economics DeMYSTiFieD (Fox and Dodge, McGraw-Hill 2012), auto-pick, into global-economics
 
 No beat-listed file left; picked the thinnest beat the folder feeds. Slip: `lit ingest` refused the path as `lit pick` prints it (relative to the book folder); fixed in 0.11.3 with a test. A reader agent sampled ~5k of 112k words (ch. 11-17), 9 principles, 5 changes, lint exit 0 first run. Applied: 2 vocab (gnp, deflation), 2 question seeds, note; row added to canon with Open Library evidence. Verdict thin: the beat already had it from Arnold 11e. Pass.
+
+
+### T-20261103-9: Text Data Management and Analysis (Zhai, Massung, ACM Books 2016), auto-pick, into token-saving; trigger evals
+
+Manual distillation: `lit lint` exit 0, 12 principles, 5 changes applied, `lit distill` wrote the note. `claude plugin eval . --case 'library-*'` on 0.11.3: 3/3 (library-trigger-1 and -2 with 1.00, without 0.75; decoy 1.00). Both triggers hit max_turns 3 after the skill loaded, as in T-20261031-2.
