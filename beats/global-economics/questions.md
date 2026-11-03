@@ -23,6 +23,7 @@ Two or three seeds from different categories. Economists answer data and method 
 - [method] Does the relationship hold with a different sample window?
 - [method] What is the identification here: a difference in differences, an event study?
 - [method] Is the growth figure per person, and is it annualised from one quarter?
+- [method] Which inputs went into that Taylor-rule rate: headline or core inflation, which output gap, what r-star?
 
 ## Interpretation
 
@@ -37,6 +38,7 @@ Two or three seeds from different categories. Economists answer data and method 
 - [interpretation] Are the firms that cut staff for AI now rehiring?
 - [interpretation] How much of the decision was already priced in, and what was the surprise?
 - [interpretation] Did the jobless rate fall because people found work or because they stopped looking?
+- [interpretation] Is the rise in unemployment from job losers, or from reentrants and new entrants looking again?
 - [interpretation] Does the jobs-at-risk figure count tasks that could be automated or jobs actually lost, and over what years?
 - [interpretation] Is the lead measured in frontier models, in deployment and data, or in chips and compute?
 - [interpretation] Did the state AI plan meet its own dated targets, and what did the guidance funds waste?

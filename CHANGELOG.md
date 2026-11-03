@@ -2,6 +2,10 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.11.1 · 2026-11-03
+
+- `lit add` linking a row to an ingested book also writes the row's title into book.md and learnings.md, so `lit distill` finds the row when the file's title differs (Arnold, Economics 11e: file "ECONOMICS, 11TH EDITION", row "Economics (11th ed.)"). global-economics: fed funds, administered rates, Taylor rule and currency peg vocab; two question seeds.
+
 ## 0.11.0 · 2026-11-03
 
 - kb/method.md "Sweeping a docs or tutorial index": find the llms.txt or sitemap, watch the docs repo's path-filtered commit feed, diff against the last sweep's list, read pages not titles, record adopt/considered outcomes as notes, monthly cadence. kb/platforms.md: GitHub `commits/<branch>/<path>.atom`.

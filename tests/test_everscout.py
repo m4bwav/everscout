@@ -1692,6 +1692,19 @@ class LiteratureTests(WorkspaceTest):
             self.assertIn("book_id: OL7W", open(os.path.join(d, fn), encoding="utf-8").read())
         self.assertIn("tier: canon", open(os.path.join(d, "book.md"), encoding="utf-8").read())
 
+    def test_linked_row_without_id_is_found_by_its_own_title(self):
+        book = os.path.join(self.tmp, "ECONOMICS, 11TH EDITION.txt")
+        open(book, "w", encoding="utf-8").write("CHAPTER ONE\nSynthetic text.\n")
+        with mock.patch.object(E, "find_readwright", return_value=None):
+            self.run_cli("lit", "ingest", book, "--beat", "test-beat")
+        code, out, _ = self.add("--tier", "recent", "--title", "Economics (11th ed.)", "--year", "2014", "--why", "w",
+                                "--evidence", "https://example.org/e")
+        self.assertIn("linked to the ingested", out)
+        d = os.path.join(E.data_dir(self.cfg(), "test-beat"), "books", "economics-11th-edition")
+        fm = E.parse_frontmatter(open(os.path.join(d, "learnings.md"), encoding="utf-8").read())[0]
+        tiers = E.lit_load(E.get_beat(self.cfg(), "test-beat"))[1]
+        self.assertIsNotNone(E.lit_find(tiers, fm["title"])[1])
+
     def test_ingest_lint_distill(self):
         self.add("--tier", "canon", "--title", "The Classic", "--year", "1990", "--id", "OL9W", "--why", "w", "--evidence", "https://example.org/s")
         book = os.path.join(self.tmp, "classic.txt")

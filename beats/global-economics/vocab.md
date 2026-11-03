@@ -46,6 +46,7 @@ Indicator aliases include the common abbreviations; watch for false matches on s
 - participation-rate: labor force participation, labour force participation, LFPR, participation rate, prime-age employment
 - u6: U-6, underemployment, discouraged workers, involuntary part-time
 - long-term-unemployment: long-term unemployed, long-term unemployment
+- fed-funds-rate: federal funds rate, fed funds, effective federal funds rate, EFFR, fed funds target range
 
 ## Institutions
 
@@ -78,6 +79,7 @@ Indicator aliases include the common abbreviations; watch for false matches on s
 - employ-america: Employ America, Core-Cast, MacroSuite
 - global-linkages-lab: Global Linkages Lab, TiRADE
 - nbs-china: National Bureau of Statistics of China, China's National Bureau of Statistics, NBS China, China Statistical Yearbook
+- fed-administered-rates: IORB, interest on reserve balances, ON RRP, overnight reverse repo facility, Standing Repo Facility, discount window
 
 ## Policies
 
@@ -100,6 +102,7 @@ Indicator aliases include the common abbreviations; watch for false matches on s
 - jones-act: Jones Act, Jones Act waiver
 - section-338: Section 338
 - genius-act: GENIUS Act
+- taylor-rule: Taylor rule, policy rule, rules versus discretion
 
 ## Themes
 
@@ -137,6 +140,7 @@ Indicator aliases include the common abbreviations; watch for false matches on s
 - guidance-funds: government guidance funds, state venture funds, AI development plan
 - crowding-out: crowding out, crowd out, crowds out
 - policy-lags: policy lags, long and variable lags, recognition lag
+- currency-peg: currency peg, fixed exchange rate, currency board, devaluation, defend the peg
 
 ## Regions
 
