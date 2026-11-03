@@ -23,6 +23,7 @@ The most important books of all time for this subject (yearly recheck).
 | Why Nations Fail | Daron Acemoglu, James Robinson | 2012 | OL16568759W | A required text on development-economics syllabi such as Carleton's; it argues institutions explain why some countries grow and others do not. | https://carleton.ca/economics/wp-content/uploads/sites/112/2026/08/ECON3508_Vivek_F26.pdf | lead |
 | Lords of Finance | Liaquat Ahamed | 2009 | OL13650534W | Won the 2010 Pulitzer Prize for History and the 2009 FT business book award; it shows how four central bankers turned a crash into the Depression. | https://www.pulitzer.org/winners/liaquat-ahamed | lead |
 | Crashed | Adam Tooze | 2018 | OL19752591W | Won the 2019 Lionel Gelber Prize and made NYT and FT books-of-the-year lists; the standard global history of the 2008 crisis. | https://en.wikipedia.org/wiki/Adam_Tooze | lead |
+| Economics DeMYSTiFieD | Melanie Fox; Eric Dodge | 2012 | OL16343000W | Plain primer; checked against Arnold 11e | https://openlibrary.org/works/OL16343000W | distilled |
 
 ## Recent
 

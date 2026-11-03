@@ -233,3 +233,7 @@ Fourth of the 2026-11-02 distill order; marketwright had not taken it. Bithell G
 ### T-20261103-7: Overdeliver (Kurtz, Hay House 2019), auto-pick, into indie-game-marketing
 
 `lit pick` listed no beat-listed file; picked Overdeliver (unlisted, direct-response marketing) for indie-game-marketing. Ingested (32 sections, 94k words, index and further reading: trust check passed). A reader agent read chs. 4, 5, 6, 9 and the takeaways with `--max-chars 6000`, 13 principles, 9 changes, lint exit 0 first run. Slip: marketwright had read the same book earlier the same day (PRs #15, #16) and its `ai-docs/reading` notes were not in `books_read_index`, so `lit pick` could not hide it; two feed rows were already made. Fixed in config (read index now includes `marketwright/ai-docs/reading@origin/main`; Overdeliver and Press Reset now hidden). Applied: indie-ai-scout PR #28 (2 vocab, 3 questions, 1 perspective), marketwright 0.4.2 PR #19 (plan across the catalogue), note. Distilled. Pass.
+
+### T-20261103-8: Economics DeMYSTiFieD (Fox and Dodge, McGraw-Hill 2012), auto-pick, into global-economics
+
+No beat-listed file left; picked the thinnest beat the folder feeds. Slip: `lit ingest` refused the path as `lit pick` prints it (relative to the book folder); fixed in 0.11.3 with a test. A reader agent sampled ~5k of 112k words (ch. 11-17), 9 principles, 5 changes, lint exit 0 first run. Applied: 2 vocab (gnp, deflation), 2 question seeds, note; row added to canon with Open Library evidence. Verdict thin: the beat already had it from Arnold 11e. Pass.
