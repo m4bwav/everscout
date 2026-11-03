@@ -40,6 +40,9 @@ Two to four seeds from at least two categories. Lead with a short, true thanks f
 - [hiring] In promotion or level calibration, what evidence counts for incidents someone prevented, against incidents they fixed?
 - [hiring, ai] If your screen or AI ranker uses signals from outside the CV (GitHub activity, open-source work, side projects), have you measured who passes by group and by whether they have care duties?
 - [hiring] Who records why each raise or promotion was given, and does anyone review those decisions as a set?
+- [hiring] Do people who want promotion get the written criteria and the names of the decision makers, or do they learn them by asking?
+- [hiring] Of the people promoted or hired into a first manager role last year, how many were women, and does anyone compare that with the pool below?
+- [hiring] When was pay last audited by gender and level, and was a gap found by audit or by a leak?
 - [interviews] How long do your interviewers wait after a question before rephrasing or moving on, and does anyone track which candidates got cut off?
 - [interviews] When a candidate's answer seemed to have no point, did a second interviewer or the written notes agree, or was the point there in a different order?
 - [hiring] When you suspect a rating reflects a candidate's accent, style or background more than the answer, what do you do: re-score, hold the verdict, or ask for a work sample or a second interviewer?

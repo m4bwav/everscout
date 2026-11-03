@@ -34,6 +34,7 @@ The most important books of the last five years (quarterly recheck).
 |---|---|---|---|---|---|---|
 | The Staff Engineer's Path | Tanya Reilly | 2022 | OL28062031W | Recommended on Gergely Orosz's Pragmatic Engineer reading list; it defines the senior IC roles companies now hire for. | https://blog.pragmaticengineer.com/my-reading-list/ | lead |
 | Co-Intelligence: Living and Working with AI | Ethan Mollick | 2024 | OL37565105W | On Forbes' must-read tech books of 2024 and a New York Times bestseller; the most read account of what AI does to skilled work and to how juniors learn it. | https://relayto.com/e/forbes-10-must-read-tech-books-of-2024-k8ik3lvv3633e | distilled |
+| Show Your Worth | Shelmina Babai Abji | 2022 |  | User's copy; McGraw Hill career guide by a former IBM VP; first-promotion (broken rung) and promotion-process vocabulary, behaviour-based interviewing; anecdotal | https://prnewswire.com/news-releases/new-book-by-author-shelmina-babai-abji-available-june-21st-301569854.html | distilled |
 
 ## Latest
 

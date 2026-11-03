@@ -14,7 +14,7 @@ Keep canonical ids stable: renaming one splits its history in the tallies. A new
 - take-home: take-home, take home assignment, take-home project
 - system-design: system design, system design interview, SD round
 - object-oriented-design: OOD, object-oriented design, low-level design, LLD
-- behavioral: behavioral interview, behavioural interview, behavioral round, STAR method
+- behavioral: behavioral interview, behavioural interview, behavioral round, STAR method, behavior-based interviewing, behaviour-based interview
 - superday: superday
 - onsite: onsite, on-site, on-site interview, in-person interview, final loop, final loops, final round
 - ai-allowed-interview: AI-assisted interview, AI allowed interview, AI Code Craft, Coding with AI round, interview with Copilot, interview with Cursor, AI-assisted coding, AI-assisted coding round, AI assisted coding interview, vibe coding interview
@@ -59,6 +59,12 @@ Keep canonical ids stable: renaming one splits its history in the tallies. A new
 - testimonial-injustice: testimonial injustice, epistemic injustice
 - hermeneutical-injustice: hermeneutical injustice, no word for it, could not name what happened
 - pre-emptive-exclusion: never interviewed, never asked, screened out before a call
+
+## Promotion and advancement (Abji 2022)
+
+- broken-rung: broken rung, first rung, first promotion to manager, first-level promotion gap
+- promotion-criteria: promotion criteria, promotion process, promotion decision makers, promotion readiness plan
+- pay-audit: pay audit, salary transparency, pay equity review, pay gap
 
 ## Screening and channels
 

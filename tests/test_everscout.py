@@ -1741,6 +1741,24 @@ class LiteratureTests(WorkspaceTest):
         code, out, _ = self.run_cli("validate", "--beat", "test-beat")
         self.assertEqual(code, 0, out)
 
+    def test_distill_without_row_names_lit_add(self):   # Show Your Worth 2026-11-03: distill said only "list row not found"
+        book = os.path.join(self.tmp, "unlisted.txt")
+        open(book, "w", encoding="utf-8").write("CHAPTER ONE\nText.\n")
+        with mock.patch.object(E, "find_readwright", return_value=None):
+            self.run_cli("lit", "ingest", book, "--beat", "test-beat")
+        d = os.path.join(E.data_dir(self.cfg(), "test-beat"), "books")
+        slug = os.listdir(d)[0]
+        lp = os.path.join(d, slug, "learnings.md")
+        text = open(lp, encoding="utf-8").read()
+        text = text.replace("1. TODO one principle in plain words (ch. N)", "1. A point (ch. 1)")
+        text = text.replace("| beat/vocab.md | TODO | 1 | proposed |", "| note | a caveat | 1 | applied |")
+        text = text.replace("One paragraph: worth it or not, for whom, what to skip.", "Fine.")
+        open(lp, "w", encoding="utf-8").write(text)
+        code, out, err = self.run_cli("lit", "distill", slug, "--beat", "test-beat")
+        self.assertEqual(code, 0, err + out)
+        self.assertIn("not found (add it: lit add --beat test-beat", out)
+        self.assertIn("--status distilled", out)
+
     def test_distill_keeps_a_skip_row(self):
         self.add("--tier", "recent", "--title", "The Thin Book", "--year", "2025", "--id", "OL8W", "--why", "w",
                  "--evidence", "https://example.org/s", "--status", "skip")
