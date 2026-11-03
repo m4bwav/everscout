@@ -840,6 +840,11 @@ def discord_messages_url(channel_id, after=None, before=None, limit=100):
     return f"{DISCORD_API}/channels/{channel_id}/messages?" + urllib.parse.urlencode(q)
 
 
+def discord_text_missing(msgs):
+    """True when a user message (type 0 or 19) came back with no content, attachments or embeds: the Message Content intent is off. System messages such as member joins never carry text."""
+    return any(m.get("type", 0) in (0, 19) and not m.get("content") and not m.get("attachments") and not m.get("embeds") for m in msgs or [])
+
+
 def parse_discord_messages(data, feed_url="", guild_id="", community=""):
     """Items from GET /channels/{id}/messages. Authors are dropped (conduct: no handles; Discord's
     Developer Policy 16: no profiling). Messages with no text are skipped: empty content on others'

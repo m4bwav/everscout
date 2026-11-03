@@ -145,6 +145,11 @@ class ParserTests(unittest.TestCase):
         self.assertIn("image", items[0]["media"])
         self.assertEqual(items[0]["kind"], "post")
 
+    def test_discord_text_missing_ignores_system_messages(self):
+        self.assertFalse(S.discord_text_missing([{"type": 7, "content": ""}]))
+        self.assertTrue(S.discord_text_missing([{"type": 0, "content": ""}]))
+        self.assertFalse(S.discord_text_missing([{"type": 0, "content": "", "attachments": [{"id": "1"}]}]))
+        self.assertFalse(S.discord_text_missing([{"type": 19, "content": "hi"}]))
     def test_reddit_thread_comments(self):
         items = S.parse_reddit(reddit_thread_atom(replies=[("c1", "fan", "what tools?", ago(2))]))
         self.assertEqual([i["kind"] for i in items], ["post", "comment"])

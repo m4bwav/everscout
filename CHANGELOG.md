@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.10.3 · 2026-11-02
+
+- `es_discord.py read` no longer warns that the Message Content intent is off when the only messages are system messages (the bot's own member-join message has no text); `discord_text_missing` checks user messages only.
+- `kb/discord.md`: set Installation > Install Link to None before turning Public Bot off, or Discord refuses the save.
+- because: the first live run on Mark's own server (2026-11-02).
 ## 0.10.2 · 2026-11-02
 
 - `lit ingest` splits trailing parentheses off a file name's title: person names (`(Gilbert Mizrahi)`, `(A B, C D)`) become `authors:` in book.md, a year or publisher (`(2016)`, `(Packt Publishing)`) is dropped; other parentheses (`(3rd ed)`) stay. A run-together subtitle with no colon cannot be told apart and stays in the title.
