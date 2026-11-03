@@ -242,3 +242,7 @@ No beat-listed file left; picked the thinnest beat the folder feeds. Slip: `lit 
 ### T-20261103-9: Text Data Management and Analysis (Zhai, Massung, ACM Books 2016), auto-pick, into token-saving; trigger evals
 
 Manual distillation: `lit lint` exit 0, 12 principles, 5 changes applied, `lit distill` wrote the note. `claude plugin eval . --case 'library-*'` on 0.11.3: 3/3 (library-trigger-1 and -2 with 1.00, without 0.75; decoy 1.00). Both triggers hit max_turns 3 after the skill loaded, as in T-20261031-2.
+
+### T-20261103-10: How Large Language Models Work (Raff, Farris, Biderman, Manning 2025), auto-pick, into token-saving
+
+Manual distillation: `lit lint` exit 0, 11 principles, 8 changes applied, 1 rejected, `lit distill` wrote the note. `beat-check` 0 errors. Trigger evals not rerun.
