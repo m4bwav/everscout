@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.9.6"
+VERSION = "0.9.7"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3862,7 +3862,16 @@ def lit_toc_titles(d):
     """Section titles from a book folder's toc.txt (`  12.   Cards  (344 w)`), lower case, four letters or more."""
     p = os.path.join(d, "toc.txt")
     titles = [m.group(1).strip().lower() for m in re.finditer(r"^\s*\d+\.\s+(.+?)\s+\([\d,]+ w\)\s*$", read(p) if os.path.isfile(p) else "", re.M)]
-    return {t for t in titles if len(t) >= 4}
+    out = set(titles)
+    for t in titles:
+        # Interview books title every chapter alike (`INTERVIEW (in: RODRIGO PRIETO: MEXICO)`): its parts and the surname count too.
+        if "(in:" in t:
+            for part in re.split(r"[:()]|\bin:", t):
+                part = part.strip()
+                out.add(part)
+                if " " in part:
+                    out.add(part.split()[-1])
+    return {t for t in out if len(t) >= 4}
 
 
 def lit_toc_match(title, text):

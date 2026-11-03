@@ -182,6 +182,12 @@ Add a new model version as its own line when people argue about the difference (
 - over-the-shoulder: over-the-shoulder, over the shoulder, OTS shot, reverse shot
 - dutch-angle: dutch angle, dutch tilt, canted angle, canted frame
 - three-quarter-angle: three-quarter angle, three-quarter view, angle-plus-angle
+- long-take: long take, oner, one-take shot, single take, unbroken shot
+- circular-track: 360 track, 360-degree tracking shot, circular dolly, orbit shot, arc shot
+- reportage-style: reportage style, documentary style, handheld realism, available light
+- flicker-light: firelight, candlelight, flickering light, fire flicker
+- muted-color-look: bleach bypass, desaturated look, pre-flashing, muted colours
+- painterly-reference: Caravaggio lighting, chiaroscuro, Vermeer light, painterly lighting
 - visual-structure: visual structure, visual components, Bruce Block
 - contrast-affinity: contrast and affinity, visual intensity
 - story-intensity: story intensity graph, intensity curve
