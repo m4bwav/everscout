@@ -229,3 +229,7 @@ Fourth of the 2026-11-02 distill order; marketwright had not taken it. Bithell G
 - Reliability check passed: publisher, author's IBM VP record, broken-rung figure traced to Women in the Workplace 2019.
 - readwright collapsed the EPUB into one 70k-word section (chapters are bare-number paragraphs); read by grep offsets; fix handed to readwright.
 - `lit ingest`, `lit lint` (one uncited principle, fixed), 6 changes applied (2 vocab, 3 questions, note), `lit distill` said "list row not found" with no hint; `lit add --status distilled` linked it after. Fixed in 0.11.2 with a test.
+
+### T-20261103-7: Overdeliver (Kurtz, Hay House 2019), auto-pick, into indie-game-marketing
+
+`lit pick` listed no beat-listed file; picked Overdeliver (unlisted, direct-response marketing) for indie-game-marketing. Ingested (32 sections, 94k words, index and further reading: trust check passed). A reader agent read chs. 4, 5, 6, 9 and the takeaways with `--max-chars 6000`, 13 principles, 9 changes, lint exit 0 first run. Slip: marketwright had read the same book earlier the same day (PRs #15, #16) and its `ai-docs/reading` notes were not in `books_read_index`, so `lit pick` could not hide it; two feed rows were already made. Fixed in config (read index now includes `marketwright/ai-docs/reading@origin/main`; Overdeliver and Press Reset now hidden). Applied: indie-ai-scout PR #28 (2 vocab, 3 questions, 1 perspective), marketwright 0.4.2 PR #19 (plan across the catalogue), note. Distilled. Pass.
