@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.10.7"
+VERSION = "0.10.8"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3313,7 +3313,7 @@ def lit_find(tiers, ref):
     key = lit_norm_title(ref)
     for t in LIT_TIERS:
         for r in tiers[t]:
-            if (ref and r["id"] and r["id"].lower() == ref.lower()) or (key and lit_norm_title(r["title"]) == key):
+            if (ref and r["id"] not in ("", "-") and r["id"].lower() == ref.lower()) or (key and lit_norm_title(r["title"]) == key):
                 return t, r
     return None, None
 
@@ -3465,7 +3465,7 @@ def cmd_lit_add(a):
     if not os.path.exists(lit_path(b)):
         shutil.copy(os.path.join(ROOT, "beats", "_template", "literature.md"), lit_path(b))
     meta, tiers, searches = lit_load(b)
-    t, r = lit_find(tiers, a.id or a.title)
+    t, r = lit_find(tiers, a.id if a.id not in (None, "", "-") else a.title)
     if r is None:
         if not (a.title and a.tier):
             fail("a new book needs --title and --tier")
