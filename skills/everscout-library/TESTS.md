@@ -216,3 +216,9 @@ Fourth of the 2026-11-02 distill order; marketwright had not taken it. Bithell G
 ### T-20261103-3: The Indie Game Developer Handbook (Hill-Whittall, 2015), auto-pick, into indie-ai-games
 
 `lit pick` listed it first among beat leads (indie-ai-games canon `lead`); not in any beat's books or the plugin-learnings index. EPUB, 73k words, 262 sections. Read about 9k words (sec. 23-25 outsourcing, 36, 39, 96, 98) with `--max-chars`; dated tool and portal lists skipped. 10 principles; applied: four question seeds (commission contracts and AI use, split asset work, base templates, who tested; indie-ai-scout PR #24) and an edition note. Lint refused `(Life of Pixel post-mortem)` against the toc title `Life of Pixel—Our First PC and Mac Launch`; 0.10.12 accepts the part before a dash. No readwright changes needed: the EPUB outline and `--max-chars` cuts served the read.
+
+## T-20261103-7 Arnold, Economics 11e into global-economics (auto-pick)
+
+- Pick: no beat-listed file; global-economics had the fewest distilled books of the beats the folder can feed. One reader agent, ~25k of 553k words (ch. 6, 7, 13 + appendix, 15, 18, 35).
+- `lit ingest`, `lit add` (linked), `lit lint` 0 errors, `lit distill` first said "list row not found": the linked row's title differed from the file's. Fixed in 0.11.1 with a test; distill then marked the row distilled.
+- 16 principles, 7 changes applied (4 vocab, 2 questions, edition note).

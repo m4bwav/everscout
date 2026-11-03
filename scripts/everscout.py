@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.11.0"
+VERSION = "0.11.1"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3559,6 +3559,8 @@ def lit_link_ingested(cfg, b, row, tier):
                 if row.get("id"):
                     s = re.sub(r"^book_id: -\s*$", f"book_id: {row['id']}", s, count=1, flags=re.M)
                 s = re.sub(r"^tier: -\s*$", f"tier: {tier}", s, count=1, flags=re.M)
+                # the row's title, so lit distill finds the row when the file's title differs ("ECONOMICS, 11TH EDITION")
+                s = re.sub(r"^title: .*$", lambda m: f"title: {row['title']}", s, count=1, flags=re.M)
                 write(p, s)
         return name
     return ""
