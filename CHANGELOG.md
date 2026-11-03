@@ -2,6 +2,12 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.11.0 · 2026-11-03
+
+- kb/method.md "Sweeping a docs or tutorial index": find the llms.txt or sitemap, watch the docs repo's path-filtered commit feed, diff against the last sweep's list, read pages not titles, record adopt/considered outcomes as notes, monthly cadence. kb/platforms.md: GitHub `commits/<branch>/<path>.atom`.
+- ai-video beat: rows for the ComfyUI docs tutorials commit feed and Comfy-Org/workflow_templates releases, a monthly sweep row for docs.comfy.org's tutorials index, tutorials in the keep list. everscout-scan runs `sweep` rows by the method.
+- because: Mark asked (2026-11-03) to fold the ComfyUI tutorials sweep and tutorial sweeping in general into the beat and everscout, after the comfyui-gen sweep (2026-10-30 to 11-03) tried about thirty tutorial pages.
+
 ## 0.10.12 · 2026-11-03
 
 - `lit lint` accepts the part of a toc title before a dash as a citation: `(Life of Pixel)` for `Life of Pixel—Our First PC and Mac Launch`.

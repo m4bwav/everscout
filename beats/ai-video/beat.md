@@ -35,7 +35,7 @@ Follows people who make video with generative models: short films, music videos,
 
 ## Keep and skip
 
-- Keep: a maker's own piece with the method or tools named; "workflow included" posts; release threads where makers compare results; long troubleshooting threads that end in a fix; festival results; pricing, licence and policy changes.
+- Keep: a maker's own piece with the method or tools named; "workflow included" posts; release threads where makers compare results; long troubleshooting threads that end in a fix; festival results; pricing, licence and policy changes; new or changed official tutorials and templates (ComfyUI docs, swept monthly).
 - Skip: reposts of viral clips without the maker, vendor showreels, "top 10 generators" posts, requests for free credits, single-shot "look what X can do" posts with no method and no discussion.
 
 ## Engagement notes

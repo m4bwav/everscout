@@ -23,6 +23,8 @@ The watch list. Columns and markers: `beats/_template/sources.md` and `kb/SCHEMA
 | r/VideoEditing | reddit | sentiment | mixed | no | no | | ~ about 3 a day; kept for reference |
 | "video model" | hn | news | n/a | no | yes | | ✓ 2026-09-26: 26 stories over 30 points in 90 days; model names alone return little |
 | #aivideo@mastodon.social | mastodon | fediverse | open | no | yes | | ✓ 2026-09-26 feed; low volume |
+| https://github.com/Comfy-Org/docs/commits/main/tutorials.atom | rss | docs | n/a | no | yes | | ✓ 2026-11-03; commits to docs.comfy.org's tutorials folder (newest 2026-11-03); the cue for an early tutorials sweep (kb/method.md "Sweeping a docs or tutorial index") |
+| Comfy-Org/workflow_templates | github | releases | n/a | no | yes | | ✓ 2026-11-03; the templates behind the tutorials; a new template is usually a new model with native support |
 | Comfy-Org/ComfyUI | github | releases | n/a | no | yes | | ✓ 2026-09-26; moved from comfyanonymous; v0.37.0 on 2026-09-21 |
 | https://github.com/Wan-Video/Wan2.2/commits.atom | rss | releases | n/a | no | yes | | ✓ 2026-09-27; the repo publishes no releases or tags, so commits (newest 2026-09-21) |
 | Lightricks/LTX-2 | github | releases | n/a | no | yes | | ✓ 2026-09-26; v1.3.0 on 2026-08-26 (the old LTX-Video feed is stale) |
