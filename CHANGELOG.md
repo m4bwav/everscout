@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.10.12 · 2026-11-03
+
+- `lit lint` accepts the part of a toc title before a dash as a citation: `(Life of Pixel)` for `Life of Pixel—Our First PC and Mac Launch`.
+- because: Hill-Whittall's post-mortem citations were refused until rewritten with `ch. 2`.
+
 ## 0.10.11 · 2026-11-03
 
 - `lit ingest` splits a trailing ` - Author Name` off file-name titles, as it already did `(Author Name)`.
