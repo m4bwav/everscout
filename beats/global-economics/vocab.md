@@ -47,6 +47,8 @@ Indicator aliases include the common abbreviations; watch for false matches on s
 - u6: U-6, underemployment, discouraged workers, involuntary part-time
 - long-term-unemployment: long-term unemployed, long-term unemployment
 - fed-funds-rate: federal funds rate, fed funds, effective federal funds rate, EFFR, fed funds target range
+- gnp: GNP, GNI, gross national product, gross national income
+
 
 ## Institutions
 
@@ -141,6 +143,8 @@ Indicator aliases include the common abbreviations; watch for false matches on s
 - crowding-out: crowding out, crowd out, crowds out
 - policy-lags: policy lags, long and variable lags, recognition lag
 - currency-peg: currency peg, fixed exchange rate, currency board, devaluation, defend the peg
+- deflation: deflation, disinflation, falling prices, debt deflation
+
 
 ## Regions
 

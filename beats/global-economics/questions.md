@@ -14,6 +14,8 @@ Two or three seeds from different categories. Economists answer data and method 
 - [data] How did you deflate it: CPI, PCE or the GDP deflator?
 - [data] Why that base year or starting point?
 - [data] Which series separates platform drivers from taxi and livery work (CPS Contingent Worker Supplement, 1099 counts)?
+- [data] Is that GDP or GNI, and does the gap matter here because of foreign-owned production or profit flows?
+
 
 ## Method
 
@@ -42,6 +44,8 @@ Two or three seeds from different categories. Economists answer data and method 
 - [interpretation] Does the jobs-at-risk figure count tasks that could be automated or jobs actually lost, and over what years?
 - [interpretation] Is the lead measured in frontier models, in deployment and data, or in chips and compute?
 - [interpretation] Did the state AI plan meet its own dated targets, and what did the guidance funds waste?
+- [interpretation] Did the unemployment rate fall because people found jobs, or because people stopped looking and left the labour force?
+
 
 ## Tools and craft
 

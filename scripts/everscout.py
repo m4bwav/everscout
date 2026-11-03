@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.11.2"
+VERSION = "0.11.3"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3722,6 +3722,9 @@ def cmd_lit_ingest(a):
     cfg = config()
     b = get_beat(cfg, a.beat)
     path = expand(a.file)
+    folder = expand(cfg.get("books_folder") or "")
+    if not os.path.isfile(path) and folder and os.path.isfile(os.path.join(folder, a.file)):
+        path = os.path.join(folder, a.file)   # a path as lit pick prints it, relative to the book folder
     if not os.path.isfile(path):
         fail(f"no such file: {path}")
     rw = find_readwright(cfg)

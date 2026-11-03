@@ -2,6 +2,10 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.11.3 · 2026-11-03
+
+- `lit ingest` accepts a path as `lit pick` prints it, relative to the book folder (Economics DeMYSTiFieD run). global-economics: gnp and deflation vocab, two question seeds, Fox and Dodge 2012 in canon.
+
 ## 0.11.2 · 2026-11-03
 
 - `lit distill` with no list row names the `lit add ... --status distilled` command to add one (Show Your Worth run).

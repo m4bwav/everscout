@@ -1705,6 +1705,21 @@ class LiteratureTests(WorkspaceTest):
         tiers = E.lit_load(E.get_beat(self.cfg(), "test-beat"))[1]
         self.assertIsNotNone(E.lit_find(tiers, fm["title"])[1])
 
+    def test_ingest_takes_a_path_as_pick_prints_it(self):
+        folder = os.path.join(self.tmp, "books")
+        os.makedirs(os.path.join(folder, "Sub"))
+        open(os.path.join(folder, "Sub", "Picked Book.txt"), "w", encoding="utf-8").write("CHAPTER ONE\nSynthetic text.\n")
+        cfgp = os.path.join(self.home, "config.json")
+        with open(cfgp, encoding="utf-8") as f:
+            cfg = json.load(f)
+        cfg["books_folder"] = folder
+        with open(cfgp, "w", encoding="utf-8") as f:
+            json.dump(cfg, f)
+        with mock.patch.object(E, "find_readwright", return_value=None):
+            code, out, err = self.run_cli("lit", "ingest", "Sub/Picked Book.txt", "--beat", "test-beat")
+        self.assertEqual(code, 0, err)
+        self.assertTrue(os.path.isdir(os.path.join(E.data_dir(self.cfg(), "test-beat"), "books", "picked-book")))
+
     def test_ingest_lint_distill(self):
         self.add("--tier", "canon", "--title", "The Classic", "--year", "1990", "--id", "OL9W", "--why", "w", "--evidence", "https://example.org/s")
         book = os.path.join(self.tmp, "classic.txt")

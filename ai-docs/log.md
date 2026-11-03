@@ -526,3 +526,11 @@ Auto-pick: no beat-listed file left; global-economics had the fewest distilled b
 - 13 principles, 9 changes applied: indie-ai-scout PR #28 (vocab control-test and back-catalogue, three questions, a direct-response perspective), marketwright 0.4.2 (PR #19, released and installed: plan.md plans for the next game across the catalogue), note rows. Two feed rows were already in reach.md from marketwright's own earlier read of the book (PR #15).
 - Tools: `lit pick` could not see marketwright's reading notes; Mark's config `books_read_index` now includes `D:/m4bwa/Claude/Projects/Ai/marketwright/ai-docs/reading@origin/main` (config only, no code change). No everscout code changes needed. No readwright changes needed: the reader reported no friction (sections read with `--max-chars 6000`).
 - Left: empty worktree folders `Ai/_wt-overdeliver` and `Ai/_wt-mw-overdeliver` (Windows refused the delete; git already unregistered them); remove by hand.
+
+## [2026-11-03] library | Fox and Dodge, Economics DeMYSTiFieD distilled into global-economics; everscout 0.11.3
+
+- Auto-pick: no beat-listed file left; global-economics is the thinnest beat the folder can feed (personal-sites and downtempo have nothing there). Nothing due; Judgment-call rows rechecked 2026-11-02.
+- One reader agent, ~5k of 112k words (sampled ch. 11-17). 9 principles, 5 changes applied (gnp and deflation vocab, two question seeds, note). Verdict: thin primer, money chapters pre-2008 framework; skip if Arnold is read.
+- Tools: everscout 0.11.3 (`lit ingest` resolves `lit pick` paths). readwright: reader asked for multi-section read, omitted-figure markers and OPF metadata; an agent built them (see readwright CHANGELOG).
+- The folder's beat-fitting non-fiction is now exhausted except LLM-application books (token-saving, already four). Next: a tier research pass for personal-sites and downtempo, or ask Mark for books.
+- Trigger evals (step 4) not run.
