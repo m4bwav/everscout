@@ -534,3 +534,7 @@ Auto-pick: no beat-listed file left; global-economics had the fewest distilled b
 - Tools: everscout 0.11.3 (`lit ingest` resolves `lit pick` paths). readwright: reader asked for multi-section read, omitted-figure markers and OPF metadata; an agent built them (see readwright CHANGELOG).
 - The folder's beat-fitting non-fiction is now exhausted except LLM-application books (token-saving, already four). Next: a tier research pass for personal-sites and downtempo, or ask Mark for books.
 - Trigger evals (step 4) not run.
+
+## 2026-11-03: personal-sites recent tier pass
+
+`lit due`: every tier current; no rows start "Judgment call". `lit pick` lists only accounting, fiction, piano, Blender 2.4-2.6 and LLM how-to files, none fitting an unread beat need, so no book was distilled (auto-pick found nothing worth it). Ran the HANDOFF's tier pass for personal-sites instead: added Matuzović, *Web Accessibility Cookbook* (O'Reilly 2024) to Recent as a lead (publisher listing + WebAxe accessibility reading list). Considered and left out: Grant, *CSS in Depth* 2e (one kind of evidence found). No tool changes needed; no readwright changes needed (no book read).

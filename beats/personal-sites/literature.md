@@ -1,6 +1,6 @@
 ---
 canon_checked: 2026-10-30
-recent_checked: 2026-10-30
+recent_checked: 2026-11-03
 latest_checked: 2026-10-30
 ---
 
@@ -29,6 +29,7 @@ The most important books of the last five years (quarterly recheck).
 | title | authors | year | id | why | evidence | status |
 |---|---|---|---|---|---|---|
 | Indie Microblogging | Manton Reece | 2022 | OL27682209W | It argues for owning your domain and writing there, and is the core IndieWeb book. | https://journal.jatan.space/indie-microblogging-by-manton-reece-book-review/ | lead |
+| Web Accessibility Cookbook | Manuel Matuzović | 2024 | - | It is the recipe book for accessible markup and CSS, the layer a hand-built site controls; O'Reilly 2024, and on WebAxe's maintained accessibility reading list. | https://www.schweitzer-online.de/en/buch/Matuzovic/Web-Accessibility-Cookbook/9781098145606/A69851665/ https://www.webaxe.org/web-accessibility-books/ | lead |
 
 ## Latest
 
