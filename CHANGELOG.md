@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.10.6 · 2026-11-02
+
+- `es_discord.py peek INVITE` reads what a server shows the public with no token (invite lookup, widget on or off); `row --followed SERVER` marks a channel fed by Follow on another server's announcement channel. kb/discord.md gains "Servers you can't add the bot to".
+- because: Mark asked how to read servers like r/StableDiffusion without an admin adding the bot.
+
 ## 0.10.5 · 2026-11-02
 
 - `lit ingest` drops a leading publisher from a spaced file name (`Apress The Blender Python API ...` titled and slugged with the publisher).

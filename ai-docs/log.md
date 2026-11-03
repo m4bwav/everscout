@@ -430,3 +430,7 @@ Auto-pick: nothing due, no beat-listed file unread; the only unread beat-fitting
 ## [2026-11-02] library | The Blender Python API (Conlan) distilled into game-design; everscout 0.10.5
 
 Auto-pick: nothing due; the read-elsewhere Blender API book named by the last handoff. Distilled from the 2026-10-22 plugin-learnings read plus greps: recent row (Judgment call: own copy; Springer DOI), mesh-errors vocab, two Levels and generation seeds, edition note (indie-ai-scout PR #14). polywright already held every idea, so no plugin changes. everscout 0.10.5: spaced file names lose a leading publisher. readwright: running-head chapter split and U+FFFD leader collapse handed to an agent in its own worktree.
+
+## [2026-11-02] discord | no-admin routes; everscout 0.10.6
+
+Mark asked how to read servers like r/StableDiffusion with no admin. Tested: invite lookup works without a token (discord.gg/stablediffusion is Stability's official server, 315k; Comfy Org 62k); widgets on but presence only; message text only through a bot or Follow on an announcement channel into Mark's server. Added `es_discord.py peek` and `row --followed`, kb/discord.md section, test. Waits on Mark: create feed channels and click Follow.

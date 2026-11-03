@@ -23,6 +23,14 @@ Checked 2026-11-02 against Discord's docs (docs.discord.com) and the Developer P
 5. **Find the channels.** `es_discord.py guilds`, then `es_discord.py channels <guild id>`. Developer Mode (User Settings > Advanced) also shows "Copy ID" on right-click.
 6. **Add the row.** `es_discord.py row <guild id> <channel id>` prints a watch-list row for the beat's `sources.md` (kind `discord`, source `guild/channel`, engage `no`). The scan then reads it with the other sources, at one request a second.
 
+## Servers you can't add the bot to (no admin)
+
+A bot needs someone with Manage Server; using your own account from a script is a self-bot and is never done. What a server exposes without either:
+
+- **`es_discord.py peek <invite>`** (no token): name, description, member and online counts from the invite lookup, and whether the admin turned the widget on. The widget only lists voice channels and who is online, never messages. Tested 2026-11-02: discord.gg/stablediffusion is Stability's official "Stable Diffusion" server (about 315k members), not the r/StableDiffusion one; comfyorg is "Comfy Org" (about 62k). Both widgets on, presence only.
+- **The Follow route (message text, no admin):** join the server as yourself; on an announcement channel (megaphone icon) click **Follow**, pick your own server and a receiving channel (you need Manage Webhooks there, which the owner has). New posts are copied into that channel and the bot reads it like any other. Add the row with `es_discord.py row <your guild> <receiving channel> --followed "<their server>"`. Covers releases and news only; normal chat channels have no public route.
+- **Web mirrors:** Answer Overflow (answeroverflow.com) shows forum channels of servers that opted in; some servers mirror to GitHub Discussions, Discourse or a subreddit. Check the welcome, rules and resources channels for a bot or API policy before writing to an admin.
+
 ## Commands
 
 | command | does |
@@ -34,7 +42,8 @@ Checked 2026-11-02 against Discord's docs (docs.discord.com) and the Developer P
 | `threads GUILD` / `threads GUILD --archived CHANNEL` | active threads, or a channel's archived public threads (forum posts are threads) |
 | `read CHANNEL [--guild ID] [--days 3 \| --after ID \| --before ID] [--max 300] [--json]` | messages, oldest first, authors dropped, in everscout's item shape |
 | `search GUILD QUERY` | Discord's guild message search; documented with Read Message History and the Message Content intent, but whether a bot token may call it is untested (2026-11-02) |
-| `row GUILD CHANNEL` | the sources.md row |
+| `row GUILD CHANNEL [--followed SERVER]` | the sources.md row; `--followed` marks a channel fed by Follow |
+| `peek INVITE` | no token: what a server shows the public (name, counts, widget on or off) |
 | `leave GUILD --yes` | remove the bot from a server |
 
 ## Limits and errors
