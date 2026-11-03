@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.10.2 · 2026-11-02
+
+- `lit ingest` splits trailing parentheses off a file name's title: person names (`(Gilbert Mizrahi)`, `(A B, C D)`) become `authors:` in book.md, a year or publisher (`(2016)`, `(Packt Publishing)`) is dropped; other parentheses (`(3rd ed)`) stay. A run-together subtitle with no colon cannot be told apart and stays in the title.
+- because: a Mizrahi prompt-engineering PDF was titled with its whole file name, author included.
+
 ## 0.10.1 · 2026-11-02
 
 - `lit lint` accepts a numbered chapter label as a citation: a toc title `Level 11: They All Want You Dead` (or `Bonus Level 5: ...`) is cited `(Level 11)`; a label ending in a digit no longer matches a longer number (`level 1` is not `level 12`).
