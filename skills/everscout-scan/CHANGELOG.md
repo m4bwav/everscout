@@ -2,6 +2,11 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`.
 
+### C-20261102-D · 2026-11-02 · Discord through an invited bot
+- because: Mark's request (2026-11-02); research `ai-docs/research/2026-11-02-discord-bot-access.md`, decision `ai-docs/decisions/2026-11-02-discord-bot-read-only.md`
+- files: SKILL.md, references/kb/ (synced, new discord.md)
+- Discord rows need DISCORD_BOT_TOKEN; skip on missing token, 401 or 403; spot reads via es_discord.py; the bot never posts.
+
 ### C-20261016-1 · 2026-10-16 · Reddit discovery without a listing, captures, fetchwright budget
 - because: plan `ai-docs/plans/2026-10-16-reddit-discovery-after-arctic-shift.md` (user said build it, 2026-10-16); lane plan `2026-10-11-reddit-lane-after-rss.md` steps 3 and 4
 - files: SKILL.md (Step 2, Output), references/procedure.md (new section G), references/kb/ (synced)

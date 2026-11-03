@@ -1,7 +1,13 @@
 # Handoff
 
-Updated 2026-11-02 (FilmCraft distilled; everscout 0.9.7, readwright 0.16.0; before that Epistemic Injustice distilled; everscout 0.9.6, readwright 0.14.0; before that Reverse Centaur distilled; readwright 0.12.0; before that User Friendly distilled; readwright 0.11.1; before that Phoenix and Taylor distilled; 0.9.2, Prompt Engineering for LLMs; before that 0.9.1, Invisible Women; 0.7.0: beat literature, see the first section). Before that 2026-10-16 (Reddit discovery built, unreleased; see the first section). Before that 2026-10-15 (0.4.0: Reddit through Arctic Shift). Before that 2026-09-28 (first all-beats scan; 0.3.0: beat statistics built). Everscout 0.1.0 was built in one session from indie-ai-scout 0.3.1; 0.2.0 added the everscout-ask skill (interrogate a beat like a reporter) and the tech-hiring beat, the first built from scratch. Read [log.md](log.md) for what happened, `decisions/` for the architecture, and `research/` for the evidence.
+Updated 2026-11-02 (Discord through an invited bot, 0.10.0, see the section below; before that FilmCraft distilled; everscout 0.9.7, readwright 0.16.0; before that Epistemic Injustice distilled; everscout 0.9.6, readwright 0.14.0; before that Reverse Centaur distilled; readwright 0.12.0; before that User Friendly distilled; readwright 0.11.1; before that Phoenix and Taylor distilled; 0.9.2, Prompt Engineering for LLMs; before that 0.9.1, Invisible Women; 0.7.0: beat literature, see the first section). Before that 2026-10-16 (Reddit discovery built, unreleased; see the first section). Before that 2026-10-15 (0.4.0: Reddit through Arctic Shift). Before that 2026-09-28 (first all-beats scan; 0.3.0: beat statistics built). Everscout 0.1.0 was built in one session from indie-ai-scout 0.3.1; 0.2.0 added the everscout-ask skill (interrogate a beat like a reporter) and the tech-hiring beat, the first built from scratch. Read [log.md](log.md) for what happened, `decisions/` for the architecture, and `research/` for the evidence.
 
+
+## 0.10.0 (2026-11-02): Discord through the user's own bot
+
+- `scripts/es_discord.py` + kind `discord` + `kb/discord.md`; read-only by decision (`decisions/2026-11-02-discord-bot-read-only.md`), evidence in `research/2026-11-02-discord-bot-access.md`.
+- Waits on Mark: create the Discord application and bot (kb/discord.md steps 1-3, he does it, the agent never handles the token), then `es_discord.py check`; first live read is untested, and so is `search` with a bot token. Record both in the research note when run.
+- Then: ask an admin of a server a beat needs (ai-video and indie-ai-games have obvious Discord homes) with the invite message, and add rows with `es_discord.py row`.
 
 ## 0.7.0 (2026-10-30): beat literature
 

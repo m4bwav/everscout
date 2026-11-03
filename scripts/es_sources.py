@@ -55,6 +55,7 @@ DEFAULT_HOST_GAPS = {
     "openlibrary.org": 1,  # identified requests may make 3 a second (openlibrary.org/developers/api, 2026-10-30); stay at one
     "arctic-shift.photon-reddit.com": 2,  # the maintainer asks for "a couple requests per second" at most
     "generativelanguage.googleapis.com": 5,  # fetchwright thread reads (Gemini URL context); free-tier quotas are per minute and per day
+    "discord.com": 1,  # bot REST reads (es_discord.py); Discord allows 50 a second, a scout needs far fewer
     "default": 3,
 }
 
@@ -144,6 +145,7 @@ class Fetcher:
         self.fetched = 0
         self.cached = 0
         self.timeout = 40
+        self.host_headers = {}  # host -> extra headers (the Discord bot token and its required User-Agent)
         self.retry = True  # False: fail at once on 429, 503 or 406 (statistics collection must not stall a scan)
 
     # state
@@ -222,6 +224,7 @@ class Fetcher:
         gap = self.gap_for(host)
         is_reddit = host == "reddit.com" or host.endswith(".reddit.com")  # not arctic-shift.photon-reddit.com
         headers = {"User-Agent": self.reddit_ua if is_reddit else self.ua, "Accept": accept}
+        headers.update(self.host_headers.get(host, {}))
         tries = 0
         while True:
             tries += 1
@@ -812,6 +815,64 @@ def parse_huggingface(data, feed_url=""):
 
 
 # ---------------------------------------------------------------- convenience URL builders for generic feeds
+
+# ---------------------------------------------------------------- Discord (a bot the server invited; es_discord.py)
+
+DISCORD_API = "https://discord.com/api/v10"
+DISCORD_EPOCH_MS = 1420070400000
+
+
+def discord_snowflake(ts):
+    """The smallest message id at or after epoch seconds ts (for the `after` query)."""
+    return str(max(0, int(ts * 1000) - DISCORD_EPOCH_MS) << 22)
+
+
+def discord_snowflake_time(sid):
+    return ((int(sid) >> 22) + DISCORD_EPOCH_MS) / 1000
+
+
+def discord_messages_url(channel_id, after=None, before=None, limit=100):
+    q = {"limit": str(min(100, max(1, int(limit))))}
+    if after:
+        q["after"] = str(after)
+    elif before:
+        q["before"] = str(before)
+    return f"{DISCORD_API}/channels/{channel_id}/messages?" + urllib.parse.urlencode(q)
+
+
+def parse_discord_messages(data, feed_url="", guild_id="", community=""):
+    """Items from GET /channels/{id}/messages. Authors are dropped (conduct: no handles; Discord's
+    Developer Policy 16: no profiling). Messages with no text are skipped: empty content on others'
+    messages means the Message Content intent is off."""
+    out = []
+    for m in data if isinstance(data, list) else []:
+        if m.get("type") not in (0, 19, None) or (m.get("author") or {}).get("bot"):
+            continue  # joins, pins and other system messages; other bots' output
+        text = (m.get("content") or "").strip()
+        embeds = m.get("embeds") or []
+        links = [a.get("url", "") for a in m.get("attachments") or []] + [e.get("url", "") for e in embeds]
+        extra = " ".join(((e.get("title") or "") + " " + (e.get("description") or "")).strip() for e in embeds).strip()
+        if not text and not extra:
+            continue
+        cid, mid = m.get("channel_id", ""), m.get("id", "")
+        out.append({
+            "id": f"discord:{mid}",
+            "platform": "discord",
+            "kind": "post",  # chat has no posts and comments; a reply is as much signal as a new message
+            "title": (text or extra).splitlines()[0][:120],
+            "author": "",
+            "url": f"https://discord.com/channels/{guild_id or '@me'}/{cid}/{mid}",
+            "link": next((l for l in links if l), ""),
+            "published": m.get("timestamp") or "",
+            "text": "\n".join(filter(None, (text, extra)))[:6000],
+            "media": media_of(*links),
+            "community": community or f"discord:{cid}",
+            "comments": (m.get("thread") or {}).get("message_count"),
+            "points": sum(r.get("count", 0) for r in m.get("reactions") or []) or None,
+            "feed": feed_url,
+        })
+    return out
+
 
 def youtube_channel_feed(channel_id):
     if channel_id.startswith("PL"):

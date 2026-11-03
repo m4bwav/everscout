@@ -65,9 +65,13 @@ Checked 2026-10-16 (plan `ai-docs/plans/2026-10-16-reddit-discovery-after-arctic
 
 World Bank `api.worldbank.org/v2/...?format=json`, IMF SDMX 3.0 `api.imf.org/external/sdmx/3.0/...` and DataMapper `imf.org/external/datamapper/api/v1/...`, OECD SDMX `sdmx.oecd.org/public/rest/...` (60 data queries an hour), ECB `data-api.ecb.europa.eu/service/data/...`, BIS `stats.bis.org/api/v2/...`, Eurostat `ec.europa.eu/eurostat/api/dissemination/...`, MusicBrainz `/ws/2/...` (1 a second, contact in the User-Agent), ListenBrainz `/1/stats/sitewide/artists` and `/1/explore/fresh-releases`, Civitai `/api/v1/models`. These are data, not discussion: a report cites them, a scan pairs them with the commentary.
 
+## Discord (your own bot, invited by each server)
+
+Checked 2026-11-02. A free bot that a server's admin added can read that server's channels through the REST API; `scripts/es_discord.py` does it and scans read `discord` rows (source `guild_id/channel_id`). Needs the Message Content intent and `DISCORD_BOT_TOKEN`. Self-bots and user tokens are banned. Read a few days at a time into paraphrased notes; no archives, no author names, no training. Read-only: the bot never posts. Setup, the invite message and the rules: [discord.md](discord.md).
+
 ## Closed, or forbidden to scrape
 
-X/Twitter (no free reads), Threads keyword search (needs Meta approval), Instagram and TikTok (business or academic only), Discord (only servers your bot was invited to; self-bots banned), Telegram (the `t.me/s/` preview answers, but the terms forbid scraping), Bandcamp (no API; the Acceptable Use Policy forbids scraping and AI ingestion; only `daily.bandcamp.com/feed` is fine), SoundCloud (API closed), Resident Advisor (no API). Everscout does not read these. A beat that needs one says so in `beat.md` and relies on the user's own reading plus the web search.
+X/Twitter (no free reads), Threads keyword search (needs Meta approval), Instagram and TikTok (business or academic only), Telegram (the `t.me/s/` preview answers, but the terms forbid scraping), Bandcamp (no API; the Acceptable Use Policy forbids scraping and AI ingestion; only `daily.bandcamp.com/feed` is fine), SoundCloud (API closed), Resident Advisor (no API). Everscout does not read these. A beat that needs one says so in `beat.md` and relies on the user's own reading plus the web search.
 
 ## When a source fails
 

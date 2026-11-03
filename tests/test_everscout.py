@@ -1968,5 +1968,98 @@ class SkillRefsTest(unittest.TestCase):
         self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
 
 
+class DiscordTests(unittest.TestCase):
+    MSGS = [
+        {"id": "1300000000000000002", "channel_id": "222", "type": 0, "timestamp": "2026-11-01T10:00:00+00:00",
+         "author": {"id": "9", "username": "someone"}, "content": "New sampler settings\nworks at 20 steps",
+         "attachments": [{"url": "https://cdn.discordapp.com/a/x.png"}], "reactions": [{"count": 3}]},
+        {"id": "1300000000000000003", "channel_id": "222", "type": 19, "message_reference": {"message_id": "1"},
+         "author": {"id": "8", "username": "other"}, "content": "thanks", "timestamp": "2026-11-01T10:05:00+00:00"},
+        {"id": "1300000000000000004", "channel_id": "222", "type": 7, "author": {"id": "7"}, "content": ""},
+        {"id": "1300000000000000005", "channel_id": "222", "type": 0, "author": {"id": "6", "bot": True}, "content": "bot spam"},
+        {"id": "1300000000000000006", "channel_id": "222", "type": 0, "author": {"id": "5"}, "content": ""},
+    ]
+
+    def test_parse_drops_authors_bots_system_and_empty(self):
+        items = S.parse_discord_messages(self.MSGS, guild_id="111")
+        self.assertEqual([i["id"] for i in items], ["discord:1300000000000000002", "discord:1300000000000000003"])
+        self.assertTrue(all(i["author"] == "" for i in items))
+        self.assertNotIn("someone", json.dumps(items))
+        self.assertEqual(items[0]["url"], "https://discord.com/channels/111/222/1300000000000000002")
+        self.assertEqual(items[0]["title"], "New sampler settings")
+        self.assertEqual((items[0]["points"], items[1]["kind"]), (3, "post"))
+        self.assertIn("image", items[0]["media"])
+
+    def test_snowflake_round_trip(self):
+        ts = 1761990000
+        self.assertAlmostEqual(S.discord_snowflake_time(S.discord_snowflake(ts)), ts, delta=1)
+
+    def test_feed_urls_and_kind(self):
+        self.assertIn("discord", E.KINDS)
+        row = {"kind": "discord", "source": "111111111111111111/222222222222222222"}
+        (url, _, parser), = E.feed_urls(row)
+        self.assertEqual(parser, "discord")
+        self.assertTrue(url.startswith("https://discord.com/api/v10/channels/222222222222222222/messages?"))
+        self.assertIn("after=", url)
+        self.assertEqual(E.feed_urls({"kind": "discord", "source": "#general"}), [])
+
+    def test_token_only_to_discord(self):
+        import es_discord as D
+        with mock.patch.dict(os.environ, {"DISCORD_BOT_TOKEN": "synthetic-token"}):
+            tmp = tempfile.mkdtemp()
+            seen = {}
+
+            def opener(req, timeout=0):
+                seen[urllib.parse.urlsplit(req.full_url).hostname] = dict(req.header_items())
+                return FakeResponse("[]")
+            try:
+                f = S.Fetcher(tmp, "ua", host_gaps={"default": 0, "discord.com": 0}, sleep=lambda s: None, opener=opener)
+                f.host_headers.update(D.host_headers())
+                f.get("https://discord.com/api/v10/channels/1/messages")
+                f.get("https://other.example/feed")
+            finally:
+                shutil.rmtree(tmp, ignore_errors=True)
+            self.assertEqual(seen["discord.com"]["Authorization"], "Bot synthetic-token")
+            self.assertTrue(seen["discord.com"]["User-agent"].startswith("DiscordBot ("))
+            self.assertNotIn("Authorization", seen["other.example"])
+
+    def test_cli_read_only_and_errors(self):
+        import es_discord as D
+        self.assertEqual(D.READ_PERMISSIONS, 1024 + 65536)
+        url = D.invite_url("123", guild="456")
+        self.assertIn("permissions=66560", url)
+        self.assertIn("scope=bot", url)
+        self.assertIn("guild_id=456", url)
+        self.assertTrue(D.intent_state(D.FLAG_MESSAGE_CONTENT_LIMITED).startswith("on"))
+        self.assertTrue(D.intent_state(0).startswith("OFF"))
+        src = open(os.path.join(ROOT, "scripts", "es_discord.py"), encoding="utf-8").read()
+        self.assertNotIn('method="POST"', src, "the bot never posts (decision 2026-11-02)")
+        self.assertNotIn('"PATCH"', src)
+        with mock.patch.dict(os.environ, {"DISCORD_BOT_TOKEN": ""}), mock.patch.object(D, "token", return_value=""):
+            with self.assertRaises(D.DiscordError):
+                D.call("/users/@me")
+
+    def test_read_pages_and_429(self):
+        import es_discord as D
+        import urllib.error
+        pages = [
+            urllib.error.HTTPError("u", 429, "rl", {}, io.BytesIO(b'{"retry_after": 0.1, "message": "slow"}')),
+            FakeResponse(json.dumps([{"id": str(100 + i), "channel_id": "2", "content": "x"} for i in range(100)])),
+            FakeResponse(json.dumps([{"id": "300", "channel_id": "2", "content": "y"}])),
+        ]
+        slept = []
+
+        def opener(req, timeout=0):
+            r = pages.pop(0)
+            if isinstance(r, Exception):
+                raise r
+            return r
+        with mock.patch.object(D, "token", return_value="t"):
+            msgs = D.read_channel("2", after="1", most=300, opener=opener, sleep=slept.append)
+        self.assertEqual(len(msgs), 101)
+        self.assertEqual(msgs[0]["id"], "100")
+        self.assertGreaterEqual(slept[0], 0.1)
+
+
 if __name__ == "__main__":
     unittest.main()
