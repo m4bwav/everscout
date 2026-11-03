@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.10.5"
+VERSION = "0.10.7"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3910,6 +3910,12 @@ def lit_toc_titles(d):
     titles = [m.group(1).strip().lower() for m in re.finditer(r"^\s*\d+\.\s+(.+?)\s+\([\d,]+ w\)\s*$", read(p) if os.path.isfile(p) else "", re.M)]
     out = set(titles)
     for t in titles:
+        # Titles ending in a period (`2. Think Process, Not Product.`) are cited without it, and without the chapter number.
+        bare = t.rstrip(" .")
+        out.add(bare)
+        m = re.match(r"\d+\.\s+(.+)", bare)
+        if m:
+            out.add(m.group(1))
         # Interview books title every chapter alike (`INTERVIEW (in: RODRIGO PRIETO: MEXICO)`): its parts and the surname count too.
         if "(in:" in t:
             for part in re.split(r"[:()]|\bin:", t):
