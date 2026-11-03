@@ -1601,6 +1601,16 @@ class LiteratureTests(WorkspaceTest):
         self.assertEqual(E.lit_title_from_stem("Some Book - Author"), "Some Book - Author")
         self.assertEqual(E.lit_title_from_stem("GenerativeDeepLearning"), "GenerativeDeepLearning")
 
+    def test_lit_split_stem_paren_author(self):
+        base = "Unlocking the Secrets of Prompt Engineering Master the art of creative language generation to accelerate your journey"
+        self.assertEqual(E.lit_split_stem(base + " (Gilbert Mizrahi)"), (base, ["Gilbert Mizrahi"]))
+        self.assertEqual(E.lit_split_stem("Deep Work (Cal Newport) (2016)"), ("Deep Work", ["Cal Newport"]))
+        self.assertEqual(E.lit_split_stem("Game Feel (Steve Swink, J. R. Smith) (Packt Publishing)"),
+                         ("Game Feel", ["Steve Swink", "J. R. Smith"]))
+        self.assertEqual(E.lit_split_stem("Some Book (3rd ed)"), ("Some Book (3rd ed)", []))
+        self.assertEqual(E.lit_split_stem("Python (programming)"), ("Python (programming)", []))
+        self.assertEqual(E.lit_split_stem("(Gilbert Mizrahi)"), ("(Gilbert Mizrahi)", []))
+
     def add(self, *args):
         return self.run_cli("lit", "add", "--beat", "test-beat", *args)
 

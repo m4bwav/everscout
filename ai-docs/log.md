@@ -403,3 +403,7 @@ Mark asked for a free, legal way to read Discord, with as much bot code in the p
 Auto-pick: `lit pick` listed no beat-listed file; *Level Up!* 3rd ed. (Wiley, Dec 2024) was read 2026-10-22 for plugin-learnings and its proposals landed 2026-10-23 (books track 9: roblox-agent, unity-agent, madnesswright, musicwright; ludowright cites it), but game-design had no row and no level-design vocabulary. Distilled from that read (git grep showed the plugin rows already applied, so this run fed the beat only): canon row, a Level design vocab section (13 terms), five level question seeds (indie-ai-scout PR #12, merged), book note. `lit due`: every tier current. Judgment-call recheck: none open (only `have` rows keep the label).
 
 Tool changes: everscout 0.10.1 (`lit lint` accepts numbered chapter labels such as `(Level 11)`; test). No readwright changes needed: no new reading this run (distilled from the earlier read). Installed everscout was updated to 0.10.0 at the start (main clone back on main).
+
+## [2026-11-02] fix | lit ingest splits (Author) off file-name titles (0.10.2)
+
+`lit_split_stem` in scripts/everscout.py: trailing parenthesized person names become book.md `authors:`, a year or publisher trailer is dropped, other parentheses stay. A colon-less run-together subtitle is not separable and stays. Found ingesting the Mizrahi prompt-engineering PDF; that book folder was left as is (another session owns it). Test: test_lit_split_stem_paren_author.

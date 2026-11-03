@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.10.1"
+VERSION = "0.10.2"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3339,6 +3339,30 @@ def lit_title_from_stem(stem):
     return t or stem
 
 
+LIT_PAREN_NAME = re.compile(r"^[A-Z][\w'.-]*(?: [A-Z][\w'.-]*){1,4}$")
+
+
+def lit_split_stem(stem):
+    """(title, authors) from a book file name. Trailing parentheses ("... (Gilbert Mizrahi)", "(Packt Publishing)", "(2020)")
+    come off: a year or a publisher is dropped, person names ("A B", "A B, C D", "A B & C D") become the authors.
+    A run-together subtitle with no colon stays in the title. The rest goes through lit_title_from_stem."""
+    t, authors = stem.strip(), []
+    while True:
+        m = re.search(r"\s*\(([^()]+)\)$", t)
+        if not m or not t[:m.start()].strip():
+            break
+        inner = m.group(1).strip()
+        names = [n.strip() for n in re.split(r",| & | and ", inner) if n.strip()]
+        if re.fullmatch(r"(19|20)\d\d", inner) or LIT_RELEASE_PUBLISHER.match(inner + " ") or re.search(r"publish|press\b", inner, re.I):
+            pass
+        elif not authors and names and all(LIT_PAREN_NAME.match(n) for n in names):
+            authors = names
+        else:
+            break
+        t = t[:m.start()].rstrip()
+    return lit_title_from_stem(t), authors
+
+
 def lit_find_in_name(tiers, name):
     """(tier, row) whose title appears whole in a file name, else (None, None); the longest title wins."""
     key = f" {lit_norm_title(name)} "
@@ -3670,7 +3694,9 @@ def cmd_lit_ingest(a):
     stem = os.path.splitext(os.path.basename(path))[0]
     mt = re.search(r"^title:\s*(.+)$", info, re.M | re.I)
     mt = mt.group(1).strip() if mt else ""
-    title = a.title or (lit_title_from_stem(stem) if not mt or LIT_JUNK_TITLE.search(mt) else mt)
+    stem_title, stem_authors = lit_split_stem(stem)
+    from_stem = not a.title and (not mt or LIT_JUNK_TITLE.search(mt))
+    title = a.title or (stem_title if from_stem else mt)
     meta, tiers, searches = lit_load(b) if os.path.exists(lit_path(b)) else ({}, {t: [] for t in LIT_TIERS}, [])
     tier, row = lit_find(tiers, a.id or title)
     if not row and not a.id:
@@ -3682,6 +3708,7 @@ def cmd_lit_ingest(a):
     os.makedirs(d, exist_ok=True)
     write(os.path.join(d, "book.md"), render_frontmatter({
         "title": title, "kind": "book", "beat": b.slug, "book_id": (row or {}).get("id") or a.id or "-", "tier": tier or "-",
+        **({"authors": ", ".join(stem_authors)} if stem_authors else {}),
         "file": path.replace(os.sep, "/"), "reader": "readwright" if rw else "none", "date": local_today()})
         + f"\n# {title}\n\nThe user's own copy, read for this beat. Never commit or redistribute the text.\n\n## readwright info\n\n```\n{info.strip()}\n```\n")
     if toc:
