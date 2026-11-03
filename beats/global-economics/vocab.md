@@ -130,6 +130,11 @@ Indicator aliases include the common abbreviations; watch for false matches on s
 - surveillance-pricing: surveillance pricing, personalized pricing, algorithmic pricing
 - algorithmic-wage-discrimination: algorithmic wage discrimination, algorithmic wage setting
 - enshittification: enshittification
+- us-china-ai-race: US-China AI race, AI superpowers, AI arms race, AI decoupling
+- chip-export-controls: chip export controls, AI chip ban, entity list, Ascend
+- ai-job-exposure: AI job exposure, automatable jobs, jobs at risk from AI, AI displacement
+- universal-basic-income: universal basic income, UBI, guaranteed income, social investment stipend
+- guidance-funds: government guidance funds, state venture funds, AI development plan
 - crowding-out: crowding out, crowd out, crowds out
 - policy-lags: policy lags, long and variable lags, recognition lag
 

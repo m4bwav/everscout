@@ -58,6 +58,8 @@ Updated 2026-11-02 (Epistemic Injustice distilled; everscout 0.9.6, readwright 0
 
 - 2026-11-02 (Blender): Acampora, *Python Scripting in Blender* distilled into game-design on Mark's pick (T-20261102-11): vocab, two question seeds (indie-ai-scout PR #11), polywright 0.5.3 (PR #43). readwright 0.15.0 (PR #27, installed). polywright PR #44 landed the stuck 2026-10-23 LEARNINGS entries; installed polywright now 0.5.3. Leftover: undeletable empty folder Ai/polywright-wt-learnings. Also in the folder, undistilled: *The Blender Python API* (Apress) PDF, Blain 6th ed. EPUB. No open everscout items. Next: `ES lit pick`, then the next book.
 
+- 2026-11-02 (AI Superpowers): Lee, *AI Superpowers* (2018) distilled into global-economics (auto-pick, T-20261102-12): recent row, five Themes vocab terms, three Interpretation questions, dated-forecast note. readwright 0.15.1 (PR #28, installed). Built-in beats (global-economics, tech-hiring, ai-video, downtempo, personal-sites) live in this repo: use an everscout worktree for their book runs. Open readwright items unchanged (footnotes inline, PDF tables and sidebars, small-caps splits). No open everscout items. Next: `ES lit pick`, then the next book.
+
 ## Reddit discovery built (2026-10-16, night), unreleased
 
 - Branch `feat/reddit-discovery` (PR to main): steps 1 to 6 of `plans/2026-10-16-reddit-discovery-after-arctic-shift.md`. Pickup of Reddit links during `fetch`, `discover list|add|mark`, `captures`, `new-note --capture`, `fetchwright.max_reads_per_scan` (exit 6), scan skill Step 2 and procedure G, kb rows. 74 tests. The plan's Status section lists how the build differs from its shape.
