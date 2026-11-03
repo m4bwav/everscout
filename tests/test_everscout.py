@@ -1620,6 +1620,15 @@ class LiteratureTests(WorkspaceTest):
         self.assertEqual(E.lit_split_stem("Python (programming)"), ("Python (programming)", []))
         self.assertEqual(E.lit_split_stem("(Gilbert Mizrahi)"), ("(Gilbert Mizrahi)", []))
 
+    def test_lit_unswap_meta(self):
+        stem = "Deborah Tannen - Conversational Style_ Analyzing Talk among Friends"
+        self.assertEqual(E.lit_unswap_meta("Deborah Tannen", "Conversational Style: Analyzing Talk among Friends", stem, []),
+                         ("Conversational Style: Analyzing Talk among Friends", ["Deborah Tannen"]))
+        self.assertEqual(E.lit_unswap_meta("Show Your Work!", "Austin Kleon", "Show Your Work - Austin Kleon", []),
+                         ("Show Your Work!", []))
+        self.assertEqual(E.lit_unswap_meta("Deborah Tannen", "Some Other Long Book Title", stem, []),
+                         ("Deborah Tannen", []))
+
     def add(self, *args):
         return self.run_cli("lit", "add", "--beat", "test-beat", *args)
 
