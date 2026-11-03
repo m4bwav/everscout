@@ -483,3 +483,10 @@ Book 3 of the 2026-11-02 distill order (token-saving canon lead). Nothing due. A
 - Read by two parallel reader agents; 17 principles, 16 changes all applied: indie-ai-scout PR #23, marketwright 0.4.1 (PR #18), note via `lit distill`.
 - Tools: readwright 0.25.0 (PR #40) `toc --group` from printed contents and page joins that no longer empty pages; everscout 0.10.11 (PR #107) trailing ` - Author` split. Both released and installed. A first tag of readwright v0.25.0 went on main before the PR merged (merge was blocked by a log commit); deleted and re-cut after the merge.
 - Trigger evals (step 4) not run.
+
+## 2026-11-03 Hill-Whittall, The Indie Game Developer Handbook
+
+- Auto-pick: first beat lead in `lit pick` (indie-ai-games canon `lead`), not in any beat's books or the plugin-learnings index. `lit due`: nothing due. Step 2 (Judgment-call rows) was done 2026-11-02.
+- Read about 9k of 73k words myself (outsourcing, base projects, Early Access, two post-mortems); 2015 tool and portal lists skipped. 10 principles; applied four question seeds and an edition note (indie-ai-scout PR #24, merged), note via `lit distill`.
+- Tools: everscout 0.10.12 (PR #109, released, installed): `lit lint` accepts the part of a toc title before a dash. No readwright changes needed: the EPUB outline and `--max-chars` served.
+- Trigger evals (step 4) not run.
