@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.10.4"
+VERSION = "0.10.5"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3329,8 +3329,12 @@ LIT_RELEASE_TAIL = re.compile(r"( (jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|
 def lit_title_from_stem(stem):
     """A readable title from a release-style file name ("0198237901.Oxford.University.Press.USA.Epistemic.Injustice...Aug.2007"):
     dots and underscores become spaces, then a leading ISBN, a leading publisher and a trailing month and year go.
+    A spaced name loses only a leading publisher ("Apress The Blender Python API ..."), when three words stay.
     Other file names come back unchanged."""
-    if " " in stem or stem.count(".") + stem.count("_") < 3:
+    if " " in stem:
+        t = LIT_RELEASE_PUBLISHER.sub("", stem, count=1)
+        return t if t != stem and len(t.split()) >= 3 else stem
+    if stem.count(".") + stem.count("_") < 3:
         return stem
     t = re.sub(r"[._]+", " ", re.sub(r"-[A-Za-z]{1,10}$", "", stem)).strip()   # "...EBOOK-kE": a release group's tag
     t = re.sub(r"^(97[89])?\d{9}[\dXx] ", "", t)
