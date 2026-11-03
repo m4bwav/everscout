@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.10.0"
+VERSION = "0.10.1"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3886,12 +3886,18 @@ def lit_toc_titles(d):
                 out.add(part)
                 if " " in part:
                     out.add(part.split()[-1])
+        # Chapters named by a numbered label (`Level 11: They All Want You Dead`, `Bonus Level 5: ...`) are cited by the label.
+        m = re.match(r"([a-z][a-z ]*\d+)\s*:", t)
+        if m:
+            out.add(m.group(1))
     return {t for t in out if len(t) >= 4}
 
 
 def lit_toc_match(title, text):
     """True when a toc title appears in text; a symbol in the title (OCR misreads like `€dge`) matches any one character."""
     pat = "".join(re.escape(c) if c.isascii() and (c.isalnum() or c in " '-,.:?!&") else "." for c in title)
+    if title[-1:].isdigit():
+        pat += r"(?!\d)"  # `level 1` must not match `level 12`
     return re.search(pat, text) is not None
 
 
