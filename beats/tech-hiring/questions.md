@@ -49,6 +49,9 @@ Two to four seeds from at least two categories. Lead with a short, true thanks f
 - [hiring] Which résumé signals make a candidate feel credible at once (an employer, a school, a GitHub profile), and how often has that first impression turned out wrong?
 - [hiring, ai] For an AI screener or interviewer, whose way of speaking was it taught to treat as clear, and who checks whether a weak answer is a gap in the rubric rather than in the candidate?
 
+- [hiring] Do your panel debriefs check who actually knew the material against who seemed to lead?
+- [hiring] Does the round allow only turn-taking or open discussion too, and have you seen who speaks more in each?
+
 ## Market and data
 
 - [data] Where did the numbers come from, and how did you count them?
@@ -70,4 +73,5 @@ Two to four seeds from at least two categories. Lead with a short, true thanks f
 
 - [outcome] What did the offer look like against what you expected, and did you negotiate?
 - [outcome] Looking back, what mattered most in getting the job?
+- [outcome] Did you ever ask directly about promotion, and what made that easy or hard?
 - [outcome] Was there an interview that felt unfair before you had a word for why, and what term later named it?

@@ -32,6 +32,12 @@ Keep canonical ids stable: renaming one splits its history in the tallies. A new
 - invisible-work: glue work, invisible work, preventive work, credit for prevention
 - ritual-opposition: pushback in interviews, adversarial interview, arguing with the interviewer
 
+## Expertise and floor (Tannen 1990)
+
+- expertise-downplaying: playing down expertise, undersold knowledge
+- rated-dominance: who seemed to lead, dominance ratings
+- collaborative-floor: one speaker at a time, overlapping talk, shared floor
+
 ## Interview pacing (Tannen 1984)
 
 - high-involvement-style: high-involvement style, fast talker, latching, rapid-fire questions
