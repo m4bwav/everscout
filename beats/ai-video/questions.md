@@ -84,3 +84,9 @@ Two or three seeds from different categories. Name the shot you mean ("the rooft
 - [ai] Did you change the shift when you changed the resolution, and what value held up?
 - [ai] How did you choose between takes: same seed and steps side by side, a blind pick, or a metric?
 - [ai] How did you keep a character LoRA from bleeding into everything: alpha and rank, a prompt without the trigger, prior images?
+
+## Cinematography choices (FilmCraft, 2026-11-02)
+
+- [craft] For a comedy beat, did you keep the camera still and the cut simple so the punch line read, or did a model-chosen move step on it?
+- [ai] Did you get a long take or orbit shot from one generation, or stitch it, and where did the stitch show?
+- [ai] How did you ask for firelight or candlelight that flickers, and did the model keep the light source motivated across the clip?

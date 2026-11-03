@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.9.7 · 2026-11-02
+
+- `lit lint` accepts an interviewee's name as a citation: interview books title every chapter `INTERVIEW (in: RODRIGO PRIETO: MEXICO)`, so "(Prieto interview)" failed lint and section numbers had to stand in. The parts of an `(in: ...)` title and the person's surname now count as toc names.
+- because: the FilmCraft run (skills/everscout-library/TESTS.md T-20261102-13).
+
 ## 0.9.6 · 2026-11-02
 
 - `lit pick` splits CamelCase only in file names with no separators: 0.9.5 turned `FilmCraft Cinematography - Mike Goodridge.epub` into "film craft", so a book read on 2026-10-22 listed as unread. It now shows as maybe read.
