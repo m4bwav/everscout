@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.10.10 · 2026-11-03
+
+- `fetch` marks near-duplicates: an item whose opening text (or title, for a bare link post) shares most word shingles with an earlier item gets `dup_of` the earlier id, shown as `dup of ID` in the listing; triage reads the first copy only. Word shingles and Jaccard overlap per Manning et al. sec. 19.6 (4-word shingles, 2 for titles, threshold 0.8).
+- because: *Introduction to Information Retrieval* (token-saving beat). On the indie-game-marketing cache it found 31 of 716 items were cross-posts (r/gamemarketing and r/gamedev copies of one post).
+
 ## 0.10.9 · 2026-11-02
 
 - `lit ingest` puts swapped EPUB metadata right: a title that is a person's name and an author field holding the book title (both in the file name) are swapped back, and the name becomes the author.
