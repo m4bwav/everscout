@@ -389,6 +389,11 @@ Kickoff (Mark's session) ran `lit due` (all current, no Judgment-call rechecks) 
 
 Tool changes: readwright 0.15.1 (PR #28, v0.15.1, installed): `read --out --max-chars` cuts at a clean break and prints where to resume. No everscout tool changes needed. Note: global-economics is a built-in beat in this repo, so its book run needs an everscout worktree, not an indie-ai-scout one.
 
+## [2026-11-02] library | FilmCraft Cinematography distilled into ai-video; everscout 0.9.7, readwright 0.16.0
+
+lit due: indie-game-marketing canon and recent due, but that beat was made minutes earlier by another session (untracked in the shared clone, marketwright feed), so it was left alone. No Judgment-call rows to recheck. Auto-picked *FilmCraft: Cinematography* because HANDOFF listed it as read 2026-10-22 and never distilled, and ai-video is the beat it fits. Evidence: NYFA's recommended cinematography books. cinewright already took the 2026-10-22 rules, so this run read the parts that read skipped (Ballhaus, Coutard, Cardiff, Young, glossary): 14 principles, vocab and questions applied (PR #87).
+
+Tool changes: everscout 0.9.7 (`lit lint` accepts interviewee names from `INTERVIEW (in: ...)` toc titles; test). readwright 0.16.0 (PR #29): `terms` view for glossaries; test. Trigger evals (step 4) not run this session.
 ## [2026-11-02] discord | Discord through the user's own invited bot (0.10.0)
 
 Mark asked for a free, legal way to read Discord, with as much bot code in the plugins as possible and current setup steps; the agent calls the bot (no forwarding to an AI API). Research (Developer Policy read through fetchwright, docs.discord.com gateway, message, reference and rate-limit pages) is in `research/2026-11-02-discord-bot-access.md`. Built `scripts/es_discord.py` (REST only, nothing hosted), source kind `discord`, per-host auth headers in the Fetcher, `kb/discord.md`, and the read-only decision. Tests 109 pass (six new). Untested live: no bot token on this machine yet; guild search for bots is undocumented. fetchwright and readwright got pointers (Discord pages are login-walled; read them with es_discord.py).

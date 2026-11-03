@@ -1880,6 +1880,15 @@ class LiteratureTests(WorkspaceTest):
         self.assertEqual(E.lit_gapped_title_hit(words, far), "")
         self.assertEqual(E.lit_gapped_title_hit("deep learning python".split(), lines), "")
 
+    def test_lint_accepts_interviewee_names(self):
+        d = os.path.join(self.tmp, "iv")
+        os.makedirs(d)
+        open(os.path.join(d, "toc.txt"), "w", encoding="utf-8").write("# x\n  17. INTERVIEW (in: RODRIGO PRIETO: MEXICO)  (3,091 w)\n")
+        t = E.lit_toc_titles(d)
+        self.assertIn("rodrigo prieto", t)
+        self.assertIn("prieto", t)
+        self.assertTrue(any(E.lit_toc_match(x, "prieto interview") for x in t))
+
     def test_lint_accepts_toc_section_names(self):
         d = os.path.join(self.tmp, "bk")
         os.makedirs(d)
