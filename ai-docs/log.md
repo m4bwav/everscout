@@ -498,3 +498,7 @@ Book 3 of the 2026-11-02 distill order (token-saving canon lead). Nothing due. A
 - Tools: no everscout changes needed (`lit pick` hides every copy once the row is distilled). readwright 0.26.0 (PR #41, released, installed): `--skip-code` now drops Python listings in PDFs; skill tip on reading the final edition.
 - `lit pick` now lists no beat-listed files: the next pick is by topic fit from the unlisted files, or a `lit` research pass to add leads the folder holds.
 - Trigger evals (step 4) not run.
+
+## [2026-11-03] library | Advanced Retrieval-Augmented Generation distilled into token-saving
+
+Auto-pick (no beat-listed file left; an unlisted RAG book fits token-saving). 15 principles; 5 changes applied: vocab and questions (indie-ai-scout PR #26), tokenwright 0.2.15 (PR #43, released, installed), book note. readwright 0.27.0 (PR #42, released, installed): `grep --per-section N`, plus a skill tip on formula placeholders and cut sentences in EPUBs. No everscout changes needed. Record: T-20261103-5.
