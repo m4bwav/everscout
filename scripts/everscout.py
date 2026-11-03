@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.10.10"
+VERSION = "0.10.11"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3383,7 +3383,7 @@ LIT_PAREN_NAME = re.compile(r"^[A-Z][\w'.-]*(?: [A-Z][\w'.-]*){1,4}$")
 def lit_split_stem(stem):
     """(title, authors) from a book file name. Trailing parentheses ("... (Gilbert Mizrahi)", "(Packt Publishing)", "(2020)")
     come off: a year or a publisher is dropped, person names ("A B", "A B, C D", "A B & C D") become the authors.
-    A run-together subtitle with no colon stays in the title. The rest goes through lit_title_from_stem."""
+    A trailing " - A B" (person names) is split off the same way. A run-together subtitle with no colon stays in the title. The rest goes through lit_title_from_stem."""
     t, authors = stem.strip(), []
     while True:
         m = re.search(r"\s*\(([^()]+)\)$", t)
@@ -3398,6 +3398,11 @@ def lit_split_stem(stem):
         else:
             break
         t = t[:m.start()].rstrip()
+    m = re.fullmatch(r"(.{3,}?) - ([^-()]+)", t)   # "The GameDev Business Handbook - Michael Futter"
+    if not authors and m and len(m.group(1).split()) >= 2:
+        names = [n.strip() for n in re.split(r",| & | and ", m.group(2)) if n.strip()]
+        if names and all(LIT_PAREN_NAME.match(n) for n in names):
+            t, authors = m.group(1).rstrip(), names
     return lit_title_from_stem(t), authors
 
 

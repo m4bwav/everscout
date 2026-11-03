@@ -1614,6 +1614,9 @@ class LiteratureTests(WorkspaceTest):
         base = "Unlocking the Secrets of Prompt Engineering Master the art of creative language generation to accelerate your journey"
         self.assertEqual(E.lit_split_stem(base + " (Gilbert Mizrahi)"), (base, ["Gilbert Mizrahi"]))
         self.assertEqual(E.lit_split_stem("Deep Work (Cal Newport) (2016)"), ("Deep Work", ["Cal Newport"]))
+        self.assertEqual(E.lit_split_stem("The GameDev Business Handbook - Michael Futter"),
+                         ("The GameDev Business Handbook", ["Michael Futter"]))
+        self.assertEqual(E.lit_split_stem("Pixel Art - a primer")[1], [])
         self.assertEqual(E.lit_split_stem("Game Feel (Steve Swink, J. R. Smith) (Packt Publishing)"),
                          ("Game Feel", ["Steve Swink", "J. R. Smith"]))
         self.assertEqual(E.lit_split_stem("Some Book (3rd ed)"), ("Some Book (3rd ed)", []))

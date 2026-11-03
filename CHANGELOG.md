@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.10.11 · 2026-11-03
+
+- `lit ingest` splits a trailing ` - Author Name` off file-name titles, as it already did `(Author Name)`.
+- because: *The GameDev Business Handbook - Michael Futter.pdf* was filed as `the-gamedev-business-handbook-michael` with the author in its title.
+
 ## 0.10.10 · 2026-11-03
 
 - `fetch` marks near-duplicates: an item whose opening text (or title, for a bare link post) shares most word shingles with an earlier item gets `dup_of` the earlier id, shown as `dup of ID` in the listing; triage reads the first copy only. Word shingles and Jaccard overlap per Manning et al. sec. 19.6 (4-word shingles, 2 for titles, threshold 0.8).
