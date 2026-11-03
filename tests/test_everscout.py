@@ -2067,6 +2067,14 @@ class LiteratureTests(WorkspaceTest):
             self.assertEqual(os.path.normcase(E.get_beat(E.config(), "test-beat").path),
                              os.path.normcase(os.path.join(other, "test-beat")))
 
+    def test_everscout_beats_env_warns_when_beat_is_elsewhere(self):
+        other = os.path.join(self.tmp, "wt-empty")
+        os.makedirs(other)
+        err = io.StringIO()
+        with mock.patch.dict(os.environ, {"EVERSCOUT_BEATS": other}), mock.patch("sys.stderr", err):
+            E.get_beat(E.config(), "test-beat")
+        self.assertIn("not in EVERSCOUT_BEATS", err.getvalue())
+
     def test_everscout_beats_env_missing_folder_fails(self):
         with mock.patch.dict(os.environ, {"EVERSCOUT_BEATS": os.path.join(self.tmp, "no-such-dir")}):
             with self.assertRaises(SystemExit):

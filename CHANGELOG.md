@@ -2,6 +2,10 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.11.5 · 2026-11-03
+
+- A beat outside `EVERSCOUT_BEATS` now warns instead of silently using another clone (You Just Don't Understand run: tech-hiring is built in, not in the beats repo). tech-hiring: expertise and floor vocab, three question seeds, a study note, the book's canon row.
+
 ## 0.11.4 · 2026-11-03
 
 - `lit pick` hides another copy of a read book by the title in its `book.md`, so a PDF twin no longer lists when the beats clone lags (Generative AI on Kubernetes run).

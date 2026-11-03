@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.11.4"
+VERSION = "0.11.5"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -630,6 +630,9 @@ def get_beat(cfg, slug):
             fail("which beat? pass --beat (known: " + ", ".join(beats) + ")")
     if slug not in beats:
         fail(f"no beat named {slug!r} (known: {', '.join(beats) or 'none'}); create one with `beat-new`")
+    env = [expand(d) for d in (os.environ.get("EVERSCOUT_BEATS") or "").split(os.pathsep) if d.strip()]
+    if env and os.path.normcase(os.path.dirname(beats[slug].rstrip("/\\"))) not in [os.path.normcase(d.rstrip("/\\")) for d in env]:
+        print(f"warning: beat {slug} is not in EVERSCOUT_BEATS; using {beats[slug]}", file=sys.stderr)
     return Beat(slug, beats[slug])
 
 

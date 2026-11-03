@@ -247,6 +247,10 @@ Manual distillation: `lit lint` exit 0, 12 principles, 5 changes applied, `lit d
 
 Manual distillation: `lit lint` exit 0, 11 principles, 8 changes applied, 1 rejected, `lit distill` wrote the note. `beat-check` 0 errors. Trigger evals not rerun.
 
+### T-20261103-12: You Just Don't Understand (Tannen 1990), auto-pick, into tech-hiring
+
+Manual distillation: `lit lint` exit 0, 12 principles, 6 changes applied, `lit distill` wrote the note. `beat-check` 0 errors. Trigger evals not rerun; the skill text did not change.
+
 ### T-20261103-11: Generative AI on Kubernetes (Huss, Zonca, O'Reilly 2026), auto-pick, into token-saving
 
 Manual distillation: `lit lint` exit 0, 11 principles, 6 changes applied, 1 rejected, `lit distill` wrote the note. `beat-check` 0 errors. Trigger evals not rerun.
