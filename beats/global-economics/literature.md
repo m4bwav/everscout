@@ -40,6 +40,7 @@ The most important books of the last five years (quarterly recheck).
 | Inside Palantir | J. Hayden Elsen | 2025 | - | Skip: Mark's copy; self-published, 14k words, no sources, and spot checks found misdated lawsuits and an invented Senate hearing (learnings 2026-11-02). | https://fortune.com/2017/04/25/palantir-settles-federal-discrimination-lawsuit | skip |
 | The Reverse Centaur's Guide to Life After AI | Cory Doctorow | 2026 | isbn:9780374621575 | Mark's copy. FSG (US) and Verso (UK), widely reviewed (Guardian, WAMC); a polemic on the economics of the AI investment boom: capex, bubble maths, and labour. | https://www.wamc.org/podcast/the-roundtable/2026-06-24/cory-doctorows-new-book-the-reverse-centaurs-guide-to-life-after-ai-takes-an-in-depth-look-at-ai-and-the-effects | distilled |
 | Essentials of Economics | Dirk Mateer, Lee Coppock, Brian O'Roark | 2016 | isbn:9780393264586 | Judgment call: Mark's copy; a W. W. Norton survey text, still in print as a 2020 second edition, read for how data releases and policy tools are taught. | https://wwnorton.co.uk/books/9780393441864-essentials-of-economics-39b68535-a387-4cf0-9bef-131dfaa4f351/editions | distilled |
+| AI Superpowers | Kai-Fu Lee | 2018 | isbn:9781328546395 | Judgment call: Mark's copy. Houghton Mifflin Harcourt; the most-cited 2018 statement of the US-China AI race and the 40-50% jobs forecast, reviewed in the International Journal of Nuclear Security (2019). | https://utk.exodar.janeway.systems/ijns/article/id/191/ | distilled |
 
 ## Latest
 

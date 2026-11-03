@@ -37,6 +37,9 @@ Two or three seeds from different categories. Economists answer data and method 
 - [interpretation] Are the firms that cut staff for AI now rehiring?
 - [interpretation] How much of the decision was already priced in, and what was the surprise?
 - [interpretation] Did the jobless rate fall because people found work or because they stopped looking?
+- [interpretation] Does the jobs-at-risk figure count tasks that could be automated or jobs actually lost, and over what years?
+- [interpretation] Is the lead measured in frontier models, in deployment and data, or in chips and compute?
+- [interpretation] Did the state AI plan meet its own dated targets, and what did the guidance funds waste?
 
 ## Tools and craft
 
