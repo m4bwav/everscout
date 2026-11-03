@@ -1658,6 +1658,14 @@ class LiteratureTests(WorkspaceTest):
         self.assertIn("evidence must be a URL", out)
         self.assertIn("not an Open Library work key", out)
 
+    def test_add_with_placeholder_id_adds_a_new_row(self):
+        self.add("--tier", "canon", "--title", "Own Copy", "--year", "2020", "--id", "-", "--why", "w", "--evidence", "https://example.org/a")
+        code, out, _ = self.add("--tier", "recent", "--title", "Second Copy", "--year", "2017", "--id", "-", "--why", "w",
+                                "--evidence", "https://example.org/b")
+        self.assertIn("added recent: Second Copy", out)
+        text = open(E.lit_path(E.get_beat(self.cfg(), "test-beat")), encoding="utf-8").read()
+        self.assertIn("Own Copy", text)
+
     def test_add_after_ingest_links_the_book(self):
         book = os.path.join(self.tmp, "Unlisted Book - Some Author.txt")
         open(book, "w", encoding="utf-8").write("CHAPTER ONE\nSynthetic text.\n")

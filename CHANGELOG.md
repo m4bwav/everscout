@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.10.8 · 2026-11-02
+
+- `lit add --id -` no longer matches another row whose id is also `-`; a placeholder id falls back to the title.
+- because: Sinicki, *Learn Unity for Android Game Development*: adding its row with `--id -` overwrote The Gamer's Brain (caught in the diff, restored).
+
 ## 0.10.7 · 2026-11-02
 
 - `lit lint` accepts a toc title cited without its final period or its chapter number (`2. Think Process, Not Product.` cited as `(Think Process, Not Product)`); `VERSION` matches plugin.json again.
