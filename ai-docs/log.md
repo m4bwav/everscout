@@ -446,3 +446,7 @@ readwright 0.19.0 (PR #33, installed): `read --drop-epigraphs` (40 pairs dropped
 Mark made a fresh server (1567019559620186263) and followed Comfy Org #announcements and #events, Stability #announcements, SwarmUI #announcements. Bot reads all three; only follow notices so far. Rows added to ai-video sources.md. r/StableDiffusion has no announcement channels.
 
 - 2026-11-02: Discord continue run 3: feed channels empty so far (expected); no code change; step 4 waits on Mark.
+
+## [2026-11-02] library | Learn Unity for Android Game Development (Sinicki) distilled into game-design; everscout 0.10.8
+
+Auto-pick: nothing due. `lit pick` led with Bacon (already distilled by the marketwright session) and marketwright plans the Video Game Marketing textbook, so took Sinicki: unread, fits game-design, not RL. Beginner Apress 2017 tutorial; ch. 10 is the lasting part. Changes (indie-ai-scout PR #17): camera-window, first-level-last, functional-fixedness vocab; question seeds on when the first level was built and on device-native input; dated-edition note. Verdict skim. Tool fix: everscout 0.10.8 (PR #99): `lit add --id -` had matched and overwritten another `-` row (The Gamer's Brain), caught in the diff before commit. readwright 0.20.0 (PR #34, installed): `read --headings`. Trigger evals (step 4) not run. T-20261102-18.
