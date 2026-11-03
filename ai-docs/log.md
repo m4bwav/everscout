@@ -476,3 +476,10 @@ Book 2 of the 2026-11-02 distill order. Read only the onset, tempo, tuning and k
 ## [2026-11-03] library | Introduction to Information Retrieval (Manning, Raghavan, Schutze) distilled into token-saving; everscout 0.10.10, readwright 0.24.0
 
 Book 3 of the 2026-11-02 distill order (token-saving canon lead). Nothing due. A reader agent ran about a dozen greps (25k characters) in ch. 2, 7, 8, 9, 11, 13 and 19. 17 principles. Applied: Levers vocab bm25, near-duplicate, precision-at-k, query-expansion, and three question seeds (indie-ai-scout PR #22); readwright 0.24.0 (PR #38, released, installed): `rw.py rank FILE WORDS` ranks sections or paragraphs by BM25; EPUB equation pictures print `[equation 11.32: image]` or `[formula: image]`; `<sub>` prints `k_1`; grep and rank name swapped arguments. everscout 0.10.10 (PR #105, released, installed): `fetch` marks cross-posts `dup_of` by 4-word shingles and Jaccard 0.8 (31 of 716 cached indie-game-marketing items, all true cross-posts). Rejected: learned triage from keep and drop feedback (no per-item labels yet: a plan, not a book run), a tokenwright habit (habits.md at budget). The first beats worktree vanished between ingest and the beat edits (likely another session's cleanup); re-created and re-ingested. Trigger evals (step 4) not run. Next: book 4, Futter, *The GameDev Business Handbook*, into indie-game-marketing (check marketwright's HANDOFF first).
+
+## 2026-11-03 Futter, The GameDev Business Handbook
+
+- Auto-pick by the 2026-11-02 order (book 4; marketwright had not taken it). `lit due`: nothing due. Step 2 (Judgment-call rows) was done 2026-11-02.
+- Read by two parallel reader agents; 17 principles, 16 changes all applied: indie-ai-scout PR #23, marketwright 0.4.1 (PR #18), note via `lit distill`.
+- Tools: readwright 0.25.0 (PR #40) `toc --group` from printed contents and page joins that no longer empty pages; everscout 0.10.11 (PR #107) trailing ` - Author` split. Both released and installed. A first tag of readwright v0.25.0 went on main before the PR merged (merge was blocked by a log commit); deleted and re-cut after the merge.
+- Trigger evals (step 4) not run.
