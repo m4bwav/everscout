@@ -422,3 +422,7 @@ Public Bot off needed Installation > Install Link = None first (kb updated). Bot
 ## [2026-11-02] discord | continue run: check server count (0.10.4)
 
 Ran the continue prompt: token, check, invite and guilds all work (steps 1-3 done earlier). `check` said servers 0 while `guilds` listed Mark's server: Discord's `approximate_guild_count` is cached. `check` now counts `/users/@me/guilds`. Test: test_check_counts_listed_servers. Step 4 (admin message for a beat's server) waits on Mark.
+
+## [2026-11-02] library | Unlocking the Secrets of Prompt Engineering (Mizrahi) distilled into token-saving; everscout 0.10.2, readwright 0.17.0
+
+Auto-pick: nothing due, no beat-listed file unread; the only unread beat-fitting file. Beginner use-case book with dated models; one new point, spreadsheet LLM formulas re-billing on every open (p. 237-238): recompute-waste vocab, one question (indie-ai-scout PR #13). Verdict skip. Tool changes: everscout 0.10.2 (PR #92) parenthesized author off file-name titles; readwright 0.17.0 (PR #31, installed) printed-contents chapter split. Installed everscout still behind: the main clone holds another session's uncommitted Discord edits. Trigger evals (step 4) not run. T-20261102-15.
