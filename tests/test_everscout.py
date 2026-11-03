@@ -1865,6 +1865,18 @@ class LiteratureTests(WorkspaceTest):
         self.assertTrue(out.splitlines()[0].startswith("Ann Writer"))
         self.assertNotIn("Big River", out)
 
+    def test_pick_hides_another_copy_of_a_read_book(self):   # a distilled book's PDF twin listed while the beats clone lagged
+        folder = os.path.join(self.tmp, "shelf")
+        os.makedirs(folder)
+        for n in ("How Big Models Work - A Writer.pdf", "Fresh Title.mobi"):
+            open(os.path.join(folder, n), "w").write("x")
+        done = os.path.join(E.data_dir(self.cfg(), "test-beat"), "books", "how-big-models-work")
+        os.makedirs(done)
+        open(os.path.join(done, "book.md"), "w", encoding="utf-8").write("---\ntitle: How Big Models Work\nfile: elsewhere/How Big Models Work [retail].epub\n---\n")
+        code, out, _ = self.run_cli("lit", "pick", "--dir", folder, "--json")
+        self.assertEqual(code, 0, out)
+        self.assertEqual([r["file"] for r in json.loads(out)], ["Fresh Title.mobi"])
+
     def test_pick_looks_in_subfolders(self):   # "Prompt Engineering for LLMs/Prompt Engineering for LLMs.epub" was missed 2026-11-02
         self.add("--tier", "recent", "--title", "Prompt Engineering for LLMs", "--authors", "John Berryman", "--year", "2024", "--id", "OL1W",
                  "--why", "w", "--evidence", "https://example.org/s")

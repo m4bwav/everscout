@@ -246,3 +246,7 @@ Manual distillation: `lit lint` exit 0, 12 principles, 5 changes applied, `lit d
 ### T-20261103-10: How Large Language Models Work (Raff, Farris, Biderman, Manning 2025), auto-pick, into token-saving
 
 Manual distillation: `lit lint` exit 0, 11 principles, 8 changes applied, 1 rejected, `lit distill` wrote the note. `beat-check` 0 errors. Trigger evals not rerun.
+
+### T-20261103-11: Generative AI on Kubernetes (Huss, Zonca, O'Reilly 2026), auto-pick, into token-saving
+
+Manual distillation: `lit lint` exit 0, 11 principles, 6 changes applied, 1 rejected, `lit distill` wrote the note. `beat-check` 0 errors. Trigger evals not rerun.
