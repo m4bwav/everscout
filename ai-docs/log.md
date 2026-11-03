@@ -426,3 +426,7 @@ Ran the continue prompt: token, check, invite and guilds all work (steps 1-3 don
 ## [2026-11-02] library | Unlocking the Secrets of Prompt Engineering (Mizrahi) distilled into token-saving; everscout 0.10.2, readwright 0.17.0
 
 Auto-pick: nothing due, no beat-listed file unread; the only unread beat-fitting file. Beginner use-case book with dated models; one new point, spreadsheet LLM formulas re-billing on every open (p. 237-238): recompute-waste vocab, one question (indie-ai-scout PR #13). Verdict skip. Tool changes: everscout 0.10.2 (PR #92) parenthesized author off file-name titles; readwright 0.17.0 (PR #31, installed) printed-contents chapter split. Installed everscout still behind: the main clone holds another session's uncommitted Discord edits. Trigger evals (step 4) not run. T-20261102-15.
+
+## [2026-11-02] library | The Blender Python API (Conlan) distilled into game-design; everscout 0.10.5
+
+Auto-pick: nothing due; the read-elsewhere Blender API book named by the last handoff. Distilled from the 2026-10-22 plugin-learnings read plus greps: recent row (Judgment call: own copy; Springer DOI), mesh-errors vocab, two Levels and generation seeds, edition note (indie-ai-scout PR #14). polywright already held every idea, so no plugin changes. everscout 0.10.5: spaced file names lose a leading publisher. readwright: running-head chapter split and U+FFFD leader collapse handed to an agent in its own worktree.

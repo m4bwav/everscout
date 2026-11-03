@@ -1606,6 +1606,9 @@ class LiteratureTests(WorkspaceTest):
         self.assertEqual(E.lit_title_from_stem("OREILLY.PYTHON.FOR.FINANCE.2014.RETAIL.EBOOK-kE"), "PYTHON FOR FINANCE")
         self.assertEqual(E.lit_title_from_stem("Some Book - Author"), "Some Book - Author")
         self.assertEqual(E.lit_title_from_stem("GenerativeDeepLearning"), "GenerativeDeepLearning")
+        self.assertEqual(E.lit_title_from_stem("Apress The Blender Python API Precision 3D Modeling"), "The Blender Python API Precision 3D Modeling")
+        self.assertEqual(E.lit_title_from_stem("Wiley Blender for Dummies"), "Blender for Dummies")
+        self.assertEqual(E.lit_title_from_stem("Manning Press"), "Manning Press")
 
     def test_lit_split_stem_paren_author(self):
         base = "Unlocking the Secrets of Prompt Engineering Master the art of creative language generation to accelerate your journey"
