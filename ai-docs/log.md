@@ -397,3 +397,9 @@ Tool changes: everscout 0.9.7 (`lit lint` accepts interviewee names from `INTERV
 ## [2026-11-02] discord | Discord through the user's own invited bot (0.10.0)
 
 Mark asked for a free, legal way to read Discord, with as much bot code in the plugins as possible and current setup steps; the agent calls the bot (no forwarding to an AI API). Research (Developer Policy read through fetchwright, docs.discord.com gateway, message, reference and rate-limit pages) is in `research/2026-11-02-discord-bot-access.md`. Built `scripts/es_discord.py` (REST only, nothing hosted), source kind `discord`, per-host auth headers in the Fetcher, `kb/discord.md`, and the read-only decision. Tests 109 pass (six new). Untested live: no bot token on this machine yet; guild search for bots is undocumented. fetchwright and readwright got pointers (Discord pages are login-walled; read them with es_discord.py).
+
+## [2026-11-02] library | Level Up! (Rogers, 3rd ed.) distilled into game-design (0.10.1)
+
+Auto-pick: `lit pick` listed no beat-listed file; *Level Up!* 3rd ed. (Wiley, Dec 2024) was read 2026-10-22 for plugin-learnings and its proposals landed 2026-10-23 (books track 9: roblox-agent, unity-agent, madnesswright, musicwright; ludowright cites it), but game-design had no row and no level-design vocabulary. Distilled from that read (git grep showed the plugin rows already applied, so this run fed the beat only): canon row, a Level design vocab section (13 terms), five level question seeds (indie-ai-scout PR #12, merged), book note. `lit due`: every tier current. Judgment-call recheck: none open (only `have` rows keep the label).
+
+Tool changes: everscout 0.10.1 (`lit lint` accepts numbered chapter labels such as `(Level 11)`; test). No readwright changes needed: no new reading this run (distilled from the earlier read). Installed everscout was updated to 0.10.0 at the start (main clone back on main).
