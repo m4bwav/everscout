@@ -1952,6 +1952,15 @@ class LiteratureTests(WorkspaceTest):
         self.assertEqual([e for e in errs if "citation" in e and "Bosses" in e], [])
         self.assertTrue([e for e in errs if "citation" in e and "Other" in e])
 
+    def test_lint_accepts_part_before_a_dash(self):
+        # Hill-Whittall titles post-mortems `Life of Pixel—Our First PC and Mac Launch`; principles cite `(Life of Pixel)`
+        d = os.path.join(self.tmp, "bk")
+        os.makedirs(d)
+        open(os.path.join(d, "toc.txt"), "w", encoding="utf-8").write("# x\n 96.   Life of Pixel—Our First PC and Mac Launch  (1,166 w)\n 32.     Development Diary - Part One  (860 w)\n")
+        t = E.lit_toc_titles(d)
+        self.assertIn("life of pixel", t)
+        self.assertIn("development diary", t)
+
     def test_lint_accepts_toc_titles_without_final_period(self):
         # Show Your Work! titles its chapters `2. Think Process, Not Product.`; principles cite them without the period
         d = os.path.join(self.tmp, "bk")

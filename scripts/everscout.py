@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.10.11"
+VERSION = "0.10.12"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3974,6 +3974,10 @@ def lit_toc_titles(d):
                 out.add(part)
                 if " " in part:
                     out.add(part.split()[-1])
+        # Dashed titles (`Life of Pixel—Our First PC and Mac Launch`) are cited by the part before the dash.
+        m = re.match(r"(.+?)\s*(?:—|–|\s-\s)", bare)
+        if m:
+            out.add(m.group(1))
         # Chapters named by a numbered label (`Level 11: They All Want You Dead`, `Bonus Level 5: ...`) are cited by the label.
         m = re.match(r"([a-z][a-z ]*\d+)\s*:", t)
         if m:
