@@ -2,6 +2,10 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.11.4 · 2026-11-03
+
+- `lit pick` hides another copy of a read book by the title in its `book.md`, so a PDF twin no longer lists when the beats clone lags (Generative AI on Kubernetes run).
+
 ## 0.11.3 · 2026-11-03
 
 - `lit ingest` accepts a path as `lit pick` prints it, relative to the book folder (Economics DeMYSTiFieD run). global-economics: gnp and deflation vocab, two question seeds, Fox and Dodge 2012 in canon.

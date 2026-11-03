@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.11.3"
+VERSION = "0.11.4"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3834,15 +3834,18 @@ def cmd_lit_pick(a):
     folder = expand(a.dir or cfg.get("books_folder") or "")
     if not folder or not os.path.isdir(folder):
         fail("give the folder of book files with --dir, or set books_folder in config.json")
-    read_keys, listed = set(), []
+    read_keys, read_titles, listed = set(), set(), []
     for slug, path in all_beats(cfg).items():
         bd = books_dir(cfg, slug)
         for name in (os.listdir(bd) if os.path.isdir(bd) else []):
             bm = os.path.join(bd, name, "book.md")
             if os.path.isfile(bm):
-                f = parse_frontmatter(read(bm))[0].get("file")
-                if f:
-                    read_keys.add(lit_file_key(f))
+                fm = parse_frontmatter(read(bm))[0]
+                if fm.get("file"):
+                    read_keys.add(lit_file_key(fm["file"]))
+                # another copy of a read book (the PDF twin of its EPUB), whatever the beats clone's list says
+                if len(lit_norm_title(fm.get("title") or "").split()) > 2:
+                    read_titles.add(lit_norm_title(fm["title"]))
         b = Beat(slug, path)
         if os.path.exists(lit_path(b)):
             for tier, rows in lit_load(b)[1].items():
@@ -3870,7 +3873,7 @@ def cmd_lit_pick(a):
     out = []
     for name in lit_book_files(folder):
         key = lit_file_key(os.path.basename(name))
-        if key in read_keys:
+        if key in read_keys or any(f" {rt} " in f" {key} " for rt in read_titles):
             continue
         if len(key) >= 8 and f" {key} " in f" {elsewhere_keys} ":
             continue
