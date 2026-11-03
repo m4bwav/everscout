@@ -22,6 +22,7 @@ Run by everscout-scan for the period since the last scan (add the month and year
 | https://artificialanalysis.ai/video/leaderboard/text-to-video | monthly | blind-vote Elo, with and without audio |
 | https://blog.comfy.org/ | monthly | native support for new models |
 | https://banodoco.ai/ | monthly | open-source video community projects |
+| https://docs.comfy.org/_llms/en/tutorials.txt | monthly | sweep: every ComfyUI tutorial with a one-line summary; diff against the last sweep's list and read only new or changed pages (kb/method.md "Sweeping a docs or tutorial index") |
 
 ## What not to trust
 

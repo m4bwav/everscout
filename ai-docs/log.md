@@ -502,3 +502,7 @@ Book 3 of the 2026-11-02 distill order (token-saving canon lead). Nothing due. A
 ## [2026-11-03] library | Advanced Retrieval-Augmented Generation distilled into token-saving
 
 Auto-pick (no beat-listed file left; an unlisted RAG book fits token-saving). 15 principles; 5 changes applied: vocab and questions (indie-ai-scout PR #26), tokenwright 0.2.15 (PR #43, released, installed), book note. readwright 0.27.0 (PR #42, released, installed): `grep --per-section N`, plus a skill tip on formula placeholders and cut sentences in EPUBs. No everscout changes needed. Record: T-20261103-5.
+
+## [2026-11-03] beat | ai-video: ComfyUI tutorials sweep folded in; kb/method.md sweep section (0.11.0)
+
+Two rss rows (Comfy-Org/docs tutorials commits, workflow_templates releases), a monthly `sweep` row for docs.comfy.org/_llms/en/tutorials.txt, keep-list line; everscout-scan follows the method for `sweep` rows. From the comfyui-gen tutorials track (2026-10-30 to 11-03). The tutorials feed showed commits on 11-02 and 11-03, after the last sweep: the next ai-video scan should sweep.

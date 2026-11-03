@@ -2,6 +2,11 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`.
 
+### C-20261103-S · 2026-11-03 · Docs and tutorial sweeps
+- because: Mark's request (2026-11-03), from the comfyui-gen ComfyUI tutorials sweep
+- files: references/kb/ (synced: method.md sweep section, platforms.md path-filtered commit feeds)
+- `sweep` rows in searches.md follow kb/method.md; the ai-video beat gains the ComfyUI tutorials index and feeds.
+
 ### C-20261102-D · 2026-11-02 · Discord through an invited bot
 - because: Mark's request (2026-11-02); research `ai-docs/research/2026-11-02-discord-bot-access.md`, decision `ai-docs/decisions/2026-11-02-discord-bot-read-only.md`
 - files: SKILL.md, references/kb/ (synced, new discord.md)
