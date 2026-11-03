@@ -2,6 +2,12 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.10.1 · 2026-11-02
+
+- `es_discord.py read` no longer warns that the Message Content intent is off when the only messages are system messages (the bot's own member-join message has no text); `discord_text_missing` checks user messages only.
+- `kb/discord.md`: set Installation > Install Link to None before turning Public Bot off, or Discord refuses the save.
+- because: the first live run on Mark's own server (2026-11-02).
+
 ## 0.10.0 · 2026-11-02
 
 - Discord, through your own free bot: `scripts/es_discord.py` (standard library, REST API v10, nothing hosted) checks the token and the Message Content intent, prints a read-only invite link (View Channels and Read Message History), lists servers, channels and threads, reads history into everscout items with authors dropped, tries guild search, prints a watch-list row, and leaves a server. A new source kind `discord` (source `guild_id/channel_id`) is read by scans at one request a second; the token header goes to discord.com only, and rows are skipped when no token is set.

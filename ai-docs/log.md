@@ -397,3 +397,11 @@ Tool changes: everscout 0.9.7 (`lit lint` accepts interviewee names from `INTERV
 ## [2026-11-02] discord | Discord through the user's own invited bot (0.10.0)
 
 Mark asked for a free, legal way to read Discord, with as much bot code in the plugins as possible and current setup steps; the agent calls the bot (no forwarding to an AI API). Research (Developer Policy read through fetchwright, docs.discord.com gateway, message, reference and rate-limit pages) is in `research/2026-11-02-discord-bot-access.md`. Built `scripts/es_discord.py` (REST only, nothing hosted), source kind `discord`, per-host auth headers in the Fetcher, `kb/discord.md`, and the read-only decision. Tests 109 pass (six new). Untested live: no bot token on this machine yet; guild search for bots is undocumented. fetchwright and readwright got pointers (Discord pages are login-walled; read them with es_discord.py).
+
+## 2026-11-02 (later): Discord continue prompt run
+
+`es_discord.py check` returned `no-token`; stopped at step 2 of the continue prompt. Waiting on Mark for the bot application, settings and DISCORD_BOT_TOKEN (kb/discord.md steps 1-3). No code changed.
+
+## 2026-11-02
+
+- Discord continue prompt run: `es_discord.py check` authenticates; Public Bot on, Message Content Intent off, 0 servers. Stopped for Mark to change both settings.

@@ -23,6 +23,7 @@ Read this before changing `kb/discord.md` or `scripts/es_discord.py`. All checke
 
 ## Unverified
 
+- 2026-11-02 live `check`: token works (bot m4bwav-scout-reader, id 1566996995728482334); Public Bot is still ON and the Message Content Intent is OFF; 0 servers. After Mark set Install Link to None (needed before Public Bot can go off) and flipped both: `check` public no, intent on; `invite` link worked; bot added to his own server (1 guild, 2 text channels); `guilds`, `channels`, `threads`, `read --days 3650` (text present), `search` all work. `read --days 1` wrongly warned the intent was off: the only message was the bot's join system message (fixed in 0.10.1).
 - The current Developer Terms of Service text: the help centre article could not be read on 2026-11-02 (fetchwright got an access error). The 2020 terms required a privacy policy describing collected data; a private bot that keeps no message data beyond paraphrased notes should say so to admins anyway (the invite message in kb/discord.md does).
 - Secondary sources (2026) report the privileged-intent review moved from a server count to a user-reach threshold in June 2026 with yearly reapplication. The gateway docs read today give 10,000 unique users; no primary announcement was found.
 - Whether bots must connect to the gateway once before REST calls work: an old requirement for sending messages; reading via REST is not affected in the docs read. The bot never sends.

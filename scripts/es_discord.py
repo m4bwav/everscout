@@ -211,7 +211,7 @@ def run(a):
         after = a.after or (None if a.before else S.discord_snowflake(time.time() - a.days * 86400))
         msgs = read_channel(a.channel, after=after, before=a.before, most=a.max)
         items = S.parse_discord_messages(msgs, guild_id=a.guild)
-        if msgs and not items:
+        if S.discord_text_missing(msgs):
             print("note: messages came back with no text; is the Message Content intent on? (es_discord.py check)", file=sys.stderr)
         show_items(items, a.json)
         return 0
