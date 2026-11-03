@@ -444,3 +444,5 @@ readwright 0.19.0 (PR #33, installed): `read --drop-epigraphs` (40 pairs dropped
 ## [2026-11-02] discord | Follow feeds live
 
 Mark made a fresh server (1567019559620186263) and followed Comfy Org #announcements and #events, Stability #announcements, SwarmUI #announcements. Bot reads all three; only follow notices so far. Rows added to ai-video sources.md. r/StableDiffusion has no announcement channels.
+
+- 2026-11-02: Discord continue run 3: feed channels empty so far (expected); no code change; step 4 waits on Mark.
