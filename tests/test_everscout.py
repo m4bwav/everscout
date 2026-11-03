@@ -1932,6 +1932,18 @@ class LiteratureTests(WorkspaceTest):
         self.assertEqual([e for e in errs if "citation" in e and "Bosses" in e], [])
         self.assertTrue([e for e in errs if "citation" in e and "Other" in e])
 
+    def test_lint_accepts_toc_titles_without_final_period(self):
+        # Show Your Work! titles its chapters `2. Think Process, Not Product.`; principles cite them without the period
+        d = os.path.join(self.tmp, "bk")
+        os.makedirs(d)
+        open(os.path.join(d, "toc.txt"), "w", encoding="utf-8").write("# x\n   7. 2. Think Process, Not Product.  (1,139 w)\n")
+        t = E.lit_toc_titles(d)
+        self.assertIn("2. think process, not product", t)
+        self.assertIn("think process, not product", t)
+        text = "---\ntitle: t\n---\n## Principles\n\n1. Share the build (2. Think Process, Not Product).\n2. Same (Think Process, Not Product).\n"
+        errs, _, _ = E.lit_learnings_problems(E.get_beat(self.cfg(), "test-beat"), text, t)
+        self.assertEqual([e for e in errs if "citation" in e], [])
+
     def test_toc_match_tolerates_ocr_symbols(self):
         # the Murch EPUB's own OCR titles a section "Seeing Around the €dge of the Frame"
         self.assertTrue(E.lit_toc_match("seeing around the €dge of the frame", "see (seeing around the edge of the frame)"))

@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.10.7 · 2026-11-02
+
+- `lit lint` accepts a toc title cited without its final period or its chapter number (`2. Think Process, Not Product.` cited as `(Think Process, Not Product)`); `VERSION` matches plugin.json again.
+- because: Kleon, *Show Your Work!*: 13 of 14 principles were refused for a citation that named the chapter.
+
 ## 0.10.6 · 2026-11-02
 
 - `es_discord.py peek INVITE` reads what a server shows the public with no token (invite lookup, widget on or off); `row --followed SERVER` marks a channel fed by Follow on another server's announcement channel. kb/discord.md gains "Servers you can't add the bot to".
