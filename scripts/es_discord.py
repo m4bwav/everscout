@@ -185,7 +185,8 @@ def run(a):
         print(f"bot      {me.get('username')} (id {me.get('id')})")
         print(f"public   {'yes: anyone can add it; turn Public Bot off' if app.get('bot_public') else 'no'}")
         print(f"intent   message content {intent_state(int(app.get('flags') or 0))}")
-        print(f"servers  {app.get('approximate_guild_count', '?')}")
+        # approximate_guild_count is cached by Discord and lagged at 0 with the bot in a server
+        print(f"servers  {len(call('/users/@me/guilds') or [])}")
         return 0
     if a.cmd == "invite":
         app = call("/applications/@me")

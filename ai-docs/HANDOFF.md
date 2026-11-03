@@ -5,7 +5,7 @@ Updated 2026-11-02 (Level Up! distilled, 0.10.1; before that Discord through an 
 
 ## 0.10.0 (2026-11-02): Discord through the user's own bot
 
-- 2026-11-02: token set and `check` passes auth, but Public Bot is ON and Message Content Intent is OFF (0 servers). Then fixed (Install Link must be None first); bot is in Mark's own server and every read command works (0.10.3 fixed a false intent warning). Next: step 4, an admin message for a server a beat needs, only if Mark wants it.
+- 2026-11-02: token set and `check` passes auth, but Public Bot is ON and Message Content Intent is OFF (0 servers). Then fixed (Install Link must be None first); bot is in Mark's own server and every read command works (0.10.3 fixed a false intent warning). 0.10.4 (same day): `check` counts listed servers (the cached count said 0). Next: step 4, an admin message for a server a beat needs, only if Mark wants it.
 
 - `scripts/es_discord.py` + kind `discord` + `kb/discord.md`; read-only by decision (`decisions/2026-11-02-discord-bot-read-only.md`), evidence in `research/2026-11-02-discord-bot-access.md`.
 - Waits on Mark: create the Discord application and bot (kb/discord.md steps 1-3, he does it, the agent never handles the token), then `es_discord.py check`; first live read is untested, and so is `search` with a bot token. Record both in the research note when run.

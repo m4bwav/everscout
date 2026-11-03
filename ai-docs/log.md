@@ -418,3 +418,7 @@ Tool changes: everscout 0.10.1 (`lit lint` accepts numbered chapter labels such 
 ## [2026-11-02] discord | bot live on Mark's server (0.10.3)
 
 Public Bot off needed Installation > Install Link = None first (kb updated). Bot added to Mark's server; guilds, channels, threads, read, search all work. `read` warned about the intent on a day holding only the bot's join message: `discord_text_missing` now checks user messages only (test added). Released as 0.10.3 (0.10.1 and 0.10.2 were taken by a parallel library session).
+
+## [2026-11-02] discord | continue run: check server count (0.10.4)
+
+Ran the continue prompt: token, check, invite and guilds all work (steps 1-3 done earlier). `check` said servers 0 while `guilds` listed Mark's server: Discord's `approximate_guild_count` is cached. `check` now counts `/users/@me/guilds`. Test: test_check_counts_listed_servers. Step 4 (admin message for a beat's server) waits on Mark.

@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.10.4 · 2026-11-02
+
+- `es_discord.py check` counts the servers the bot can list; Discord's cached `approximate_guild_count` showed 0 with the bot in Mark's server.
+- because: the continue-prompt run on 2026-11-02.
+
 ## 0.10.3 · 2026-11-02
 
 - `es_discord.py read` no longer warns that the Message Content intent is off when the only messages are system messages (the bot's own member-join message has no text); `discord_text_missing` checks user messages only.
