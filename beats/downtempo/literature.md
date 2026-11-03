@@ -1,6 +1,6 @@
 ---
 canon_checked: 2026-10-30
-recent_checked: 2026-10-30
+recent_checked: 2026-11-03
 latest_checked: 2026-10-30
 ---
 
@@ -28,10 +28,10 @@ The most important books of the last five years (quarterly recheck).
 
 | title | authors | year | id | why | evidence | status |
 |---|---|---|---|---|---|---|
-| Bedroom Beats & B-Sides | Laurent Fintoni | 2021 | OL24720102W | It is the history of instrumental hip-hop and beat music, trip-hop's nearest scene. | https://velocitypress.uk/?p=15428 | lead |
+| Bedroom Beats & B-Sides | Laurent Fintoni | 2021 | OL24720102W | It is the history of instrumental hip-hop and beat music, trip-hop's nearest scene, built on over 100 interviews; DJ Mag and Reverb covered it as the account of global beat culture. | https://velocitypress.uk/?p=15428 https://reverb.com/news/how-bedroom-beats-went-global | lead |
 | Futuromania | Simon Reynolds | 2024 | OL37589501W | The Irish Examiner put it on its 12 best music books of 2024, and it gathers Reynolds's writing on electronic music's futurist side. | https://www.irishexaminer.com/lifestyle/artsandculture/arid-41533190.html?type=app | lead |
-| Renegade Snares | Ben Murphy, Carl Loben | 2021 | OL25485104W | It is the first full history of jungle and drum and bass, a neighbour of trip-hop. | https://openlibrary.org/works/OL25485104W | lead |
-| Balearic | (author not checked) | 2021 | OL27127856W | It covers Ibiza's Balearic scene, where chillout was born. | https://openlibrary.org/works/OL27127856W | lead |
+| Renegade Snares | Ben Murphy, Carl Loben | 2021 | OL25485104W | It is the first full history of jungle and drum and bass, a neighbour of trip-hop, by two DJ Mag editors; reviewed by the Brooklyn Rail and Attack. | https://openlibrary.org/works/OL25485104W https://brooklynrail.org/2022/04/music/Drums-Talk/ | lead |
+| Balearic: An Oral History of Club Culture in Ibiza | Luis Costa Plans, Christian Len | 2021 | OL27127856W | It covers Ibiza's Balearic scene, where chillout was born, from about a hundred interviews; Ibiza Spotlight covered its launch and reviewers call it the most thorough book on the island's club scene. | https://openlibrary.org/works/OL27127856W https://www.ibiza-spotlight.com/magazine/2021/09/pikes-ibiza-rounds-troops-new-book-launch | lead |
 | An Introduction to Audio Content Analysis | Alexander Lerch | 2023 | isbn:9781119890942 | User's copy; the Wiley-IEEE Press graduate text on music information retrieval by a Georgia Tech professor, held by university libraries; feeds musicwright's measures more than the beat | https://libcat.library.tamu.edu/Record/in00004688426 https://audiocontentanalysis.org/ | distilled |
 
 ## Latest
