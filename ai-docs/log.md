@@ -538,3 +538,7 @@ Auto-pick: no beat-listed file left; global-economics had the fewest distilled b
 ## 2026-11-03: personal-sites recent tier pass
 
 `lit due`: every tier current; no rows start "Judgment call". `lit pick` lists only accounting, fiction, piano, Blender 2.4-2.6 and LLM how-to files, none fitting an unread beat need, so no book was distilled (auto-pick found nothing worth it). Ran the HANDOFF's tier pass for personal-sites instead: added Matuzović, *Web Accessibility Cookbook* (O'Reilly 2024) to Recent as a lead (publisher listing + WebAxe accessibility reading list). Considered and left out: Grant, *CSS in Depth* 2e (one kind of evidence found). No tool changes needed; no readwright changes needed (no book read).
+
+## 2026-11-03: downtempo recent tier pass
+
+`lit due` all current; `lit pick` still holds nothing fitting a beat, so no book distilled. Rechecked downtempo's Recent rows that rested on one source: Bedroom Beats & B-Sides (+ Reverb, DJ Mag), Renegade Snares (+ Brooklyn Rail review, Attack interview), Balearic (authors filled: Luis Costa Plans, Christian Len; + Ibiza Spotlight launch, Substack review). All stay leads. No tool changes needed; no readwright changes needed (no book read). Next: ask Mark for books; the leads in each beat's literature.md are the shopping list.
