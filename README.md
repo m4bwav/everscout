@@ -55,7 +55,7 @@ Feeds and documented public endpoints only, no keys needed:
 | huggingface | `models?pipeline_tag=text-to-video` |
 | news | a Google News search |
 
-Every request names everscout and your contact. Threads (post plus comments) can be read from Reddit, HN, Bluesky, Mastodon, Lemmy and Discourse. X, Threads, Instagram, TikTok, Discord and Telegram aren't read at all, and neither is anything a platform forbids scraping (Bandcamp, for one). `kb/platforms.md` has what each platform allows as of 2026-09-26.
+Every request names everscout and your contact. Threads (post plus comments) can be read from Reddit, HN, Bluesky, Mastodon, Lemmy and Discourse. Discord is read only through your own free bot, in servers whose admins invited it, read-only (`scripts/es_discord.py`, setup in `kb/discord.md`). X, Threads, Instagram, TikTok and Telegram aren't read at all, and neither is anything a platform forbids scraping (Bandcamp, for one). `kb/platforms.md` has what each platform allows as of 2026-09-26.
 
 ## How it engages
 

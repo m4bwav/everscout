@@ -2,6 +2,11 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`.
 
+### C-20261102-D · 2026-11-02 · Discord through an invited bot
+- because: Mark's request (2026-11-02); research `ai-docs/research/2026-11-02-discord-bot-access.md`, decision `ai-docs/decisions/2026-11-02-discord-bot-read-only.md`
+- files: SKILL.md, references/kb/ (synced, new discord.md)
+- Discord is no longer a forbidden source: a beat may add `discord` rows for servers whose admins invited the user's bot; links kb/discord.md.
+
 ### C-20261016-1 · 2026-10-16 · A YouTube 404 on every channel is the endpoint
 - because: ai-video scan 2026-10-16 (seven channel feeds 404 while their pages answered 200; Google's own channel too), research/2026-10-16-youtube-feeds-and-gdelt-refusals.md (repository ai-docs)
 - files: references/kb/platforms.md (synced from kb/platforms.md, youtube row)

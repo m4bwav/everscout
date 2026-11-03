@@ -2,6 +2,13 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.10.0 · 2026-11-02
+
+- Discord, through your own free bot: `scripts/es_discord.py` (standard library, REST API v10, nothing hosted) checks the token and the Message Content intent, prints a read-only invite link (View Channels and Read Message History), lists servers, channels and threads, reads history into everscout items with authors dropped, tries guild search, prints a watch-list row, and leaves a server. A new source kind `discord` (source `guild_id/channel_id`) is read by scans at one request a second; the token header goes to discord.com only, and rows are skipped when no token is set.
+- Read-only by decision (`ai-docs/decisions/2026-11-02-discord-bot-read-only.md`): no posting, reacting, DMs or joining; a test fails if the client gains a POST or PATCH.
+- Setup guide `kb/discord.md` (Developer Portal steps, the invite message for admins, the Developer Policy rules that bind a reader, rate limits); evidence in `ai-docs/research/2026-11-02-discord-bot-access.md`.
+- because: Mark asked for a legal, free way to read Discord with as much bot code in the plugin as possible, the agent calling the bot rather than the bot forwarding to an AI API (2026-11-02).
+
 ## 0.9.6 · 2026-11-02
 
 - `lit pick` splits CamelCase only in file names with no separators: 0.9.5 turned `FilmCraft Cinematography - Mike Goodridge.epub` into "film craft", so a book read on 2026-10-22 listed as unread. It now shows as maybe read.

@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.9.6"
+VERSION = "0.10.0"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -90,7 +90,7 @@ DEFAULT_CONFIG = {
 }
 
 STANCES = ("native", "open", "mixed", "hostile", "anti", "n/a", "unknown")
-KINDS = ("reddit", "rss", "youtube", "github", "hn", "news", "arxiv", "mastodon", "bluesky", "lemmy", "discourse", "huggingface", "web")
+KINDS = ("reddit", "rss", "youtube", "github", "hn", "news", "arxiv", "mastodon", "bluesky", "lemmy", "discourse", "huggingface", "discord", "web")
 NOTE_KINDS = ("showcase", "workflow", "discussion", "release", "question", "postmortem", "analysis", "data", "news", "paper", "web", "book")
 DEFAULT_SECTIONS = ["What it is", "How it was made", "Reception and interest", "Why it matters", "Questions this raises"]
 ASKED_WORDS = ("how did you make", "how did you do", "what did you use", "what tools", "which tools", "what software",
@@ -246,8 +246,11 @@ def reddit_user_agent(cfg):
 
 
 def fetcher(cfg):
-    return S.Fetcher(local_root(cfg), user_agent(cfg), reddit_user_agent(cfg),
-                     host_gaps=(cfg.get("pace") or {}).get("hosts"), log=note)
+    f = S.Fetcher(local_root(cfg), user_agent(cfg), reddit_user_agent(cfg),
+                  host_gaps=(cfg.get("pace") or {}).get("hosts"), log=note)
+    import es_discord  # the bot token, when one is set, goes to discord.com only
+    f.host_headers.update(es_discord.host_headers())
+    return f
 
 
 REDDIT_RSS_END = dt.date(2026, 11, 13)  # Reddit's logged-out feeds stop answering (kb/platforms.md)
@@ -670,6 +673,12 @@ def feed_urls(row, listings=("new",), t="week", since_days=3):
     if k == "discourse":
         base = s.rstrip("/")
         return [(base + ("/latest.rss" if "/c/" not in base else ".rss"), "new", "feed")]
+    if k == "discord":  # guild_id/channel_id; read with the bot token (es_discord.py, kb/discord.md)
+        m = re.fullmatch(r"(\d{15,21})/(\d{15,21})", s)
+        if not m:
+            return []
+        since = (int(time.time()) // 3600) * 3600 - since_days * 86400
+        return [(S.discord_messages_url(m.group(2), after=S.discord_snowflake(since)), "new", "discord")]
     return []
 
 
@@ -712,6 +721,9 @@ def parse_with(parser, text, url, row):
         return S.parse_huggingface(json.loads(text) if text.strip() else [], url)
     if parser == "arctic":
         return S.parse_arctic_posts(json.loads(text) if text.strip() else {}, url)
+    if parser == "discord":
+        return S.parse_discord_messages(json.loads(text) if text.strip() else [], url,
+                                        guild_id=row["source"].split("/")[0], community=row.get("name") or "")
     return S.parse_feed(text, url, platform=row["kind"])
 
 
@@ -1027,6 +1039,9 @@ def cmd_fetch(a):
         jobs.append((items, {re.sub(r"^r/", "", r["source"]).lower(): r for r in batch}, "new"))
     yt_tried = yt_failed = 0
     for r in rows:
+        if r["kind"] == "discord" and "discord.com" not in f.host_headers:
+            note(f"discord {r['source']}: skipped, DISCORD_BOT_TOKEN is not set (kb/discord.md)")
+            continue  # a tokenless request is a 401, and 401s count toward Discord's invalid-request ban
         for url, listing, parser in feed_urls(r, listings if r["kind"] == "reddit" else ("new",), a.t, a.max_age_days):
             if r["kind"] == "reddit" and (listing == "new" or reader != "rss"):
                 continue  # planned above
