@@ -104,6 +104,29 @@ def call(path, query=None, method="GET", opener=urllib.request.urlopen, sleep=ti
     raise DiscordError(429, "rate limited twice; stopped")
 
 
+def peek(code, opener=urllib.request.urlopen):
+    """What a server shows the public without a bot or a login: the invite lookup (name, counts)
+    and the widget, only when its admin turned the widget on. Never message text."""
+    code = code.rstrip("/").split("/")[-1]
+    def get(path):
+        req = urllib.request.Request(API + path, headers={"User-Agent": UA, "Accept": "application/json"})
+        try:
+            with opener(req, timeout=40) as r:
+                return json.loads(r.read().decode("utf-8", "replace"))
+        except urllib.error.HTTPError:
+            return None
+    inv = get(f"/invites/{urllib.parse.quote(code)}?with_counts=true") or {}
+    g = inv.get("guild") or {}
+    out = {"code": code, "guild": g.get("id"), "name": g.get("name"), "description": g.get("description"),
+           "members": inv.get("approximate_member_count"), "online": inv.get("approximate_presence_count"),
+           "widget": None}
+    if g.get("id"):
+        w = get(f"/guilds/{g['id']}/widget.json")
+        if w and "channels" in w:
+            out["widget"] = {"voice_channels": len(w.get("channels", [])), "online": w.get("presence_count")}
+    return out
+
+
 def invite_url(app_id, guild=None):
     q = {"client_id": app_id, "scope": "bot", "permissions": str(READ_PERMISSIONS)}
     if guild:
@@ -166,6 +189,8 @@ def main(argv=None):
     s.add_argument("--max", type=int, default=300); s.add_argument("--json", action="store_true")
     s = sub.add_parser("search"); s.add_argument("guild"); s.add_argument("query"); s.add_argument("--json", action="store_true")
     s = sub.add_parser("row"); s.add_argument("guild"); s.add_argument("channel")
+    s.add_argument("--followed", metavar="SERVER", help="the channel receives a Followed announcement channel from SERVER")
+    s = sub.add_parser("peek"); s.add_argument("invite")
     s = sub.add_parser("leave"); s.add_argument("guild"); s.add_argument("--yes", action="store_true")
     a = p.parse_args(argv)
     try:
@@ -179,6 +204,18 @@ def main(argv=None):
 
 
 def run(a):
+    if a.cmd == "peek":
+        d = peek(a.invite)
+        if not d["guild"]:
+            print(f"{d['code']}: unknown or expired invite")
+            return 1
+        print(f"server   {d['name']} (id {d['guild']})")
+        print(f"members  {d['members']} ({d['online']} online)")
+        if d["description"]:
+            print(f"about    {d['description']}")
+        print(f"widget   {'on: ' + str(d['widget']['voice_channels']) + ' voice channels, presence only' if d['widget'] else 'off'}")
+        print("messages need the bot (an admin adds it) or Follow on an announcement channel (kb/discord.md, Follow route)")
+        return 0
     if a.cmd == "check":
         me = call("/users/@me")
         app = call("/applications/@me")
@@ -225,7 +262,8 @@ def run(a):
         names = {c["id"]: c.get("name", "") for c in call(f"/guilds/{a.guild}/channels") or []}
         # engage stays "no": the bot never posts, and the conduct code keeps drafted replies off Discord
         print(f"| {a.guild}/{a.channel} | discord | core | native | no | yes | | ✓ {time.strftime('%Y-%m-%d')} "
-              f"#{names.get(a.channel, '?')}; bot invited by the server admin |")
+              f"#{names.get(a.channel, '?')}; " + (f"Followed announcements from {a.followed} |" if getattr(a, "followed", None)
+                                                else "bot invited by the server admin |"))
         return 0
     if a.cmd == "leave":
         if not a.yes:

@@ -2071,6 +2071,21 @@ class DiscordTests(unittest.TestCase):
             with self.assertRaises(D.DiscordError):
                 D.call("/users/@me")
 
+    def test_peek_needs_no_token(self):
+        import es_discord as D
+        import urllib.error
+        seen = []
+
+        def opener(req, timeout=0):
+            seen.append(req)
+            if "widget" in req.full_url:
+                raise urllib.error.HTTPError("u", 403, "off", {}, io.BytesIO(b"{}"))
+            return FakeResponse(json.dumps({"guild": {"id": "7", "name": "S"}, "approximate_member_count": 5}))
+        d = D.peek("https://discord.gg/abc", opener=opener)
+        self.assertEqual((d["guild"], d["members"], d["widget"]), ("7", 5, None))
+        self.assertIn("/invites/abc?", seen[0].full_url)
+        self.assertFalse(any(r.has_header("Authorization") for r in seen))
+
     def test_check_counts_listed_servers(self):
         import es_discord as D
         replies = {"/users/@me": {"id": "1", "username": "b"},
