@@ -2,6 +2,7 @@
 
 Run: python -m unittest discover -s tests
 """
+import argparse
 import contextlib
 import datetime as dt
 import io
@@ -2066,6 +2067,16 @@ class DiscordTests(unittest.TestCase):
         with mock.patch.dict(os.environ, {"DISCORD_BOT_TOKEN": ""}), mock.patch.object(D, "token", return_value=""):
             with self.assertRaises(D.DiscordError):
                 D.call("/users/@me")
+
+    def test_check_counts_listed_servers(self):
+        import es_discord as D
+        replies = {"/users/@me": {"id": "1", "username": "b"},
+                   "/applications/@me": {"bot_public": False, "flags": 0, "approximate_guild_count": 0},
+                   "/users/@me/guilds": [{"id": "9", "name": "s"}]}
+        out = io.StringIO()
+        with mock.patch.object(D, "call", side_effect=lambda path, **k: replies[path]), mock.patch("sys.stdout", out):
+            D.run(argparse.Namespace(cmd="check"))
+        self.assertIn("servers  1", out.getvalue())
 
     def test_read_pages_and_429(self):
         import es_discord as D
