@@ -454,3 +454,7 @@ Auto-pick: nothing due. `lit pick` led with Bacon (already distilled by the mark
 ## [2026-11-02] library | Conversational Style (Tannen) distilled into tech-hiring; everscout 0.10.9
 
 Auto-pick: nothing due; all indie-game-marketing books already distilled by marketwright. Took Tannen's 1984 study (OUP 2005 ed.): unread, non-RL, the mechanism behind Talking From 9 to 5 (pace, pause and overlap mismatch read as weaker competence). 8 principles, 5 changes applied to the tech-hiring beat (PR #101). Tool fixes: everscout 0.10.9 `lit ingest` unswaps swapped EPUB title/author (the folder had been named deborah-tannen); readwright 0.21.0 (PR #35) `info` notes the swap, plus a distilling tip. Both installed. Trigger evals (step 4) not run. T-20261102-19.
+
+## [2026-11-02] library | LLM Engineer's Handbook (Iusztin, Labonne) distilled into token-saving
+
+Named by the kickoff (book 1 of the 2026-11-02 distill order). Read the retrieval and serving chapters only (~12k of 123k words); the rest is an AWS/ZenML build. 13 principles; applied: beat vocab and two seeds (indie-ai-scout PR #20), tokenwright 0.2.14 (PR #42, installed), local-delegate PR #10 (merged; main clone not pulled, someone else's uncommitted log.md blocks the fast-forward). No everscout tool changes needed. readwright 0.22.0 (PR #36, installed): `--skip-code` drops dangling code lead-ins; Packt tip in Distilling a book. Judgment-call recheck (step 2) and trigger evals (step 4) not run. T-20261102-20.
