@@ -1606,6 +1606,16 @@ class LiteratureTests(WorkspaceTest):
         self.assertEqual(E.lit_title_from_stem("Some Book - Author"), "Some Book - Author")
         self.assertEqual(E.lit_title_from_stem("GenerativeDeepLearning"), "GenerativeDeepLearning")
 
+    def test_lit_split_stem_paren_author(self):
+        base = "Unlocking the Secrets of Prompt Engineering Master the art of creative language generation to accelerate your journey"
+        self.assertEqual(E.lit_split_stem(base + " (Gilbert Mizrahi)"), (base, ["Gilbert Mizrahi"]))
+        self.assertEqual(E.lit_split_stem("Deep Work (Cal Newport) (2016)"), ("Deep Work", ["Cal Newport"]))
+        self.assertEqual(E.lit_split_stem("Game Feel (Steve Swink, J. R. Smith) (Packt Publishing)"),
+                         ("Game Feel", ["Steve Swink", "J. R. Smith"]))
+        self.assertEqual(E.lit_split_stem("Some Book (3rd ed)"), ("Some Book (3rd ed)", []))
+        self.assertEqual(E.lit_split_stem("Python (programming)"), ("Python (programming)", []))
+        self.assertEqual(E.lit_split_stem("(Gilbert Mizrahi)"), ("(Gilbert Mizrahi)", []))
+
     def add(self, *args):
         return self.run_cli("lit", "add", "--beat", "test-beat", *args)
 
@@ -1904,6 +1914,19 @@ class LiteratureTests(WorkspaceTest):
         self.assertFalse([e for e in errs if "citation" in e])
         errs, _, _ = E.lit_learnings_problems(E.get_beat(self.cfg(), "test-beat"), text)
         self.assertTrue([e for e in errs if "citation" in e])
+
+    def test_lint_accepts_numbered_chapter_labels(self):
+        # Level Up! titles its chapters `Level 11: They All Want You Dead`; principles cite `(Level 11)`
+        d = os.path.join(self.tmp, "bk")
+        os.makedirs(d)
+        open(os.path.join(d, "toc.txt"), "w", encoding="utf-8").write("# x\n 120. Level 11: They All Want You Dead  (340 w)\n 200. Bonus Level 5: Questionnaire  (90 w)\n")
+        t = E.lit_toc_titles(d)
+        self.assertIn("level 11", t)
+        self.assertIn("bonus level 5", t)
+        text = "---\ntitle: t\n---\n## Principles\n\n1. Bosses run a readable pattern (Level 11; Bonus Level 5).\n2. Other (Level 1).\n"
+        errs, _, _ = E.lit_learnings_problems(E.get_beat(self.cfg(), "test-beat"), text, t)
+        self.assertEqual([e for e in errs if "citation" in e and "Bosses" in e], [])
+        self.assertTrue([e for e in errs if "citation" in e and "Other" in e])
 
     def test_toc_match_tolerates_ocr_symbols(self):
         # the Murch EPUB's own OCR titles a section "Seeing Around the €dge of the Frame"
