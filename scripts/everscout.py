@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.10.9"
+VERSION = "0.10.10"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -1095,6 +1095,12 @@ def cmd_fetch(a):
         e = disc.get(it["id"].split(":")[-1]) if it.get("platform") == "reddit" else None
         if e and e.get("mentions"):
             it["elsewhere"] = e["mentions"]
+    dupes = near_dupes(allitems)   # triage reads one copy of a cross-post; the other copies say whose copy they are
+    for it in allitems:
+        if it["id"] in dupes:
+            it["dup_of"] = dupes[it["id"]]
+    if dupes:
+        note(f"{len(dupes)} items repeat an earlier one (cross-posts, mirrors): marked dup_of, triage the first copy only")
     if picked:
         note(f"pickup: {len(picked)} Reddit threads linked from other sources in this fetch, {len(disc)} kept from the last "
              f"{DISCOVERY_KEEP_DAYS} days; `discover list --beat {b.slug}` ranks the ones to read")
@@ -1121,8 +1127,36 @@ def cmd_fetch(a):
         age = f"{i['age_hours']:>6}h" if i.get("age_hours") is not None else "     ?"
         score = f"{i['points']}p {i['comments']}c " if i.get("via") == "arcticshift" else ""
         score += f"linked {i['elsewhere']}x elsewhere " if i.get("elsewhere") else ""
+        score += f"dup of {i['dup_of']} " if i.get("dup_of") else ""
         print(f"{(i.get('published') or '')[:16]:<16} {i['source_kind']:<8} {str(i['community'])[:18]:<18} {age} "
               f"{'M' if i['media'] else ' '} {score}{i['title'][:70]}  {i['url']}")
+
+
+def shingles(text, k=4):
+    """Word k-shingles of the normalised text (Manning et al. 2008, sec. 19.6); a text shorter than k words is one shingle."""
+    w = re.findall(r"[a-z0-9]+", (text or "").lower())
+    return {" ".join(w[i:i + k]) for i in range(max(1, len(w) - k + 1))} if w else set()
+
+
+def near_dupes(items, threshold=0.8):
+    """{id: id of the earlier item it repeats} for items whose opening text (or title, when the text is under 12 words)
+    shares most word shingles: one announcement cross-posted to several subreddits, a feed and its mirror. The body
+    alone, since a cross-post reframes the title; 4-word shingles, 2 for a bare title. The book's 0.9 is for web pages,
+    short posts differ more in their framing."""
+    out, kept = {}, []
+    for it in sorted(items, key=lambda i: i.get("published") or ""):
+        body = (it.get("text") or "")[:600]
+        long_body = len(body.split()) >= 12
+        sh = shingles(body if long_body else f"{it.get('title') or ''} {body}", 4 if long_body else 2)
+        if not sh:
+            continue
+        for kid, ksh in kept:
+            if len(sh & ksh) / len(sh | ksh) >= threshold:
+                out[it["id"]] = kid
+                break
+        else:
+            kept.append((it["id"], sh))
+    return out
 
 
 def learn_rate(rates, sub, posts, window_days=None):

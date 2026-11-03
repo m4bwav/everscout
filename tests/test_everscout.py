@@ -2003,6 +2003,22 @@ class LiteratureTests(WorkspaceTest):
                 E.beat_dirs(E.config())
 
 
+class NearDupeTests(unittest.TestCase):   # Manning IR sec. 19.6 shingling, 2026-11-03
+    def test_cross_post_marks_the_later_copy(self):
+        items = [{"id": "r:b", "published": "2026-11-02T10:00", "title": "I made a tiny roguelike in 7 days with a local model"},
+                 {"id": "r:a", "published": "2026-11-02T09:00", "title": "I made a tiny roguelike in 7 days with a local model!"},
+                 {"id": "r:c", "published": "2026-11-02T11:00", "title": "Which local model writes the best dialogue?"}]
+        self.assertEqual(E.near_dupes(items), {"r:b": "r:a"})
+
+    def test_long_posts_compare_by_four_word_shingles(self):
+        body = "We rebuilt the whole lighting pass so the caves read at night and the torches flicker with the wind. "
+        items = [{"id": "1", "published": "1", "title": "Devlog 12", "text": body * 2},
+                 {"id": "2", "published": "2", "title": "Devlog 12 (crosspost)", "text": body * 2},
+                 {"id": "3", "published": "3", "title": "Devlog 13", "text": "A new boss with three phases and a falling arena."}]
+        self.assertEqual(E.near_dupes(items), {"2": "1"})
+        self.assertEqual(E.shingles(""), set())
+
+
 class ReadwrightLookupTests(unittest.TestCase):
     def test_worktree_finds_clone_beside_main_checkout(self):
         with tempfile.TemporaryDirectory() as tmp:
