@@ -222,3 +222,10 @@ Fourth of the 2026-11-02 distill order; marketwright had not taken it. Bithell G
 - Pick: no beat-listed file; global-economics had the fewest distilled books of the beats the folder can feed. One reader agent, ~25k of 553k words (ch. 6, 7, 13 + appendix, 15, 18, 35).
 - `lit ingest`, `lit add` (linked), `lit lint` 0 errors, `lit distill` first said "list row not found": the linked row's title differed from the file's. Fixed in 0.11.1 with a test; distill then marked the row distilled.
 - 16 principles, 7 changes applied (4 vocab, 2 questions, edition note).
+
+## T-20261103-8 Abji, Show Your Worth into tech-hiring (auto-pick)
+
+- Pick: `lit pick` listed no beat-listed file; every indie-game-marketing file in the folder was already distilled (marketwright reading notes); chose an unlisted McGraw Hill 2022 career guide that fits tech-hiring's promotion and compensation scope.
+- Reliability check passed: publisher, author's IBM VP record, broken-rung figure traced to Women in the Workplace 2019.
+- readwright collapsed the EPUB into one 70k-word section (chapters are bare-number paragraphs); read by grep offsets; fix handed to readwright.
+- `lit ingest`, `lit lint` (one uncited principle, fixed), 6 changes applied (2 vocab, 3 questions, note), `lit distill` said "list row not found" with no hint; `lit add --status distilled` linked it after. Fixed in 0.11.2 with a test.

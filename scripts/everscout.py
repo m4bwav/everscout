@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.11.1"
+VERSION = "0.11.2"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -4106,7 +4106,7 @@ def cmd_lit_distill(a):
         row["status"] = "distilled"
         write(lit_path(b), lit_render(b, meta, tiers, searches))
     print(f"note {p}\n{len(applied)} changes applied ({len(for_note)} written into the note), {len(open_)} left proposed; "
-          f"list row {(row['status'] if row['status'] == 'skip' else 'distilled') if row else 'not found'}")
+          f"list row {(row['status'] if row['status'] == 'skip' else 'distilled') if row else f'not found (add it: lit add --beat {a.beat} --tier TIER --status distilled --title "{title}" ...)'}")
 
 
 def cmd_lit(a):
