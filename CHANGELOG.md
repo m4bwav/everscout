@@ -2,6 +2,10 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.11.6 · 2026-11-03
+
+- `lit ingest` no longer takes a book for a listed one whose title its name contains when the file names another author, and refuses a folder that holds another book's file (Better Web Typography overwrote Web Typography's `book.md` and `toc.txt`; both restored). Its report no longer says "set to reading" for a row it left alone.
+
 ## 0.11.5 · 2026-11-03
 
 - A beat outside `EVERSCOUT_BEATS` now warns instead of silently using another clone (You Just Don't Understand run: tech-hiring is built in, not in the beats repo). tech-hiring: expertise and floor vocab, three question seeds, a study note, the book's canon row.

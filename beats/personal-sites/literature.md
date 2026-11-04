@@ -22,6 +22,7 @@ The most important books of all time for this subject (yearly recheck).
 | Web Typography | Richard Rutter | 2017 | OL27054557W | It condenses typography practice for the browser. | https://www.goodreads.com/book/show/35429034-web-typography | distilled |
 | User Friendly | Cliff Kuang, Robert Fabricant | 2019 | - | It is the history of user-centred design, from the 1920s to the iPhone, behind the 'start with the user' rule; an Amazon Best Book of 2019 praised in the New York Times Book Review. | https://ebr.overdrive.com/library/world-languages/media/4297414 https://harvard.com/book/9781250758200 | distilled |
 | Web Form Design | Luke Wroblewski | 2008 | isbn:9781933820248 | It is the standard short book on form design, listed on one kind of evidence (reviews) because no other beat book covers forms. | https://www.viget.com/articles/book-review-web-form-design-by-luke-wroblewski | distilled |
+| Better Web Typography for a Better Web | Matej Latin | 2017 | OL38198412W | A practical course-turned-book for developers on setting paragraphs and small type; rests on one kind of evidence, reader reviews. | https://www.goodreads.com/book/show/35857337 | distilled |
 
 ## Recent
 

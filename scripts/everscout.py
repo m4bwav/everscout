@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.11.5"
+VERSION = "0.11.6"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3431,6 +3431,13 @@ def lit_find_in_name(tiers, name):
     return best
 
 
+def lit_same_author(name, listed):
+    """True when a surname from the row's authors appears in the file name, or the row lists none. A name's
+    "X - Y" may be either author and title or title and author, so the whole name is searched."""
+    surnames = [lit_norm_title(n).split()[-1] for n in re.split(r",|;|&|\band\b", listed or "") if lit_norm_title(n)]
+    return not surnames or any(f" {n} " in f" {lit_norm_title(name)} " for n in surnames)
+
+
 def lit_problems(b, meta, tiers, searches, today_d=None):
     """(errors, warnings) for literature.md."""
     today_d = today_d or dt.date.today()
@@ -3764,10 +3771,21 @@ def cmd_lit_ingest(a):
     tier, row = lit_find(tiers, a.id or title)
     if not row and not a.id:
         tier, row = lit_find_in_name(tiers, stem)
+        # "Better Web Typography - Matej Latin" holds the title "Web Typography" but is not Rutter's book
+        if row and stem_authors and not lit_same_author(stem, row["authors"]):
+            note(f"file name holds the listed title '{row['title']}' but names another author ({', '.join(stem_authors)}; listed: {row['authors']}): treated as a different book")
+            tier, row = None, None
     if row:
         title = row["title"] or title
     slug = slugify(title, 40, whole=True)
     d = os.path.join(books_dir(cfg, b.slug), slug)
+    bp = os.path.join(d, "book.md")
+    if os.path.exists(bp) and not a.force:
+        # a twin format of the same book may share the folder; another book must not overwrite its outline
+        mf = re.search(r"^file:\s*(.+)$", read(bp), re.M)
+        old = os.path.splitext(os.path.basename(mf.group(1).strip()))[0] if mf else stem
+        if old != stem:
+            fail(f"{d} already holds another file ({old}); pass --title for this book's own folder, or --force to replace that book's files")
     os.makedirs(d, exist_ok=True)
     write(os.path.join(d, "book.md"), render_frontmatter({
         "title": title, "kind": "book", "beat": b.slug, "book_id": (row or {}).get("id") or a.id or "-", "tier": tier or "-",
@@ -3781,11 +3799,12 @@ def cmd_lit_ingest(a):
         write(lp, LEARNINGS_TEMPLATE.format(title=title, beat=b.slug, book_id=(row or {}).get("id") or a.id or "-", date=local_today(),
                                             quote=LIT_MAX_QUOTE_WORDS, beat_files=", ".join(LIT_TARGET_BEAT_FILES),
                                             feeds=", ".join(b.list_meta("feeds")) or "none"))
-    if row and row["status"] in ("lead", "have"):
+    was = row["status"] if row else ""
+    if row and was in ("lead", "have"):
         row["status"] = "reading"
         write(lit_path(b), lit_render(b, meta, tiers, searches))
     print(f"book folder {d}")
-    print(f"  learnings.md to fill; toc.txt {'written' if toc else 'not written'}; list row {'set to reading' if row else 'not found (lit add it; the new row links to this folder and reads reading)'}")
+    print(f"  learnings.md to fill; toc.txt {'written' if toc else 'not written'}; list row {('set to reading' if was in ('lead', 'have') else f'stays {was}') if row else 'not found (lit add it; the new row links to this folder and reads reading)'}")
     if rw:
         print(f"  read sections with: python {rw} read \"{path}\" --section N   (search: grep \"{path}\" PATTERN)")
 
