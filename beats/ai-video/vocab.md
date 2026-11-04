@@ -204,6 +204,11 @@ Add a new model version as its own line when people argue about the difference (
 - video-vae: video VAE, causal 3D VAE
 - video-benchmarks: VBench, GenEval, T2I-CompBench, DrawBench, FID, KID
 
+- greeble: greeble, greebles, technical lorem ipsum
+- hud: HUD, heads-up display, suit cam
+- screen-graphics: screen graphics, playback graphics, FUI, fantasy user interface
+- text-in-frame: on-screen text, readable text, garbled text, signage
+
 ## Formats
 
 - short-film: short film, short movie
