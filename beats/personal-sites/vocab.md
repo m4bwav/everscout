@@ -178,6 +178,14 @@ Keep canonical ids stable. A new builder or trend gets its own id when people co
 
 Read.cv announced its shutdown in 2025 (unverified whether Posts.cv survives); kept because people still mention moving off it.
 
+## Forms
+
+- contact-form: contact form, get in touch form, enquiry form
+- inline-validation: inline validation, validate on blur, real-time validation
+- placeholder-label: placeholder as label, floating label, label in input
+- smart-default: smart default, sensible default
+- gradual-engagement: gradual engagement, lazy registration, try before sign-up
+
 ## Typography craft
 
 - measure: line length, characters per line, text measure
