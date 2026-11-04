@@ -279,3 +279,6 @@ Manual distillation: `lit lint` exit 0, 14 principles, 10 changes applied, 2 rej
 
 ### T-20261103-18: The Little Book of Valuation (Damodaran, 2011), auto-pick, into global-economics
 Off the beat's scope, chosen because finwright had a valuation gap. `lit ingest` on the MOBI through calibre, lint 0 errors, `lit distill` wrote the note. 12 principles, 6 applied, 2 rejected. Friction: tables and formulas were images (readwright 0.38.0 `image`); `1.1021^5` read as 1.10215 (fixed there).
+
+### T-20261103-19: Detail in Typography (Hochuli, 2008 ed.), auto-pick, into personal-sites
+OCR of a two-up scan with `rw.py ocr`, `lit ingest --title`, lint exit 0, `lit distill` wrote the note. 18 principles, 10 applied, 3 rejected. Friction: two missing spreads went unflagged until the contents was compared, now noted by readwright 0.39.0. Trigger evals not rerun.
