@@ -19,6 +19,8 @@ Two or three seeds from different categories. Economists answer data and method 
 
 ## Method
 
+- [method] Does that long chart splice several series, in which unit (money or a metal), and does the cycle appear before detrending?
+
 - [method] Is that year on year, annualised month on month, or a three-month average?
 - [method] Is the trend line a filter or a moving average?
 - [method] How did you handle the pandemic-era outliers?
@@ -28,6 +30,9 @@ Two or three seeds from different categories. Economists answer data and method 
 - [method] Which inputs went into that Taylor-rule rate: headline or core inflation, which output gap, what r-star?
 
 ## Interpretation
+
+- [interpretation] Which prices led the rise (food, energy, shelter, or goods and services), and what does that order say about the cause?
+- [interpretation] Which kind of inflation do you mean here (monetary, demand, supply, cost-push, administered, expectations), and what evidence separates it from the others?
 
 - [interpretation] What would change your read of this?
 - [interpretation] How much of the move is composition?
