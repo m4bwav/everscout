@@ -20,5 +20,6 @@ Written by everscout-report in study mode after the person approves this outline
 - A curious non-economist who wants to read a jobs report.
 - A central bank watcher at a bank or fund.
 - An academic macroeconomist.
+- An economic historian reading today's inflation against earlier price regimes.
 - A development economist looking from outside the rich economies.
 - An industrial-organisation economist watching market power, platforms and antitrust.

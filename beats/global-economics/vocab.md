@@ -109,6 +109,10 @@ Indicator aliases include the common abbreviations; watch for false matches on s
 ## Themes
 
 - stagflation: stagflation
+- gibson-paradox: Gibson paradox, Gibson's paradox
+- long-waves: long waves, Kondratieff, Kuznets swings, price revolution
+- price-relatives: relative prices, price relatives
+- cost-push: cost-push inflation, wage-price spiral, demand-pull
 - energy-shock: energy shock, oil shock, energy crisis, Strait of Hormuz
 - soft-landing: soft landing, hard landing, recession risk
 - labor-hoarding: labor hoarding, labour hoarding, no-hire, low-hire

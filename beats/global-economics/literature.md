@@ -24,6 +24,7 @@ The most important books of all time for this subject (yearly recheck).
 | Lords of Finance | Liaquat Ahamed | 2009 | OL13650534W | Won the 2010 Pulitzer Prize for History and the 2009 FT business book award; it shows how four central bankers turned a crash into the Depression. | https://www.pulitzer.org/winners/liaquat-ahamed | lead |
 | Crashed | Adam Tooze | 2018 | OL19752591W | Won the 2019 Lionel Gelber Prize and made NYT and FT books-of-the-year lists; the standard global history of the 2008 crisis. | https://en.wikipedia.org/wiki/Adam_Tooze | lead |
 | Economics DeMYSTiFieD | Melanie Fox; Eric Dodge | 2012 | OL16343000W | Plain primer; checked against Arnold 11e | https://openlibrary.org/works/OL16343000W | distilled |
+| The Great Wave: Price Revolutions and the Rhythm of History | David Hackett Fischer | 1996 | isbn:9780195121216 | User's copy; Oxford University Press, reviewed in the Journal of Economic History and Business History Review; one kind of evidence, kept as the list's one book tracing price levels across centuries, though specialists reject its wave model. | https://resolve.cambridge.org/core/journals/journal-of-economic-history/article/great-wave-price-revolutions-and-the-rhythm-of-history-by-david-hackett-fischer-new-york-and-oxford-oxford-university-press-1996-pp-xvi-536/FE6AAC932831D2960C955A357DA78125 | distilled |
 
 ## Recent
 
