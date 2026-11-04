@@ -258,3 +258,7 @@ Manual distillation: `lit lint` exit 0, 11 principles, 6 changes applied, 1 reje
 ### T-20261103-13: Building LLM Powered Applications (Alto, Packt 2024), auto-pick, into token-saving
 
 Manual distillation: `lit lint` exit 0, 11 principles, 4 changes applied, 2 rejected, `lit distill` wrote the note. `beat-check` 0 errors. Trigger evals not rerun.
+
+### T-20261103-14: Web Typography (Rutter, 2017), auto-pick, into personal-sites
+
+Manual distillation: `lit lint` exit 0, 17 principles, 6 changes applied, 2 rejected, `lit distill` wrote the note. `beat-check` 0 errors. Trigger evals not rerun.

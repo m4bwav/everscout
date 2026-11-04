@@ -51,3 +51,8 @@ Two to four seeds from at least two categories. Lead with a short, specific than
 - [ai, design] Did you write down a design direction (tokens, fonts, rules) for the tool to follow, and did it stick to it?
 - [ai] Has anyone used the chat or AI feature on your site, and what do they ask it?
 - [ai] Does the AI feature say it is an AI, and what does it do when it cannot answer?
+
+## Type
+
+- [type] Which typeface did you settle first, and how did the others follow from it?
+- [type] Did you test the type by reading a long post on a phone, and what did you change after?

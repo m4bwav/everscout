@@ -177,3 +177,12 @@ Keep canonical ids stable. A new builder or trend gets its own id when people co
 ## Notes
 
 Read.cv announced its shutdown in 2025 (unverified whether Posts.cv survives); kept because people still mention moving off it.
+
+## Typography craft
+
+- measure: line length, characters per line, text measure
+- type-scale: modular scale, type scale
+- font-loading-flash: FOUT, FOIT, flash of unstyled text, flash of invisible text, font-display
+- fallback-metrics: size-adjust, font-size-adjust, ascent-override, fallback font metrics
+- type-pairing: font pairing, type pairing, superfamily
+- vertical-rhythm: vertical rhythm, baseline grid
