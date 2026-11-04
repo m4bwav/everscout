@@ -45,6 +45,7 @@ The most important books of the last five years (quarterly recheck).
 | AI Superpowers | Kai-Fu Lee | 2018 | isbn:9781328546395 | User's copy; Houghton Mifflin Harcourt; the most-cited 2018 statement of the US-China AI race and the 40-50% jobs forecast, reviewed in the International Journal of Nuclear Security (2019). | https://utk.exodar.janeway.systems/ijns/article/id/191/ | distilled |
 | Economics (11th ed.) | Roger A. Arnold | 2014 |  | Mark's copy; South-Western/Cengage survey text (13th ed. 2018 still sold); read for the macro measurement, Fed, crisis and international-finance chapters | https://opac.northsouth.edu/cgi-bin/koha/opac-search.pl?q=an:8350 ; https://www.schweitzer-online.de/en/buch/Arnold/Economics/9781337617383/A42491164/ | distilled |
 | The Little Book of Valuation | Aswath Damodaran | 2024 | OL21458576W | Short guide to valuing one company, updated 2024; off the macro scope and listed because it feeds finwright, on one kind of evidence (author's own edition page, 8 editions) since no independent review was found. | https://pages.stern.nyu.edu/%7eadamodar/New_Home_Page/littlebook2ed.htm | distilled |
+| The Bogleheads' Guide to Investing | Taylor Larimore, Mel Lindauer, Michael LeBoeuf | 2014 | isbn:9781118921289 | Plain guide to low-cost index investing, older than the recent window and off the macro scope, listed because it feeds finwright; one kind of evidence, a journal review. | https://rpc.cfainstitute.org/research/financial-analysts-journal/2015/the-bogleheads-guide-to-investing | distilled |
 
 ## Latest
 

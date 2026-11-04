@@ -285,3 +285,6 @@ OCR of a two-up scan with `rw.py ocr`, `lit ingest --title`, lint exit 0, `lit d
 
 ### T-20261103-20: Universal Principles of Typography (Stocks, 2024), auto-pick, into personal-sites
 `lit ingest --title` after a junk metadata title reached the folder name (fixed in 0.11.7), lint exit 0, `lit distill` wrote the note. 15 principles, 9 applied, 3 rejected. Trigger evals not rerun.
+
+### T-20261103-21: The Bogleheads' Guide to Investing (2nd ed., 2014), auto-pick, into global-economics
+`lit ingest --title`, `lit add` for the row, lint exit 0, `lit distill --allow-open` wrote the note with 4 changes left proposed for finwright PR #14. 3 applied, 3 rejected. Trigger evals not rerun.
