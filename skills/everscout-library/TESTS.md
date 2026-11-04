@@ -270,3 +270,5 @@ Manual distillation: `lit lint` exit 0, 15 principles, 5 changes applied, 2 reje
 ### T-20261103-16: Better Web Typography for a Better Web (Latin, 2017), auto-pick, into personal-sites
 
 Manual distillation: `lit lint` exit 0, 13 principles, 5 changes applied, 2 rejected, `lit distill` wrote the note. First ingest overwrote Web Typography's `book.md` and `toc.txt` through a title match on the file name; both restored, fixed in 0.11.6 with a test.
+
+Trigger evals on 0.11.6: `claude plugin eval . --trust-plugin --case 'library-*'`: 3/3 (library-trigger-1 and -2 with 1.00, without 0.75; decoy 1.00; $0.92). Both triggers hit max_turns 3 after the skill loaded, as before.
