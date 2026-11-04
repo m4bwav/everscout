@@ -254,3 +254,7 @@ Manual distillation: `lit lint` exit 0, 12 principles, 6 changes applied, `lit d
 ### T-20261103-11: Generative AI on Kubernetes (Huss, Zonca, O'Reilly 2026), auto-pick, into token-saving
 
 Manual distillation: `lit lint` exit 0, 11 principles, 6 changes applied, 1 rejected, `lit distill` wrote the note. `beat-check` 0 errors. Trigger evals not rerun.
+
+### T-20261103-13: Building LLM Powered Applications (Alto, Packt 2024), auto-pick, into token-saving
+
+Manual distillation: `lit lint` exit 0, 11 principles, 4 changes applied, 2 rejected, `lit distill` wrote the note. `beat-check` 0 errors. Trigger evals not rerun.
