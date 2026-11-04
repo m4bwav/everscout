@@ -289,5 +289,8 @@ OCR of a two-up scan with `rw.py ocr`, `lit ingest --title`, lint exit 0, `lit d
 ### T-20261103-21: The Bogleheads' Guide to Investing (2nd ed., 2014), auto-pick, into global-economics
 `lit ingest --title`, `lit add` for the row, lint exit 0, `lit distill --allow-open` wrote the note with 4 changes left proposed for finwright PR #14. 3 applied, 3 rejected. Trigger evals not rerun.
 
+### T-20261104-2: Arcade Game Typography (Omagari, 2019), auto-pick, into game-design
+`lit ingest`, `lit add` for the row, lint exit 0, `lit distill` wrote the note. 15 principles, 6 applied, 2 rejected. Friction: scrambled OCR layer and plates the text misses (fixed in readwright 0.41.0: `info` note, `page`). Trigger evals not rerun; skill text unchanged.
+
 ### T-20261104-1: Typeset in the Future (Addey, 2018), auto-pick, into ai-video
 `lit ingest`, `lit add` for the row, lint exit 0, `lit distill` wrote the note. 14 principles, 5 applied, 2 rejected. Friction: fixed-layout EPUB read line by line (fixed in readwright 0.40.2). Trigger evals not rerun.
