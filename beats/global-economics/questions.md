@@ -50,7 +50,7 @@ Two or three seeds from different categories. Economists answer data and method 
 - [interpretation] Is the lead measured in frontier models, in deployment and data, or in chips and compute?
 - [interpretation] Did the state AI plan meet its own dated targets, and what did the guidance funds waste?
 - [interpretation] Did the unemployment rate fall because people found jobs, or because people stopped looking and left the labour force?
-
+- [interpretation] Does the claim that stocks are dear against their history allow for interest rates and the share of firms with losses?
 
 ## Tools and craft
 

@@ -44,6 +44,7 @@ The most important books of the last five years (quarterly recheck).
 | Essentials of Economics | Dirk Mateer, Lee Coppock, Brian O'Roark | 2016 | isbn:9780393264586 | User's copy; a W. W. Norton survey text, still in print as a 2020 second edition, read for how data releases and policy tools are taught. | https://wwnorton.co.uk/books/9780393441864-essentials-of-economics-39b68535-a387-4cf0-9bef-131dfaa4f351/editions | distilled |
 | AI Superpowers | Kai-Fu Lee | 2018 | isbn:9781328546395 | User's copy; Houghton Mifflin Harcourt; the most-cited 2018 statement of the US-China AI race and the 40-50% jobs forecast, reviewed in the International Journal of Nuclear Security (2019). | https://utk.exodar.janeway.systems/ijns/article/id/191/ | distilled |
 | Economics (11th ed.) | Roger A. Arnold | 2014 |  | Mark's copy; South-Western/Cengage survey text (13th ed. 2018 still sold); read for the macro measurement, Fed, crisis and international-finance chapters | https://opac.northsouth.edu/cgi-bin/koha/opac-search.pl?q=an:8350 ; https://www.schweitzer-online.de/en/buch/Arnold/Economics/9781337617383/A42491164/ | distilled |
+| The Little Book of Valuation | Aswath Damodaran | 2024 | OL21458576W | Short guide to valuing one company, updated 2024; off the macro scope and listed because it feeds finwright, on one kind of evidence (author's own edition page, 8 editions) since no independent review was found. | https://pages.stern.nyu.edu/%7eadamodar/New_Home_Page/littlebook2ed.htm | distilled |
 
 ## Latest
 
