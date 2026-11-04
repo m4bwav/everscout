@@ -23,6 +23,7 @@ The most important books of all time for this subject (yearly recheck).
 | User Friendly | Cliff Kuang, Robert Fabricant | 2019 | - | It is the history of user-centred design, from the 1920s to the iPhone, behind the 'start with the user' rule; an Amazon Best Book of 2019 praised in the New York Times Book Review. | https://ebr.overdrive.com/library/world-languages/media/4297414 https://harvard.com/book/9781250758200 | distilled |
 | Web Form Design | Luke Wroblewski | 2008 | isbn:9781933820248 | It is the standard short book on form design, listed on one kind of evidence (reviews) because no other beat book covers forms. | https://www.viget.com/articles/book-review-web-form-design-by-luke-wroblewski | distilled |
 | Better Web Typography for a Better Web | Matej Latin | 2017 | OL38198412W | A practical course-turned-book for developers on setting paragraphs and small type; rests on one kind of evidence, reader reviews. | https://www.goodreads.com/book/show/35857337 | distilled |
+| Detail in Typography | Jost Hochuli | 1987 | OL3067489W | The short standard text on letter, word and line spacing, still reprinted from 1987 to 2015; one kind of evidence (reviews), kept because no web typography book here argues spacing from the letterforms. | https://eyemagazine.com/review/article/on-a-clear-day-you-can-read-between-the-lines | distilled |
 
 ## Recent
 
