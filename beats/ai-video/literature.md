@@ -24,6 +24,7 @@ The most important books of all time for this subject (yearly recheck).
 | Master Shots (series) | Christopher Kenworthy | 2009 | OL16414622W | Its ready-made camera setups translate well into camera-motion prompts. | https://filmlifestyle.com/best-books-for-cinematographers/ | distilled |
 | Deep Learning | Ian Goodfellow, Yoshua Bengio, Aaron Courville | 2016 | OL17801809W | It is the set or main textbook in university deep learning courses such as Montreal's IFT6135 and Cornell's CS6784, and it underlies the networks video models are built from. | https://sites.google.com/view/ift6135-h2021/course-description | lead |
 | FilmCraft: Cinematography | Mike Goodridge, Tim Grierson | 2012 | isbn:9781908150691 | Interviews with sixteen working cinematographers give the reasons behind light, lens and movement choices that AI video prompts have to state outright. | https://www.nyfa.edu/student-resources/5-cinematography-books-recommendations/ | distilled |
+| Typeset in the Future: Typography and Design in Science Fiction Movies | Dave Addey | 2018 | isbn:9781419727146 | One kind of evidence, kept because no other listed book covers screens and signs in a film, the text models cannot draw. | https://popmatters.com/typeset-in-future-dave-addey-2627021422.html | distilled |
 
 ## Recent
 

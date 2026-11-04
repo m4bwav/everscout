@@ -90,3 +90,9 @@ Two or three seeds from different categories. Name the shot you mean ("the rooft
 - [craft] For a comedy beat, did you keep the camera still and the cut simple so the punch line read, or did a model-chosen move step on it?
 - [ai] Did you get a long take or orbit shot from one generation, or stitch it, and where did the stitch show?
 - [ai] How did you ask for firelight or candlelight that flickers, and did the model keep the light source motivated across the clip?
+
+## On-screen text (Typeset in the Future, 2026-11-04)
+
+- [ai] How did you get readable signs or screens: in the prompt, or composited in post, and how did you track them?
+- [ai] What did you do about garbled background text that changed every frame?
+- [craft] Did any text compete with dialogue, and how did you time or dim it?
