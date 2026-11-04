@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.11.6"
+VERSION = "0.11.7"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3409,6 +3409,11 @@ def lit_split_stem(stem):
     return lit_title_from_stem(t), authors
 
 
+def lit_clean_meta_title(title):
+    """An EPUB title with a typesetter's leftover at its end, "Universal Principles of Typography (for . .)", without it."""
+    return re.sub(r"\s*\((?:\w+\s*)?(?:\.\s*)+\)\s*$", "", title).strip()
+
+
 def lit_unswap_meta(title, author, stem, authors):
     """(title, authors) with EPUB metadata put right when its title and author fields are swapped: the title is a
     person's name ("Deborah Tannen") and the author field is the book title, both found in the file name."""
@@ -3761,7 +3766,7 @@ def cmd_lit_ingest(a):
              "and spot-check three facts before distilling (kb/literature.md step 1a); a book that fails is `skip`")
     stem = os.path.splitext(os.path.basename(path))[0]
     mt = re.search(r"^title:\s*(.+)$", info, re.M | re.I)
-    mt = mt.group(1).strip() if mt else ""
+    mt = lit_clean_meta_title(mt.group(1).strip()) if mt else ""
     stem_title, stem_authors = lit_split_stem(stem)
     ma = re.search(r"^author:\s*(.+)$", info, re.M | re.I)
     mt, stem_authors = lit_unswap_meta(mt, ma.group(1).strip() if ma else "", stem, stem_authors)

@@ -282,3 +282,6 @@ Off the beat's scope, chosen because finwright had a valuation gap. `lit ingest`
 
 ### T-20261103-19: Detail in Typography (Hochuli, 2008 ed.), auto-pick, into personal-sites
 OCR of a two-up scan with `rw.py ocr`, `lit ingest --title`, lint exit 0, `lit distill` wrote the note. 18 principles, 10 applied, 3 rejected. Friction: two missing spreads went unflagged until the contents was compared, now noted by readwright 0.39.0. Trigger evals not rerun.
+
+### T-20261103-20: Universal Principles of Typography (Stocks, 2024), auto-pick, into personal-sites
+`lit ingest --title` after a junk metadata title reached the folder name (fixed in 0.11.7), lint exit 0, `lit distill` wrote the note. 15 principles, 9 applied, 3 rejected. Trigger evals not rerun.

@@ -1623,6 +1623,11 @@ class LiteratureTests(WorkspaceTest):
         self.assertEqual(E.lit_split_stem("Python (programming)"), ("Python (programming)", []))
         self.assertEqual(E.lit_split_stem("(Gilbert Mizrahi)"), ("(Gilbert Mizrahi)", []))
 
+    def test_lit_clean_meta_title(self):   # slug had been universal-principles-of-typography-for
+        self.assertEqual(E.lit_clean_meta_title("Universal Principles of Typography (for . .)"), "Universal Principles of Typography")
+        self.assertEqual(E.lit_clean_meta_title("Economics (11th ed.)"), "Economics (11th ed.)")
+        self.assertEqual(E.lit_clean_meta_title("Plain Title"), "Plain Title")
+
     def test_lit_unswap_meta(self):
         stem = "Deborah Tannen - Conversational Style_ Analyzing Talk among Friends"
         self.assertEqual(E.lit_unswap_meta("Deborah Tannen", "Conversational Style: Analyzing Talk among Friends", stem, []),
