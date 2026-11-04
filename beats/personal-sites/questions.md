@@ -56,3 +56,8 @@ Two to four seeds from at least two categories. Lead with a short, specific than
 
 - [type] Which typeface did you settle first, and how did the others follow from it?
 - [type] Did you test the type by reading a long post on a phone, and what did you change after?
+
+## Forms
+
+- [forms] Which questions did you cut from your contact form, and did more or better messages come in?
+- [forms] What does someone see after your form sends, and do they know when you will reply?
