@@ -199,3 +199,6 @@ Read.cv announced its shutdown in 2025 (unverified whether Posts.cv survives); k
 - figure-styles: lining figures, non-lining figures, font-variant-numeric
 - word-shape: word shape, bouma, parallel letter recognition
 - text-wrap: text-wrap balance, text-wrap pretty, widows and orphans
+- fluid-type: fluid type, fluid type scale, Utopia, clamp font size
+- variable-fonts: variable font, font-variation-settings, optical size, font-optical-sizing, grade axis
+- line-box-trim: text-box-trim, leading trim, cap height spacing

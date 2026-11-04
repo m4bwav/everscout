@@ -2,6 +2,10 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.11.7 · 2026-11-03
+
+- `lit ingest` drops a leftover such as `(for . .)` from the end of an EPUB title, which had reached the book folder name.
+
 ## 0.11.6 · 2026-11-03
 
 - `lit ingest` no longer takes a book for a listed one whose title its name contains when the file names another author, and refuses a folder that holds another book's file (Better Web Typography overwrote Web Typography's `book.md` and `toc.txt`; both restored). Its report no longer says "set to reading" for a row it left alone.
