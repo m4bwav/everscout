@@ -276,3 +276,6 @@ Trigger evals on 0.11.6: `claude plugin eval . --trust-plugin --case 'library-*'
 ### T-20261103-17: The Great Wave (Fischer, 1996), auto-pick, into global-economics
 
 Manual distillation: `lit lint` exit 0, 14 principles, 10 changes applied, 2 rejected, `lit distill` wrote the note. `lit add` after ingest linked the folder. Trigger evals not rerun.
+
+### T-20261103-18: The Little Book of Valuation (Damodaran, 2011), auto-pick, into global-economics
+Off the beat's scope, chosen because finwright had a valuation gap. `lit ingest` on the MOBI through calibre, lint 0 errors, `lit distill` wrote the note. 12 principles, 6 applied, 2 rejected. Friction: tables and formulas were images (readwright 0.38.0 `image`); `1.1021^5` read as 1.10215 (fixed there).
