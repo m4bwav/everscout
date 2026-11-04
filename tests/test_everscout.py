@@ -1818,6 +1818,31 @@ class LiteratureTests(WorkspaceTest):
         self.assertIn("set to reading", out)
         self.assertTrue(os.path.isdir(os.path.join(E.data_dir(self.cfg(), "test-beat"), "books", "the-visual-story")))
 
+    def test_ingest_other_author_is_another_book(self):
+        self.add("--tier", "canon", "--title", "Web Typography", "--authors", "Richard Rutter", "--year", "2017", "--id", "OL7W", "--why", "w", "--evidence", "https://example.org/s")
+        rw = os.path.join(self.tmp, "rw.py")
+        open(rw, "w", encoding="utf-8").write("print('format: pdf\\nwords: 90000')\n")
+        latin = os.path.join(self.tmp, "Better Web Typography for a Better Web - Matej Latin.pdf")
+        rutter = os.path.join(self.tmp, "Richard Rutter - Web Typography.pdf")
+        for p in (latin, rutter):
+            open(p, "wb").write(b"%PDF-1.4")
+        books = os.path.join(E.data_dir(self.cfg(), "test-beat"), "books")
+        with mock.patch.object(E, "find_readwright", return_value=rw):
+            code, out, err = self.run_cli("lit", "ingest", rutter, "--beat", "test-beat")
+            self.assertEqual(code, 0, err)
+            self.assertIn("set to reading", out)
+            code, out, err = self.run_cli("lit", "ingest", rutter, "--beat", "test-beat")
+            self.assertIn("stays reading", out)
+            code, out, err = self.run_cli("lit", "ingest", latin, "--beat", "test-beat")
+            self.assertEqual(code, 0, err)
+            self.assertTrue(os.path.isdir(os.path.join(books, "better-web-typography-for-a-better-web")))
+            other = os.path.join(self.tmp, "Web Typography 2.pdf")
+            open(other, "wb").write(b"%PDF-1.4")
+            code, out, err = self.run_cli("lit", "ingest", other, "--beat", "test-beat", "--title", "Web Typography")
+            self.assertEqual(code, 1)
+            self.assertIn("another file", err)
+        self.assertIn("Rutter", open(os.path.join(books, "web-typography", "book.md"), encoding="utf-8").read())
+
     def test_ingest_refuses_file_without_text(self):
         book = os.path.join(self.tmp, "scan.pdf")
         open(book, "wb").write(b"%PDF-1.4")

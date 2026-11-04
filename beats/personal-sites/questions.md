@@ -55,6 +55,7 @@ Two to four seeds from at least two categories. Lead with a short, specific than
 ## Type
 
 - [type] Which typeface did you settle first, and how did the others follow from it?
+- [type] When you changed your line length or text size, what else did you have to change to keep it readable?
 - [type] Did you test the type by reading a long post on a phone, and what did you change after?
 
 ## Forms

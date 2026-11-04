@@ -266,3 +266,7 @@ Manual distillation: `lit lint` exit 0, 17 principles, 6 changes applied, 2 reje
 ### T-20261103-15: Web Form Design (Wroblewski, 2008), auto-pick, into personal-sites
 
 Manual distillation: `lit lint` exit 0, 15 principles, 5 changes applied, 2 rejected, `lit distill` wrote the note. `beat-check` 0 errors, 1 existing warning. Trigger evals not rerun.
+
+### T-20261103-16: Better Web Typography for a Better Web (Latin, 2017), auto-pick, into personal-sites
+
+Manual distillation: `lit lint` exit 0, 13 principles, 5 changes applied, 2 rejected, `lit distill` wrote the note. First ingest overwrote Web Typography's `book.md` and `toc.txt` through a title match on the file name; both restored, fixed in 0.11.6 with a test.
