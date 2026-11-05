@@ -62,6 +62,8 @@ Two to four seeds from at least two categories. Lead with a short, specific than
 - [type] If your sizes are fluid, did you test them at 200% zoom, and what did you change?
 - [type] If you moved to a variable font, did the total download shrink, and which axes do you use?
 - [type] When you compared typefaces, did you set the same text at the same size, measure and line-height?
+- [type] When you stepped back from a page of text, what uneven spacing did you find?
+- [type] Which empty areas of your page did you design on purpose?
 - [type] Did you check your font's kerning and figures in your own language and with your own numbers?
 
 ## Forms
