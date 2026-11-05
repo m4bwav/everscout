@@ -2,6 +2,10 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## Unreleased
+
+- New built-in beat **ai-voice** (speech, voice design, cloning, singing, cleanup, craft and law): 41 sources probed 2026-11-04, feeds voicewright. Voice models live here; audio native to a video model stays in ai-video.
+
 ## 0.11.7 · 2026-11-03
 
 - `lit ingest` drops a leftover such as `(for . .)` from the end of an EPUB title, which had reached the book folder name.
