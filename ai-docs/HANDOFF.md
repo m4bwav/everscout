@@ -86,6 +86,8 @@ Updated 2026-11-04 (Saller, The Subversive Copy Editor distilled into personal-s
 
 - 2026-11-03 (Hochuli): *Detail in Typography* (Hyphen Press, 2008 ed.) distilled into personal-sites (auto-pick, T-20261103-19): canon row, three vocab groups, two Type question seeds, book note. sitewright 0.6.0 (figures, abbreviations, slashes, fair face comparison). readwright 0.39.0: `info` notes pages missing from a scan; this file lacks pp. 12-13 and 44-45, so a complete copy would add the Emphasis chapter. No open tool items. Next: `ES lit pick`; Ruder, Typography has some fit.
 
+- 2026-11-04 (Ruder): Ruder, *Typography* (1967) distilled into personal-sites (auto-pick, T-20261104-6): canon row, three vocab groups, two Type question seeds, book note. sitewright 0.8.0 (PR #16), readwright 0.43.0 (PR #66, `--lang`), both installed. Open readwright items are in its HANDOFF. No open everscout items. Next: `ES lit pick`; little fit remains.
+
 ## Reddit discovery built (2026-10-16, night), unreleased
 
 - Branch `feat/reddit-discovery` (PR to main): steps 1 to 6 of `plans/2026-10-16-reddit-discovery-after-arctic-shift.md`. Pickup of Reddit links during `fetch`, `discover list|add|mark`, `captures`, `new-note --capture`, `fetchwright.max_reads_per_scan` (exit 6), scan skill Step 2 and procedure G, kb rows. 74 tests. The plan's Status section lists how the build differs from its shape.
