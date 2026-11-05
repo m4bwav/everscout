@@ -312,3 +312,6 @@ OCR of a two-up scan with `rw.py ocr`, `lit ingest --title`, lint exit 0, `lit d
 
 ### T-20261105-1: Effective Software Testing (Aniche, 2022), auto-pick, into token-saving
 `lit ingest`, `lit add` for the row, lint exit 0, `lit distill` wrote the note. 15 principles, 7 applied, 3 rejected. Friction: listing captions and legends survived `--skip-code` (fixed in readwright 0.43.2). Trigger evals not rerun.
+
+### T-20261105-2: Software Testing with Generative AI (Winteringham, 2024), auto-pick, into token-saving
+`lit ingest`, `lit add` for the row, lint exit 0, `lit distill` wrote the note. 18 principles, 7 applied, 3 rejected. Friction: code and model replies in table cells passed `--skip-code` (fixed in readwright 0.44.0). Trigger evals not rerun; skill text unchanged.
