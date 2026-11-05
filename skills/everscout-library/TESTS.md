@@ -315,3 +315,6 @@ OCR of a two-up scan with `rw.py ocr`, `lit ingest --title`, lint exit 0, `lit d
 
 ### T-20261105-2: Software Testing with Generative AI (Winteringham, 2024), auto-pick, into token-saving
 `lit ingest`, `lit add` for the row, lint exit 0, `lit distill` wrote the note. 18 principles, 7 applied, 3 rejected. Friction: code and model replies in table cells passed `--skip-code` (fixed in readwright 0.44.0). Trigger evals not rerun; skill text unchanged.
+
+### T-20261105-3: Accounting: What the Numbers Mean (Marshall, McManus, Viele, 10th ed., 2014), auto-pick, into global-economics
+`lit ingest`, `lit add` for the row, lint exit 0, `lit distill` wrote the note. 16 principles, 3 applied, 3 rejected. Friction: running heads opened 100 false sections (fixed in readwright 0.44.1); a concurrent read lost text from a half-written cache (fixed in 0.44.2). Trigger evals not rerun; skill text unchanged.
