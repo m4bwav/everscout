@@ -694,3 +694,11 @@ Auto-pick: nothing due, no Judgment-call rows, no beat-listed file left; four te
 Tools: readwright 0.44.1 (PR #70), alternating running heads beside folios; 0.44.2 (PR #71), atomic PDF caches. finwright PR #16. No everscout tool changes needed. Slip: a heredoc with doubled backslashes was refused again. Step 4 not rerun. T-20261105-3. Readwright leaves open: short-chapter heads, folio glued to a caption, repeated real headings at a page edge, calibre/soffice/pandoc caches not atomic.
 The session-start evergreen items (6 units due, consolidation in 6) were not done in this session.
 Next: `ES lit pick`. More accounting texts would add little; Mark's pick would serve better.
+
+
+## [2026-11-05] Generative AI on Microsoft Azure into token-saving
+
+Auto-pick: nothing due, no Judgment-call rows, no beat-listed file left; after testing and accounting runs, a real publisher's 2026 book on a beat with an agent angle. Read about 7k of 102k words, by `rw.py rank`. 11 principles, 4 changes applied, 2 rejected. Verdict: skip unless Azure is your platform. Spot checks: Model Router modes hold in Microsoft's docs; LCEL is misnamed in the book; its Copilot billing section is now legacy. Its 30 to 40 percent repeat-query figure and order-of-magnitude routing saving are unsourced and were not used. The one finding, that a per-request router can lose the prompt cache, comes from Microsoft's docs rather than the book, and was not measured.
+Tools: readwright 0.44.3 (PR #72), no stray space before punctuation in pretty-printed EPUB markup, plus a distilling tip. tokenwright 0.2.18 (PR #46). indie-ai-scout PR #42. No everscout tool changes needed. Slip: doubled backslashes in a heredoc were refused twice; the hook caught both. Step 4 not rerun. T-20261105-4.
+The session-start evergreen items (6 units due, consolidation in 6) were not done in this session. Readwright's open items from the previous run were not worked.
+Next: `ES lit pick`. Fit is thin; Mark's pick would serve better.
