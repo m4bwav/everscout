@@ -306,3 +306,6 @@ OCR of a two-up scan with `rw.py ocr`, `lit ingest --title`, lint exit 0, `lit d
 
 ### T-20261104-1: Typeset in the Future (Addey, 2018), auto-pick, into ai-video
 `lit ingest`, `lit add` for the row, lint exit 0, `lit distill` wrote the note. 14 principles, 5 applied, 2 rejected. Friction: fixed-layout EPUB read line by line (fixed in readwright 0.40.2). Trigger evals not rerun.
+
+### T-20261104-7: Taking Testing Seriously (Bach and Bolton, 2025), auto-pick, into token-saving
+`lit ingest`, `lit add` for the row, lint exit 0, `lit distill` wrote the note. 16 principles, 10 applied, 4 rejected. Friction: nested lists read flat (fixed in readwright 0.43.1). Trigger evals not rerun.

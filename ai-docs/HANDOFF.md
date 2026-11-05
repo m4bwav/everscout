@@ -86,6 +86,8 @@ Updated 2026-11-04 (Saller, The Subversive Copy Editor distilled into personal-s
 
 - 2026-11-03 (Hochuli): *Detail in Typography* (Hyphen Press, 2008 ed.) distilled into personal-sites (auto-pick, T-20261103-19): canon row, three vocab groups, two Type question seeds, book note. sitewright 0.6.0 (figures, abbreviations, slashes, fair face comparison). readwright 0.39.0: `info` notes pages missing from a scan; this file lacks pp. 12-13 and 44-45, so a complete copy would add the Emphasis chapter. No open tool items. Next: `ES lit pick`; Ruder, Typography has some fit.
 
+- 2026-11-04 (Bach): Bach and Bolton, *Taking Testing Seriously* (Wiley 2025) distilled into token-saving (auto-pick, T-20261104-7): recent row, two Topics, two Measurement questions, book note. evergreen 0.18.1 (PR #37: `not covered:` line, oracle kinds, reworded variants, load cases, pruning), readwright 0.43.1 (PR #67, nested lists). No open everscout items. Next: `ES lit pick`; little fit remains.
+
 - 2026-11-04 (Ruder): Ruder, *Typography* (1967) distilled into personal-sites (auto-pick, T-20261104-6): canon row, three vocab groups, two Type question seeds, book note. sitewright 0.8.0 (PR #16), readwright 0.43.0 (PR #66, `--lang`), both installed. Open readwright items are in its HANDOFF. No open everscout items. Next: `ES lit pick`; little fit remains.
 
 ## Reddit discovery built (2026-10-16, night), unreleased
