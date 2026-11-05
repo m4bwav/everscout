@@ -202,3 +202,8 @@ Read.cv announced its shutdown in 2025 (unverified whether Posts.cv survives); k
 - fluid-type: fluid type, fluid type scale, Utopia, clamp font size
 - variable-fonts: variable font, font-variation-settings, optical size, font-optical-sizing, grade axis
 - line-box-trim: text-box-trim, leading trim, cap height spacing
+
+## Site copy editing
+
+- house-style: house style, style guide, style sheet
+- silent-change: silent edit, stealth edit, tracked changes

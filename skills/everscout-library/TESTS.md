@@ -289,6 +289,9 @@ OCR of a two-up scan with `rw.py ocr`, `lit ingest --title`, lint exit 0, `lit d
 ### T-20261103-21: The Bogleheads' Guide to Investing (2nd ed., 2014), auto-pick, into global-economics
 `lit ingest --title`, `lit add` for the row, lint exit 0, `lit distill --allow-open` wrote the note with 4 changes left proposed for finwright PR #14. 3 applied, 3 rejected. Trigger evals not rerun.
 
+### T-20261104-5: The Subversive Copy Editor (Saller, 2009), auto-pick, into personal-sites
+`lit ingest`, `lit add` for the row, lint exit 0, `lit distill` wrote the note. 18 principles, 10 applied, 2 rejected. Friction: page-foot notes split sentences (fixed in readwright 0.42.0). Trigger evals not rerun; skill text unchanged.
+
 ### T-20261104-4: Privacy and Security for Large Language Models (Lin, 2026), auto-pick, into token-saving
 `lit ingest --title`, `lit add` for the row, lint exit 0, `lit distill` wrote the note. 12 principles, 4 applied, 2 rejected. Friction: code listings ate the character cap and left numbered callout markers (fixed in readwright 0.41.2). Trigger evals not rerun; skill text unchanged.
 

@@ -20,6 +20,8 @@ Two to four seeds from at least two categories. Lead with a short, specific than
 - [content] Do you write case studies, and how long do they end up?
 - [content] How often do you update it, and what keeps you updating?
 - [content] Do you have a now, uses or colophon page, and do people read it?
+- [content] Does anyone edit your writing before it goes up, and how do you settle a disagreement?
+- [content] Which odd style choices do you keep on purpose, and has a reader ever tripped on one?
 
 ## Design
 
