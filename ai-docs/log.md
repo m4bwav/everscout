@@ -710,3 +710,4 @@ Tools: readwright PR #73 (0.44.4, the four open items) NOT merged at this entry:
 Lesson: wait on CI with a deadline from the start; an open-ended wait on an agent looked like a stall to Mark. A session-long hang in an install step should be rerun, not waited on.
 The session-start evergreen items (6 units due, consolidation in 6) were not done in this session.
 Next: check PR #73, merge and release if green, update the plugin; then `ES lit pick`.
+Later: the routes rerun passed in 1m50s; PR #73 merged, readwright 0.44.4 released and installed.
