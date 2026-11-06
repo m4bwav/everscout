@@ -55,6 +55,7 @@ Searched 2026-10-30 with `lit new`; most hits were self-published, reports or of
 | title | authors | year | id | why | evidence | status |
 |---|---|---|---|---|---|---|
 | The Wage Standard | Arindrajit Dube | 2026 | OL45187368W | A leading minimum-wage researcher on wages and labour markets, from a major publisher (Dutton). | https://openlibrary.org/works/OL45187368W | lead |
+| J.K. Lasser's Small Business Taxes 2024 | Barbara Weltman | 2023 | isbn:9781394192472 | Off the beat's scope; read to give finwright a base on side and self-employed income, and superseded in part by the 2025 tax act. | https://lehmanns.de/shop/wirtschaft/62594031-9781394192472-j-k-lasser-s-small-business-taxes-2024 | distilled |
 
 ## Searches
 

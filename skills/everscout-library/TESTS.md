@@ -320,4 +320,5 @@ OCR of a two-up scan with `rw.py ocr`, `lit ingest --title`, lint exit 0, `lit d
 `lit ingest`, `lit add` for the row, lint exit 0, `lit distill` wrote the note. 16 principles, 3 applied, 3 rejected. Friction: running heads opened 100 false sections (fixed in readwright 0.44.1); a concurrent read lost text from a half-written cache (fixed in 0.44.2). Trigger evals not rerun; skill text unchanged.
 
 - T-20261105-4 (2026-11-05): Generative AI on Microsoft Azure into token-saving; ingest, lint, distill and check all exit 0; 4 changes applied, 2 rejected. Trigger evals not rerun.
+- T-20261105-6 (2026-11-05): Lasser's Small Business Taxes 2024 into global-economics; ingest, lint, distill exit 0; 6 changes applied, 3 rejected. Trigger evals not rerun.
 - T-20261105-5 (2026-11-05): Verbal Hygiene into tech-hiring; ingest, lint, distill exit 0; tests pass; 6 changes applied, 2 rejected. Trigger evals not rerun.
