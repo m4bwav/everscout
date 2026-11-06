@@ -4,6 +4,12 @@ Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELO
 
 ## Unreleased
 
+## 0.12.1 · 2026-11-06
+
+- `lit ingest`: `--title` now gives a book its own folder, and a listed title its colon cuts to one word (`Typography: A Manual...`) needs its author in the file name.
+- `lit lint`: a toc title with ` / ` can be cited by either part.
+- *Typography for Lawyers* distilled into personal-sites.
+
 ## 0.12.0 · 2026-11-05
 
 - New built-in beat **ai-voice** (speech, voice design, cloning, singing, cleanup, craft and law): 41 sources probed 2026-11-04, feeds voicewright. Voice models live here; audio native to a video model stays in ai-video.

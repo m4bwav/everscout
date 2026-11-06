@@ -70,3 +70,8 @@ Two to four seeds from at least two categories. Lead with a short, specific than
 
 - [forms] Which questions did you cut from your contact form, and did more or better messages come in?
 - [forms] What does someone see after your form sends, and do they know when you will reply?
+
+## Page and resume layout
+
+- [layout] What did you settle first on your page, the body text or the layout, and what changed when you tried the other order?
+- [layout] Your resume page: one page or two, and did anyone comment on it?

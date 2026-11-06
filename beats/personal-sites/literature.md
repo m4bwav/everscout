@@ -26,6 +26,7 @@ The most important books of all time for this subject (yearly recheck).
 | Detail in Typography | Jost Hochuli | 1987 | OL3067489W | The short standard text on letter, word and line spacing, still reprinted from 1987 to 2015; one kind of evidence (reviews), kept because no web typography book here argues spacing from the letterforms. | https://eyemagazine.com/review/article/on-a-clear-day-you-can-read-between-the-lines | distilled |
 | The Subversive Copy Editor | Carol Fisher Saller | 2009 | - | Off the beat's design focus; kept for how a site's writing gets edited and for editwright. Rests on reviews and a publisher's series only, one kind of evidence, because it is the standard book on the editor and writer relationship rather than on style. | https://www.wordorigins.org/harmless-drudge/review-the-subversive-copy-editor | distilled |
 | Typography: A Manual of Design | Emil Ruder | 1967 | OL4926592W | The Basel school's teaching manual on white space, grey value and rhythm, still in print from Niggli; rests on one kind of evidence, practitioner lists, because no syllabus or award was confirmed. | https://keithtam.net/typography-and-book-design-reading-list/ | distilled |
+| Typography for Lawyers | Matthew Butterick | 2010 | isbn:9781598390773 | Plain rules with reasons for non-designers, grown into the widely read Practical Typography; one kind of evidence, kept because the rules apply far beyond law. | https://practicaltypography.com/bibliography.html | distilled |
 
 ## Recent
 

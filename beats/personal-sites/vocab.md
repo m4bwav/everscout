@@ -206,6 +206,10 @@ Read.cv announced its shutdown in 2025 (unverified whether Posts.cv survives); k
 - swiss-style: Swiss style, International Typographic Style, Basel school
 - line-box-trim: text-box-trim, leading trim, cap height spacing
 
+- reader-attention: reader attention, looking for the exit
+- foreground-background: foreground and background, body text first
+- practical-typography: Practical Typography, Typography for Lawyers, Butterick
+
 ## Site copy editing
 
 - house-style: house style, style guide, style sheet

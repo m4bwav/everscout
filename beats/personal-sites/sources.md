@@ -4,6 +4,7 @@ The watch list. Columns and markers: `beats/_template/sources.md` and `kb/SCHEMA
 
 | source | kind | group | stance | engage | scan | filter | notes |
 |---|---|---|---|---|---|---|---|
+| Practical Typography | web | craft | native | no | no | | ~ https://practicaltypography.com/ Butterick's general version of Typography for Lawyers; reference, not scanned. Seen in search 2026-11-06, not probed |
 | r/webdev | reddit | builders | mixed | no | yes | portfolio personal site personal website blog my site redesign | ~ huge general sub; personal sites appear on Showoff Saturday; filter keeps them. Feed ✓ 2026-09-27 |
 | r/web_design | reddit | design | mixed | yes | yes | portfolio personal site personal website blog | ~ design critique and inspiration. Feed ✓ 2026-09-27 |
 | r/Frontend | reddit | builders | mixed | no | yes | portfolio personal site personal website blog | ~ front-end craft. Feed ✓ 2026-09-27 |
