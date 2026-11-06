@@ -739,3 +739,12 @@ Auto-pick: nothing due, no Judgment-call rows, no `have` rows, 0 beat-listed fil
 Tools: readwright 0.45.1: a `--max-chars` cut no longer ends on a bare section title, `rank --limit` works, a tip for endnotes with no markers. No everscout tool changes needed. Slip: a heredoc with doubled backslashes was refused again, used Write. Step 4 not rerun; the skill text did not change. T-20261106-3.
 The session-start evergreen items were not done in this session.
 Next: `ES lit pick`.
+
+## [2026-11-06] library | Senior, Mixing Secrets for the Small Studio distilled into downtempo; musicwright 0.1.14, readwright 0.46.0
+
+Pick: the canon `lead` that `lit pick` flagged as read elsewhere; the round-4 progress file listed it as todo, and the file is in the book folder. The copy is the 2018 second edition, so the row year moved from 2011; a third edition is listed for 2025 and was not examined. Read about 15k of 182k words: chapter summaries and parts of sections 12.3, 15.2, 19.2, 19.3. 18 principles, 5 changes applied, 2 rejected. Spot checks: edition and publisher, EBU R128, a first-edition Sound on Sound review hold; Auratone history unconfirmed. The premixed-audio mapping to AI renders is inference, marked untested in musicwright mixing.md.
+Due tiers: ai-music canon and recent filled from an agent's research, 7 and 5 rows, 5 of them `Judgment call`; recent is thin. Evidence URLs are the agent's, not rechecked by me. The beat folder is untracked in indie-ai-scout (another session, 09:07 today), so the rows sit uncommitted there. `lit check` warns it has no Open Library searches.
+Judgment-call step: not rechecked this run. Step 4 not rerun; the skill text did not change.
+Tools: no everscout tool changes needed. readwright 0.46.0: `read --until`, tips for summaries and pull-quote fragments; a fragment filter was tested on 81 PDFs and rejected (about 38 of 40 sampled hits were headings). Slip: my `sed` cut at the word Assignment dropped most of the first read. musicwright work ran in this session, not a separate agent, and main moved to 0.1.13 meanwhile, so the PR needed a merge. T-20261106-4.
+The session-start evergreen items were not done in this session.
+Next: `ES lit pick`.

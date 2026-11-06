@@ -122,6 +122,10 @@ Short names collide with ordinary words ("Air", "Lamb", "Stone", "Om"), so their
 ## Techniques
 
 - sampling: sampling, sampled, chopped, chopping, crate digging
+- mix-referencing: reference track, reference tracks, mix referencing
+- parallel-compression: parallel compression, new york compression
+- sidechain-ducking: sidechain, side-chain, ducking
+- reverb-predelay: pre-delay, predelay
 - vinyl-texture: vinyl crackle, vinyl noise, vinyl texture
 - tape-saturation: tape saturation, wow and flutter, tape warmth, saturation
 - sidechain: sidechain, sidechaining, ducking

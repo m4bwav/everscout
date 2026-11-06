@@ -29,6 +29,8 @@ One observation about the sound, then one or two questions. Producers answer gea
 - [mixing] How do you keep the low end clean at slow tempos?
 - [mixing] What loudness do you master to for streaming versus Bandcamp?
 - [mixing] How did you sit the vocal back in the mix like that?
+- [mixing] Which reference tracks do you check a mix against, and what do you listen for?
+- [mixing] What is the reverb doing on that part: depth, sustain or width?
 
 ## Composition
 
