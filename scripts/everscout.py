@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.12.0"
+VERSION = "0.12.1"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3774,10 +3774,11 @@ def cmd_lit_ingest(a):
     title = a.title or (stem_title if from_stem else mt)
     meta, tiers, searches = lit_load(b) if os.path.exists(lit_path(b)) else ({}, {t: [] for t in LIT_TIERS}, [])
     tier, row = lit_find(tiers, a.id or title)
-    if not row and not a.id:
+    if not row and not a.id and not a.title:   # an explicit --title names this book; never swap it for a row the file name happens to hold
         tier, row = lit_find_in_name(tiers, stem)
-        # "Better Web Typography - Matej Latin" holds the title "Web Typography" but is not Rutter's book
-        if row and stem_authors and not lit_same_author(stem, row["authors"]):
+        # "Better Web Typography - Matej Latin" holds the title "Web Typography" but is not Rutter's book;
+        # "Butterick-Typography for Lawyers" holds "Typography" (Ruder's, cut at its colon), one word needs its author too
+        if row and (stem_authors or " " not in lit_norm_title(row["title"])) and not lit_same_author(stem, row["authors"]):
             note(f"file name holds the listed title '{row['title']}' but names another author ({', '.join(stem_authors)}; listed: {row['authors']}): treated as a different book")
             tier, row = None, None
     if row:
@@ -4013,6 +4014,9 @@ def lit_toc_titles(d):
         m = re.match(r"(.+?)\s*(?:—|–|\s-\s)", bare)
         if m:
             out.add(m.group(1))
+        # Sections holding two topics (`mixing fonts / Times New Roman`) are cited by either.
+        if " / " in bare:
+            out.update(x.strip() for x in bare.split(" / "))
         # Chapters named by a numbered label (`Level 11: They All Want You Dead`, `Bonus Level 5: ...`) are cited by the label.
         m = re.match(r"([a-z][a-z ]*\d+)\s*:", t)
         if m:

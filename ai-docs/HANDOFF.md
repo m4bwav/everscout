@@ -89,6 +89,7 @@ Updated 2026-11-06 (Miki, Quietly Powerful distilled into tech-hiring, T-2026110
 - 2026-11-04 (Bach): Bach and Bolton, *Taking Testing Seriously* (Wiley 2025) distilled into token-saving (auto-pick, T-20261104-7): recent row, two Topics, two Measurement questions, book note. evergreen 0.18.1 (PR #37: `not covered:` line, oracle kinds, reworded variants, load cases, pruning), readwright 0.43.1 (PR #67, nested lists). No open everscout items. Next: `ES lit pick`; little fit remains.
 
 - 2026-11-04 (Ruder): Ruder, *Typography* (1967) distilled into personal-sites (auto-pick, T-20261104-6): canon row, three vocab groups, two Type question seeds, book note. sitewright 0.8.0 (PR #16), readwright 0.43.0 (PR #66, `--lang`), both installed. Open readwright items are in its HANDOFF. No open everscout items. Next: `ES lit pick`; little fit remains.
+- 2026-11-06: Butterick, *Typography for Lawyers* distilled into personal-sites (auto-pick, T-20261106-2); everscout 0.12.1 (ingest `--title` and one-word listed titles, ` / ` toc citations), readwright 0.45.0 (`read --drop-images`), sitewright 0.8.1. No open readwright items from this run. Evergreen session-start items not done.
 
 ## Reddit discovery built (2026-10-16, night), unreleased
 

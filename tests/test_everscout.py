@@ -1823,6 +1823,26 @@ class LiteratureTests(WorkspaceTest):
         self.assertIn("set to reading", out)
         self.assertTrue(os.path.isdir(os.path.join(E.data_dir(self.cfg(), "test-beat"), "books", "the-visual-story")))
 
+    def test_ingest_one_word_listed_title_needs_its_author(self):
+        self.add("--tier", "canon", "--title", "Typography: A Manual of Design", "--authors", "Emil Ruder", "--year", "1967", "--id", "OL8W", "--why", "w", "--evidence", "https://example.org/s")
+        rw = os.path.join(self.tmp, "rw.py")
+        open(rw, "w", encoding="utf-8").write("print('format: pdf\\nwords: 90000')\n")
+        other = os.path.join(self.tmp, "Ann Bell-Typography for Lawyers-Some Press.pdf")
+        open(other, "wb").write(b"%PDF-1.4")
+        books = os.path.join(E.data_dir(self.cfg(), "test-beat"), "books")
+        with mock.patch.object(E, "find_readwright", return_value=rw):
+            code, out, err = self.run_cli("lit", "ingest", other, "--beat", "test-beat")
+            self.assertEqual(code, 0, err)
+            self.assertFalse(os.path.isdir(os.path.join(books, "typography-a-manual-of-design")))
+            code, out, err = self.run_cli("lit", "ingest", other, "--beat", "test-beat", "--title", "Second Name")
+            self.assertTrue(os.path.isdir(os.path.join(books, "second-name")))
+
+    def test_toc_title_with_slash_cited_by_part(self):
+        d = os.path.join(self.tmp, "slash")
+        os.makedirs(d)
+        open(os.path.join(d, "toc.txt"), "w", encoding="utf-8").write("  58.   mixing fonts / Times New Roman  (1,342 w)\n")
+        self.assertIn("mixing fonts", E.lit_toc_titles(d))
+
     def test_ingest_other_author_is_another_book(self):
         self.add("--tier", "canon", "--title", "Web Typography", "--authors", "Richard Rutter", "--year", "2017", "--id", "OL7W", "--why", "w", "--evidence", "https://example.org/s")
         rw = os.path.join(self.tmp, "rw.py")
