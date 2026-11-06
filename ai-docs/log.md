@@ -702,3 +702,11 @@ Auto-pick: nothing due, no Judgment-call rows, no beat-listed file left; after t
 Tools: readwright 0.44.3 (PR #72), no stray space before punctuation in pretty-printed EPUB markup, plus a distilling tip. tokenwright 0.2.18 (PR #46). indie-ai-scout PR #42. No everscout tool changes needed. Slip: doubled backslashes in a heredoc were refused twice; the hook caught both. Step 4 not rerun. T-20261105-4.
 The session-start evergreen items (6 units due, consolidation in 6) were not done in this session. Readwright's open items from the previous run were not worked.
 Next: `ES lit pick`. Fit is thin; Mark's pick would serve better.
+
+## [2026-11-05] library | Cameron, Verbal Hygiene distilled into tech-hiring; editwright 0.2.1
+
+Auto-pick: nothing due, no Judgment-call rows; a new topic after testing and accounting runs, from a real publisher, with a use in editwright. Read about 16k of 126k words; ch. 3 and 4 unread. 13 principles, 6 changes applied, 2 rejected (dropping consistency checks, relaxing everwrite). Verdict: worth it for style-rule setters and for ch. 5 on speech coaching; not a hiring book, and its evidence is dated. Spot checks: Gervasio and Crawford 1989 exists, abstract only; O'Barr and Atkins 1980 exists, but secondary sources credit the credibility experiment to Conley, O'Barr and Lind 1978; originals not read. editwright's new rule has not been run on a manuscript. T-20261105-5.
+Tools: readwright PR #73 (0.44.4, the four open items) NOT merged at this entry: its routes job hung in the tool install step for 1h44m (under 6 min on PR #72), so it was cancelled and rerun; the fix results were not reviewed by this session. No everscout tool changes needed. Leftover undeletable folder Ai/editwright-wt-hygiene.
+Lesson: wait on CI with a deadline from the start; an open-ended wait on an agent looked like a stall to Mark. A session-long hang in an install step should be rerun, not waited on.
+The session-start evergreen items (6 units due, consolidation in 6) were not done in this session.
+Next: check PR #73, merge and release if green, update the plugin; then `ES lit pick`.
