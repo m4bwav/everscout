@@ -57,6 +57,13 @@ Keep canonical ids stable: renaming one splits its history in the tallies. A new
 - proxy-signal-screening: proxy signals, social data hiring, GitHub activity as signal, Gild, off-CV signals
 - culture-fit: culture fit, pattern matching candidates, looks like our team
 
+## Speech coaching (Cameron 1995)
+
+- assertiveness-training: assertiveness training, assertive communication, cracked record technique, empathic assertion
+- talk-like-a-man: talk like a man, sound more confident, stop hedging, tentative language, uptalk advice
+- powerless-speech: powerless speech, powerful speech style, hedges and tag questions
+- assertiveness-double-bind: double bind, too aggressive, abrasive feedback, likeability penalty
+
 ## Interviewer credibility (Fricker 2007)
 
 - credibility-deficit: credibility deficit, not believed, discounted answer, doubted candidate, accent bias in interviews

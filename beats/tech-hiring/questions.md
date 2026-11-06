@@ -26,6 +26,7 @@ Two to four seeds from at least two categories. Lead with a short, true thanks f
 - [interviews, ai] Did any interview happen in person because of cheating worries, and how did that change the day?
 - [interviews] Did you ever play down something you had done because claiming it felt like bragging, and did it seem to cost you?
 - [interviews] When you pushed back on an interviewer in a design round, did it read as engagement or as attitude?
+- [interviews] Were you coached to sound more direct or stop hedging, and did it change how the interviewers responded?
 
 ## Hiring side (managers and recruiters)
 
@@ -51,6 +52,7 @@ Two to four seeds from at least two categories. Lead with a short, true thanks f
 
 - [hiring] Do your panel debriefs check who actually knew the material against who seemed to lead?
 - [hiring] Does the round allow only turn-taking or open discussion too, and have you seen who speaks more in each?
+- [hiring] When a scorecard says a candidate lacked confidence or was too aggressive, what did they actually say, and would the same words get the same note from someone else?
 
 ## Market and data
 
