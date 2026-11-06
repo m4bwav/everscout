@@ -4,6 +4,8 @@ Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELO
 
 ## Unreleased
 
+## 0.12.0 · 2026-11-05
+
 - New built-in beat **ai-voice** (speech, voice design, cloning, singing, cleanup, craft and law): 41 sources probed 2026-11-04, feeds voicewright. Voice models live here; audio native to a video model stays in ai-video.
 
 ## 0.11.7 · 2026-11-03
