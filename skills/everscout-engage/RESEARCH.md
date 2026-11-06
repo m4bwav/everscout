@@ -65,6 +65,11 @@ Best sources: the platforms' own docs and rules pages, r/redditdev, bsky.network
 
 ## Findings log
 
+### R-20261106-1 · 2026-11-06 · Quiet: Reddit dates hold on secondary coverage
+- Summary: No report of delay: RSS ends 2026-11-13, new API requests closed 2026-10-31; Reddit's own post unread, and an update is due 11-10. Commission's final Art. 50 guidelines (2026-07-20) noted, non-binding, 50(4) text unread. No new community AI rule since r/opensource. Tooling, practice, testing: nothing new; skills.sh and MCP registry not checked.
+- Track: subject. Sources: https://decrypt.co/379892/reddit-killing-rss-feeds-public-api-access-ai-scrapers, https://www.dirittobancario.it/wp-content/uploads/2026/07/Communication-European-Commission-20-July-2026.pdf
+- magnitude 0.15 · applied: none
+
 ### R-20261030-1 · 2026-10-30 · Subject: r/opensource bans AI projects from 2026-10-24; Reddit dates hold
 
 - Summary: r/opensource moderators barred projects that use, are made by, or are for AI, effective 2026-10-24 (secondary coverage); one more subreddit where an AI-assisted ask must check the sidebar rules first, which the per-community rules check already covers. Bluesky rules on agent replies and DMs remain unclear (Blotato survey, 2026-10-08). Reddit dates unchanged: new Data API requests close 2026-10-31, RSS ends 2026-11-13. Tooling: nothing new. Testing: nothing new.
