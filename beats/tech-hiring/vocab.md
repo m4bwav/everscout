@@ -32,6 +32,12 @@ Keep canonical ids stable: renaming one splits its history in the tallies. A new
 - invisible-work: glue work, invisible work, preventive work, credit for prevention
 - ritual-opposition: pushback in interviews, adversarial interview, arguing with the interviewer
 
+## Adversarial talk (Tannen 1998)
+
+- agonism: agonism, automatic opposition, combative for its own sake
+- culture-of-critique: culture of critique, tough questions, attack as rigour
+- believing-game: believing game, doubting game
+
 ## Expertise and floor (Tannen 1990)
 
 - expertise-downplaying: playing down expertise, undersold knowledge

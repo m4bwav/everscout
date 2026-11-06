@@ -324,3 +324,4 @@ OCR of a two-up scan with `rw.py ocr`, `lit ingest --title`, lint exit 0, `lit d
 - T-20261105-6 (2026-11-05): Lasser's Small Business Taxes 2024 into global-economics; ingest, lint, distill exit 0; 6 changes applied, 3 rejected. Trigger evals not rerun.
 - T-20261105-5 (2026-11-05): Verbal Hygiene into tech-hiring; ingest, lint, distill exit 0; tests pass; 6 changes applied, 2 rejected. Trigger evals not rerun.
 - T-20261106-2 (2026-11-06): Typography for Lawyers into personal-sites; ingest, lint, distill exit 0; tests pass; 8 changes applied, 2 rejected. Trigger evals not rerun.
+- T-20261106-3 (2026-11-06): The Argument Culture into tech-hiring; ingest, lint, distill exit 0; 8 changes applied, 3 rejected. Trigger evals not rerun.
