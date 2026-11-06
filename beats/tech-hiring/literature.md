@@ -27,6 +27,7 @@ The most important books of all time for this subject (yearly recheck).
 | Conversational Style: Analyzing Talk among Friends | Deborah Tannen | 1984 | - | Tannen's founding study of high-involvement and high-considerateness styles, the basis of Talking From 9 to 5; assigned in sociolinguistics courses (OUP, Biber) and reissued with an afterword in 2005 (reviewed by LINGUIST List). Explains why pace, overlap and pauses get read as competence or its lack. | https://academic.oup.com/book/48215 https://linguistlist.org/issues/17/492/ | distilled |
 | You Just Don't Understand | Deborah Tannen | 1990 | - | The book that took the difference view of talk to a mass audience and the main target of its critics; one kind of evidence, kept because its critique literature shows its standing and it supplies the expertise and floor studies. | https://en.wikipedia.org/wiki/You_Just_Don%27t_Understand | distilled |
 | Verbal Hygiene | Deborah Cameron | 1995 | - | Reissued as a Routledge Linguistics Classic and reviewed as a major work of sociolinguistics; its ch. 5 is the standard critique of telling women at work to talk like a man. | https://linguistlist.org/issues/24/2954/ | distilled |
+| The Argument Culture | Deborah Tannen | 1998 | - | Names the habit of automatic opposition behind adversarial interviews and reviews; rests on reviews and one reported course use, kept for its vocabulary, and it never discusses hiring. | https://www.biola.edu/winsome-conviction/podcast/2020/today-s-argument-culture | distilled |
 
 ## Recent
 

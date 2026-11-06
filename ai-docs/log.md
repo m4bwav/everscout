@@ -732,3 +732,10 @@ Auto-pick: nothing due, no Judgment-call rows, 0 beat-listed files. Chosen becau
 Tools: `lit ingest --title` could still be swapped for a row: Ruder's listed title, cut at its colon to one word, matched this file name and blocked ingest. Fixed, with a test. `lit lint` now takes either part of a ` / ` toc title. readwright `read --drop-images` plus a tip for rule books. Slip of mine: grep for `file:` in book.md matched twice, breaking the first reads. Step 4 not rerun. T-20261106-2.
 The session-start evergreen items were not done in this session.
 Next: `ES lit pick`.
+
+## [2026-11-06] library | Tannen, The Argument Culture distilled into tech-hiring; editwright 0.2.2, readwright 0.45.1
+
+Auto-pick: nothing due, no Judgment-call rows, no `have` rows, 0 beat-listed files. A real publisher, an author the beat already reads, a new angle (automatic opposition). Read about 12k of 126k words; press and politics chapters and ch. 7 unread. 17 principles, 8 changes applied, 3 rejected (hostility ranking, lexwright settlement guidance, gender-difference question). Verdict: ch. 1, 8 and 9 for panel runners. The book never discusses hiring, and every link to interviews is inference, labelled untested in study.md. Spot checks: Tracy and Baratz 1993 exists (abstract only; quoted finding not seen); Marshall was doubted and others confirmed him, though the book omits his self-experiment; Bond and DePaulo 2006 puts detection just under 54 percent; the Secret Service exception, lawyer satisfaction figures and Ornstein's 1,211 percent were not checked. Canon row rests on reviews and one reported course use, no syllabus found, reason stated. editwright's two new steps have not been run on a manuscript.
+Tools: readwright 0.45.1: a `--max-chars` cut no longer ends on a bare section title, `rank --limit` works, a tip for endnotes with no markers. No everscout tool changes needed. Slip: a heredoc with doubled backslashes was refused again, used Write. Step 4 not rerun; the skill text did not change. T-20261106-3.
+The session-start evergreen items were not done in this session.
+Next: `ES lit pick`.

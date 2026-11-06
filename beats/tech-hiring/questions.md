@@ -18,6 +18,7 @@ Two to four seeds from at least two categories. Lead with a short, true thanks f
 
 ## Interviews
 
+- [interviews] Did an interviewer push back on an answer you later found was correct, and how did you read it at the time?
 - [interviews] Which round was the hardest, and was it the one you expected?
 - [interviews] How did the take-home or live-coding round compare with a LeetCode-style round, from your side?
 - [interviews, ai] Were you allowed to use an AI assistant in any round, and how did they grade that round?
@@ -32,6 +33,7 @@ Two to four seeds from at least two categories. Lead with a short, true thanks f
 
 ## Hiring side (managers and recruiters)
 
+- [hiring] When you challenge a candidate's answer, what are you testing, and does it change with other interviewers in the room?
 - [hiring] About how many applications does one opening get now, and how many of them does a person actually read?
 - [hiring, ai] What part of screening is automated where you are, and what do you still do by hand?
 - [hiring] What makes a résumé get a call in the first ten seconds?
