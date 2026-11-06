@@ -79,6 +79,15 @@ Keep canonical ids stable: renaming one splits its history in the tallies. A new
 - promotion-criteria: promotion criteria, promotion process, promotion decision makers, promotion readiness plan
 - pay-audit: pay audit, salary transparency, pay equity review, pay gap
 
+## Quiet candidates (Miki 2019)
+
+- confidence-proxy: confidence as competence, looks confident, polished candidate, executive presence
+- dominance-bias: strong leader bias, too polite, too soft, can he go to war, loud candidate wins
+- warm-up-time: slow to warm up, first ten seconds, needs a follow-up question, quiet candidate
+- personality-screen: personality profile screen, psychometric shortlist, introvert screened out, ideal leader profile
+- assessment-centre-bias: assessment centre, group exercise bias, think on your feet round, no preparation time
+- team-feedback-gap: no team input on promotion, upward feedback, reports never asked
+
 ## Screening and channels
 
 - ats: ATS, applicant tracking system, Workday, Greenhouse ATS, Lever ATS

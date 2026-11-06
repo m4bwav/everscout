@@ -27,6 +27,8 @@ Two to four seeds from at least two categories. Lead with a short, true thanks f
 - [interviews] Did you ever play down something you had done because claiming it felt like bragging, and did it seem to cost you?
 - [interviews] When you pushed back on an interviewer in a design round, did it read as engagement or as attitude?
 - [interviews] Were you coached to sound more direct or stop hedging, and did it change how the interviewers responded?
+- [interviews] Did giving candidates the questions or the exercise ahead of time change who did well?
+- [interviews] Were you ever told you were not a strong enough leader or not confident enough, with no evidence from your work?
 
 ## Hiring side (managers and recruiters)
 
@@ -53,6 +55,8 @@ Two to four seeds from at least two categories. Lead with a short, true thanks f
 - [hiring] Do your panel debriefs check who actually knew the material against who seemed to lead?
 - [hiring] Does the round allow only turn-taking or open discussion too, and have you seen who speaks more in each?
 - [hiring] When a scorecard says a candidate lacked confidence or was too aggressive, what did they actually say, and would the same words get the same note from someone else?
+- [hiring] Do you still use a personality test to shortlist, and has anyone checked it against how those hires did?
+- [hiring] When you promote someone to lead, do you ask the people who would report to them, and has that ever changed the decision?
 
 ## Market and data
 
