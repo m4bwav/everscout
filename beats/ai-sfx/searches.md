@@ -12,6 +12,8 @@ Run by everscout-scan for the period since the last scan (add the month and year
 | sound effects AI backlash OR disclosure game <month year> | monthly | reception and store rules |
 | ElevenLabs OR Stability sound effects pricing OR licence change <month year> | monthly | hosted cost and licence shifts |
 | game audio round robin variation tutorial FMOD Wwise <year> | monthly | craft |
+| how many footstep variations per surface game audio | monthly | set sizes people actually ship |
+| game audio demo reel implementation breakdown <year> | monthly | how designers show in-engine work |
 | sound effect breakdown how we made game audio <month year> | monthly | finished work with the method named |
 | AI generated audio copyright ruling <month year> | monthly | law |
 

@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.12.2"
+VERSION = "0.12.3"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3826,7 +3826,7 @@ def lit_file_key(path):
     return re.sub(r"[^a-z0-9]+", " ", stem.lower()).strip()
 
 
-LIT_WISHLIST = re.compile(r"reading[-_ ]?list|to[-_ ]?read|wish[-_ ]?list", re.I)
+LIT_WISHLIST = re.compile(r"reading[-_ ]?list|to[-_ ]?read|wish[-_ ]?list|wanted", re.I)
 
 
 def lit_read_index(entries):
@@ -3906,7 +3906,9 @@ def cmd_lit_pick(a):
         if len(key) >= 8 and f" {key} " in f" {elsewhere_keys} ":
             continue
         # a short title (two words or fewer) also needs an author's name in the file name: "Deep Learning" is in many titles
-        hits = [l for l in listed if f" {l[0]} " in f" {key} " and (len(l[0].split()) > 2 or any(n in key.split() for n in l[1]))]
+        # words before the title with no listed author mean a longer title that holds it: "Unity Game Audio Implementation" is not "Game Audio Implementation"
+        hits = [l for l in listed if f" {l[0]} " in f" {key} " and (len(l[0].split()) > 2 or any(n in key.split() for n in l[1]))
+                and (key.startswith(l[0]) or any(n in key.split() for n in l[1]))]
         if any(h[4] == "distilled" for h in hits):
             continue
         # a run of four title words found in the other records: probably read there under a different file name
