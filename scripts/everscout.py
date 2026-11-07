@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.12.5"
+VERSION = "0.12.6"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3909,7 +3909,7 @@ def cmd_lit_pick(a):
         top = lit_file_key(parts[0]) if len(parts) > 1 else ""
         if top and any(f" {rt} " in f" {top} " for rt in read_titles):
             continue
-        if len(key) >= 8 and f" {key} " in f" {elsewhere_keys} ":
+        if len(key) >= 8 and f" {key} " in padded:
             continue
         # a short title (two words or fewer) also needs an author's name in the file name: "Deep Learning" is in many titles
         # words before the title with no listed author mean a longer title that holds it: "Unity Game Audio Implementation" is not "Game Audio Implementation"
@@ -3922,7 +3922,7 @@ def cmd_lit_pick(a):
         words = key.split()
         parent = os.path.dirname(name)
         maybe = next((" ".join(w[i:i + 4]) for w in (words, lit_file_key(os.path.basename(parent)).split() if parent else [])
-                      for i in range(len(w) - 3) if f" {' '.join(w[i:i + 4])} " in f" {elsewhere_keys} "), "")
+                      for i in range(len(w) - 3) if f" {' '.join(w[i:i + 4])} " in padded), "")
         # or a short title ("Pixel Logic") with another word of the file name, like the author, close by in the record
         maybe = maybe or lit_short_title_hit(words, elsewhere_keys)
         # or a slug that dropped the small words ("procedural-3d-modeling-geometry-blender" for "Procedural 3D Modeling Using Geometry Nodes in Blender")

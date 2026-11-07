@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`.
 
+### C-20261107-2 · 2026-11-07 · lit pick stops copying the read index per test
+- because: T-20261107-10 (MemoryError on the full listing)
+- files: scripts/everscout.py (`cmd_lit_pick`); 1 test. Plugin 0.12.6.
+
 ### C-20261107-1 · 2026-11-07 · lit pick hides a read book's side files
 - because: T-20261107-6 (Hewitt's appendix and CD log listed after the book was distilled)
 - files: scripts/everscout.py (`cmd_lit_pick`); 1 test. Plugin 0.12.5.

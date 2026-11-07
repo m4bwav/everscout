@@ -61,4 +61,5 @@ Two or three seeds from different categories. Name the sound or moment you mean.
 - [rights] How do you keep track of where each file came from?
 - [rights] Has a licence ever stopped you using a sound you liked?
 - [reception] What feedback from players or the director changed the sound?
+- [reception] Which sound did players or viewers complain about, and was the cause its level or what it meant?
 - [reception] Which overused sound do you most try to avoid?

@@ -1899,6 +1899,11 @@ class LiteratureTests(WorkspaceTest):
             self.assertEqual(code, 0, err)
             self.assertEqual("spot-check" in err + out, warned, toc)
 
+    def test_pick_does_not_copy_the_read_index_per_test(self):
+        # a large index raised MemoryError when each `in` built a new padded string
+        with open(E.__file__, encoding="utf-8") as f:
+            self.assertNotIn('in f" {elsewhere_keys} "', f.read())
+
     def test_pick_hides_side_files_of_a_read_book(self):
         folder = os.path.join(self.tmp, "shelf")
         side = os.path.join(folder, "Ann Writer - The Classic Craft Book (1990)")
