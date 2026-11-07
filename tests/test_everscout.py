@@ -1809,6 +1809,7 @@ class LiteratureTests(WorkspaceTest):
         code, out, err = self.run_cli("lit", "distill", "seen-and-heard", "--beat", "test-beat")
         self.assertEqual(code, 0, err + out)
         self.assertIn("list row distilled", out)
+        self.assertIn("1 changes applied (1 written into the note), 0 rejected", out)   # the note row counts as applied
 
     def test_distill_keeps_a_skip_row(self):
         self.add("--tier", "recent", "--title", "The Thin Book", "--year", "2025", "--id", "OL8W", "--why", "w",
