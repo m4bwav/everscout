@@ -21,6 +21,9 @@ Two or three seeds from different categories. Name the sound or moment you mean.
 - [process] Which noise colour or inharmonic source did you start this from, and why that one?
 - [process] What does each layer's decay do here, and which layer outlasts the others?
 
+- [process] Which sound did you cut because it sat alone with nothing around it?
+- [process] When did a familiar wrong sound beat an accurate one, and did generated audio change that?
+
 ## Variation and sets
 
 - [variation] How many variations did this event need before players stopped noticing the repeat?

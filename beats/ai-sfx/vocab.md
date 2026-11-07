@@ -108,6 +108,8 @@ Add a new version as its own line when people argue about the difference; otherw
 - pitch-envelope: pitch envelope, pitch sweep
 - frequency-shift: frequency shifter, frequency shifting
 - envelope-follower: envelope follower
+- production-elements: production elements, drones, risers, stings, boomers, whooshes, hybrid effects
+- orphan-effect: orphan sound effect, orphan effect
 
 ## Topics
 
