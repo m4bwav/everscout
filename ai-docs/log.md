@@ -770,3 +770,5 @@ sfxwright: no commits and another session is building it, so eight ranked items 
 Tools: `lit pick` no longer tags a longer title with a shorter row, and no longer treats wanted lists as read (sfx-wanted-books.md and voicewright-wanted-books.md made titles look read). readwright `read --from` no longer matches the header line, with a tutorial tip. Slip: a heredoc with doubled backslashes was blocked; used Write. Step 4 not rerun; the skill text did not change. T-20261106-7.
 The session-start evergreen items were not done in this session.
 Next: `ES lit pick`.
+
+Correction: 0.12.3 was merged and tagged with one test failing, because the release command did not stop on the test result. The code was right; the new test used the real title, which the built-in ai-sfx beat now lists as distilled. Fixed with synthetic titles in a test-only PR, no version bump. Slip to avoid: make merge depend on the test exit code.
