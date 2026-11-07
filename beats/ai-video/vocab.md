@@ -209,6 +209,14 @@ Add a new model version as its own line when people argue about the difference (
 - screen-graphics: screen graphics, playback graphics, FUI, fantasy user interface
 - text-in-frame: on-screen text, readable text, garbled text, signage
 
+## Editing and mix (Suddenly Something Clicked, 2026-11-06)
+
+- rule-of-two-and-a-half: rule of two and a half, two and a half layers, dense clarity
+- worldizing: worldizing, worldising, audio sfumato
+- encoded-embodied-sound: encoded sound, embodied sound
+- premix: premix, premixes
+- saccadic-masking: saccadic masking, saccadic cinema
+
 ## Formats
 
 - short-film: short film, short movie

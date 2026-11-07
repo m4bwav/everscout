@@ -780,3 +780,11 @@ sfxwright: knowledge lines in references/edit.md, no version bump, so the instal
 Tools: readwright 0.47.0: `--drop-repeated` removes running heads glued to page text and rejoins the split sentence (41 in this book; a head followed by a capital stays, by design), with a distilling tip. No everscout tool changes needed. Slip: a heredoc with apostrophes broke a whole command, which is the known Bash quirk; used Write. Step 4 not rerun; the skill text did not change. T-20261106-8.
 The session-start evergreen items were not done in this session.
 Next: `ES lit pick`.
+
+## [2026-11-06] library | Murch, Suddenly Something Clicked distilled into ai-video; readwright 0.47.1
+
+Auto-pick: nothing due, no Judgment-call rows, no `have` rows, 0 beat-listed files. Chosen to move off sound-effects and hiring books, and because it was in no beat or plugin-learnings note. Read ch. 15 and 21 whole; ch. 6, 12, 25, 27 in part; about 16k of 138k words. 27 principles, 7 changes applied, 3 rejected. Verdict: read ch. 21 and 15. Rules are one editor's judgment, untested on generated footage or audio. Checks from search summaries: publisher, 2025 date, three planned volumes. The rule of two and a half was not found in an independent source in one search. Recent row rests on trade reviews, reason stated.
+cinewright PR #89: knowledge lines, no version bump, so the installed copy lacks them until the next release. The same PR repaired cinewright-edit's changelog, where an earlier entry sat inside the entry-shape line; my first patch repeated that mistake and was redone before commit.
+Tools: readwright 0.47.1: fixed-layout detection needed the viewport's name attribute first, so this book read as one line per paragraph with folios and margin quotes mixed in; both orders work now. `--offset` past the end refuses instead of printing nothing. Residue: a real word pair split at a line end stays hyphenated (for-mats), and a chapter title runs into its first paragraph. No everscout tool changes needed. readwright PR had no CI, local tests passed (239). Slips: Write refused learnings.md because it had not been read in this session, and a heredoc with doubled backslashes was blocked. Step 4 not rerun; the skill text did not change. T-20261106-9.
+The session-start evergreen items were not done in this session.
+Next: `ES lit pick`.

@@ -44,6 +44,8 @@ Two or three seeds from different categories. Name the shot you mean ("the rooft
 
 - [sound, ai] Is the audio native to the model or added after? What for voice, music and effects?
 - [sound] How did you get the lip-sync to line up?
+- [sound] How many sounds lead at any moment, and what did you take out to let a new one in? (Murch)
+- [sound, craft] Where do your cuts fall inside a spoken line, and could you control that with generated speech? (Murch)
 
 ## Cost and time
 
