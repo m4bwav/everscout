@@ -52,6 +52,13 @@ Keep canonical ids stable: renaming one splits its history in the tallies. A new
 - machine-gun-questions: machine-gun questions, rapid-fire questioning, grilling, put on the spot
 - cooperative-overlap: cooperative overlap, finishing sentences, back-channel, talking over to agree
 
+## Reading messages (Tannen 2017)
+
+- soft-rejection: soft rejection, soft no, keep you on file, polite no
+- tone-reading: curt reply, cold reply, one-line reply from the recruiter
+- left-on-read: left on read, read receipt
+- follow-up-spiral: follow-up spiral, kept following up, complementary schismogenesis
+
 ## Bias in screening and evaluation (Criado Perez 2019)
 
 - sex-disaggregated-data: sex-disaggregated data, gender data gap, data split by sex, funnel by gender, adverse impact ratio

@@ -11,6 +11,7 @@ Two to four seeds from at least two categories. Lead with a short, true thanks f
 - [search, data] Roughly how many applications did it take to get the first interview, and did that ratio change as you went?
 - [search, channels] Which channel produced the offers in the end: referrals, recruiters reaching out, job boards, or your own network?
 - [search] How long was it from the first application to the signed offer?
+- [search] When a recruiter's message was warm but gave no clear answer, how did you find out where you stood?
 - [search, data] Did you tailor each application, or send a standard one, and could you see a difference in the response rate?
 - [search, channels] Did applying within the first day or two of a posting make a difference for you?
 - [search] What would you do differently if you started the search again tomorrow?
@@ -33,6 +34,8 @@ Two to four seeds from at least two categories. Lead with a short, true thanks f
 
 ## Hiring side (managers and recruiters)
 
+- [hiring] What wording do you use when you have decided against a candidate, and has anyone read it as still open?
+- [hiring] After how long does silence mean no in your process, and do candidates get told?
 - [hiring] When you challenge a candidate's answer, what are you testing, and does it change with other interviewers in the room?
 - [hiring] About how many applications does one opening get now, and how many of them does a person actually read?
 - [hiring, ai] What part of screening is automated where you are, and what do you still do by hand?
