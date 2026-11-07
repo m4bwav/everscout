@@ -772,3 +772,11 @@ The session-start evergreen items were not done in this session.
 Next: `ES lit pick`.
 
 Correction: 0.12.3 was merged and tagged with one test failing, because the release command did not stop on the test result. The code was right; the new test used the real title, which the built-in ai-sfx beat now lists as distilled. Fixed with synthetic titles in a test-only PR, no version bump. Slip to avoid: make merge depend on the test exit code.
+
+## [2026-11-06] library | Case, Sound FX distilled into ai-sfx; readwright 0.47.0
+
+Pick: no `have` rows, no beat-listed file. Sound FX was not in any beat or plugin-learnings note and speaks to the beat question on thin and muddy sound, so it got a canon row. Read sec. 2.4, 4.3, 4.4, 6.4 whole; sec. 5.3, 6.5, 7.3, 9.4, 10.2, 11.4 cut short; sec. 3.2 by search only. 26 principles, 5 changes applied, 2 rejected. Verdict: read ch. 4 to 7, sec. 9.4 and 11.4 if you edit sound by script. Checks: publisher, year and ISBN from the Routledge listing; comb arithmetic and harmonic intervals recomputed. Settings are untested on generated sound.
+sfxwright: knowledge lines in references/edit.md, no version bump, so the installed copy lacks them until the next release. Worktree off origin; another session has uncommitted edits in the main clone, which were left alone.
+Tools: readwright 0.47.0: `--drop-repeated` removes running heads glued to page text and rejoins the split sentence (41 in this book; a head followed by a capital stays, by design), with a distilling tip. No everscout tool changes needed. Slip: a heredoc with apostrophes broke a whole command, which is the known Bash quirk; used Write. Step 4 not rerun; the skill text did not change. T-20261106-8.
+The session-start evergreen items were not done in this session.
+Next: `ES lit pick`.

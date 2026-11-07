@@ -15,6 +15,8 @@ Two or three seeds from different categories. Name the sound or moment you mean.
 - [process] How do you decide when a sound is finished?
 - [process] What sounded right in the editor and wrong once it was in the game?
 - [process] Where is your listener, on the camera or the character, and what did that change in the sounds you made?
+- [process] Which part of this sound seemed thin alone but worked in the scene, and how did you judge it?
+- [process] When a generated sound came out thin, what fixed it apart from layering: EQ, distortion, envelope or something else?
 
 ## Variation and sets
 

@@ -91,6 +91,13 @@ Add a new version as its own line when people argue about the difference; otherw
 - one-shot: one shot, one-shot, one shot asset
 - listener-placement: audio listener, listener on camera, listener on character
 - asset-tracker: audio asset tracker, audio asset spreadsheet, sound list
+- spectral-masking: masking, spectral masking, upward spread of masking
+- comb-filtering: comb filter, comb filtering, phasing between layers
+- early-reflections: early reflections, early reflection pattern
+- side-chain: side chain, sidechain, key input
+- keyed-gate: keyed gate, gated reverb, gated room
+- spreader: spreader, stereo spreader, micro-pitch widening
+- harmonic-distortion: harmonic distortion, saturation, even harmonics, odd harmonics
 
 ## Topics
 
