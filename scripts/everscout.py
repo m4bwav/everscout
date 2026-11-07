@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.12.9"
+VERSION = "0.12.10"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3441,7 +3441,9 @@ def lit_same_author(name, listed):
     """True when a surname from the row's authors appears in the file name, or the row lists none. A name's
     "X - Y" may be either author and title or title and author, so the whole name is searched."""
     surnames = [lit_norm_title(n).split()[-1] for n in re.split(r",|;|&|\band\b", listed or "") if lit_norm_title(n)]
-    return not surnames or any(f" {n} " in f" {lit_norm_title(name)} " for n in surnames)
+    # not lit_norm_title: it drops "(...)" and text after a colon, where file names often carry the author
+    hay = " " + re.sub(r"[^a-z0-9]+", " ", (name or "").lower()).strip() + " "
+    return not surnames or any(f" {n} " in hay for n in surnames)
 
 
 def lit_problems(b, meta, tiers, searches, today_d=None):

@@ -124,6 +124,10 @@ Add a new version as its own line when people argue about the difference; otherw
 - boredom-switch: boredom switch, bored button, drop to silence
 - mickey-mousing: mickey-mousing, mickey mousing
 - preparatory-cue: preparatory cue, audio warning, sound cue, telegraphing
+- married-effect: married effect, married foley, single effect
+- topping-production: topping production, top production
+- sync-sweet-spot: sweet spot, sync sweet spot, hang it as a unit
+- character-signifier: character signifier, signature sound, sound leitmotif
 
 ## Topics
 

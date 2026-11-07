@@ -1618,6 +1618,12 @@ class LiteratureTests(WorkspaceTest):
         self.assertEqual(E.lit_title_from_stem("Wiley Blender for Dummies"), "Blender for Dummies")
         self.assertEqual(E.lit_title_from_stem("Manning Press"), "Manning Press")
 
+    def test_lit_same_author_in_parentheses(self):
+        # The Foley Grail file names its author in parentheses after a comma title; it was called "another author"
+        stem = "The Foley Grail The Art of Performing Sound for Film, Games, and Animation (Vanessa Theme Ament)"
+        self.assertTrue(E.lit_same_author(stem, "Vanessa Theme Ament"))
+        self.assertFalse(E.lit_same_author(stem, "Ric Viers"))
+
     def test_lit_split_stem_paren_author(self):
         base = "Unlocking the Secrets of Prompt Engineering Master the art of creative language generation to accelerate your journey"
         self.assertEqual(E.lit_split_stem(base + " (Gilbert Mizrahi)"), (base, ["Gilbert Mizrahi"]))

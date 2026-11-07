@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.12.10 · 2026-11-07
+
+- `lit ingest` and `lit pick`: an author named in parentheses in the file name ("... (Vanessa Theme Ament).pdf") was dropped before the surname check, so the file was called another author's book and got a new folder and row. The check now reads the whole file name.
+- ai-sfx distils Ament, *The Foley Grail* 3rd ed. (ch. 5, 10, 11): four vocab terms, one maker question; sfxwright 0.1.14.
+
 ## 0.12.9 · 2026-11-07
 
 - `lit pick`: when several folder files hold a read-elsewhere title, the line names them (up to three) instead of only counting them.
