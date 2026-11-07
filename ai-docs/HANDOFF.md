@@ -1,6 +1,6 @@
 # Handoff
 
-Updated 2026-11-07 (Roads, The Computer Music Tutorial distilled into ai-music, T-20261107-15: musicwright 0.1.24 (stretch, varispeed, formant notes; half and double tempo in transcription), readwright 0.53.0 (chapter mini-contents collapse, short-cut footer), everscout 0.12.9 (`lit pick` names every file holding a title), all installed. Open: canon sizes for ai-sfx, ai-voice, tech-hiring; trigger evals; session-start evergreen items; readwright cannot recover Pd object names or square roots from pdftotext; Roads ch. 36-39 (spectrum analysis) unread, could feed mw.py checks. Next: The Foley Grail (ai-sfx, read elsewhere, file present) or The Sound Effects Bible.)
+Updated 2026-11-07 (Ament, The Foley Grail distilled into ai-sfx, T-20261107-16: sfxwright 0.1.14 (late-over-early sync, whole-run shifts, sweet spot, style match in plan.md), readwright 0.54.0 (same-page outline names run into one paragraph get their own text), everscout 0.12.10 (parenthesised file-name author no longer read as another author), all installed. Open: canon sizes for ai-sfx, ai-voice, tech-hiring; trigger evals; session-start evergreen items; readwright cannot recover Pd object names or square roots from pdftotext; Roads ch. 36-39 unread; sfxwright has no picture-timing input, so an early-hit sync check waits. Next: The Sound Effects Bible (ai-sfx) or Sound Synthesis and Sampling (ai-sfx canon, read elsewhere, file present).)
 
 
 ## 0.10.0 (2026-11-02): Discord through the user's own bot
