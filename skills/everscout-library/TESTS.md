@@ -345,3 +345,4 @@ First book in ai-sfx. `lit lint` 0 errors, `lit distill` and `lit check` exit 0.
 - T-20261107-6 (2026-11-07): Sound Design for the Stage into ai-sfx; ingest, lint, distill, beat-check exit 0; 7 changes applied, 2 rejected. Trigger evals not rerun; skill text unchanged.
 - T-20261107-7 (2026-11-07): Introduction to Computer Music into ai-music; ingest, lint, distill, beat-check exit 0; 5 changes applied.
 - T-20261107-8 (2026-11-07): The Oxford Handbook of Computer Music into ai-music; ingest, lint, distill, lit check, beat-check exit 0; 6 changes applied, 2 rejected. Trigger evals not rerun; skill text unchanged.
+- T-20261107-9 (2026-11-07): Sound Analysis and Synthesis with R into ai-voice; ingest, lint, distill, lit check exit 0; 6 changes applied, 3 rejected. Trigger evals not rerun; skill text unchanged.

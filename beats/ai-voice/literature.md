@@ -22,6 +22,7 @@ The books of this beat, in three tiers (`kb/literature.md`). AI voice has almost
 | Speech Enhancement: Theory and Practice | Philipos C. Loizou | 2013 | isbn:9781138075573 | Graduate text on denoising and on measuring whether it helps intelligibility, with code. | https://ch.mathworks.com/academia/books/speech-enhancement-loizou.html | lead |
 | Dialogue Editing for Motion Pictures | John Purcell | 2013 | isbn:9780415828178 | Working dialogue editor's guide to cleaning and matching lines, the closest craft model for AI line assembly. | https://routledge.com/9780415828178 | lead |
 | Digital Audio Restoration | Simon Godsill; Peter Rayner | 1998 | - | Statistical methods for repairing degraded recordings, with companion audio examples; a research text, one kind of evidence, listed as the field's named reference. | https://link.springer.com/book/9781447115618 | lead |
+| Sound Analysis and Synthesis with R | Jerome Sueur | 2018 | isbn:9783319776477 | Reference on what spectral, pitch and formant measures mean and where they fail; bioacoustics first, one kind of evidence, kept as the source of voicewright measuring notes. | https://www.r-bloggers.com/2018/11/book-review-sound-analysis-and-synthesis-with-r/ | distilled |
 
 ## Recent
 
