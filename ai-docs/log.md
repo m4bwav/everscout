@@ -812,3 +812,12 @@ sfxwright 0.1.4: reference lines in edit.md.
 Tools: readwright 0.47.4 keeps a printed contents page as one section (three false sections here), plus a reference-book tip. No everscout tool changes needed. Slips: `beat-check` takes the slug as a positional argument; a heredoc with doubled backslashes was blocked once. Noticed: ai-sfx canon has 21 rows against the 5 to 10 in kb/literature.md; `lit check` does not flag it. Not trimmed here. Step 4 not rerun; the skill text did not change. T-20261107-2.
 The session-start evergreen items were not done in this session.
 Next: `ES lit pick`; ai-sfx has had four books, so prefer another beat.
+
+## [2026-11-07] library | Manning, Electronic and Computer Music distilled into ai-music; readwright 0.48.0
+
+Auto-pick: nothing due, no Judgment-call rows, no `have` rows, 0 beat-listed files. Another session was distilling Power Tools in ai-sfx, so this took a different beat; ai-music had one book. Read about 9k of 195k words of the 2004 third edition (a 2013 fourth exists). 20 principles, 8 changes applied, 3 rejected. Verdict: p. 87-88, 201-203 and ch. 22 for the roots of generation; nothing on neural models. Canon row rests on endurance alone, reason stated. Illiac Suite is 1956 here, 1957 in most sources; Olson and Belar and Xenakis's IBM date not confirmed. Period vocabulary and the two question seeds are untested on models or scans.
+musicwright PR #116: knowledge lines, no version bump, so the installed copy lacks them until the next release. indie-ai-scout PR #45.
+Tools: readwright 0.48.0 removes OCR heads glued to a page's first words, letter-spaced too. Residue that cannot be fixed safely: a left-hand-only head (`22 : Developments from 1 9 4 5 to 1960 piece`) has no right-hand twin, so nothing marks where it ends. No everscout tool changes needed.
+Slips: `v0.48.0` was first tagged and released on main while PR #88 was unmerged, since another session had shipped 0.47.4 and my script did not stop on the failed merge. Deleted within minutes, retagged after the merge. A changelog insert matched inside the Entry shape line and reused an ID, caught by a hook and repaired before merge. An empty `python -` heredoc hung a call. Heredocs with doubled backslashes were blocked again. Step 4 not rerun.
+The session-start evergreen items were not done in this session.
+Next: `ES lit pick`; Fry, Sound Design for the Stage fits ai-sfx, or Miranda and Collins for ai-music.
