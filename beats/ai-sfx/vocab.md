@@ -79,6 +79,10 @@ Add a new version as its own line when people argue about the difference; otherw
 - pitch-variation: pitch variation, pitch randomization, random pitch
 - convolution: convolution, impulse response
 - granular: granular, granular synthesis
+- stick-slip: stick-slip, stick slip
+- blade-pass: blade pass, blade-pass frequency
+- poisson-timing: Poisson timing, Poisson process
+- bubble-resonance: Minnaert, bubble resonance
 - time-stretch: time stretch, timestretch, paulstretch
 - procedural: procedural audio, procedural sound, physical modelling
 - spotting: spotting, spotting session, cue sheet

@@ -21,6 +21,7 @@ Two or three seeds from different categories. Name the sound or moment you mean.
 - [process] Which part of this sound seemed thin alone but worked in the scene, and how did you judge it?
 - [process] When a generated sound came out thin, what fixed it apart from layering: EQ, distortion, envelope or something else?
 - [process] Which noise colour or inharmonic source did you start this from, and why that one?
+- [process] Which physical process makes this sound, and did you build from that or from a reference recording?
 - [process] What does each layer's decay do here, and which layer outlasts the others?
 
 - [process] Which sound did you cut because it sat alone with nothing around it?
