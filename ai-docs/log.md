@@ -833,3 +833,9 @@ Judgment call recheck: one search found no syllabus, award or practitioner list 
 Tools: readwright 0.48.2 keeps caption credits out of section titles (L-062). `mu?ed` is in the publisher's file, so a tip, not a fix. everscout 0.12.5: `lit pick` hides side files of a read book.
 Not done: session-start evergreen items, ai-sfx canon size (22 rows against 5 to 10), trigger evals. T-20261107-6.
 Next: `ES lit pick`; Miranda or Collins for ai-music.
+
+## [2026-11-07] library | Collins, Introduction to Computer Music distilled into ai-music; musicwright 0.1.21, readwright 0.49.0
+Auto-pick: named by the last log; no `have` book, and listed `lead` books are already in the read index. Read about 15k of 146k words. 21 principles, 5 changes applied (musicwright PR #120, indie-ai-scout PRs #48 and a status follow-up). Reliability: Wiley confirmed, reviewed in Organised Sound, Ariza's cited paper confirmed. Voss and Clarke's 1/f finding not confirmed by one search, so it stays attributed to the book. Canon row ranks last, with no syllabus seen. Musicwright's rule section is untested here.
+Tools: readwright 0.49.0 (PR #91): `--section pN` read the wrong page when a page had several sections (L-063); `read --min-para-words` removes OCR debris. No everscout tool changes needed. Slip: a heredoc with doubled backslashes was blocked again; a patch script written with Write avoided it. T-20261107-7. The repos reported no CI checks; merged on local tests.
+Not done: session-start evergreen items, ai-sfx canon size, trigger evals.
+Next: `ES lit pick`; little ai-music fit remains apart from the Oxford Handbook of Computer Music.
