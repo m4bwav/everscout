@@ -860,3 +860,10 @@ Judgment-call rows: none left.
 Tools: everscout 0.12.6 fixes a `lit pick` MemoryError from a per-test copy of the read index. readwright 0.50.0: `read --headings` lists `5.2 Title` lines in a flat PDF (L-066). Slip: my new constant shadowed an existing `NUMBERED_HEAD` and broke 4 tests; the suite caught it before merge, renamed.
 Not done: session-start evergreen items, canon sizes (ai-sfx, ai-voice), trigger evals. T-20261107-10.
 Next: `ES lit pick`; Tannen, You're the Only One I Can Tell for tech-hiring. Buying a canon book for multi-agent-grind would help, as the folder has none.
+
+## [2026-11-07] library | Tannen, You're the Only One I Can Tell distilled into tech-hiring; readwright 0.50.1
+Auto-pick: the last log named it; no `have` book, nothing due. Read about 9k of 96k words: Introduction, parts of ch. 2 and 7. 13 principles, 7 changes applied, 4 rejected. Verdict: skip for hiring except a couple of hours in ch. 2 and 7. It is about friendship and never discusses hiring, so the hiring links are inference, untested. Reliability: Random House, reviewed in The Guardian and The Washington Post; Taylor 2000 and Sneed and Cohen 2014 confirmed, but the book omits that the second held only at ages 51 to 64. Al Rashdi not checked. No canon row, since canon is 15 against 5 to 10.
+Tools: readwright 0.50.1: a picture's second copy no longer prints a false `[formula: image]` (L-067), plus a tip to check a cited study's limits. No everscout tool changes needed. editwright: one dialogue query, no version bump, so the installed copy lacks it until the next release.
+Slips: my first read cut long paragraphs with `cut -c1-1500`, disclosed in the learnings; a Write to learnings.md was refused for not reading first, and the first lint caught it.
+Not done: session-start evergreen items, canon sizes (ai-sfx, ai-voice, tech-hiring), trigger evals. T-20261107-11.
+Next: `ES lit pick`; multi-agent-grind has no book in the folder, so buying one would help most.
