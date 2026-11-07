@@ -36,6 +36,9 @@ Two to four seeds from at least two categories. Lead with a short, true thanks f
 - [hiring] When you challenge a candidate's answer, what are you testing, and does it change with other interviewers in the room?
 - [hiring] About how many applications does one opening get now, and how many of them does a person actually read?
 - [hiring, ai] What part of screening is automated where you are, and what do you still do by hand?
+- [hiring] When a candidate's best work was done on a team, how do you find out which part was theirs?
+- [hiring] What work do you not count as real engineering when you assess someone, and who ends up doing it on your teams?
+- [hiring] When a debrief says no, how often does the stated reason point at something the candidate did or showed?
 - [hiring] What makes a résumé get a call in the first ten seconds?
 - [hiring, ai] Have you changed your interview format because of AI assistants, and what did you change it to?
 - [hiring] What signal do you look for in a junior candidate now that you did not look for three years ago?

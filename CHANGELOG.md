@@ -4,6 +4,11 @@ Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELO
 
 ## Unreleased
 
+## 0.12.2 · 2026-11-06
+
+- `lit pick`: a much-discussed book counts as maybe read. A short title's author was ignored once the name passed 8 mentions in the records, so *Pixel Logic* listed as unread.
+- *How to Suppress Women's Writing* distilled into tech-hiring.
+
 ## 0.12.1 · 2026-11-06
 
 - `lit ingest`: `--title` now gives a book its own folder, and a listed title its colon cuts to one word (`Typography: A Manual...`) needs its author in the file name.
