@@ -14,13 +14,13 @@
   "topic": "how to define a subject for continuous community monitoring, which platforms and communities can be read and engaged with, and how their access rules change",
   "tier": "fast",
   "interval_days": 14,
-  "last_checked": "2026-09-26",
+  "last_checked": "2026-11-06",
   "next_due": "2026-10-10",
   "verify_at_use": true,
   "volatile_claims": [
     {
       "claim": "Reddit logged-out Atom feeds answer at about one request a minute",
-      "checked": "2026-09-26",
+      "checked": "2026-11-06",
       "recheck_days": 30
     },
     {
@@ -40,7 +40,7 @@
     "quiet": 0,
     "pinned_min": 0,
     "pinned_max": 0,
-    "vau_quiet": 0
+    "vau_quiet": 1
   },
   "history": [
     {
@@ -48,6 +48,12 @@
       "m": null,
       "interval_after": 14,
       "note": "created"
+    },
+    {
+      "date": "2026-11-06",
+      "m": 0.0,
+      "interval_after": null,
+      "note": "use-time claims pass: one Atom request answered 200; the pace was not re-measured. cost: fetches 1"
     }
   ],
   "counts": {
