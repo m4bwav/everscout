@@ -94,6 +94,8 @@ Updated 2026-11-06 (Murphy, Ears to the Ground distilled into downtempo, T-20261
 
 - Sound FX (Case) distilled into ai-sfx 2026-11-06 (T-20261106-8): canon row, vocab, questions, sfxwright edit reference (unreleased, no bump); readwright 0.47.0. Open: sfxwright installed copy lacks the lines until its next release. Next: `ES lit pick`; candidates for ai-sfx are Refining Sound and Power Tools for Synthesizer Programming.
 
+- Refining Sound (Shepard) distilled into ai-sfx 2026-11-07 (T-20261107-1): canon row, vocab, questions, sfxwright edit reference (unreleased, no bump); readwright 0.47.3. Next: `ES lit pick`; candidate for ai-sfx is Power Tools for Synthesizer Programming.
+
 ## Reddit discovery built (2026-10-16, night), unreleased
 
 - Branch `feat/reddit-discovery` (PR to main): steps 1 to 6 of `plans/2026-10-16-reddit-discovery-after-arctic-shift.md`. Pickup of Reddit links during `fetch`, `discover list|add|mark`, `captures`, `new-note --capture`, `fetchwright.max_reads_per_scan` (exit 6), scan skill Step 2 and procedure G, kb rows. 74 tests. The plan's Status section lists how the build differs from its shape.
