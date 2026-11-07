@@ -1899,6 +1899,20 @@ class LiteratureTests(WorkspaceTest):
             self.assertEqual(code, 0, err)
             self.assertEqual("spot-check" in err + out, warned, toc)
 
+    def test_pick_hides_side_files_of_a_read_book(self):
+        folder = os.path.join(self.tmp, "shelf")
+        side = os.path.join(folder, "Ann Writer - The Classic Craft Book (1990)")
+        os.makedirs(side)
+        for n in ("Ann Writer - The Classic Craft Book.pdf", "Appendix C.pdf"):
+            open(os.path.join(side, n), "w").write("x")
+        open(os.path.join(folder, "Fresh Title.epub"), "w").write("x")
+        done = os.path.join(E.data_dir(self.cfg(), "test-beat"), "books", "the-classic-craft-book")
+        os.makedirs(done)
+        open(os.path.join(done, "book.md"), "w", encoding="utf-8").write("---\ntitle: The Classic Craft Book\nfile: x/Ann Writer - The Classic Craft Book.pdf\n---\n")
+        code, out, _ = self.run_cli("lit", "pick", "--dir", folder, "--json")
+        self.assertEqual(code, 0, out)
+        self.assertEqual({r["file"] for r in json.loads(out)}, {"Fresh Title.epub"})
+
     def test_pick_lists_unread_books(self):
         self.add("--tier", "canon", "--title", "The Classic Craft Book", "--authors", "Ann Writer", "--year", "1990", "--id", "OL9W",
                  "--why", "w", "--evidence", "https://example.org/s")

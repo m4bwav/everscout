@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.12.5 · 2026-11-07
+
+- `lit pick` hides side files in a folder named for a read book (appendices, CD logs).
+- ai-sfx gains *Sound Design for the Stage* (canon, distilled), production-element and orphan-effect vocabulary, and two questions.
+
 ## 0.12.4 · 2026-11-06
 
 - `thread --thread-reader same` now honours the flag; it read through the configured fetchwright reader regardless.

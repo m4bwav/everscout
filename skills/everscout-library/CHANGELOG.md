@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`.
 
+### C-20261107-1 · 2026-11-07 · lit pick hides a read book's side files
+- because: T-20261107-6 (Hewitt's appendix and CD log listed after the book was distilled)
+- files: scripts/everscout.py (`cmd_lit_pick`); 1 test. Plugin 0.12.5.
+
 ### C-20261106-1 · 2026-11-06 · lit pick sees a much-discussed book's author
 - because: T-20261106-6 (*Pixel Logic*, read and written up at length, listed as unread: its author's name passed the 8-mention rarity limit)
 - files: scripts/everscout.py (`lit_short_title_hit`); 1 test. Plugin 0.12.2. The file name's last word now also counts when it sits beside at least half the title's mentions. Maybe-read went from 41 to 43; a first version on any word went to 52 and hid unread books through phrases like large language models.

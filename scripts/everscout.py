@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.12.4"
+VERSION = "0.12.5"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3903,6 +3903,11 @@ def cmd_lit_pick(a):
     for name in lit_book_files(folder):
         key = lit_file_key(os.path.basename(name))
         if key in read_keys or any(f" {rt} " in f" {key} " for rt in read_titles):
+            continue
+        # a side file (an appendix, a CD log) in a folder named for a read book
+        parts = name.replace("\\", "/").split("/")
+        top = lit_file_key(parts[0]) if len(parts) > 1 else ""
+        if top and any(f" {rt} " in f" {top} " for rt in read_titles):
             continue
         if len(key) >= 8 and f" {key} " in f" {elsewhere_keys} ":
             continue
