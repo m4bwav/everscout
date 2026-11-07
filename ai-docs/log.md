@@ -748,3 +748,12 @@ Judgment-call step: not rechecked this run. Step 4 not rerun; the skill text did
 Tools: no everscout tool changes needed. readwright 0.46.0: `read --until`, tips for summaries and pull-quote fragments; a fragment filter was tested on 81 PDFs and rejected (about 38 of 40 sampled hits were headings). Slip: my `sed` cut at the word Assignment dropped most of the first read. musicwright work ran in this session, not a separate agent, and main moved to 0.1.13 meanwhile, so the PR needed a merge. T-20261106-4.
 The session-start evergreen items were not done in this session.
 Next: `ES lit pick`.
+
+## [2026-11-06] library | Müller, Fundamentals of Music Processing distilled into ai-music; readwright 0.46.1
+
+Pick: the only `have` row not yet distilled, in ai-music canon, read earlier today for musicwright (Ai/books/plugin-learnings/music-round4-muller.md). That read plus a fresh read of sec. 7.3.1.2, 7.3.3 and 8.2. 19 principles, 8 changes applied, 2 rejected (more mw.py measures need calibration on renders; mean average precision as a beat metric). Verdict: a reference for people building audio checks; not for following AI music. Spot checks: three figures found in the text, and the earlier note's section for the one-triad figure was wrong (5.5, not 5.4).
+Beat: ai-music was untracked since this morning; committed through indie-ai-scout PR #43, with the main clone's copy replaced by the pull. Open Library searches added; `lit new` gave one Springer lead.
+Judgment-call step (PR #44): Puckette kept with UC San Diego and Aalto lists; Briot and the Miranda Handbook dropped, no second kind found in one search each; White moved to latest as unvetted. Lerch and Foster marked distilled, so `lit pick` stops listing them.
+Tools: readwright 0.46.1: outline entries linked by name were silently dropped, merging their text into the entry before (132 sections, now 288 of 287 entries plus front matter). 10 of the first 40 PDFs in the folder have such entries. Tested on this book and a synthetic fixture only. No everscout tool changes needed. musicwright PR #98 is one knowledge line, no version bump, so the installed copy lacks it until the next release. Slip: heredocs with doubled backslashes and apostrophes failed twice; used Write. Step 4 not rerun; the skill text did not change. T-20261106-5.
+The session-start evergreen items were not done in this session.
+Next: `ES lit pick`.
