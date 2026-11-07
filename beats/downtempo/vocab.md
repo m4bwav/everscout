@@ -38,6 +38,15 @@ Short names collide with ordinary words ("Air", "Lamb", "Stone", "Om"), so their
 - haruomi-hosono: Haruomi Hosono
 - madlib: Madlib, Madvillain
 
+- erland-cooper: Erland Cooper
+- lord-of-the-isles: Lord of the Isles
+- kmru: KMRU
+- claire-rousay: claire rousay
+- matthew-herbert: Matthew Herbert
+- lawrence-english: Lawrence English
+- kate-carr: Kate Carr
+- emeka-ogboh: Emeka Ogboh
+
 ## Labels
 
 - ninja-tune: Ninja Tune, Just Isn't Music
@@ -135,6 +144,10 @@ Short names collide with ordinary words ("Air", "Lamb", "Stone", "Om"), so their
 - stem-separation: stem separation, stem splitter, demucs
 - granular: granular synthesis, granular processor, granular texture, granular
 - field-recording: field recording, field recordings, foley
+- contact-mic: contact mic, contact mics, contact microphone
+- hydrophone: hydrophone, hydrophones
+- musique-concrete: musique concrete, musique concrète
+- location-impulse-response: impulse response of, recorded impulse response, impulse responses
 - varispeed: varispeed, vari-speed, varispeeded, varispeeding
 - reverb-throws: reverb throw, delay throw, dub delay, space echo
 - bitcrush: bitcrush, bit crusher, lo-fi processing
