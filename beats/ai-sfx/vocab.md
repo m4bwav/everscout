@@ -115,5 +115,7 @@ Add a new version as its own line when people argue about the difference; otherw
 
 - ai-disclosure: AI disclosure, Steam AI, generative AI disclosure
 - copyright: copyright, Copyright Office, copyrightable
+- sound-annoyance: annoyance, unpleasant sound, percent highly annoyed, dose-response curve
+- equal-loudness: equal-loudness contour, phon, sone, A-weighting, dBA, dBC
 - sound-mark: sound mark, sonic trademark, Wilhelm scream
 - ai-tells: AI artifacts, sounds AI, metallic, phasey, smeared transient

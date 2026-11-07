@@ -852,3 +852,11 @@ Tools: readwright 0.49.2 (PR #93): `--skip-code` found no code in Springer EPUBs
 Noticed: ai-voice beat.md has no `feeds` frontmatter, so rows used `plugin:voicewright`. An untracked Oxford PNG sits in the readwright clone, and an uncommitted HANDOFF edit in the voicewright clone from another session; both left alone. No questions for Mark, so no askwright page.
 Not done: session-start evergreen items, canon sizes (ai-sfx, ai-voice), trigger evals.
 Next: `ES lit pick`; the folder has little left for ai-voice, so consider The Effects of Sound on People for ai-sfx, or Tannen, You're the Only One I Can Tell for tech-hiring.
+
+## [2026-11-07] library | Cowan, The Effects of Sound on People distilled into ai-sfx; everscout 0.12.6, readwright 0.50.0, sfxwright 0.1.9
+Auto-pick: the last log named it; no `have` book, and no file in the folder fits multi-agent-grind. Read about 9k of 84k words: sec. 2.3, 3.5, 5.2, 7.2, 7.5. 12 principles, 6 changes applied, 2 rejected (annoyance metric, retail music). Reliability: Wiley; the scrape and wine studies matched by search, with secondary accounts differing on the scrape band; the Mozart check returned nothing; no critical review found. No canon row, since ai-sfx is over size and this is a side reference. Applying community-noise data to short designed sounds is inference, and nothing was tested on generated audio.
+Tiers: multi-agent-grind canon and recent researched (never checked before), two rows each, below the sizes in kb/literature.md. Reinertsen rests on practitioner lists, Dibia on the author's own list and is self-published; both say so. No Open Library ids and no searches yet. indie-ai-scout PR.
+Judgment-call rows: none left.
+Tools: everscout 0.12.6 fixes a `lit pick` MemoryError from a per-test copy of the read index. readwright 0.50.0: `read --headings` lists `5.2 Title` lines in a flat PDF (L-066). Slip: my new constant shadowed an existing `NUMBERED_HEAD` and broke 4 tests; the suite caught it before merge, renamed.
+Not done: session-start evergreen items, canon sizes (ai-sfx, ai-voice), trigger evals. T-20261107-10.
+Next: `ES lit pick`; Tannen, You're the Only One I Can Tell for tech-hiring. Buying a canon book for multi-agent-grind would help, as the folder has none.

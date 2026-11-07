@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.12.6 · 2026-11-07
+
+- `lit pick` no longer rebuilds the whole read index as a new string for every test, which raised MemoryError on a large index.
+- ai-sfx gains *The Effects of Sound on People* (book note, no canon row), annoyance and equal-loudness vocabulary, and one reception question.
+
 ## 0.12.5 · 2026-11-07
 
 - `lit pick` hides side files in a folder named for a read book (appendices, CD logs).
