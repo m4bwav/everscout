@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.12.9 · 2026-11-07
+
+- `lit pick`: when several folder files hold a read-elsewhere title, the line names them (up to three) instead of only counting them.
+- ai-music distils Roads, *The Computer Music Tutorial* 2e (in indie-ai-scout): time-stretch, onset and beat-tracking vocabulary, three maker questions; musicwright 0.1.24.
+
 ## 0.12.8 · 2026-11-07
 
 - `lit pick`: each read-elsewhere line names the folder file that holds the title (`file: ...`), so a book under a dotted publisher name (`The.MIT.Press.Game.Sound...pdf`) is found without a manual search.

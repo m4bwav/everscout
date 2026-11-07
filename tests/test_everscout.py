@@ -2078,6 +2078,19 @@ class LiteratureTests(WorkspaceTest):
         self.assertIn("read elsewhere, still `lead`", out)
         self.assertIn("file: " + name, out)
 
+    def test_pick_names_every_file_holding_the_title(self):   # Roads: "2 files hold the title" named neither 2026-11-07
+        self.add("--tier", "canon", "--title", "Game Sound", "--authors", "Karen Collins", "--year", "2008", "--id", "OL1W",
+                 "--why", "w", "--evidence", "https://example.org/s")
+        folder, idx = os.path.join(self.tmp, "shelf"), os.path.join(self.tmp, "notes")
+        os.makedirs(folder)
+        os.makedirs(idx)
+        open(os.path.join(idx, "INDEX.md"), "w", encoding="utf-8").write("| game.md | Karen Collins, *Game Sound* |")
+        for name in ("Game Sound - Collins.epub", "Game Sound - Collins.pdf"):
+            open(os.path.join(folder, name), "w").write("x")
+        code, out, _ = self.run_cli("lit", "pick", "--dir", folder, "--read-index", idx)
+        self.assertEqual(code, 0, out)
+        self.assertIn("2 files hold the title: Game Sound - Collins.epub; Game Sound - Collins.pdf", out)
+
     def test_pick_ignores_reading_lists(self):   # Krug, Don't Make Me Think, was "read elsewhere" from a reading list 2026-11-02
         self.add("--tier", "canon", "--title", "Dont Make Me Think", "--authors", "Steve Krug", "--year", "2000", "--id", "OL1W",
                  "--why", "w", "--evidence", "https://example.org/s")
