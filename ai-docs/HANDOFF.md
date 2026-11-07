@@ -1,6 +1,6 @@
 # Handoff
 
-Updated 2026-11-07 (Collins, Game Sound distilled into ai-sfx, T-20261107-14: sfxwright 0.1.13 (plan.md: what each game event tells the player), readwright 0.52.0 (bare-numbered heads across page sections), everscout 0.12.8 (`lit pick` names the file of a read-elsewhere row), all installed. Open: canon sizes for ai-sfx, ai-voice, tech-hiring; trigger evals; session-start evergreen items; readwright cannot recover Pd object names or square roots from pdftotext. Next: The Computer Music Tutorial (ai-music) or The Foley Grail (ai-sfx, read elsewhere).)
+Updated 2026-11-07 (Roads, The Computer Music Tutorial distilled into ai-music, T-20261107-15: musicwright 0.1.24 (stretch, varispeed, formant notes; half and double tempo in transcription), readwright 0.53.0 (chapter mini-contents collapse, short-cut footer), everscout 0.12.9 (`lit pick` names every file holding a title), all installed. Open: canon sizes for ai-sfx, ai-voice, tech-hiring; trigger evals; session-start evergreen items; readwright cannot recover Pd object names or square roots from pdftotext; Roads ch. 36-39 (spectrum analysis) unread, could feed mw.py checks. Next: The Foley Grail (ai-sfx, read elsewhere, file present) or The Sound Effects Bible.)
 
 
 ## 0.10.0 (2026-11-02): Discord through the user's own bot

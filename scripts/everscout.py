@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.12.8"
+VERSION = "0.12.9"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3945,7 +3945,9 @@ def cmd_lit_pick(a):
         # name the file to ingest: "The.MIT.Press.Game.Sound...pdf" holds "Game Sound" though no author is in its name (2026-11-07)
         t = lit_norm_title(title)
         match = [n for n, k in files if f" {t} " in k]
-        where = f"file: {match[0]}" if len(match) == 1 else (f"{len(match)} files hold the title" if match else "no file found")
+        # several files: name them all (up to 3), a bare count sent Roads' run looking (2026-11-07)
+        where = (f"file: {match[0]}" if len(match) == 1 else
+                 f"{len(match)} files hold the title: " + "; ".join(match[:3]) + ("; ..." if len(match) > 3 else "") if match else "no file found")
         print(f"read elsewhere, still `{status}` in {slug} {tier}: {title} (in {src}; distil it from that read, or ingest the file; {where})")
 
 
