@@ -804,3 +804,11 @@ sfxwright: knowledge lines, no version bump, so the installed copy lacks them un
 Tools: readwright 0.47.3: side-margin page numbers no longer land inside sentences; 5 of 40 other PDFs qualify, and sampled removals were folios once line references and contents leaders were blocked. No everscout tool changes needed. Slips: `lit ingest --authors` does not exist; heredocs with doubled backslashes were blocked twice; `(Preface)` is refused as a citation, used the page number. Step 4 not rerun; the skill text did not change. T-20261107-1.
 The session-start evergreen items were not done in this session.
 Next: `ES lit pick`; Power Tools for Synthesizer Programming is the remaining ai-sfx candidate.
+
+## [2026-11-07] library | Aikin, Power Tools for Synthesizer Programming into ai-sfx
+
+Auto-pick: nothing due, no Judgment-call rows, no `have` rows; the candidate the last session named. Read about 13k of 84k words. 27 principles, 7 changes applied, 2 rejected (sync or ring-mod recipe, beating metric). Verdict: a few hours for someone shaping synthesized or layered effects; a music book, so its use for effects is untested inference. Slips in the book: 50 ms pre-delay for walls 50 feet away ignores the return trip; digital filter limit given as the sampling rate; a mangled fraction.
+sfxwright 0.1.4: reference lines in edit.md.
+Tools: readwright 0.47.4 keeps a printed contents page as one section (three false sections here), plus a reference-book tip. No everscout tool changes needed. Slips: `beat-check` takes the slug as a positional argument; a heredoc with doubled backslashes was blocked once. Noticed: ai-sfx canon has 21 rows against the 5 to 10 in kb/literature.md; `lit check` does not flag it. Not trimmed here. Step 4 not rerun; the skill text did not change. T-20261107-2.
+The session-start evergreen items were not done in this session.
+Next: `ES lit pick`; ai-sfx has had four books, so prefer another beat.

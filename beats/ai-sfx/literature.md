@@ -32,6 +32,7 @@ The books of this beat, in three tiers (`kb/literature.md`). AI sound effects ha
 | Digital Audio Restoration | Simon Godsill; Peter Rayner | 1998 | - | Click and noise removal models. | https://betterread.com.au/book/digital-audio-restoration.do | lead |
 | Sound FX: Unlocking the Creative Potential of Recording Studio Effects | Alexander U. Case | 2007 | isbn:9780240520322 | Why each studio effect sounds as it does, with fix, feature and fit reasoning that carries from mixes to layered effects; written for music, so its numbers are starting points. | https://www.routledge.com/Sound-FX-Unlocking-the-Creative-Potential-of-Recording-Studio-Effects/Case/p/book/9780240520322 | distilled |
 | Refining Sound | Brian K. Shepard | 2013 | isbn:9780199922963 | A plain-language walk through each synthesis stage, for procedural recipes; one kind of evidence, a university course-store listing, kept because Oxford University Press published it for college teaching and no syllabus was read. | https://www.hickeys.com/music/studio/ithaca_college/fall_2018/MUMC14500/products/sku100049-shepherd-refining-sounda-practical-guide-to-synthesissynthesizers.php | distilled |
+| Power Tools for Synthesizer Programming | Jim Aikin | 2004 | isbn:9780879307738 | Plain guide to each synth stage, for procedural recipes and shaping; one kind of evidence, a second edition in 2015 showing endurance, kept because no syllabus turned up and its effects use is inference. | https://www.allbookstores.com/Power-Tools-For-Synthesizer-Programming/9781480397941 | distilled |
 
 ## Recent
 
