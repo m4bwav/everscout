@@ -30,6 +30,7 @@ The books of this beat, in three tiers (`kb/literature.md`). AI sound effects ha
 | An Introduction to the Psychology of Hearing | Brian C. J. Moore | 2013 | - | Masking, pitch, loudness. | https://brill.com/display/title/24210?language=en | lead |
 | Psychoacoustics: Facts and Models | Hugo Fastl; Eberhard Zwicker | 2007 | - | Roughness, sharpness and loudness models that could become measured checks. | https://www.barnesandnoble.com/w/psychoacoustics-hugo-fastl/1112165184 | lead |
 | Digital Audio Restoration | Simon Godsill; Peter Rayner | 1998 | - | Click and noise removal models. | https://betterread.com.au/book/digital-audio-restoration.do | lead |
+| Sound FX: Unlocking the Creative Potential of Recording Studio Effects | Alexander U. Case | 2007 | isbn:9780240520322 | Why each studio effect sounds as it does, with fix, feature and fit reasoning that carries from mixes to layered effects; written for music, so its numbers are starting points. | https://www.routledge.com/Sound-FX-Unlocking-the-Creative-Potential-of-Recording-Studio-Effects/Case/p/book/9780240520322 | distilled |
 
 ## Recent
 
