@@ -47,6 +47,13 @@ One observation about the sound, then one or two questions. Producers answer gea
 - [release] Who made the artwork?
 - [release] Do you play it live, and with what setup?
 
+## Found sound
+
+- [foundsound] Where did that recording come from, and did you make it yourself?
+- [foundsound] Are there recordings in here we cannot hear as recordings, blended under an instrument?
+- [foundsound] Did you clean that recording up or leave its noise in, and why?
+- [foundsound] Voices in a recording: did you ask the people, and how do you handle that?
+
 ## Background
 
 - [background] Who got you into trip-hop or down-tempo?
