@@ -26,6 +26,7 @@ Two or three seeds from different categories. Name the sound or moment you mean.
 
 - [process] Which sound did you cut because it sat alone with nothing around it?
 - [process] When did a familiar wrong sound beat an accurate one, and did generated audio change that?
+- [process] Which of your sounds must a player hear to play well, and what replaces them when the game is muted?
 
 ## Variation and sets
 

@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.12.8 · 2026-11-07
+
+- `lit pick`: each read-elsewhere line names the folder file that holds the title (`file: ...`), so a book under a dotted publisher name (`The.MIT.Press.Game.Sound...pdf`) is found without a manual search.
+- ai-sfx distils Collins, *Game Sound* (canon row distilled, Ohio State syllabus added as evidence): dynamic-audio, diegetic-sound, boredom-switch, mickey-mousing and preparatory-cue vocabulary, one process question on muted play.
+
 ## 0.12.7 · 2026-11-07
 
 - `lit distill` falls back to the title when the learnings' `book_id` (an ISBN added while reading) is not on the list row, instead of saying the row was not found.
