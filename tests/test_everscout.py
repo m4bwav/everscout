@@ -1916,17 +1916,17 @@ class LiteratureTests(WorkspaceTest):
         self.assertNotIn("Big River", out)
 
     def test_pick_does_not_tag_a_longer_title_with_a_shorter_row(self):   # Coggan's Unity book tagged as Stevens and Raybould's, 2026-11-06
-        self.add("--tier", "canon", "--title", "Game Audio Implementation", "--authors", "Richard Stevens; Dave Raybould", "--year", "2016", "--id", "-",
+        self.add("--tier", "canon", "--title", "Quail Audio Wiring", "--authors", "Richard Stevens; Dave Raybould", "--year", "2016", "--id", "-",
                  "--why", "w", "--evidence", "https://example.org/s")
         folder = os.path.join(self.tmp, "shelf")
         os.makedirs(folder)
-        for n in ("Unity Game Audio Implementation - Andrew Coggan.pdf", "Game Audio Implementation.pdf", "Raybould Game Audio Implementation.pdf"):
+        for n in ("Harbor Quail Audio Wiring - Andrew Coggan.pdf", "Quail Audio Wiring.pdf", "Raybould Quail Audio Wiring.pdf"):
             open(os.path.join(folder, n), "w").write("x")
         code, out, _ = self.run_cli("lit", "pick", "--dir", folder, "--json")
         self.assertEqual(code, 0, out)
         got = {r["file"]: bool(r["listed"]) for r in json.loads(out)}
-        self.assertEqual(got, {"Unity Game Audio Implementation - Andrew Coggan.pdf": False, "Game Audio Implementation.pdf": True,
-                               "Raybould Game Audio Implementation.pdf": True})
+        self.assertEqual(got, {"Harbor Quail Audio Wiring - Andrew Coggan.pdf": False, "Quail Audio Wiring.pdf": True,
+                               "Raybould Quail Audio Wiring.pdf": True})
 
     def test_pick_ignores_a_wanted_books_list(self):   # sfx-wanted-books.md counted its wanted titles as read, 2026-11-06
         folder = os.path.join(self.tmp, "shelf")
