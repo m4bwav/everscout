@@ -137,3 +137,5 @@ Add a new version as its own line when people argue about the difference; otherw
 - equal-loudness: equal-loudness contour, phon, sone, A-weighting, dBA, dBC
 - sound-mark: sound mark, sonic trademark, Wilhelm scream
 - ai-tells: AI artifacts, sounds AI, metallic, phasey, smeared transient
+- explosion-anatomy: concussion, trail-off, explosion debris, fireball layer
+- imaging-element: imaging element, stinger, sweeper, stab, power up, power down, swell, hit to whoosh, whoosh to hit, tape rewind

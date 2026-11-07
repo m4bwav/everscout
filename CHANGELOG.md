@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.12.11 · 2026-11-07
+
+- `lit distill`: the applied count left out `note` rows while the parenthesis counted them ("3 changes applied (1 written into the note)" for 4); it now counts every applied row and also says how many were rejected.
+- ai-sfx distils Viers, *The Sound Effects Bible* (ch. 18 encyclopedia): explosion-anatomy and imaging-element vocab, one maker question on building automatic or burst sounds; sfxwright 0.1.15.
+
 ## 0.12.10 · 2026-11-07
 
 - `lit ingest` and `lit pick`: an author named in parentheses in the file name ("... (Vanessa Theme Ament).pdf") was dropped before the surname check, so the file was called another author's book and got a new folder and row. The check now reads the whole file name.

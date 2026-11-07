@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.12.10"
+VERSION = "0.12.11"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -4164,7 +4164,9 @@ def cmd_lit_distill(a):
     if row and row["status"] != "skip":
         row["status"] = "distilled"
         write(lit_path(b), lit_render(b, meta, tiers, searches))
-    print(f"note {p}\n{len(applied)} changes applied ({len(for_note)} written into the note), {len(open_)} left proposed; "
+    rejected = sum(1 for c in changes if lit_change_status(c) == "rejected")
+    # count every applied row; the note rows are a subset of it (Sound Effects Bible 2026-11-07 printed 3 of 4)
+    print(f"note {p}\n{len(applied) + len(for_note)} changes applied ({len(for_note)} written into the note), {rejected} rejected, {len(open_)} left proposed; "
           f"list row {(row['status'] if row['status'] == 'skip' else 'distilled') if row else f'not found (add it: lit add --beat {a.beat} --tier TIER --status distilled --title "{title}" ...)'}")
 
 
