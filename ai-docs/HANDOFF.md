@@ -1,6 +1,6 @@
 # Handoff
 
-Updated 2026-11-07 (Viers, The Sound Effects Bible distilled into ai-sfx, T-20261107-17: ch. 18 encyclopedia read; sfxwright 0.1.15 (edit.md Builds by event: explosion parts and trail-off, crash level contrast, automatic fire, body falls, punches, swords, rumble, mouse-over, laser), readwright 0.55.0 (a section ending on a colon names the sections holding its list), everscout 0.12.11 (`lit distill` counts note rows in its applied total), all installed. Open: canon sizes for ai-sfx, ai-voice, tech-hiring; trigger evals; session-start evergreen items; readwright cannot recover Pd object names or square roots from pdftotext; Roads ch. 36-39 unread; sfxwright has no picture-timing input. Five ai-sfx/ai-music books in a row; every read-elsewhere row left is ai-sfx. Next: Sound Synthesis and Sampling (ai-sfx canon) or a non-sfx beat if a file turns up (game-design, ai-video, ai-voice have none listed in the folder).)
+Updated 2026-11-07 (chain session: five books via one subagent each, T-20261107-13 to -17; sfxwright 0.1.15, readwright 0.55.0, everscout 0.12.11, musicwright 0.1.24, all installed. Open: trigger evals, Judgment-call recheck, canon sizes for ai-sfx, ai-voice, tech-hiring, session-start evergreen items. Only ai-sfx rows are left to read elsewhere; a non-sfx book needs Mark to add one to the folder. Next: Sound Synthesis and Sampling).
 
 
 ## 0.10.0 (2026-11-02): Discord through the user's own bot

@@ -911,3 +911,9 @@ Tools: everscout 0.12.11: `lit distill` printed 3 changes applied for 4 (the not
 Slips: a heredoc with apostrophes broke bash quoting and two with doubled backslashes were refused by the hook (Write and Edit used instead); I first edited rw.py in readwright's main clone, then moved the change into a worktree before committing.
 Not done: session-start evergreen items, canon sizes, trigger evals.
 Next: Sound Synthesis and Sampling (ai-sfx canon, file present), or a non-sfx book if one is added to the folder.
+
+## [2026-11-07] library | Chain session: five books, one subagent each
+First session under the five-books rule (continue prompt PR #187, Mark: "chaining up to 5 books per chain session"). The books ran one after another, each in its own general-purpose subagent of about 150k tokens and 17 to 21 minutes: Designing Sound (T-20261107-13), Game Sound (-14), The Computer Music Tutorial (-15, ai-music), The Foley Grail (-16), The Sound Effects Bible (-17). Releases: sfxwright 0.1.12 to 0.1.15, readwright 0.51.1 to 0.55.0, everscout 0.12.8 to 0.12.11, musicwright 0.1.24; all installed. The main session stayed small (reports only).
+Stopped because: five books done. Step 2 (Judgment-call recheck) and step 4 (trigger evals) were not run.
+Repeated slips across the subagents: heredocs with doubled backslashes or apostrophes refused or broken (use Write or Edit); a Write to learnings.md refused for not reading first; a `find` over BigDownloads hangs (use books_folder).
+Next: every read-elsewhere row left is ai-sfx (Sound Synthesis and Sampling is next). A non-sfx book needs Mark to add one to the books folder.
