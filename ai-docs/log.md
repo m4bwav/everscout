@@ -839,3 +839,9 @@ Auto-pick: named by the last log; no `have` book, and listed `lead` books are al
 Tools: readwright 0.49.0 (PR #91): `--section pN` read the wrong page when a page had several sections (L-063); `read --min-para-words` removes OCR debris. No everscout tool changes needed. Slip: a heredoc with doubled backslashes was blocked again; a patch script written with Write avoided it. T-20261107-7. The repos reported no CI checks; merged on local tests.
 Not done: session-start evergreen items, ai-sfx canon size, trigger evals.
 Next: `ES lit pick`; little ai-music fit remains apart from the Oxford Handbook of Computer Music.
+
+## [2026-11-07] library | Dean (ed.), The Oxford Handbook of Computer Music distilled into ai-music; musicwright 0.1.22, readwright 0.49.1
+Auto-pick: named by the last log; no `have` book, and Audio-Vision is already in the read index. Read about 12k of 250k words: ch. 1, parts of 6, 17, 18, 19, 20, 23. 18 principles, 6 changes applied, 2 rejected (evolution generators, sampling history). Reliability: Oxford confirmed, reviewed in Organised Sound (review text not read), SoundSpotter's 2007 paper exists with no full text seen. The Pearce and Wiggins paper title was not found by one search, though the line of work was. Canon row ranks last, no syllabus seen. Nothing tested on generated audio.
+Tools: readwright 0.49.1 (PR #92): `read --headings` finds headings over a rule of dots; caps lists and acronyms open no false section (L-064). Residue: GENDYN stays a false section (used too rarely in sentences), and a two-line caps title still gives two sections. No everscout tool changes needed. indie-ai-scout PR #50. T-20261107-8. The repos reported no CI checks; merged on local tests (readwright 255 OK, musicwright suite exit 0).
+Not done: session-start evergreen items, ai-sfx canon size, trigger evals.
+Next: `ES lit pick`; ai-music is thin on what remains, so try another beat, ai-voice has the fewest books.
