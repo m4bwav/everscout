@@ -26,6 +26,8 @@ Two or three seeds from different categories. Name the line or moment you mean. 
 
 - [quality, ai] Did any denoiser or enhancer make it worse?
 - [quality] What did you do about room tone and level between lines?
+- [quality] Did you measure the take, and with the same settings each time?
+- [quality, ai] Is the breath or noise in the voice itself, or added over it afterwards?
 
 ## Craft and reception
 

@@ -59,6 +59,13 @@ Add a new version as its own line when people argue about the difference; otherw
 - wespeaker: WeSpeaker, CAM++, 3D-Speaker
 - whisper: Whisper, faster-whisper
 - uvr: Ultimate Vocal Remover, UVR, BS-Roformer
+- formant: formant, formants, F1, F2, F3
+- lpc: LPC, linear prediction, linear predictive coding
+- mfcc: MFCC, MFCCs, mel cepstrum, mel-frequency cepstral coefficients
+- dtw: DTW, dynamic time warping
+- preemphasis: preemphasis, pre-emphasis
+- soundgen: soundgen
+- seewave: seewave, tuneR, phonTools
 
 ## Tools
 
