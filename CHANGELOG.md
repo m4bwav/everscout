@@ -5,6 +5,10 @@ Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELO
 ## Unreleased
 
 - New built-in beat **ai-sfx** (sound effect models, ComfyUI, video-to-sound, procedural sound, libraries, craft and licences): 35 sources, probed 2026-11-06, feeds sfxwright. Read-only at the start.
+## 0.12.2 · 2026-11-06
+
+- `lit pick`: a much-discussed book counts as maybe read. A short title's author was ignored once the name passed 8 mentions in the records, so *Pixel Logic* listed as unread.
+- *How to Suppress Women's Writing* distilled into tech-hiring.
 
 ## 0.12.1 · 2026-11-06
 

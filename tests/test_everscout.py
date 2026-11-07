@@ -2011,6 +2011,14 @@ class LiteratureTests(WorkspaceTest):
         self.assertNotIn("maybe read:", out)
         self.assertIn("Dont Make Me Think - Steve Krug.epub", out, "a book only on a reading list is still unread")
 
+    def test_short_title_finds_a_much_discussed_author(self):
+        text = " ".join(["azzi says rows matter"] * 20 + ["pixel logic by azzi"] * 3)
+        self.assertEqual(E.lit_short_title_hit("pixel logic michael azzi".split(), text), "pixel logic")
+        phrase = " ".join(["large language models cost tokens"] * 12)
+        self.assertEqual(E.lit_short_title_hit("building large language models from scratch".split(), phrase), "")
+        far = " ".join(["python is used here " + "x " * 100] * 12 + ["pixel logic " + "y " * 200] * 3)
+        self.assertEqual(E.lit_short_title_hit("pixel logic with python".split(), far), "")
+
     def test_short_title_needs_a_rare_word_nearby(self):
         text = "pixel logic by azzi was read " + "deep learning hands on python " * 12
         self.assertEqual(E.lit_short_title_hit("pixel logic michael azzi".split(), text), "pixel logic")

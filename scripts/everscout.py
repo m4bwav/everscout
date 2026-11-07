@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.12.1"
+VERSION = "0.12.2"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3977,9 +3977,11 @@ def lit_short_title_hit(words, text, near=150):
         if min(len(words[i]), len(words[i + 1])) < 5:
             continue
         # rare in the records: "python" or "theory" sits near any title, a surname does not
-        others = {w for w in words if len(w) >= 4 and padded.count(f" {w} ") <= 8} - {words[i], words[i + 1]}
-        for m in re.finditer(re.escape(pair), padded):
-            window = padded[max(0, m.start() - near):m.end() + near]
+        windows = [padded[max(0, m.start() - near):m.end() + near] for m in re.finditer(re.escape(pair), padded)]
+        # a much-discussed book's author is common in the records, yet still sits beside most mentions of its title
+        others = {w for w in words if len(w) >= 4 and (padded.count(f" {w} ") <= 8
+                  or (w == words[-1] and sum(f" {w} " in x for x in windows) >= max(2, (len(windows) + 1) // 2)))} - {words[i], words[i + 1]}
+        for window in windows:
             if any(f" {w} " in window for w in others):
                 return pair.strip()
     return ""

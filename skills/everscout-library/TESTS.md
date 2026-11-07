@@ -326,6 +326,7 @@ OCR of a two-up scan with `rw.py ocr`, `lit ingest --title`, lint exit 0, `lit d
 - T-20261106-2 (2026-11-06): Typography for Lawyers into personal-sites; ingest, lint, distill exit 0; tests pass; 8 changes applied, 2 rejected. Trigger evals not rerun.
 - T-20261106-3 (2026-11-06): The Argument Culture into tech-hiring; ingest, lint, distill exit 0; 8 changes applied, 3 rejected. Trigger evals not rerun.
 - T-20261106-4 (2026-11-06): Mixing Secrets into downtempo; ingest, lint, distill exit 0; 5 changes applied, 2 rejected; lit check clean.
+- T-20261106-6 (2026-11-06): How to Suppress Women's Writing into tech-hiring; ingest, lint, distill exit 0; 4 beat changes and 1 note applied, 3 rejected; lit check clean.
 
 ### T-20261106-5 · 2026-11-06 · Fundamentals of Music Processing into ai-music
 From an earlier read plus sec. 7.3.1.2, 7.3.3, 8.2. `lit lint` 0 errors, `lit distill` wrote the note, `lit check` and `beat-check` 0 errors. 19 principles, 8 applied, 2 rejected.
