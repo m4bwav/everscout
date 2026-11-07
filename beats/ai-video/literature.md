@@ -36,6 +36,7 @@ The most important books of the last five years (quarterly recheck).
 | Generative Deep Learning (2nd ed.) | David Foster | 2023 | OL28799243W | Queen Mary University of London's Generative Deep Learning module follows this book for its syllabus, which covers diffusion, VAEs and multimodal models. | https://www.qmul.ac.uk/modules/items/ecs534u-generative-deep-learning.html | distilled |
 | Understanding Deep Learning | Simon J. D. Prince | 2023 | OL36475079W | University deep learning courses set it as required reading and build their lecture order on it, including its chapters on diffusion and transformers. | https://oluwatosin-oluwadare.github.io/Teaching/CSCE5218%E2%80%93DeepLearning/files/DeepLearning-Syllabus-Spring2026.pdf | lead |
 | Artists' Master Series: Color & Light | Charlie Pickard, Djamila Knopf, Guweiz, Nathan Fowkes et al. | 2021 | isbn:9781912843411 | User's copy; a publisher-edited colour and light course (theory chapters plus painters' tutorials) that names the lighting and palette choices a generated look is judged by; reviewed by Parka Blogs. | https://www.parkablogs.com/content/book-review-artists%E2%80%99-master-series-color-and-light | distilled |
+| Suddenly Something Clicked | Walter Murch | 2025 | isbn:9780571328857 | Murch's 2025 essays give the rule of two and a half and his cutting notes; rests on trade reviews plus the author's standing, no syllabus yet, kept as the user's copy. | https://www.kirkusreviews.com/book-reviews/walter-murch/suddenly-something-clicked | distilled |
 
 ## Latest
 

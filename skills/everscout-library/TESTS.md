@@ -336,3 +336,4 @@ From an earlier read plus sec. 7.3.1.2, 7.3.3, 8.2. `lit lint` 0 errors, `lit di
 
 ### T-20261106-7 · 2026-11-06 · Unity Game Audio Implementation into ai-sfx
 First book in ai-sfx. `lit lint` 0 errors, `lit distill` and `lit check` exit 0. 22 principles, 7 changes applied, 5 rejected. Trigger evals not rerun.
+- T-20261106-9 (2026-11-06): Suddenly Something Clicked into ai-video; ingest, lint, distill exit 0; 7 changes applied, 3 rejected. Trigger evals not rerun.
