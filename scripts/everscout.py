@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.12.3"
+VERSION = "0.12.4"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -1521,6 +1521,7 @@ def cmd_captures(a):
 def cmd_thread(a):
     cfg = config()
     set_reddit_reader(cfg, a)
+    set_thread_reader(cfg, a)
     words, b, before = ASKED_WORDS, None, None
     if a.beat:
         b = get_beat(cfg, a.beat)

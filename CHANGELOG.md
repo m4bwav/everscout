@@ -2,8 +2,9 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
-## Unreleased
+## 0.12.4 · 2026-11-06
 
+- `thread --thread-reader same` now honours the flag; it read through the configured fetchwright reader regardless.
 - New built-in beat **ai-sfx** (sound effect models, ComfyUI, video-to-sound, procedural sound, libraries, craft and licences): 35 sources, probed 2026-11-06, feeds sfxwright. Read-only at the start.
 ## 0.12.3 · 2026-11-06
 

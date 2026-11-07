@@ -1417,6 +1417,14 @@ class FetchwrightReaderTests(WorkspaceTest):
             E.load_thread(self.cfg(), "https://news.ycombinator.com/item?id=1")
         self.assertEqual(self.calls(), [])
 
+    def test_thread_command_honours_the_same_flag_over_fetchwright_config(self):
+        self.set_cfg(reddit={"reader": "rss", "thread_reader": "fetchwright"})
+        atom = reddit_thread_atom("fw1abc", replies=[("c1", "someone", "what tools did you use?", ago(20))])
+        with mock.patch.object(S.Fetcher, "get", return_value=(atom, False, 200)):
+            code, out, err = self.run_cli("thread", self.URL, "--thread-reader", "same")
+        self.assertEqual(code, 0, err)
+        self.assertEqual(self.calls(), [], "the flag wins, so fetchwright is never called")
+
     def test_budget_stops_fresh_reads_at_the_cap(self):
         self.set_cfg(fetchwright={"cli": self.cli, "max_reads_per_scan": 1})
         code, out, err = self.run_cli("thread", self.URL, "--beat", "test-beat", "--thread-reader", "fetchwright")
