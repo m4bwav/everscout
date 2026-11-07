@@ -4,6 +4,8 @@ Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELO
 
 ## Unreleased
 
+- New built-in beat **ai-sfx** (sound effect models, ComfyUI, video-to-sound, procedural sound, libraries, craft and licences): 35 sources, probed 2026-11-06, feeds sfxwright. Read-only at the start.
+
 ## 0.12.1 · 2026-11-06
 
 - `lit ingest`: `--title` now gives a book its own folder, and a listed title its colon cuts to one word (`Typography: A Manual...`) needs its author in the file name.
