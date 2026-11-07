@@ -1,6 +1,6 @@
 # Handoff
 
-Updated 2026-11-07 (Tannen, You're the Only One I Can Tell distilled into tech-hiring, T-20261107-11: readwright 0.50.1, no everscout release; editwright dialogue line unreleased. Open: canon sizes for ai-sfx, ai-voice, tech-hiring; trigger evals; session-start evergreen items. Next: `ES lit pick`).
+Updated 2026-11-07 (Chion, Audio-Vision distilled into ai-sfx from the earlier plugin-learnings read plus ch. 5, T-20261107-12: everscout 0.12.7, sfxwright 0.1.11, readwright 0.51.0, all installed. Open: canon sizes for ai-sfx, ai-voice, tech-hiring; trigger evals; session-start evergreen items; a locked leftover folder Ai/sfxwright-chion to delete. Next: `ES lit pick`, then another read-elsewhere ai-sfx row).
 
 
 ## 0.10.0 (2026-11-02): Discord through the user's own bot

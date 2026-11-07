@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.12.6"
+VERSION = "0.12.7"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -4125,7 +4125,10 @@ def cmd_lit_distill(a):
     secs = lit_sections(body)
     url = ""
     meta, tiers, searches = lit_load(b) if os.path.exists(lit_path(b)) else ({}, {t: [] for t in LIT_TIERS}, [])
-    _, row = lit_find(tiers, fm.get("book_id") if fm.get("book_id") not in (None, "", "-") else title)
+    # an id written into learnings.md (an ISBN) may be absent from a row whose id is `-`, so fall back to the title
+    _, row = lit_find(tiers, fm.get("book_id")) if fm.get("book_id") not in (None, "", "-") else (None, None)
+    if not row:
+        _, row = lit_find(tiers, title)
     if row:
         url = row["evidence"] if row["id"] in ("", "-") else ("https://openlibrary.org/works/" + row["id"] if row["id"].startswith("OL") else row["evidence"])
     nid = "book-" + os.path.basename(d)

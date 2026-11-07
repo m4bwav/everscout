@@ -110,6 +110,11 @@ Add a new version as its own line when people argue about the difference; otherw
 - envelope-follower: envelope follower
 - production-elements: production elements, drones, risers, stings, boomers, whooshes, hybrid effects
 - orphan-effect: orphan sound effect, orphan effect
+- synchresis: synchresis, sync point, synch point
+- added-value: added value, audiovisual contract
+- materializing-indices: materializing indices, materializing sound indices, MSI
+- rendering: rendering, rendered sound, hyperreal sound
+- offscreen-sound: offscreen sound, acousmatic, acousmatic sound
 
 ## Topics
 

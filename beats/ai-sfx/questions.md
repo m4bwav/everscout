@@ -12,6 +12,8 @@ Two or three seeds from different categories. Name the sound or moment you mean.
 - [process] What did you start from for the tail: a recording, a synth, or a stretched copy of the attack?
 - [process] How many takes did you throw away before this one?
 - [process] Did you distort the layers one by one or the whole mix, and could you hear the difference?
+- [process] Did you judge this sound alone or against the picture, and did the picture change your choice?
+- [process] How much friction or grit did you leave in, and did taking it out make the sound feel fake or cleaner?
 - [process] What did you cut last, and why did it go?
 - [process] How do you decide when a sound is finished?
 - [process] What sounded right in the editor and wrong once it was in the game?
