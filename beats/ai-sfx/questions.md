@@ -17,6 +17,8 @@ Two or three seeds from different categories. Name the sound or moment you mean.
 - [process] Where is your listener, on the camera or the character, and what did that change in the sounds you made?
 - [process] Which part of this sound seemed thin alone but worked in the scene, and how did you judge it?
 - [process] When a generated sound came out thin, what fixed it apart from layering: EQ, distortion, envelope or something else?
+- [process] Which noise colour or inharmonic source did you start this from, and why that one?
+- [process] What does each layer's decay do here, and which layer outlasts the others?
 
 ## Variation and sets
 
@@ -25,6 +27,7 @@ Two or three seeds from different categories. Name the sound or moment you mean.
 - [variation] How far can you push pitch here before it stops being the same object?
 - [variation] How do you keep a whole game's footsteps in the same world?
 - [variation] How many files does a sound played thousands of times get, compared with one played fifty times?
+- [variation] Does a harder hit change only the level here, or its attack and tail too?
 
 ## Tools
 

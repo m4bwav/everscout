@@ -98,6 +98,13 @@ Add a new version as its own line when people argue about the difference; otherw
 - keyed-gate: keyed gate, gated reverb, gated room
 - spreader: spreader, stereo spreader, micro-pitch widening
 - harmonic-distortion: harmonic distortion, saturation, even harmonics, odd harmonics
+- fm-synthesis: FM synthesis, frequency modulation, harmonicity ratio, modulation index
+- oscillator-sync: oscillator sync, hard sync
+- noise-colour: pink noise, red noise, brown noise, blue noise, violet noise
+- detuned-stack: detuned oscillators, supersaw, multiwave oscillator
+- pitch-envelope: pitch envelope, pitch sweep
+- frequency-shift: frequency shifter, frequency shifting
+- envelope-follower: envelope follower
 
 ## Topics
 

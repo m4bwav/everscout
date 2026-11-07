@@ -796,3 +796,11 @@ sfxwright and musicwright: knowledge lines, no version bump, so the installed co
 Tools: readwright 0.47.2: grep offsets point at the match, so `read --offset` opened mid-sentence; grep now names `--at-para`, plus a tip for interview-led books. No everscout tool changes needed. Slips: `grep --limit` does not exist (`--max`); Write refused learnings.md unread, which also let a beat log line go in before distill; a plugin manifest bump missed the root plugin.json, caught by tests. Step 2 had no rows; step 4 not rerun, since the skill text did not change. T-20261106-10.
 The session-start evergreen items were not done in this session.
 Next: `ES lit pick`.
+
+## [2026-11-07] library | Shepard, Refining Sound distilled into ai-sfx; readwright 0.47.3
+
+Auto-pick: nothing due, no Judgment-call rows, no `have` rows, 0 beat-listed files. Chosen from last session's ai-sfx candidates because it was in no beat or plugin-learnings note and bears on procedural recipes. Read about 11k of 103k words. 25 principles, 8 changes applied, 3 rejected (FM recipe, `vary` intensity option, inharmonicity metric). Verdict: an evening for someone writing synth recipes; skip MIDI and slider steps. A music textbook, so every mapping to effects is inference, untested on generated sound. Slip in the book: p. 42 octave figures are an octave out. Checks from search summaries: publisher, year, ISBNs, Prophet VS 1986, Chowning 1973. Canon row rests on one course-store page, no syllabus read, reason stated.
+sfxwright: knowledge lines, no version bump, so the installed copy lacks them until the next release.
+Tools: readwright 0.47.3: side-margin page numbers no longer land inside sentences; 5 of 40 other PDFs qualify, and sampled removals were folios once line references and contents leaders were blocked. No everscout tool changes needed. Slips: `lit ingest --authors` does not exist; heredocs with doubled backslashes were blocked twice; `(Preface)` is refused as a citation, used the page number. Step 4 not rerun; the skill text did not change. T-20261107-1.
+The session-start evergreen items were not done in this session.
+Next: `ES lit pick`; Power Tools for Synthesizer Programming is the remaining ai-sfx candidate.
