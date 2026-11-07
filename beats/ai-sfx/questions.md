@@ -11,6 +11,7 @@ Two or three seeds from different categories. Name the sound or moment you mean.
 - [process] What were the separate layers in this sound, and which one came first?
 - [process] What did you start from for the tail: a recording, a synth, or a stretched copy of the attack?
 - [process] How many takes did you throw away before this one?
+- [process] Did you distort the layers one by one or the whole mix, and could you hear the difference?
 - [process] What did you cut last, and why did it go?
 - [process] How do you decide when a sound is finished?
 - [process] What sounded right in the editor and wrong once it was in the game?
@@ -27,6 +28,7 @@ Two or three seeds from different categories. Name the sound or moment you mean.
 - [variation] How far can you push pitch here before it stops being the same object?
 - [variation] How do you keep a whole game's footsteps in the same world?
 - [variation] How many files does a sound played thousands of times get, compared with one played fifty times?
+- [variation] Do you detune the whole sound between takes, or only one layer?
 - [variation] Does a harder hit change only the level here, or its attack and tail too?
 
 ## Tools

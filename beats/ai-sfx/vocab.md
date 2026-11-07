@@ -98,6 +98,9 @@ Add a new version as its own line when people argue about the difference; otherw
 - keyed-gate: keyed gate, gated reverb, gated room
 - spreader: spreader, stereo spreader, micro-pitch widening
 - harmonic-distortion: harmonic distortion, saturation, even harmonics, odd harmonics
+- ring-modulation: ring modulation, ring mod, ring modulator
+- sample-and-hold: sample and hold, sample-and-hold, S&H, stepped random
+- gated-reverb: gated reverb, gate reverb
 - fm-synthesis: FM synthesis, frequency modulation, harmonicity ratio, modulation index
 - oscillator-sync: oscillator sync, hard sync
 - noise-colour: pink noise, red noise, brown noise, blue noise, violet noise
