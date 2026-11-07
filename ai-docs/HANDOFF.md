@@ -1,6 +1,6 @@
 # Handoff
 
-Updated 2026-11-07 (Chion, Audio-Vision distilled into ai-sfx from the earlier plugin-learnings read plus ch. 5, T-20261107-12: everscout 0.12.7, sfxwright 0.1.11, readwright 0.51.0, all installed. Open: canon sizes for ai-sfx, ai-voice, tech-hiring; trigger evals; session-start evergreen items. Next: `ES lit pick`, then another read-elsewhere ai-sfx row).
+Updated 2026-11-07 (Farnell, Designing Sound distilled into ai-sfx, T-20261107-13: sfxwright 0.1.12 (bubbles, rain, motor, cricket recipes), readwright 0.51.1, both installed. Open: canon sizes for ai-sfx, ai-voice, tech-hiring; trigger evals; session-start evergreen items; readwright cannot recover Pd object names or square roots from pdftotext. Next: `ES lit pick`, then Collins, Game Sound or Designing Sound's neighbours (Sound Effects Bible, Foley Grail), or The Computer Music Tutorial for ai-music).
 
 
 ## 0.10.0 (2026-11-02): Discord through the user's own bot

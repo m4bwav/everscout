@@ -12,7 +12,7 @@ The books of this beat, in three tiers (`kb/literature.md`). AI sound effects ha
 
 | title | authors | year | id | why | evidence | status |
 |---|---|---|---|---|---|---|
-| Designing Sound | Andy Farnell | 2010 | - | Procedural recipes and synthesis models. | https://www.barnesandnoble.com/w/designing-sound-andy-farnell/1100660348 | lead |
+| Designing Sound | Andy Farnell | 2010 | - | Procedural recipes and synthesis models. | https://www.barnesandnoble.com/w/designing-sound-andy-farnell/1100660348 | distilled |
 | The Sound Effects Bible | Ric Viers | 2014 | - | Recording and foley practice, library building. | https://mwp.com/product/the-sound-effects-bible | lead |
 | The Essential Guide to Game Audio | Steve Horowitz; Scott Looney | 2014 | - | Game asset thinking and middleware concepts. | https://www.routledge.com/The-Essential-Guide-to-Game-Audio-The-Theory-and-Practice-of-Sound-for-Games/Horowitz-Looney/p/book/9780415706704 | lead |
 | Sound Design: The Expressive Power of Music, Voice and Sound Effects in Cinema and Interactive Media | David Sonnenschein | 2001 | - | Narrative intent and a design process. | https://mwp.com/product/sound-design | lead |
