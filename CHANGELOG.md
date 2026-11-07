@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.12.7 · 2026-11-07
+
+- `lit distill` falls back to the title when the learnings' `book_id` (an ISBN added while reading) is not on the list row, instead of saying the row was not found.
+- ai-sfx distils Chion, *Audio-Vision* (canon row distilled): synchresis, added value, materializing indices, rendering and offscreen vocabulary, two process questions.
+
 ## 0.12.6 · 2026-11-07
 
 - `lit pick` no longer rebuilds the whole read index as a new string for every test, which raised MemoryError on a large index.
