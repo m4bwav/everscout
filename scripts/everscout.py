@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.12.7"
+VERSION = "0.12.8"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3940,8 +3940,13 @@ def cmd_lit_pick(a):
     maybe = sum(1 for r in out if r["maybe_read"])
     print(f"{len(out) - maybe} unread ({sum(1 for r in out if r['listed'] and not r['maybe_read'])} listed by a beat), "
           f"{maybe} maybe read elsewhere{'' if a.all else ' (--all shows them)'}; check the topic fits a beat before ingesting")
+    files = [(n, f" {lit_file_key(os.path.basename(n))} ") for n in lit_book_files(folder)]
     for slug, tier, status, title, src in stale:
-        print(f"read elsewhere, still `{status}` in {slug} {tier}: {title} (in {src}; distil it from that read, or ingest the file)")
+        # name the file to ingest: "The.MIT.Press.Game.Sound...pdf" holds "Game Sound" though no author is in its name (2026-11-07)
+        t = lit_norm_title(title)
+        match = [n for n, k in files if f" {t} " in k]
+        where = f"file: {match[0]}" if len(match) == 1 else (f"{len(match)} files hold the title" if match else "no file found")
+        print(f"read elsewhere, still `{status}` in {slug} {tier}: {title} (in {src}; distil it from that read, or ingest the file; {where})")
 
 
 def lit_book_files(folder, depth=2):

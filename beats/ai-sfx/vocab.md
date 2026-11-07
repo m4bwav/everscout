@@ -119,6 +119,11 @@ Add a new version as its own line when people argue about the difference; otherw
 - materializing-indices: materializing indices, materializing sound indices, MSI
 - rendering: rendering, rendered sound, hyperreal sound
 - offscreen-sound: offscreen sound, acousmatic, acousmatic sound
+- dynamic-audio: dynamic audio, adaptive audio, interactive audio, nondynamic audio
+- diegetic-sound: diegetic sound, nondiegetic sound, source sound, underscore
+- boredom-switch: boredom switch, bored button, drop to silence
+- mickey-mousing: mickey-mousing, mickey mousing
+- preparatory-cue: preparatory cue, audio warning, sound cue, telegraphing
 
 ## Topics
 

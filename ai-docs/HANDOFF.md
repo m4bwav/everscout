@@ -1,6 +1,6 @@
 # Handoff
 
-Updated 2026-11-07 (Farnell, Designing Sound distilled into ai-sfx, T-20261107-13: sfxwright 0.1.12 (bubbles, rain, motor, cricket recipes), readwright 0.51.1, both installed. Open: canon sizes for ai-sfx, ai-voice, tech-hiring; trigger evals; session-start evergreen items; readwright cannot recover Pd object names or square roots from pdftotext. Next: `ES lit pick`, then Collins, Game Sound or Designing Sound's neighbours (Sound Effects Bible, Foley Grail), or The Computer Music Tutorial for ai-music).
+Updated 2026-11-07 (Collins, Game Sound distilled into ai-sfx, T-20261107-14: sfxwright 0.1.13 (plan.md: what each game event tells the player), readwright 0.52.0 (bare-numbered heads across page sections), everscout 0.12.8 (`lit pick` names the file of a read-elsewhere row), all installed. Open: canon sizes for ai-sfx, ai-voice, tech-hiring; trigger evals; session-start evergreen items; readwright cannot recover Pd object names or square roots from pdftotext. Next: The Computer Music Tutorial (ai-music) or The Foley Grail (ai-sfx, read elsewhere).)
 
 
 ## 0.10.0 (2026-11-02): Discord through the user's own bot
