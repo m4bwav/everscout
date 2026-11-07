@@ -79,6 +79,14 @@ Keep canonical ids stable: renaming one splits its history in the tallies. A new
 - hermeneutical-injustice: hermeneutical injustice, no word for it, could not name what happened
 - pre-emptive-exclusion: never interviewed, never asked, screened out before a call
 
+## Dismissing work (Russ 1983)
+
+- credit-denial: she had help, carried by the team, credit for team work
+- work-reclassified: not real engineering, glue work, non-promotable work
+- isolated-achievement: one good project, only known for
+- token-exception: not like other women, only woman on the team
+- no-visible-models: no role models, nobody like me
+
 ## Promotion and advancement (Abji 2022)
 
 - broken-rung: broken rung, first rung, first promotion to manager, first-level promotion gap
