@@ -341,3 +341,4 @@ First book in ai-sfx. `lit lint` 0 errors, `lit distill` and `lit check` exit 0.
 - T-20261107-1 (2026-11-07): Refining Sound into ai-sfx; ingest, lint, distill exit 0; 8 changes applied, 3 rejected. Trigger evals not rerun.
 - T-20261107-2 (2026-11-07): Power Tools for Synthesizer Programming into ai-sfx; ingest, lint, distill, lit check exit 0; 7 changes applied, 2 rejected. Trigger evals not rerun; skill text unchanged.
 - T-20261107-3 (2026-11-07): Electronic and Computer Music into ai-music; ingest, lint, distill, beat-check exit 0; 8 changes applied, 3 rejected. Trigger evals not rerun; skill text unchanged.
+- T-20261107-5 (2026-11-07): Music Theory for Computer Musicians into ai-music; ingest, lint, distill, lit check, beat-check exit 0; 7 changes applied, 0 rejected. Trigger evals not rerun; skill text unchanged.
