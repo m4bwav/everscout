@@ -13,7 +13,7 @@ The books of this beat, in three tiers (`kb/literature.md`). AI voice has almost
 | title | authors | year | id | why | evidence | status |
 |---|---|---|---|---|---|---|
 | Freeing the Natural Voice | Kristin Linklater | 1976 | - | Standard voice-training text, required in current university actor courses; gives direction its body and breath vocabulary. | https://digitalworlds.ufl.edu/syllabi/2026/Spring/2026-Spring-Tpp%204287%20-%20Voice%20For%20The%20Actor-18915.pdf | lead |
-| The Art of Voice Acting | James R. Alburger | 2024 | isbn:9781032370682 | The long-running voiceover craft manual, now in a 7th edition; no syllabus found, listed for endurance across editions. | https://www.routledge.com/The-Art-of-Voice-Acting-The-Craft-and-Business-of-Performing-for-Voiceover/Alburger/p/book/9781032370682 | lead |
+| The Art of Voice Acting | James R. Alburger | 2024 | isbn:9781032370682 | The long-running voiceover craft manual, now in a 7th edition; no syllabus found, listed for endurance across editions. | https://www.routledge.com/The-Art-of-Voice-Acting-The-Craft-and-Business-of-Performing-for-Voiceover/Alburger/p/book/9781032370682 | distilled |
 | Directing Actors | Judith Weston | 1996 | - | How to give a performer playable direction; publisher claims film-school use, unverified, kept for its 25th anniversary edition. | https://mwp.com/?p=3602 | lead |
 | Foundations of Voice Studies | Jody Kreiman; Diana Sidtis | 2011 | isbn:9780631222972 | Joins production and perception, including how listeners read identity, emotion and personality from voice; one kind of evidence, kept because it bears directly on why voices sound alike. | https://www.lavoisier.fr/livre/autre/foundations-of-voice-studies/kreiman/descriptif_2987665 | lead |
 | The Phonetic Description of Voice Quality | John Laver | 1980 | isbn:9780521108898 | Describes voice quality as habitual settings of the vocal apparatus, a vocabulary for specifying a voice; cited by Kreiman and Sidtis. | https://booktopia.com.au/the-phonetic-description-of-voice-quality-john-laver/book/9780521108898.html | lead |
@@ -27,7 +27,7 @@ The books of this beat, in three tiers (`kb/literature.md`). AI voice has almost
 
 | title | authors | year | id | why | evidence | status |
 |---|---|---|---|---|---|---|
-| Neural Text-to-Speech Synthesis | Xu Tan | 2023 | isbn:9789819908295 | Single-author Springer monograph on neural TTS; predates the current diffusion and LLM-style engines. | https://tenlong.com.tw/products/9789819908295 | lead |
+| Neural Text-to-Speech Synthesis | Xu Tan | 2023 | isbn:9789819908295 | Single-author Springer monograph on neural TTS; predates the current diffusion and LLM-style engines. | https://tenlong.com.tw/products/9789819908295 | distilled |
 | This Is the Voice | John Colapinto | 2021 | isbn:9781982128746 | General account of voice science and voice artists; starred Publishers Weekly review per the publisher, no critic's review read. | https://bookpage.com/books/this-is-the-voice/ | lead |
 | The Voice Catchers | Joseph Turow | 2021 | isbn:9780300248036 | Scholarly account of voice profiling and marketing, for the consent and reception question. | https://muse.jhu.edu/article/845386 | lead |
 | Voice-Over Voice Actor: The Extended Edition | Yuri Lowenthal; Tara Platt | 2021 | - | Working game and animation actors on the job, updated with a workbook; bestseller claim comes from the publisher. | https://www.bugbotpress.com/news/2021/7/24/voice-over-voice-actor-the-extended-edition-is-an-amazon-best-seller | lead |
