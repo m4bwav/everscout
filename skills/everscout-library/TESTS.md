@@ -330,3 +330,6 @@ OCR of a two-up scan with `rw.py ocr`, `lit ingest --title`, lint exit 0, `lit d
 
 ### T-20261106-5 · 2026-11-06 · Fundamentals of Music Processing into ai-music
 From an earlier read plus sec. 7.3.1.2, 7.3.3, 8.2. `lit lint` 0 errors, `lit distill` wrote the note, `lit check` and `beat-check` 0 errors. 19 principles, 8 applied, 2 rejected.
+
+### T-20261106-7 · 2026-11-06 · Unity Game Audio Implementation into ai-sfx
+First book in ai-sfx. `lit lint` 0 errors, `lit distill` and `lit check` exit 0. 22 principles, 7 changes applied, 5 rejected. Trigger evals not rerun.

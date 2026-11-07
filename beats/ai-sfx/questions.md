@@ -13,6 +13,8 @@ Two or three seeds from different categories. Name the sound or moment you mean.
 - [process] How many takes did you throw away before this one?
 - [process] What did you cut last, and why did it go?
 - [process] How do you decide when a sound is finished?
+- [process] What sounded right in the editor and wrong once it was in the game?
+- [process] Where is your listener, on the camera or the character, and what did that change in the sounds you made?
 
 ## Variation and sets
 
@@ -20,6 +22,7 @@ Two or three seeds from different categories. Name the sound or moment you mean.
 - [variation] What do you randomize in the engine, and what do you bake into the files?
 - [variation] How far can you push pitch here before it stops being the same object?
 - [variation] How do you keep a whole game's footsteps in the same world?
+- [variation] How many files does a sound played thousands of times get, compared with one played fifty times?
 
 ## Tools
 

@@ -15,3 +15,7 @@ The history and guide everscout-report writes in baseline mode, one chapter at a
 ## Perspectives to research from
 
 A solo game developer with no audio budget; a game sound designer; a film sound editor; a library maker; an audio researcher.
+
+## Notes for chapters
+
+- 03-practice: game audio books treat a sound as half file and half implementation, so a set is only finished once checked in the engine: trigger timing, head silence, variation by play count, listener placement. The split is an industry view, not a measurement (Coggan, *Unity Game Audio Implementation*, ch. 2, 3, 6).

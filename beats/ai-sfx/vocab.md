@@ -37,6 +37,8 @@ Add a new version as its own line when people argue about the difference; otherw
 - sound-particles: Sound Particles
 - ffmpeg: ffmpeg, FFmpeg
 - sox: SoX
+- audacity: Audacity
+- ocenaudio: ocenaudio, Ocen Audio
 - pure-data: Pure Data, PureData
 - supercollider: SuperCollider
 - sfxr: sfxr, jsfxr, Bfxr, ChipTone, rFXGen, LabChirp
@@ -84,6 +86,11 @@ Add a new version as its own line when people argue about the difference; otherw
 - foley: foley, footsteps, cloth pass
 - seed-fishing: seed fishing, batch of seeds
 - loudness: LUFS, ASWG, true peak, R128
+- top-and-tail: top and tail, top-and-tail loop
+- transient-tail-swap: transient and tail swap, split transient and tail
+- one-shot: one shot, one-shot, one shot asset
+- listener-placement: audio listener, listener on camera, listener on character
+- asset-tracker: audio asset tracker, audio asset spreadsheet, sound list
 
 ## Topics
 
