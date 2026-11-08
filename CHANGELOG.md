@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.12.22 · 2026-11-07
+
+- `tally` skips book notes (platform book): a distilled book tags the vocab it names, which counted as community signal (the Google note added provider google).
+- `lit ingest` splits a leading `First Last_First Last_-_Title` file name into title and authors (Continuous Delivery came in titled with both authors).
+
 ## 0.12.21 · 2026-11-07
 
 - A row whose `why` starts "User's copy" may sit in recent whatever its year: `lit ingest --tier recent` and `lit check` no longer push it to canon, which is for standing (Belknap's self-published 2018 Leadership for Introverts had to go into canon to pass ingest). Root `plugin.json` caught up from 0.12.16.

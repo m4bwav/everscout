@@ -2527,5 +2527,26 @@ class DiscordTests(unittest.TestCase):
         self.assertGreaterEqual(slept[0], 0.1)
 
 
+class TallyBookNotesTest(unittest.TestCase):
+    def test_tally_skips_book_notes_and_stem_splits_leading_authors(self):
+        d = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, d, True)
+        os.makedirs(os.path.join(d, "notes"))
+        for name, plat in (("scan", "reddit"), ("book", "book")):
+            with open(os.path.join(d, "notes", name + ".md"), "w", encoding="utf-8") as f:
+                f.write(f"---\ntitle: {name}\nkind: note\ndate: 2026-11-01\nposted: 2026-11-01\nplatform: {plat}\nproviders: [{name}co]\n---\nbody\n")
+
+        class B:
+            meta = {}
+
+            def vocab(self):
+                return {"providers": {}}
+        res = E.tally(B(), d, now=E.now_utc())
+        self.assertIn("scanco", res["providers"])
+        self.assertNotIn("bookco", res["providers"], "book notes are not community signal")
+        self.assertEqual(E.lit_split_stem("Jez Humble_David Farley_-_Continuous Delivery"),
+                         ("Continuous Delivery", ["Jez Humble", "David Farley"]))
+
+
 if __name__ == "__main__":
     unittest.main()
