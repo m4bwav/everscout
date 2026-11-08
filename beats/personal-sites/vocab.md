@@ -214,3 +214,8 @@ Read.cv announced its shutdown in 2025 (unverified whether Posts.cv survives); k
 
 - house-style: house style, style guide, style sheet
 - silent-change: silent edit, stealth edit, tracked changes
+
+## Hierarchy and grids
+
+- type-hierarchy: typographic hierarchy, information hierarchy, levels of importance
+- grid-system: modular grid, hierarchic grid, hangline, column grid

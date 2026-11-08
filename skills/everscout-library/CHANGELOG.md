@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`.
 
+### C-20261107-5 · 2026-11-07 · lit ingest --tier needs --year
+- because: T-20261107-26 (Typography Workbook row came in with no year; `lit check` warned after distill and the row was fixed with `lit add`)
+- files: scripts/everscout.py (`cmd_lit_ingest`), SKILL.md Step 3.1; 1 test. Plugin 0.12.19.
+
 ### C-20261107-4 · 2026-11-07 · lit ingest refuses a recent row older than the window
 - because: T-20261107-25 (EvoMUSART 2019 went into recent; beat-check warned only after the beats PR, and the row had to be moved by hand)
 - files: scripts/everscout.py (`cmd_lit_ingest`); 1 test; also resynced the drifted references/kb/literature.md copy. Plugin 0.12.18.
