@@ -35,7 +35,7 @@ Follow the procedure section of [references/kb/literature.md](references/kb/lite
 
 1. No book named: `ES lit pick` lists unread files in the user's book folder, beat-listed first (`--match 'refactor|testing'` keeps only files whose path fits a beat's topics). Then `ES lit ingest <file> --beat <slug> [--id OL...W]` (a book no beat lists: add `--tier T --why W --evidence E --year Y` and its row comes in at ingest) and read the outline it prints; it refuses a file with no text layer.
 2. Read the parts that bear on the beat's research questions through readwright (`rw.py read --section`, `rw.py grep`), never the whole text into the context.
-3. Fill `learnings.md`: cited principles in fresh words, what the beat already has (`ES recall`), the Changes table with targets, the Verdict.
+3. Fill `learnings.md` (ingest wrote it, so Read it once before a whole-file Write, or the Write is refused): cited principles in fresh words, what the beat already has (`ES recall`), the Changes table with targets, the Verdict.
 4. `ES lit lint <book> --beat <slug>` until it exits 0. Show the user the proposed changes grouped by target and ask which to apply. Apply them through each target's own rules; mark rows `applied` or `rejected` (a note after the word is fine: `applied (v1.2, PR #3)`). A `note` row's change text (an edition line, reading caveats) is written into the book note by `lit distill`. Working in a worktree of the beats repo: set `EVERSCOUT_BEATS=<worktree>/beats` so `lit` edits the worktree's literature.md, not the main clone's.
 5. `ES lit distill <book> --beat <slug>`, then `ES tally --beat <slug>` and `ES index --beat <slug>`. Append `library | <book>: N principles, M changes applied` to `DATA/log.md`.
 
