@@ -2,6 +2,10 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.12.14 · 2026-11-07
+
+- `lit ingest`: when readwright's toc says a scan read one page per section has Chapter N headings, the chapter map from `rw.py toc --chapters` is written at the top of `toc.txt`, above the page rows (Yewdall run).
+
 ## 0.12.13 · 2026-11-07
 
 - `lit pick`: a beat row whose title sits inside a longer title a beat has already read (Stevens and Raybould, *Game Audio Implementation*, inside Coggan, *Unity Game Audio Implementation*) is no longer shown as read elsewhere, and its file line no longer names the longer book's files (Holman run).

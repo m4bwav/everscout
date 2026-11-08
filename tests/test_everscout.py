@@ -1739,6 +1739,24 @@ class LiteratureTests(WorkspaceTest):
         self.assertEqual(code, 0, err)
         self.assertTrue(os.path.isdir(os.path.join(E.data_dir(self.cfg(), "test-beat"), "books", "picked-book")))
 
+    def test_ingest_keeps_readwright_chapter_map(self):   # Yewdall scan: 678 page rows, chapters only via --chapters
+        fake = os.path.join(self.tmp, "fake_rw.py")
+        open(fake, "w", encoding="utf-8").write(
+            "import sys\n"
+            "a = sys.argv[1:]\n"
+            "if a[0] == 'info': print('words: 50000')\n"
+            "elif '--chapters' in a: print('   10-15    Chapter 1: Mixing  (2,541 w)')\n"
+            "else: print('   1. page 1: X  (5 w)'); print('note: 22 Chapter N headings found on the pages; rw.py toc FILE --chapters lists them as page ranges')\n")
+        book = os.path.join(self.tmp, "Scanned Book.txt")
+        open(book, "w", encoding="utf-8").write("Chapter 1 Mixing\nText.\n")
+        with mock.patch.object(E, "find_readwright", return_value=fake):
+            code, out, err = self.run_cli("lit", "ingest", book, "--beat", "test-beat")
+        self.assertEqual(code, 0, err)
+        toc = open(os.path.join(E.data_dir(self.cfg(), "test-beat"), "books", "scanned-book", "toc.txt"), encoding="utf-8").read()
+        self.assertTrue(toc.startswith("## chapters"))
+        self.assertIn("Chapter 1: Mixing", toc)
+        self.assertIn("page 1: X", toc)
+
     def test_ingest_lint_distill(self):
         self.add("--tier", "canon", "--title", "The Classic", "--year", "1990", "--id", "OL9W", "--why", "w", "--evidence", "https://example.org/s")
         book = os.path.join(self.tmp, "classic.txt")
