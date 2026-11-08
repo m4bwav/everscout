@@ -1814,6 +1814,26 @@ class LiteratureTests(WorkspaceTest):
         self.assertNotIn("Section 99 ", out)
         self.assertIn("more lines in toc.txt", out)
 
+    def test_ingest_long_outline_shows_top_level(self):
+        fake = os.path.join(self.tmp, "fake_rw.py")
+        open(fake, "w", encoding="utf-8").write(
+            "import sys\n"
+            "a = sys.argv[1:]\n"
+            "if a[0] == 'info': print('words: 50000')\n"
+            "else:\n"
+            "    print('# book | epub | 300 sections')\n"
+            "    for c in range(15):\n"
+            "        print(f'  {c * 20}. Ch. {c}: Chapter {c}  (100 w)')\n"
+            "        for s in range(1, 20): print(f'  {c * 20 + s}.   Sub {c}.{s}  (5 w)')\n")
+        book = os.path.join(self.tmp, "Tree Book.txt")
+        open(book, "w", encoding="utf-8").write("Text.\n")
+        with mock.patch.object(E, "find_readwright", return_value=fake):
+            code, out, err = self.run_cli("lit", "ingest", book, "--beat", "test-beat")
+        self.assertEqual(code, 0, err)
+        self.assertIn("Chapter 14 ", out)   # the last chapter shows
+        self.assertNotIn("Sub 0.1 ", out)
+        self.assertIn("subsections hidden", out)
+
     def test_ingest_lint_distill(self):
         self.add("--tier", "canon", "--title", "The Classic", "--year", "1990", "--id", "OL9W", "--why", "w", "--evidence", "https://example.org/s")
         book = os.path.join(self.tmp, "classic.txt")

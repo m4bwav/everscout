@@ -3851,15 +3851,29 @@ def cmd_lit_ingest(a):
     if toc:   # the skill says "read the outline it prints"; runs used to open toc.txt in a second call (Zizza, 2026-11-07)
         lines = [ln for ln in toc.splitlines() if ln.strip()]
         print("outline:")
-        for ln in lines[:LIT_OUTLINE_LINES]:
+        shown, top = lit_outline_lines(lines)
+        for ln in shown:
             print(f"  {ln}")
-        if len(lines) > LIT_OUTLINE_LINES:
-            print(f"  ... {len(lines) - LIT_OUTLINE_LINES} more lines in toc.txt")
+        if len(shown) < len(lines):
+            print(f"  ... {len(lines) - len(shown)} more lines in toc.txt{' (subsections hidden, top level shown)' if top else ''}")
     if rw:
         print(f"  read sections with: python {rw} read \"{path}\" --section N   (search: grep \"{path}\" PATTERN)")
 
 
 LIT_OUTLINE_LINES = 45
+
+
+def lit_outline_lines(lines):
+    """The outline lit ingest prints, and whether it is the top level only. A long toc shows its top-level entries (title
+    not indented past the number) so the whole book's shape fits: the first 45 lines of a 313-section book covered only
+    chapters 1 and 2 (Unity 2022 by Example, 2026-11-08). Falls back to the first lines when the toc is flat or the top
+    level alone is too long."""
+    if len(lines) <= LIT_OUTLINE_LINES:
+        return lines, False
+    top = [ln for ln in lines if not re.match(r"\s*\d+\.\s{2,}", ln)]
+    if 1 < len(top) < len(lines) and len(top) <= LIT_OUTLINE_LINES * 2:
+        return top, True
+    return lines[:LIT_OUTLINE_LINES], False
 LIT_BOOK_EXTS = (".pdf", ".epub", ".mobi", ".azw3", ".azw", ".djvu", ".txt")
 
 
