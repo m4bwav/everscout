@@ -1,6 +1,6 @@
 # Handoff
 
-Updated 2026-11-07 (chain book: Practical Art of Motion Picture Sound into ai-sfx, T-20261107-21; sfxwright 0.1.19, readwright 0.59.0, everscout 0.12.14, all installed. Open: trigger evals, Judgment-call recheck, canon sizes for ai-sfx, ai-voice, tech-hiring, session-start evergreen items. Next: pick by the rule; every ai-sfx canon lead with a file is now distilled (Game Audio Implementation by Stevens has no file; The Computer Music Tutorial was distilled into ai-music), so lit pick may find nothing beat-listed: a non-sfx book needs Mark to add one to the folder).
+Updated 2026-11-07 (chain session 2: four books, T-20261107-18 to -21, all ai-sfx; stopped because nothing beat-listed is left to pick. Releases: sfxwright 0.1.16-0.1.19, readwright 0.56.0-0.59.0, everscout 0.12.12-0.12.14, all installed. Open: trigger evals, Judgment-call recheck, canon sizes for ai-sfx, ai-voice, tech-hiring, session-start evergreen items; lit pick still lists The Computer Music Tutorial as an ai-sfx lead although it is distilled into ai-music (mark the ai-sfx row or teach pick to skip books in any beat's DATA/books). Next: Mark adds a book for a non-sfx beat to the folder, or names one).
 
 
 ## 0.10.0 (2026-11-02): Discord through the user's own bot

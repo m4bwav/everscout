@@ -941,3 +941,8 @@ Chain book, picked by the rule: the last ai-sfx canon lead with a file in the bo
 Tools: readwright 0.59.0 (PR #106): `toc --chapters` builds chapter page ranges from Chapter N heads on the pages (the scan had 678 page sections and `--group` folded nothing; found all 22 chapters, L-078), plain toc points to it, plus a distilling tip for scanned practitioner books. everscout 0.12.14: `lit ingest` writes that chapter map at the top of toc.txt, with a test. CI watched green on sfxwright and readwright; everscout has no CI, local tests passed. All installed.
 Slips: a Write to learnings.md was refused for not reading first (read it, then wrote); a python patch script's path joining broke twice (fixed by hand). The run was cut off once by a parent restart and resumed from the worktrees.
 Next: pick by the rule; ai-sfx has no canon lead with a file left.
+
+## [2026-11-07] library | Chain session 2: four books, then nothing left to pick
+Four books, one general-purpose subagent each, one at a time: Sound Synthesis and Sampling (T-20261107-18), Designing Audio Effect Plugins in C++ (-19), Sound for Film and Television (-20), Practical Art of Motion Picture Sound (-21), all ai-sfx. Releases: sfxwright 0.1.16 to 0.1.19, readwright 0.56.0 to 0.59.0, everscout 0.12.12 to 0.12.14; all installed. Book 4's agent was cut off by a parent restart and resumed from its worktrees with nothing redone.
+Stopped because: nothing beat-listed left. `lit pick` names only The Computer Music Tutorial (already distilled into ai-music as T-20261107-15, so the rule skips it); the unread files are not on any beat's list. Steps 1 (no tier due), 2 and 4 not run beyond step 1.
+Next: a non-sfx book needs Mark to add one to the books folder or name one.
