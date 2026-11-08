@@ -1735,6 +1735,20 @@ class LiteratureTests(WorkspaceTest):
         bm = open(os.path.join(E.data_dir(self.cfg(), "test-beat"), "books", "shelf-book", "book.md"), encoding="utf-8").read()
         self.assertIn("tier: recent", bm)
 
+    def test_users_old_copy_goes_into_recent(self):   # Belknap 2018 had to go into canon to pass ingest
+        book = os.path.join(self.tmp, "Old Own Book.txt")
+        open(book, "w", encoding="utf-8").write("CHAPTER ONE\nSynthetic text.\n")
+        with mock.patch.object(E, "find_readwright", return_value=None):
+            code, out, err = self.run_cli("lit", "ingest", book, "--beat", "test-beat", "--title", "Old Own Book", "--tier",
+                                          "recent", "--why", "User's copy; self-published coaching book",
+                                          "--evidence", "https://example.org/b", "--year", "2012")
+        self.assertEqual(code, 0, err)
+        code, out, _ = self.run_cli("lit", "check", "--beat", "test-beat")
+        self.assertEqual(code, 0, out)
+        self.assertNotIn("older than the recent window", out)
+        self.assertTrue(E.lit_user_copy("User’s copy, small press"))
+        self.assertFalse(E.lit_user_copy("Judgment call: fits Q1"))
+
     def test_linked_row_without_id_is_found_by_its_own_title(self):
         book = os.path.join(self.tmp, "ECONOMICS, 11TH EDITION.txt")
         open(book, "w", encoding="utf-8").write("CHAPTER ONE\nSynthetic text.\n")

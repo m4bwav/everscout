@@ -2,6 +2,10 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.12.21 · 2026-11-07
+
+- A row whose `why` starts "User's copy" may sit in recent whatever its year: `lit ingest --tier recent` and `lit check` no longer push it to canon, which is for standing (Belknap's self-published 2018 Leadership for Introverts had to go into canon to pass ingest). Root `plugin.json` caught up from 0.12.16.
+
 ## 0.12.20 · 2026-11-07
 
 - `lit ingest` prints the outline (up to 45 lines, the rest in toc.txt), as the skill says it does; runs had opened toc.txt in a second call (Zizza run).

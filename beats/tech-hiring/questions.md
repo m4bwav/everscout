@@ -31,9 +31,11 @@ Two to four seeds from at least two categories. Lead with a short, true thanks f
 - [interviews] Were you coached to sound more direct or stop hedging, and did it change how the interviewers responded?
 - [interviews] Did giving candidates the questions or the exercise ahead of time change who did well?
 - [interviews] Were you ever told you were not a strong enough leader or not confident enough, with no evidence from your work?
+- [interviews] Do you let candidates send a written follow-up after a live round, and has a late answer ever changed a decision?
 
 ## Hiring side (managers and recruiters)
 
+- [hiring] Do hiring managers who feel unsure of themselves pick people like themselves, and does the panel catch it?
 - [hiring] What wording do you use when you have decided against a candidate, and has anyone read it as still open?
 - [hiring] After how long does silence mean no in your process, and do candidates get told?
 - [hiring] When you challenge a candidate's answer, what are you testing, and does it change with other interviewers in the room?
