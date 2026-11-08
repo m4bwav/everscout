@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.12.21"
+VERSION = "0.12.22"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -2096,6 +2096,8 @@ def tally(b, dd, now=None):
     res = {f: {} for f in facets}
     half_life = float(b.meta.get("half_life_days") or 30)
     for p, fm, _ in all_notes(dd):
+        if fm.get("platform") == "book":   # a distilled book's note tags vocab it names, not community talk
+            continue
         posted = S.parse_time(str(fm.get("posted") or fm.get("date") or ""))
         if not posted:
             continue
@@ -3402,6 +3404,11 @@ def lit_split_stem(stem):
         else:
             break
         t = t[:m.start()].rstrip()
+    m = re.fullmatch(r"((?:[A-Z][\w.'-]* [A-Z][\w.'-]+_)+)-_(.{3,})", t)   # "Jez Humble_David Farley_-_Continuous Delivery"
+    if not authors and m:
+        names = [n.strip() for n in m.group(1).split("_") if n.strip()]
+        if all(LIT_PAREN_NAME.match(n) for n in names):
+            t, authors = m.group(2).replace("_", " ").strip(), names
     m = re.fullmatch(r"(.{3,}?) - ([^-()]+)", t)   # "The GameDev Business Handbook - Michael Futter"
     if not authors and m and len(m.group(1).split()) >= 2:
         names = [n.strip() for n in re.split(r",| & | and ", m.group(2)) if n.strip()]
