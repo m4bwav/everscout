@@ -100,6 +100,8 @@ Updated 2026-11-08 (chain book: Cameron, Unity 2022 by Example into game-design,
 
 - Bilbao, Numerical Sound Synthesis distilled into ai-sfx 2026-11-07 (T-20261107-32): canon row, vocab physical-modeling and strike-position, a tools question, book note; sfxwright 0.1.23 (PR #28: `synth modal` strike and velocity, routes.md modal limits for large plates); readwright 0.69.0 (PR #118: outline entries named Unlock-ch1, fmatter, index take the chapter's own title, L-084). No open tool items. Next: `ES lit pick`; Beginning Game Audio Programming (Premier 2003) is the remaining ai-sfx file but dated.
 
+- Farley, Modern Software Engineering distilled into multi-agent-grind 2026-11-08 (T-20261108-2): recent row added at ingest, vocab fail-fast, trunk-based, wrong-diagnosis, one merging question (indie-ai-scout PR #64); grindwright 0.3.20 (PR #45, released, installed). No tool changes needed. Next: `ES lit pick --expand`; thin beats ai-voice (3 books), indie-ai-games and indie-game-marketing (4) have no fitting unread file; Fowler Refactoring is not in the folder.
+
 ## Reddit discovery built (2026-10-16, night), unreleased
 
 - Branch `feat/reddit-discovery` (PR to main): steps 1 to 6 of `plans/2026-10-16-reddit-discovery-after-arctic-shift.md`. Pickup of Reddit links during `fetch`, `discover list|add|mark`, `captures`, `new-note --capture`, `fetchwright.max_reads_per_scan` (exit 6), scan skill Step 2 and procedure G, kb rows. 74 tests. The plan's Status section lists how the build differs from its shape.
