@@ -1719,10 +1719,15 @@ class LiteratureTests(WorkspaceTest):
             self.assertNotEqual(code, 0)
             code, out, err = self.run_cli("lit", "ingest", book, "--beat", "test-beat", "--title", "Shelf Book", "--tier", "recent",
                                           "--why", "Judgment call: fits Q1", "--evidence", "https://example.org/b", "--year", "2017")
+            self.assertNotEqual(code, 0)   # EvoMUSART 2019 went into recent and beat-check warned after the merge
+            self.assertIn("--tier canon", err + out)
+            year = str(E.dt.date.today().year - 1)
+            code, out, err = self.run_cli("lit", "ingest", book, "--beat", "test-beat", "--title", "Shelf Book", "--tier", "recent",
+                                          "--why", "Judgment call: fits Q1", "--evidence", "https://example.org/b", "--year", year)
         self.assertEqual(code, 0, err)
         self.assertIn("added to recent, reading", out)
         t, r = E.lit_find(E.lit_load(E.get_beat(self.cfg(), "test-beat"))[1], "Shelf Book")
-        self.assertEqual((t, r["status"], r["year"]), ("recent", "reading", "2017"))
+        self.assertEqual((t, r["status"], r["year"]), ("recent", "reading", year))
         bm = open(os.path.join(E.data_dir(self.cfg(), "test-beat"), "books", "shelf-book", "book.md"), encoding="utf-8").read()
         self.assertIn("tier: recent", bm)
 

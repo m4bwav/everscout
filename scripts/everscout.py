@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.12.17"
+VERSION = "0.12.18"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3793,6 +3793,9 @@ def cmd_lit_ingest(a):
     if not row and a.tier:   # a shelf book no beat lists: its row comes in at ingest, already reading
         if not (a.why and a.evidence):
             fail("a new row at ingest needs --why and --evidence with --tier")
+        y = re.search(r"\d{4}", str(a.year or ""))
+        if a.tier == "recent" and y and int(y.group()) < dt.date.today().year - LIT_RECENT_YEARS:
+            fail(f"{y.group()} is older than the recent window ({LIT_RECENT_YEARS} years): use --tier canon")
         row = {k: "" for k in LIT_COLUMNS}
         row.update(title=title, authors=a.authors or ", ".join(stem_authors), year=a.year or "", id=a.id or "",
                    why=a.why, evidence=a.evidence, status="reading")
