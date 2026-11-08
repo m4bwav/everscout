@@ -1,6 +1,6 @@
 # Handoff
 
-Updated 2026-11-07 (chain session 2: four books, T-20261107-18 to -21, all ai-sfx; stopped because nothing beat-listed is left to pick. Releases: sfxwright 0.1.16-0.1.19, readwright 0.56.0-0.59.0, everscout 0.12.12-0.12.14, all installed. Open: trigger evals, Judgment-call recheck, canon sizes for ai-sfx, ai-voice, tech-hiring, session-start evergreen items; lit pick still lists The Computer Music Tutorial as an ai-sfx lead although it is distilled into ai-music (mark the ai-sfx row or teach pick to skip books in any beat's DATA/books). Next: Mark adds a book for a non-sfx beat to the folder, or names one).
+Updated 2026-11-07 (chain session 3, book 1: Lanham, Game Audio Development With Unity 5.x into ai-sfx, T-20261107-22; no beat lists a lead with a file left, so the main session named this shelf book. Releases: sfxwright 0.1.20, readwright 0.60.0, everscout 0.12.15, all installed. Fixed: `lit pick` skips a lead any beat has distilled (the ai-sfx Roads row is now `skip`). Open: trigger evals, Judgment-call recheck, canon sizes for ai-sfx, ai-voice, tech-hiring, session-start evergreen items. Next: every remaining unread file is off-list; pick the best fit for any beat by the rule and say why, or Mark names one).
 
 
 ## 0.10.0 (2026-11-02): Discord through the user's own bot

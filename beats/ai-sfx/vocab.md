@@ -104,7 +104,7 @@ Add a new version as its own line when people argue about the difference; otherw
 - spectral-masking: masking, spectral masking, upward spread of masking
 - comb-filtering: comb filter, comb filtering, phasing between layers
 - early-reflections: early reflections, early reflection pattern
-- side-chain: side chain, sidechain, key input
+- side-chain: side chain, sidechain, key input, duck volume, ducking
 - keyed-gate: keyed gate, gated reverb, gated room
 - spreader: spreader, stereo spreader, micro-pitch widening
 - harmonic-distortion: harmonic distortion, saturation, even harmonics, odd harmonics
@@ -151,3 +151,5 @@ Add a new version as its own line when people argue about the difference; otherw
 - futz: futz, futzed, worldize, worldizing, telephone effect
 - scene-transition: prelap, J-cut, postlap, L-cut, hard cut, bang cut
 - stems: DM&E, M&E, premix, stem
+- mixer-snapshot: mixer snapshot, audio snapshot, snapshot transition
+- vertical-remix: vertical remixing, vertical layering, horizontal resequencing

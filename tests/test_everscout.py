@@ -2007,6 +2007,24 @@ class LiteratureTests(WorkspaceTest):
         code, out, _ = self.run_cli("lit", "pick", "--dir", folder, "--read-index", idx, "--json")
         self.assertEqual([r["file"] for r in json.loads(out)], ["Fresh Title Of Book.epub"])
 
+    def test_pick_skips_a_lead_another_beat_distilled(self):   # Roads still an ai-sfx lead after ai-music distilled it, 2026-11-07
+        self.add("--tier", "recent", "--title", "The Classic Craft Book", "--authors", "Ann Writer", "--year", "1990", "--id", "-",
+                 "--why", "w", "--evidence", "https://example.org/s")
+        folder = os.path.join(self.tmp, "shelf")
+        os.makedirs(folder)
+        open(os.path.join(folder, "Ann Writer - The Classic Craft Book.epub"), "w").write("x")
+        open(os.path.join(folder, "Fresh Title.mobi"), "w").write("x")
+        done = os.path.join(E.data_dir(self.cfg(), "test-beat"), "books", "the-classic-craft-book")
+        os.makedirs(done)
+        open(os.path.join(done, "book.md"), "w", encoding="utf-8").write("---\ntitle: The Classic Craft Book\nfile: other/Classic Craft.pdf\n---\n")
+        idx = os.path.join(self.tmp, "index")
+        os.makedirs(idx)
+        open(os.path.join(idx, "n.md"), "w", encoding="utf-8").write("Read: The Classic Craft Book by Ann Writer\n")
+        code, out, _ = self.run_cli("lit", "pick", "--dir", folder, "--read-index", idx)
+        self.assertEqual(code, 0, out)
+        self.assertNotIn("read elsewhere, still", out)
+        self.assertNotIn("Classic Craft", out)
+
     def test_pick_hides_another_copy_of_a_read_book(self):   # a distilled book's PDF twin listed while the beats clone lagged
         folder = os.path.join(self.tmp, "shelf")
         os.makedirs(folder)
