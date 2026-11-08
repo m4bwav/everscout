@@ -2,6 +2,10 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.12.17 · 2026-11-07
+
+- `lit ingest --tier T --why W --evidence E [--year Y --authors A]`: a shelf book no beat lists gets its literature row at ingest, already `reading`, instead of a later `lit add`.
+
 ## 0.12.16 · 2026-11-07
 
 - `lit pick`: a top folder with more than five unlisted files (a magazine run, a collected works) prints as one line with its count; `--expand` lists them all. The shelf list went from 388 lines to 182.

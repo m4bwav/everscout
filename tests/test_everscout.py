@@ -1702,7 +1702,7 @@ class LiteratureTests(WorkspaceTest):
         open(book, "w", encoding="utf-8").write("CHAPTER ONE\nSynthetic text.\n")
         with mock.patch.object(E, "find_readwright", return_value=None):
             code, out, err = self.run_cli("lit", "ingest", book, "--beat", "test-beat", "--title", "Unlisted Book: A Subtitle")
-        self.assertIn("not found (lit add it;", out)
+        self.assertIn("not found (pass --tier", out)
         code, out, err = self.add("--tier", "canon", "--title", "Unlisted Book", "--year", "2019", "--id", "OL7W", "--why", "w",
                                   "--evidence", "https://example.org/s")
         self.assertIn("[reading]; linked to the ingested unlisted-book-a-subtitle", out)
@@ -1710,6 +1710,21 @@ class LiteratureTests(WorkspaceTest):
         for fn in ("book.md", "learnings.md"):
             self.assertIn("book_id: OL7W", open(os.path.join(d, fn), encoding="utf-8").read())
         self.assertIn("tier: canon", open(os.path.join(d, "book.md"), encoding="utf-8").read())
+
+    def test_ingest_adds_row_for_shelf_book(self):   # Game Audio Dev With Unity, Dooley: shelf books no beat listed
+        book = os.path.join(self.tmp, "Shelf Book - Some Author.txt")
+        open(book, "w", encoding="utf-8").write("CHAPTER ONE\nSynthetic text.\n")
+        with mock.patch.object(E, "find_readwright", return_value=None):
+            code, out, err = self.run_cli("lit", "ingest", book, "--beat", "test-beat", "--title", "Shelf Book", "--tier", "recent")
+            self.assertNotEqual(code, 0)
+            code, out, err = self.run_cli("lit", "ingest", book, "--beat", "test-beat", "--title", "Shelf Book", "--tier", "recent",
+                                          "--why", "Judgment call: fits Q1", "--evidence", "https://example.org/b", "--year", "2017")
+        self.assertEqual(code, 0, err)
+        self.assertIn("added to recent, reading", out)
+        t, r = E.lit_find(E.lit_load(E.get_beat(self.cfg(), "test-beat"))[1], "Shelf Book")
+        self.assertEqual((t, r["status"], r["year"]), ("recent", "reading", "2017"))
+        bm = open(os.path.join(E.data_dir(self.cfg(), "test-beat"), "books", "shelf-book", "book.md"), encoding="utf-8").read()
+        self.assertIn("tier: recent", bm)
 
     def test_linked_row_without_id_is_found_by_its_own_title(self):
         book = os.path.join(self.tmp, "ECONOMICS, 11TH EDITION.txt")

@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.12.16"
+VERSION = "0.12.17"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3789,6 +3789,15 @@ def cmd_lit_ingest(a):
         if row and (stem_authors or " " not in lit_norm_title(row["title"])) and not lit_same_author(stem, row["authors"]):
             note(f"file name holds the listed title '{row['title']}' but names another author ({', '.join(stem_authors)}; listed: {row['authors']}): treated as a different book")
             tier, row = None, None
+    added = False
+    if not row and a.tier:   # a shelf book no beat lists: its row comes in at ingest, already reading
+        if not (a.why and a.evidence):
+            fail("a new row at ingest needs --why and --evidence with --tier")
+        row = {k: "" for k in LIT_COLUMNS}
+        row.update(title=title, authors=a.authors or ", ".join(stem_authors), year=a.year or "", id=a.id or "",
+                   why=a.why, evidence=a.evidence, status="reading")
+        tiers[a.tier].append(row)
+        tier, added = a.tier, True
     if row:
         title = row["title"] or title
     slug = slugify(title, 40, whole=True)
@@ -3816,9 +3825,10 @@ def cmd_lit_ingest(a):
     was = row["status"] if row else ""
     if row and was in ("lead", "have"):
         row["status"] = "reading"
+    if added or (row and was in ("lead", "have")):
         write(lit_path(b), lit_render(b, meta, tiers, searches))
     print(f"book folder {d}")
-    print(f"  learnings.md to fill; toc.txt {'written' if toc else 'not written'}; list row {('set to reading' if was in ('lead', 'have') else f'stays {was}') if row else 'not found (lit add it; the new row links to this folder and reads reading)'}")
+    print(f"  learnings.md to fill; toc.txt {'written' if toc else 'not written'}; list row {(f'added to {tier}, reading' if added else 'set to reading' if was in ('lead', 'have') else f'stays {was}') if row else 'not found (pass --tier, --why and --evidence to add it at ingest, or lit add it; the new row links to this folder and reads reading)'}")
     if rw:
         print(f"  read sections with: python {rw} read \"{path}\" --section N   (search: grep \"{path}\" PATTERN)")
 
@@ -4328,6 +4338,9 @@ def main(argv=None):
     q = lsp.add_parser("due", help="tiers due for research (canon yearly, recent quarterly, latest monthly); exit 2 when any"); q.add_argument("--beat")
     q = lsp.add_parser("ingest", help="set up a provided book: readwright outline, DATA/books/<slug>/learnings.md, row set to reading")
     q.add_argument("file"); q.add_argument("--beat"); q.add_argument("--title"); q.add_argument("--id")
+    q.add_argument("--tier", choices=LIT_TIERS, help="a book no beat lists: add its row to this tier, reading (needs --why and --evidence)")
+    for f in ("why", "evidence", "authors", "year"):
+        q.add_argument("--" + f)
     q.add_argument("--force", action="store_true", help="rewrite learnings.md; set up a file with no text layer anyway")
     q = lsp.add_parser("pick", help="book files in a folder no beat has read yet, beat-listed ones first")
     q.add_argument("--dir", help="folder of book files (default: config books_folder)")
