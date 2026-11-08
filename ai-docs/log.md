@@ -917,3 +917,9 @@ First session under the five-books rule (continue prompt PR #187, Mark: "chainin
 Stopped because: five books done. Step 2 (Judgment-call recheck) and step 4 (trigger evals) were not run.
 Repeated slips across the subagents: heredocs with doubled backslashes or apostrophes refused or broken (use Write or Edit); a Write to learnings.md refused for not reading first; a `find` over BigDownloads hangs (use books_folder).
 Next: every read-elsewhere row left is ai-sfx (Sound Synthesis and Sampling is next). A non-sfx book needs Mark to add one to the books folder.
+
+## [2026-11-07] library | Sound Synthesis and Sampling into ai-sfx (T-20261107-18)
+Chain book, named by the handoff (ai-sfx canon lead, file in the books folder). The 2026-11-06 plugin-learnings read took sec. 1.9.3 and 4.3 loop joins; this run read sec. 4.3.1-4.3.2, 5.4, 6.2-6.3 and 6.8.3-6.8.4, about 5.5k of 159k words. Reliability: Focal Press 2008, Martin Russ; spot checks (D-50 LA synthesis, Rodet's FOF, Propellerhead Reason) passed. 16 principles, 4 changes applied: sfxwright 0.1.16 (PR #21, edit.md From synthesis and sampling: render variants from the original, keep big pitch moves off voices and fixed-spectrum hits, familiar plus alien onset blip, fuse check), vocab munchkinisation and familiar-alien, a reception question on demo-sound tells, an edition note. Rejected: a study chapter on synthesis history.
+Tools: readwright 0.56.0 (PR #103): `read --at-para/--offset` with `--max-words` printed nothing (word cap applied before the start, L-075); the big-section note now points at `read --section N --headings`, plus a distilling tip. CI green before merge on both; both installed. No everscout code change needed.
+Slips: the toc outline stopped at the parts (PDF bookmarks), worked around with read --headings, now suggested by the tool.
+Next: pick by the rule.

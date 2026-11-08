@@ -79,6 +79,8 @@ Add a new version as its own line when people argue about the difference; otherw
 - pitch-variation: pitch variation, pitch randomization, random pitch
 - convolution: convolution, impulse response
 - granular: granular, granular synthesis
+- munchkinisation: munchkinisation, munchkinization, chipmunk effect
+- familiar-alien: familiar plus alien, alien layer, hybrid layer
 - stick-slip: stick-slip, stick slip
 - blade-pass: blade pass, blade-pass frequency
 - poisson-timing: Poisson timing, Poisson process

@@ -69,3 +69,4 @@ Two or three seeds from different categories. Name the sound or moment you mean.
 - [reception] What feedback from players or the director changed the sound?
 - [reception] Which sound did players or viewers complain about, and was the cause its level or what it meant?
 - [reception] Which overused sound do you most try to avoid?
+- [reception] Which demo-sounding move (heavy reverb, auto-pan, a resonant sweep, wide echoes) did you strip from a library or generated sound before it sat in the mix?
