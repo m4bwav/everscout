@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`.
 
+### C-20261107-4 · 2026-11-07 · lit ingest refuses a recent row older than the window
+- because: T-20261107-25 (EvoMUSART 2019 went into recent; beat-check warned only after the beats PR, and the row had to be moved by hand)
+- files: scripts/everscout.py (`cmd_lit_ingest`); 1 test; also resynced the drifted references/kb/literature.md copy. Plugin 0.12.18.
+
 ### C-20261107-3 · 2026-11-07 · lit pick skips a lead another beat distilled
 - because: T-20261107-22 (The Computer Music Tutorial listed as an ai-sfx lead read elsewhere after ai-music distilled it)
 - files: scripts/everscout.py (`cmd_lit_pick`); 1 test. Plugin 0.12.15.
