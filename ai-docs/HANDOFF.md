@@ -1,6 +1,6 @@
 # Handoff
 
-Updated 2026-11-07 (chain session 5, book 2 DONE: Beck, Tidy First? into multi-agent-grind, T-20261107-33; grindwright 0.3.18 (crew.md structure and behaviour apart), readwright 0.69.1 (--chapter brings unnumbered subsections), both installed; no everscout code changes. Book 1: Bilbao into ai-sfx, T-20261107-32. Next candidate: `lit pick`; Modern Software Engineering (Farley) or TDD by Example for multi-agent-grind, or a thinner beat.)
+Updated 2026-11-07 (chain session 5, book 3 DONE: Beck, Test-Driven Development: By Example into multi-agent-grind, T-20261107-34; grindwright 0.3.19 (crew.md isolated tests, failing test first, test list), readwright 0.70.0 (--drop-repeated cuts 8-word runs recurring on many pages: an overprinted blurb), both installed; no everscout code changes. Book 2: Beck, Tidy First?, T-20261107-33; book 1: Bilbao into ai-sfx, T-20261107-32. Open readwright item: letter-interleaved text where an overprinted layer overlaps page glyphs (TDD by Example PDF rip) cannot be undone by a text pass; OCR is the only route. Next candidate: `lit pick`; Modern Software Engineering (Farley) or Refactoring for multi-agent-grind, or a book for another beat.)
 
 
 ## 0.10.0 (2026-11-02): Discord through the user's own bot
