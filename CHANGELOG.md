@@ -2,6 +2,10 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.12.23 · 2026-11-08
+
+- `lit ingest` prints the top level of a long outline (chapters and parts, subsections hidden) instead of its first 45 lines, which covered only chapters 1 and 2 of the 313-section Unity 2022 by Example.
+
 ## 0.12.22 · 2026-11-07
 
 - `tally` skips book notes (platform book): a distilled book tags the vocab it names, which counted as community signal (the Google note added provider google).
