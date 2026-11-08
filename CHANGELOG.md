@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.12.12 · 2026-11-07
+
+- `lit pick`: the "read elsewhere, still `lead`" rows now print before the unread file list; after 389 unread files they sat at the very end and `| head` hid them (Pirkle run).
+- ai-sfx distils Pirkle, *Designing Audio Effect Plugins in C++* (2nd ed.): echo-density, look-ahead, oversampling and zipper-noise vocab, one maker question on oversampling and look-ahead; sfxwright 0.1.17.
+
 ## 0.12.11 · 2026-11-07
 
 - `lit distill`: the applied count left out `note` rows while the parenthesis counted them ("3 changes applied (1 written into the note)" for 4); it now counts every applied row and also says how many were rejected.

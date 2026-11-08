@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.12.11"
+VERSION = "0.12.12"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3934,15 +3934,8 @@ def cmd_lit_pick(a):
     if a.json:
         print(json.dumps(out, indent=1))
         return
-    for r in out:
-        if r["maybe_read"] and not a.all:
-            continue
-        tag = "; ".join(f"{l['beat']} {l['tier']} {l['status']}" for l in r["listed"])
-        print(r["file"] + (f"   [{tag}]" if tag else "") + (f"   (maybe read: '{r['maybe_read']}' in the read index)" if r["maybe_read"] else ""))
-    maybe = sum(1 for r in out if r["maybe_read"])
-    print(f"{len(out) - maybe} unread ({sum(1 for r in out if r['listed'] and not r['maybe_read'])} listed by a beat), "
-          f"{maybe} maybe read elsewhere{'' if a.all else ' (--all shows them)'}; check the topic fits a beat before ingesting")
-    files = [(n, f" {lit_file_key(os.path.basename(n))} ") for n in lit_book_files(folder)]
+    # beat rows read elsewhere come first: printed after hundreds of unread files, `| head` hid them (Pirkle run, 2026-11-07)
+    files = [(n, f" {lit_file_key(os.path.basename(n))} ") for n in lit_book_files(folder)] if stale else []
     for slug, tier, status, title, src in stale:
         # name the file to ingest: "The.MIT.Press.Game.Sound...pdf" holds "Game Sound" though no author is in its name (2026-11-07)
         t = lit_norm_title(title)
@@ -3951,6 +3944,14 @@ def cmd_lit_pick(a):
         where = (f"file: {match[0]}" if len(match) == 1 else
                  f"{len(match)} files hold the title: " + "; ".join(match[:3]) + ("; ..." if len(match) > 3 else "") if match else "no file found")
         print(f"read elsewhere, still `{status}` in {slug} {tier}: {title} (in {src}; distil it from that read, or ingest the file; {where})")
+    for r in out:
+        if r["maybe_read"] and not a.all:
+            continue
+        tag = "; ".join(f"{l['beat']} {l['tier']} {l['status']}" for l in r["listed"])
+        print(r["file"] + (f"   [{tag}]" if tag else "") + (f"   (maybe read: '{r['maybe_read']}' in the read index)" if r["maybe_read"] else ""))
+    maybe = sum(1 for r in out if r["maybe_read"])
+    print(f"{len(out) - maybe} unread ({sum(1 for r in out if r['listed'] and not r['maybe_read'])} listed by a beat), "
+          f"{maybe} maybe read elsewhere{'' if a.all else ' (--all shows them)'}; check the topic fits a beat before ingesting")
 
 
 def lit_book_files(folder, depth=2):
