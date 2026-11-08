@@ -1,6 +1,6 @@
 # Handoff
 
-Updated 2026-11-07 (chain session: five books via one subagent each, T-20261107-13 to -17; sfxwright 0.1.15, readwright 0.55.0, everscout 0.12.11, musicwright 0.1.24, all installed. Open: trigger evals, Judgment-call recheck, canon sizes for ai-sfx, ai-voice, tech-hiring, session-start evergreen items. Only ai-sfx rows are left to read elsewhere; a non-sfx book needs Mark to add one to the folder. Next: Sound Synthesis and Sampling).
+Updated 2026-11-07 (chain book: Sound Synthesis and Sampling into ai-sfx, T-20261107-18; sfxwright 0.1.16, readwright 0.56.0, both installed. Open: trigger evals, Judgment-call recheck, canon sizes for ai-sfx, ai-voice, tech-hiring, session-start evergreen items. Next: pick by the rule (lit pick; remaining read-elsewhere rows are ai-sfx, e.g. Designing Audio Effect Plugins in C++); a non-sfx book needs Mark to add one to the folder).
 
 
 ## 0.10.0 (2026-11-02): Discord through the user's own bot
