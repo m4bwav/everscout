@@ -21,6 +21,7 @@ The most important books of all time for this subject (yearly recheck).
 | Electronic and Experimental Music | Thom Holmes | 2002 | OL20018328W | College history-of-electronic-music courses such as Foothill's MUS 11D list it as their text for the technology and composers of the field. | https://catalog.foothill.edu/course-outlines/MUS-11D/MUS-11D.pdf | lead |
 | Making Music: 74 Creative Strategies for Electronic Music Producers | Dennis DeSantis | 2015 | OL19649956W | A roundup of expert music-production reading lists ranks it first, and reviews in Tape Op and Attack treat it as the key book on the producer's creative process. | https://mostrecommendedbooks.com/lists/best-music-production-books | distilled |
 | Mixing Secrets for the Small Studio | Mike Senior | 2018 | OL16938034W | Compiled expert reading lists rank it among the top music-production books, and it is the usual mixing recommendation for home-studio producers. | https://mostrecommendedbooks.com/lists/best-music-production-books | distilled |
+| Make: Analog Synthesizers | Ray Wilson | 2013 |  | A 2013 Maker Media build book by the founder of Music From Outer Space that explains VCOs, filters, envelopes and LFOs from the circuit up; rests on reader reviews and Synthtopia coverage, one kind of evidence, kept because no beat book explains the analog voice behind the scene's synth texture. | https://synthtopia.com/?p=49659 https://www.goodreads.com/book/show/16144497 | distilled |
 
 ## Recent
 
