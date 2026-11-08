@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.12.22"
+VERSION = "0.12.24"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3996,6 +3996,10 @@ def cmd_lit_pick(a):
         # or a slug that dropped the small words ("procedural-3d-modeling-geometry-blender" for "Procedural 3D Modeling Using Geometry Nodes in Blender")
         maybe = maybe or lit_gapped_title_hit(words, elsewhere_lines)
         out.append({"file": name, "listed": [{"beat": h[2], "tier": h[3], "status": h[4]} for h in hits], "maybe_read": maybe})
+    # --match: only files whose path fits a pattern, so a beat's topic can be swept without grepping 400 lines (Fowler run, 2026-11-08)
+    if a.match:
+        rx = re.compile(a.match, re.I)
+        out = [r for r in out if rx.search(r["file"])]
     out.sort(key=lambda r: (bool(r["maybe_read"]), not r["listed"], r["file"].lower()))
     if a.json:
         print(json.dumps(out, indent=1))
@@ -4388,6 +4392,7 @@ def main(argv=None):
     q.add_argument("--all", action="store_true", help="also list books that are maybe read elsewhere")
     q.add_argument("--expand", action="store_true", help="list every file of a folder with many unlisted files (one line each by default)")
     q.add_argument("--read-index", action="append", help="a file or folder of .md files recording books read elsewhere; a book whose file name appears there counts as read; FOLDER@REF reads a git checkout's folder at that ref (repeatable; config books_read_index)")
+    q.add_argument("--match", help="only files whose path matches this regular expression, case-insensitive (several topics: 'refactor|testing|agent')")
     q.add_argument("--json", action="store_true")
     q = lsp.add_parser("lint", help="check a book's learnings.md: citations, quote length, change targets"); q.add_argument("book"); q.add_argument("--beat")
     q = lsp.add_parser("distill", help="finish a book: a `book` note for recall, the row set to distilled"); q.add_argument("book"); q.add_argument("--beat")

@@ -2038,6 +2038,17 @@ class LiteratureTests(WorkspaceTest):
         _, out, _ = self.run_cli("lit", "pick", "--dir", folder, "--expand")
         self.assertIn("Issue 03", out)
 
+    def test_pick_match_filters_by_path(self):   # Fowler run: 406 unread lines grepped by hand
+        folder = os.path.join(self.tmp, "shelf")
+        os.makedirs(folder)
+        for n in ("Refactoring Second Edition.epub", "Bookkeeping Basics.pdf", "Software Testing Craft.pdf"):
+            open(os.path.join(folder, n), "w").write("x")
+        code, out, _ = self.run_cli("lit", "pick", "--dir", folder, "--match", "REFACTOR|testing")
+        self.assertEqual(code, 0, out)
+        self.assertIn("Refactoring Second Edition.epub", out)
+        self.assertIn("Software Testing Craft.pdf", out)
+        self.assertNotIn("Bookkeeping", out)
+
     def test_pick_hides_side_files_of_a_read_book(self):
         folder = os.path.join(self.tmp, "shelf")
         side = os.path.join(folder, "Ann Writer - The Classic Craft Book (1990)")
