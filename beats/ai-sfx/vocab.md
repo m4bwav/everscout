@@ -82,6 +82,10 @@ Add a new version as its own line when people argue about the difference; otherw
 - munchkinisation: munchkinisation, munchkinization, chipmunk effect
 - familiar-alien: familiar plus alien, alien layer, hybrid layer
 - stick-slip: stick-slip, stick slip
+- echo-density: echo density, modal density, flutter echo, Schroeder reverberator
+- look-ahead: look-ahead, lookahead, preview
+- oversampling: oversampling, aliasing, alias foldover
+- zipper-noise: zipper noise, parameter smoothing
 - blade-pass: blade pass, blade-pass frequency
 - poisson-timing: Poisson timing, Poisson process
 - bubble-resonance: Minnaert, bubble resonance

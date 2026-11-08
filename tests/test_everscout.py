@@ -2084,6 +2084,10 @@ class LiteratureTests(WorkspaceTest):
         self.assertEqual(code, 0, out)
         self.assertIn("read elsewhere, still `lead`", out)
         self.assertIn("file: " + name, out)
+        # before the unread list, so `| head` shows it (Pirkle run, 2026-11-07)
+        open(os.path.join(folder, "Aaa Unrelated Book.epub"), "w").write("x")
+        out = self.run_cli("lit", "pick", "--dir", folder, "--read-index", idx)[1]
+        self.assertLess(out.index("read elsewhere, still"), out.index("Aaa Unrelated Book.epub"))
 
     def test_pick_names_every_file_holding_the_title(self):   # Roads: "2 files hold the title" named neither 2026-11-07
         self.add("--tier", "canon", "--title", "Game Sound", "--authors", "Karen Collins", "--year", "2008", "--id", "OL1W",

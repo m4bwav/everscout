@@ -53,6 +53,7 @@ Two or three seeds from different categories. Name the sound or moment you mean.
 - [ai, tools] How many seeds did you run before keeping one?
 - [ai, craft] What did you do to the raw output after generating it?
 - [ai, craft] Which sounds does the model still get wrong for you?
+- [ai, craft] When you saturate or hard-limit a generated or scripted sound, do you oversample or look ahead, and can you hear the difference?
 - [ai, tools] What settings did you end on, and what did each one change?
 - [ai, tools] How long does one batch take on your hardware?
 
