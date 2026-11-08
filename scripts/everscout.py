@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.12.12"
+VERSION = "0.12.13"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3899,6 +3899,10 @@ def cmd_lit_pick(a):
         near = [padded[max(0, m.start() - 150):m.end() + 150] for m in re.finditer(re.escape(f" {t} "), padded)]
         if len(t.split()) <= 2 and not any(f" {n} " in w for w in near for n in names):
             continue
+        # every hit sits inside a longer title a beat has read ("Unity Game Audio Implementation" holds "Game Audio Implementation"; Holman run, 2026-11-07)
+        longer = [rt for rt in read_titles if rt != t and f" {t} " in f" {rt} "]
+        if longer and padded.count(f" {t} ") <= sum(padded.count(f" {rt} ") for rt in longer):
+            continue
         src = next((os.path.basename(p) for p, text in idx if f" {t} " in " " + re.sub(r"[^a-z0-9]+", " ", text.lower()) + " "), "")
         stale.append((slug, tier, status, title, src))
     out = []
@@ -3939,7 +3943,8 @@ def cmd_lit_pick(a):
     for slug, tier, status, title, src in stale:
         # name the file to ingest: "The.MIT.Press.Game.Sound...pdf" holds "Game Sound" though no author is in its name (2026-11-07)
         t = lit_norm_title(title)
-        match = [n for n, k in files if f" {t} " in k]
+        longer = [rt for rt in read_titles if rt != t and f" {t} " in f" {rt} "]
+        match = [n for n, k in files if f" {t} " in k and not any(f" {rt} " in k for rt in longer)]
         # several files: name them all (up to 3), a bare count sent Roads' run looking (2026-11-07)
         where = (f"file: {match[0]}" if len(match) == 1 else
                  f"{len(match)} files hold the title: " + "; ".join(match[:3]) + ("; ..." if len(match) > 3 else "") if match else "no file found")

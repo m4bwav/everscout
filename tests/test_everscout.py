@@ -2102,6 +2102,21 @@ class LiteratureTests(WorkspaceTest):
         self.assertEqual(code, 0, out)
         self.assertIn("2 files hold the title: Game Sound - Collins.epub; Game Sound - Collins.pdf", out)
 
+    def test_pick_skips_a_title_inside_a_longer_read_title(self):   # Stevens' Game Audio Implementation matched Coggan's Unity book 2026-11-07
+        self.add("--tier", "canon", "--title", "Game Audio Implementation", "--authors", "Richard Stevens", "--year", "2016", "--id", "OL1W",
+                 "--why", "w", "--evidence", "https://example.org/s")
+        bd = os.path.join(E.data_dir(self.cfg(), "test-beat"), "books", "unity-game-audio-implementation")
+        os.makedirs(bd)
+        open(os.path.join(bd, "book.md"), "w", encoding="utf-8").write("---\ntitle: Unity Game Audio Implementation\nkind: book\n---\n")
+        folder, idx = os.path.join(self.tmp, "shelf"), os.path.join(self.tmp, "notes")
+        os.makedirs(folder)
+        os.makedirs(idx)
+        open(os.path.join(idx, "game.md"), "w", encoding="utf-8").write("Coggan, *Unity Game Audio Implementation* (2022)\n")
+        open(os.path.join(folder, "Unity Game Audio Implementation - Coggan.pdf"), "w").write("x")
+        code, out, _ = self.run_cli("lit", "pick", "--dir", folder, "--read-index", idx)
+        self.assertEqual(code, 0, out)
+        self.assertNotIn("read elsewhere, still", out)
+
     def test_pick_ignores_reading_lists(self):   # Krug, Don't Make Me Think, was "read elsewhere" from a reading list 2026-11-02
         self.add("--tier", "canon", "--title", "Dont Make Me Think", "--authors", "Steve Krug", "--year", "2000", "--id", "OL1W",
                  "--why", "w", "--evidence", "https://example.org/s")
