@@ -1946,6 +1946,21 @@ class LiteratureTests(WorkspaceTest):
         with open(E.__file__, encoding="utf-8") as f:
             self.assertNotIn('in f" {elsewhere_keys} "', f.read())
 
+    def test_pick_collapses_a_folder_of_many_files(self):   # Dooley run: a magazine run filled 387 lines
+        folder = os.path.join(self.tmp, "shelf")
+        mags = os.path.join(folder, "Some Magazine")
+        os.makedirs(mags)
+        for i in range(8):
+            open(os.path.join(mags, f"Issue {i:02d} Spring.pdf"), "w").write("x")
+        open(os.path.join(folder, "Fresh Title.epub"), "w").write("x")
+        code, out, _ = self.run_cli("lit", "pick", "--dir", folder)
+        self.assertEqual(code, 0, out)
+        self.assertIn("Some Magazine/   (8 files", out)
+        self.assertNotIn("Issue 03", out)
+        self.assertIn("Fresh Title.epub", out)
+        _, out, _ = self.run_cli("lit", "pick", "--dir", folder, "--expand")
+        self.assertIn("Issue 03", out)
+
     def test_pick_hides_side_files_of_a_read_book(self):
         folder = os.path.join(self.tmp, "shelf")
         side = os.path.join(folder, "Ann Writer - The Classic Craft Book (1990)")
