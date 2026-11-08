@@ -134,6 +134,9 @@ Add a new version as its own line when people argue about the difference; otherw
 - topping-production: topping production, top production
 - sync-sweet-spot: sweet spot, sync sweet spot, hang it as a unit
 - character-signifier: character signifier, signature sound, sound leitmotif
+- predub: predub, predubbing, premix pass
+- p-fx: P-FX, production effects, PFX
+- show-kit: show kit, sound palette
 
 ## Topics
 

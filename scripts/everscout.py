@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.12.13"
+VERSION = "0.12.14"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3756,6 +3756,11 @@ def cmd_lit_ingest(a):
                 info = p.stdout
             else:
                 toc = p.stdout
+        if "--chapters" in toc and "toc FILE --chapters" in toc:
+            # a scan read one page per section: keep readwright's chapter map in toc.txt, not just 600 page rows
+            p = subprocess.run([sys.executable, rw, "toc", path, "--chapters"], capture_output=True, text=True, encoding="utf-8", errors="replace")
+            if p.returncode == 0 and p.stdout.strip():
+                toc = "## chapters (rw.py toc --chapters)\n\n" + p.stdout.strip() + "\n\n## pages\n\n" + toc
     else:
         note("readwright not found (github.com/m4bwav/readwright, or set EVERSCOUT_READWRIGHT): outline the book with your own reader")
     m = re.search(r"^words:\s*(\d+)\s*$", info, re.M)

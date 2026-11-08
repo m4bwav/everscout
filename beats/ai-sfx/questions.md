@@ -28,6 +28,7 @@ Two or three seeds from different categories. Name the sound or moment you mean.
 - [process] When did a familiar wrong sound beat an accurate one, and did generated audio change that?
 - [process] For a burst or automatic sound, did you build it from single hits, and how did you set their spacing and overlap?
 - [process] Which of your sounds must a player hear to play well, and what replaces them when the game is muted?
+- [process] Do you build a show kit of premixed recurring sounds before cutting, and what goes in it?
 - [process] How did you line the steps up with the picture: shift the whole run, or snap every hit to its frame, and did snapping make the walk feel mechanical?
 
 ## Variation and sets
