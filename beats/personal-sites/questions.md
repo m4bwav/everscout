@@ -75,3 +75,7 @@ Two to four seeds from at least two categories. Lead with a short, specific than
 
 - [layout] What did you settle first on your page, the body text or the layout, and what changed when you tried the other order?
 - [layout] Your resume page: one page or two, and did anyone comment on it?
+
+## Hierarchy
+
+- [layout] How many ways do your headings, links and captions differ from body text (size, weight, colour, place), and did cutting one make the page clearer?

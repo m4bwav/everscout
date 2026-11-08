@@ -1717,6 +1717,10 @@ class LiteratureTests(WorkspaceTest):
         with mock.patch.object(E, "find_readwright", return_value=None):
             code, out, err = self.run_cli("lit", "ingest", book, "--beat", "test-beat", "--title", "Shelf Book", "--tier", "recent")
             self.assertNotEqual(code, 0)
+            code, out, err = self.run_cli("lit", "ingest", book, "--beat", "test-beat", "--title", "Shelf Book", "--tier", "canon",
+                                          "--why", "Judgment call: fits Q1", "--evidence", "https://example.org/b")
+            self.assertNotEqual(code, 0)   # Samara's Typography Workbook came in with no year
+            self.assertIn("--year", err + out)
             code, out, err = self.run_cli("lit", "ingest", book, "--beat", "test-beat", "--title", "Shelf Book", "--tier", "recent",
                                           "--why", "Judgment call: fits Q1", "--evidence", "https://example.org/b", "--year", "2017")
             self.assertNotEqual(code, 0)   # EvoMUSART 2019 went into recent and beat-check warned after the merge
