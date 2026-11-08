@@ -12,6 +12,7 @@ showcase_words: [i made, we made, i built, sound pack, comparison, side by side,
 skip_words: [megathread, weekly thread, daily discussion, hiring, giveaway, discount code, promo code, referral, for hire]
 asked_words: [which model, what model, best sfx, sound effect generator, how do i make, sounds thin, sounds muddy, commercial use, what license, royalty free]
 mute_words: [promo code, discount code, affiliate, referral link, free credits, soundboard, rizz, meme sounds, voice changer]
+feeds: [sfxwright:sfxwright]
 note_sections: [What it is, How it was made, Reception and interest, Why it matters, Questions this raises]
 ---
 

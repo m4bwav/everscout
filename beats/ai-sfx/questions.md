@@ -15,6 +15,7 @@ Two or three seeds from different categories. Name the sound or moment you mean.
 - [process] Did you judge this sound alone or against the picture, and did the picture change your choice?
 - [process] How much friction or grit did you leave in, and did taking it out make the sound feel fake or cleaner?
 - [process] What did you cut last, and why did it go?
+- [process] In what order did your effects run, and what changed when you swapped two of them?
 - [process] How do you decide when a sound is finished?
 - [process] What sounded right in the editor and wrong once it was in the game?
 - [process] Where is your listener, on the camera or the character, and what did that change in the sounds you made?

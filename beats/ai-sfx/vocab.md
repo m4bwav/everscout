@@ -78,6 +78,8 @@ Add a new version as its own line when people argue about the difference; otherw
 - round-robin: round robin, round-robin, variation set, machine gun, machine-gunning
 - pitch-variation: pitch variation, pitch randomization, random pitch
 - convolution: convolution, impulse response
+- serial-chain: serial chain, effects chain, fx chain, insert chain, effect order
+- parallel-processing: parallel processing, parallel compression, parallel chain, wet/dry blend, new york compression
 - granular: granular, granular synthesis
 - munchkinisation: munchkinisation, munchkinization, chipmunk effect
 - familiar-alien: familiar plus alien, alien layer, hybrid layer
