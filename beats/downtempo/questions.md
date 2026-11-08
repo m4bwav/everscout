@@ -23,6 +23,8 @@ One observation about the sound, then one or two questions. Producers answer gea
 - [sound] How did you get that tape or vinyl warmth, a plugin chain or real tape?
 - [sound] What's on the drum bus?
 - [sound] Which reverb is giving it that space?
+- [sound] Is that pad one oscillator with slow pulse-width modulation, or two detuned ones?
+- [sound] What is moving the filter on that part: an envelope, a slow LFO, or your hand on the knob?
 
 ## Mixing
 

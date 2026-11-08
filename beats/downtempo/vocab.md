@@ -100,6 +100,7 @@ Short names collide with ordinary words ("Air", "Lamb", "Stone", "Om"), so their
 - rc-20: RC-20, RC20, Retro Color
 - valhalla: Valhalla, VintageVerb, Supermassive, ValhallaDSP
 - vital: Vital synth, Vital by Matt Tytel
+- modular-synth: modular synth, modular synthesizer, Eurorack, ARP 2600, Minimoog
 - serum: Serum
 - omnisphere: Omnisphere, Spectrasonics Omnisphere
 - casio-cz-101: Casio CZ-101, CZ-101, CZ101, CZ 101
@@ -156,6 +157,11 @@ Short names collide with ordinary words ("Air", "Lamb", "Stone", "Om"), so their
 - polyrhythmic-loops: polyrhythmic loops, polyrhythmic loop, asynchronous loops, odd-length loop
 - tresillo: tresillo, 3+3+2, 3-3-2 rhythm
 - ghost-notes: ghost notes, ghost note
+- pulse-width-modulation: pulse width modulation, pulse-width modulation, PWM pad
+- filter-resonance: resonant filter, filter resonance, filter sweep, self-oscillating filter
+- sample-and-hold: sample and hold, sample & hold, stepped random modulation
+- ring-modulation: ring modulator, ring modulation, ring mod
+- oscillator-sync: hard sync, oscillator sync, osc sync
 
 ## Notes
 
