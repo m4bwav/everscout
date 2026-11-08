@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.12.19"
+VERSION = "0.12.20"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3834,10 +3834,18 @@ def cmd_lit_ingest(a):
         write(lit_path(b), lit_render(b, meta, tiers, searches))
     print(f"book folder {d}")
     print(f"  learnings.md to fill; toc.txt {'written' if toc else 'not written'}; list row {(f'added to {tier}, reading' if added else 'set to reading' if was in ('lead', 'have') else f'stays {was}') if row else 'not found (pass --tier, --why and --evidence to add it at ingest, or lit add it; the new row links to this folder and reads reading)'}")
+    if toc:   # the skill says "read the outline it prints"; runs used to open toc.txt in a second call (Zizza, 2026-11-07)
+        lines = [ln for ln in toc.splitlines() if ln.strip()]
+        print("outline:")
+        for ln in lines[:LIT_OUTLINE_LINES]:
+            print(f"  {ln}")
+        if len(lines) > LIT_OUTLINE_LINES:
+            print(f"  ... {len(lines) - LIT_OUTLINE_LINES} more lines in toc.txt")
     if rw:
         print(f"  read sections with: python {rw} read \"{path}\" --section N   (search: grep \"{path}\" PATTERN)")
 
 
+LIT_OUTLINE_LINES = 45
 LIT_BOOK_EXTS = (".pdf", ".epub", ".mobi", ".azw3", ".azw", ".djvu", ".txt")
 
 

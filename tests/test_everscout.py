@@ -1780,6 +1780,25 @@ class LiteratureTests(WorkspaceTest):
         self.assertTrue(toc.startswith("## chapters"))
         self.assertIn("Chapter 1: Mixing", toc)
         self.assertIn("page 1: X", toc)
+        self.assertIn("outline:", out)   # printed, so no second call to open toc.txt
+        self.assertIn("Chapter 1: Mixing", out)
+
+    def test_ingest_outline_is_capped(self):
+        fake = os.path.join(self.tmp, "fake_rw.py")
+        open(fake, "w", encoding="utf-8").write(
+            "import sys\n"
+            "a = sys.argv[1:]\n"
+            "if a[0] == 'info': print('words: 50000')\n"
+            "else:\n"
+            "    for i in range(100): print(f'  {i}. Section {i}  (5 w)')\n")
+        book = os.path.join(self.tmp, "Long Book.txt")
+        open(book, "w", encoding="utf-8").write("Text.\n")
+        with mock.patch.object(E, "find_readwright", return_value=fake):
+            code, out, err = self.run_cli("lit", "ingest", book, "--beat", "test-beat")
+        self.assertEqual(code, 0, err)
+        self.assertIn("Section 0 ", out)
+        self.assertNotIn("Section 99 ", out)
+        self.assertIn("more lines in toc.txt", out)
 
     def test_ingest_lint_distill(self):
         self.add("--tier", "canon", "--title", "The Classic", "--year", "1990", "--id", "OL9W", "--why", "w", "--evidence", "https://example.org/s")

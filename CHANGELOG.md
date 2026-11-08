@@ -2,6 +2,10 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.12.20 · 2026-11-07
+
+- `lit ingest` prints the outline (up to 45 lines, the rest in toc.txt), as the skill says it does; runs had opened toc.txt in a second call (Zizza run).
+
 ## 0.12.19 · 2026-11-07
 
 - `lit ingest --tier` refuses a new row without `--year` (Samara's Typography Workbook came in with no year and `lit check` warned after distill).

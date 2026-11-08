@@ -137,6 +137,8 @@ Add a new version as its own line when people argue about the difference; otherw
 - predub: predub, predubbing, premix pass
 - p-fx: P-FX, production effects, PFX
 - show-kit: show kit, sound palette
+- audio-asset-list: audio asset list, sound list, asset tracker, audio spreadsheet
+- tuned-pickup: tuned pickup, pickup in key, musical pickup sound
 
 ## Topics
 
