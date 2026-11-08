@@ -35,6 +35,7 @@ The books of this beat, in three tiers (`kb/literature.md`). AI sound effects ha
 | Power Tools for Synthesizer Programming | Jim Aikin | 2004 | isbn:9780879307738 | Plain guide to each synth stage, for procedural recipes and shaping; one kind of evidence, a second edition in 2015 showing endurance, kept because no syllabus turned up and its effects use is inference. | https://www.allbookstores.com/Power-Tools-For-Synthesizer-Programming/9781480397941 | distilled |
 | Sound Design for the Stage | Gareth Fry | 2019 | isbn:9781785005534 | User's copy; a working designer on when a sound belongs in a story, from a theatre series the National Theatre's shop stocks; one kind of evidence, kept for the rare focus on deciding over gear. | https://shop.nationaltheatre.org.uk/products/sound-design-for-the-stage | distilled |
 | The Audio Effects Workshop | Geoffrey Francis | 2011 |  | User's copy. Effects-by-effect craft (EQ, gates, compression, delay, reverb, modulation) behind scripted SFX edits and layering. | https://wob.com/en-us/books/geoffrey-francis/the-audio-effects-workshop/9781435456143 | distilled |
+| Numerical Sound Synthesis | Stefan Bilbao | 2009 |  | Standard text on finite-difference physical models of strings, bars, plates and membranes; basis for procedural impact and resonance recipes. | https://www.wiley.com/en-us/Numerical+Sound+Synthesis%3A+Finite+Difference+Schemes+and+Simulation+in+Musical+Acoustics-p-9780470510469 | distilled |
 
 ## Recent
 
