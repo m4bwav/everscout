@@ -976,3 +976,10 @@ Named by the main session: personal-sites had few recent books and none teaching
 ## [2026-11-07] library | chain session 3 summary
 
 Five books, one subagent each in turn (T-20261107-22 Lanham game audio, -23 Dooley, -24 Pezze & Young, -25 EvoMUSART 2019, -26 Samara). Stopped at the five-book cap. Releases: everscout 0.12.15-0.12.19, readwright 0.60.0-0.64.0 (distilling section moved to references/distilling.md), sfxwright 0.1.20, grindwright 0.3.6-0.3.7, sitewright 0.8.2; all installed. Steps 2 and 4 (Judgment-call recheck, trigger evals) not done this session.
+
+## [2026-11-07] library | chain session 4, book 1: Zizza, Game Audio Fundamentals into ai-sfx (T-20261107-27)
+
+Named by the main session (HANDOFF next candidate); not in any beat's DATA/books or the plugin-learnings INDEX. Focal Press 2023, Keith Zizza (WPI instructor, SEGA, EA, Ubisoft credits); row added to recent at ingest. Read ch. 8 and the ch. 11 time-estimate part, grepped ch. 8, 11-13, about 9k of 99k words. 10 principles; 4 changes applied: sfxwright 0.1.21 (PR m4bwav/sfxwright#26, plan.md: key-tuned pickups and UI, overlap limits, priority as cut order, estimate vs actual), vocab audio-asset-list and tuned-pickup, a process question, edition note. Rejected: mix order on headphones then monitors (general mixing). None controversial.
+Tools: everscout 0.12.20 (`lit ingest` prints the outline it promised, with a test); readwright 0.65.0 (PR m4bwav/readwright#113: tracked-out table text such as `l a s e r_ 0 2 .w av` is rejoined, L-080, with tests; distilling tip for broad intro textbooks and chapter-only bookmarks). CI watched green on sfxwright and readwright; everscout local tests pass. All installed.
+Slips: a heredoc with doubled backslashes was refused by the hook (used Edit). `read --headings` finds nothing in a PDF bookmarked only at chapter level; grep plus `--offset` worked.
+Next: Leadership for Introverts (tech-hiring) by the rule.

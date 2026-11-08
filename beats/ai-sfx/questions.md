@@ -30,6 +30,7 @@ Two or three seeds from different categories. Name the sound or moment you mean.
 - [process] Which of your sounds must a player hear to play well, and what replaces them when the game is muted?
 - [process] Do you build a show kit of premixed recurring sounds before cutting, and what goes in it?
 - [process] How did you line the steps up with the picture: shift the whole run, or snap every hit to its frame, and did snapping make the walk feel mechanical?
+- [process] Do you tune pickup and UI sounds to the key of the score, and does the game swap them when the music changes key?
 
 ## Variation and sets
 

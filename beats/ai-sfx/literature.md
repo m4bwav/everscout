@@ -44,6 +44,7 @@ The books of this beat, in three tiers (`kb/literature.md`). AI sound effects ha
 | Game Audio Programming 4 | Guy Somberg (ed.) | 2024 | - | Runtime audio techniques; lower value after volume 5. | https://www.routledge.com/Game-Audio-Programming-4-Principles-and-Practices/Somberg/p/book/9781032361079 | lead |
 | Unity Game Audio Implementation | Andrew Coggan | 2022 | isbn:9780367517731 | Beginner project book; starting numbers for variation sets, loops and delivery. Not the Stevens and Raybould book. | https://www.routledge.com/Unity-Game-Audio-Implementation-A-Practical-Guide-for-Beginners/Coggan/p/book/9780367517731 | distilled |
 | Game Audio Development With Unity 5.x | Micheal Lanham | 2017 | - | Packt tutorial for Unity's audio mixer, adaptive audio and FMOD; the user's copy was on the shelf. | https://www.packtpub.com/en-us/product/game-audio-development-with-unity-5x-9781787286450 | distilled |
+| Game Audio Fundamentals | Keith Zizza | 2023 |  | Focal Press 2023 intro by a WPI game audio instructor with SEGA, EA and Ubisoft credits; one kind of evidence (publisher page, GameSoundCon director's blurb), kept as the newest whole-pipeline primer. | https://www.routledge.com/product/isbn/9781032111957 | distilled |
 
 ## Latest
 
