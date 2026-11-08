@@ -1,6 +1,6 @@
 # Handoff
 
-Updated 2026-11-07 (chain session 3, book 1: Lanham, Game Audio Development With Unity 5.x into ai-sfx, T-20261107-22; no beat lists a lead with a file left, so the main session named this shelf book. Releases: sfxwright 0.1.20, readwright 0.60.0, everscout 0.12.15, all installed. Fixed: `lit pick` skips a lead any beat has distilled (the ai-sfx Roads row is now `skip`). Open: trigger evals, Judgment-call recheck, canon sizes for ai-sfx, ai-voice, tech-hiring, session-start evergreen items. Next: every remaining unread file is off-list; pick the best fit for any beat by the rule and say why, or Mark names one).
+Updated 2026-11-07 (chain session 3, book 2: Dooley, Software Development, Design and Coding into multi-agent-grind, T-20261107-23; picked by the subagent as the beat with no books and the shelf book closest to its Q1 and Q4. Releases: grindwright 0.3.6, readwright 0.61.0, everscout 0.12.16, all installed. Fixed: `rw.py grep -q`; `lit pick` collapses big folders. Open: trigger evals, Judgment-call recheck, canon sizes for ai-sfx, ai-voice, tech-hiring, session-start evergreen items; `lit ingest` could take tier, why and evidence so a shelf book gets its row at ingest. Next: every remaining unread file is off-list; pick the best fit for any beat by the rule and say why (ai-voice and indie-game-marketing have the fewest books), or Mark names one).
 
 
 ## 0.10.0 (2026-11-02): Discord through the user's own bot

@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.12.15"
+VERSION = "0.12.16"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3864,6 +3864,9 @@ def lit_read_index(entries):
     return [(f, t) for f, t in out if not LIT_WISHLIST.search(os.path.basename(f))]
 
 
+LIT_PICK_GROUP = 5   # more unlisted files than this in one top folder print as one line
+
+
 def cmd_lit_pick(a):
     """Book files in a folder that no beat has read yet, the ones a beat's literature lists first."""
     cfg = config()
@@ -3957,8 +3960,24 @@ def cmd_lit_pick(a):
         where = (f"file: {match[0]}" if len(match) == 1 else
                  f"{len(match)} files hold the title: " + "; ".join(match[:3]) + ("; ..." if len(match) > 3 else "") if match else "no file found")
         print(f"read elsewhere, still `{status}` in {slug} {tier}: {title} (in {src}; distil it from that read, or ingest the file; {where})")
+    # a folder of many unlisted files (a magazine run, a course pack) prints as one line: 387 lines hid the
+    # few real candidates (Dooley run, 2026-11-07); --expand lists them all
+    groups = {}
+    if not getattr(a, "expand", False):
+        for r in out:
+            top = r["file"].replace(chr(92), "/").split("/")[0]
+            if "/" in r["file"].replace(chr(92), "/") and not r["listed"] and not (r["maybe_read"] and not a.all):
+                groups.setdefault(top, []).append(r)
+        groups = {k: v for k, v in groups.items() if len(v) > LIT_PICK_GROUP}
+    shown_groups = set()
     for r in out:
         if r["maybe_read"] and not a.all:
+            continue
+        top = r["file"].replace(chr(92), "/").split("/")[0]
+        if top in groups and r in groups[top]:
+            if top not in shown_groups:
+                shown_groups.add(top)
+                print(f"{top}/   ({len(groups[top])} files; --expand lists them)")
             continue
         tag = "; ".join(f"{l['beat']} {l['tier']} {l['status']}" for l in r["listed"])
         print(r["file"] + (f"   [{tag}]" if tag else "") + (f"   (maybe read: '{r['maybe_read']}' in the read index)" if r["maybe_read"] else ""))
@@ -4313,6 +4332,7 @@ def main(argv=None):
     q = lsp.add_parser("pick", help="book files in a folder no beat has read yet, beat-listed ones first")
     q.add_argument("--dir", help="folder of book files (default: config books_folder)")
     q.add_argument("--all", action="store_true", help="also list books that are maybe read elsewhere")
+    q.add_argument("--expand", action="store_true", help="list every file of a folder with many unlisted files (one line each by default)")
     q.add_argument("--read-index", action="append", help="a file or folder of .md files recording books read elsewhere; a book whose file name appears there counts as read; FOLDER@REF reads a git checkout's folder at that ref (repeatable; config books_read_index)")
     q.add_argument("--json", action="store_true")
     q = lsp.add_parser("lint", help="check a book's learnings.md: citations, quote length, change targets"); q.add_argument("book"); q.add_argument("--beat")

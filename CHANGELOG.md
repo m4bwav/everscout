@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.12.16 · 2026-11-07
+
+- `lit pick`: a top folder with more than five unlisted files (a magazine run, a collected works) prints as one line with its count; `--expand` lists them all. The shelf list went from 388 lines to 182.
+- multi-agent-grind distils its first book, Dooley, *Software Development, Design and Coding* (Apress 2017): Amdahl, WIP, lead time and pull vocab, three questions; grindwright 0.3.6 (crew sizing by serial share, pull rule, review-cap prior).
+
 ## 0.12.15 · 2026-11-07
 
 - `lit pick`: a beat row still `lead` or `have` for a book any beat has distilled (its title in a beat's `DATA/books`) is no longer shown as read elsewhere; The Computer Music Tutorial stopped showing as an ai-sfx lead after ai-music distilled it. The ai-sfx row is now `skip`, pointing at the ai-music note.
