@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.12.14"
+VERSION = "0.12.15"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3899,6 +3899,9 @@ def cmd_lit_pick(a):
     stale, padded = [], f" {elsewhere_keys} "
     for t, names, slug, tier, status, title in listed:
         if status not in ("lead", "have") or f" {t} " not in padded:
+            continue
+        # a beat has distilled this book already (another beat's row lags: Roads in ai-sfx after ai-music read it, 2026-11-07)
+        if t in read_titles:
             continue
         # a short title also needs an author's name close by, as for file names
         near = [padded[max(0, m.start() - 150):m.end() + 150] for m in re.finditer(re.escape(f" {t} "), padded)]

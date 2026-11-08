@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.12.15 · 2026-11-07
+
+- `lit pick`: a beat row still `lead` or `have` for a book any beat has distilled (its title in a beat's `DATA/books`) is no longer shown as read elsewhere; The Computer Music Tutorial stopped showing as an ai-sfx lead after ai-music distilled it. The ai-sfx row is now `skip`, pointing at the ai-music note.
+- ai-sfx distils Lanham, *Game Audio Development With Unity 5.x*: duck volume and ducking aliases, mixer-snapshot and vertical-remix vocab, one tools question on shared mixer returns; sfxwright 0.1.20.
+
 ## 0.12.14 · 2026-11-07
 
 - `lit ingest`: when readwright's toc says a scan read one page per section has Chapter N headings, the chapter map from `rw.py toc --chapters` is written at the top of `toc.txt`, above the page rows (Yewdall run).

@@ -40,9 +40,10 @@ The books of this beat, in three tiers (`kb/literature.md`). AI sound effects ha
 | title | authors | year | id | why | evidence | status |
 |---|---|---|---|---|---|---|
 | The Foley Grail | Vanessa Theme Ament | 2022 | - | Foley performance for film, games, animation. | https://www.routledge.com/The-Foley-Grail-The-Art-of-Performing-Sound-for-Film-Games-and-Animation/ThemeAment/p/book/9780367442248 | distilled |
-| The Computer Music Tutorial | Curtis Roads | 2023 | - | A synthesis reference including granular and concatenative. | https://www.penguinrandomhouse.com/books/716383/the-computer-music-tutorial-second-edition-by-curtis-roads/ | lead |
+| The Computer Music Tutorial | Curtis Roads | 2023 | - | A synthesis reference including granular and concatenative. Distilled in ai-music (2026-11-07); read its book note there. | https://www.penguinrandomhouse.com/books/716383/the-computer-music-tutorial-second-edition-by-curtis-roads/ | skip |
 | Game Audio Programming 4 | Guy Somberg (ed.) | 2024 | - | Runtime audio techniques; lower value after volume 5. | https://www.routledge.com/Game-Audio-Programming-4-Principles-and-Practices/Somberg/p/book/9781032361079 | lead |
 | Unity Game Audio Implementation | Andrew Coggan | 2022 | isbn:9780367517731 | Beginner project book; starting numbers for variation sets, loops and delivery. Not the Stevens and Raybould book. | https://www.routledge.com/Unity-Game-Audio-Implementation-A-Practical-Guide-for-Beginners/Coggan/p/book/9780367517731 | distilled |
+| Game Audio Development With Unity 5.x | Micheal Lanham | 2017 | - | Packt tutorial for Unity's audio mixer, adaptive audio and FMOD; the user's copy was on the shelf. | https://www.packtpub.com/en-us/product/game-audio-development-with-unity-5x-9781787286450 | distilled |
 
 ## Latest
 
