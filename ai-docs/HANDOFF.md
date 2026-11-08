@@ -1,6 +1,6 @@
 # Handoff
 
-Updated 2026-11-07 (chain session 5, book 1 DONE: Bilbao, Numerical Sound Synthesis (Wiley 2009) into ai-sfx, T-20261107-32; sfxwright 0.1.23 (modal strike and velocity), readwright 0.69.0 (production-file bookmark names replaced by chapter titles), both installed; no everscout code changes. Next candidate: Beginning Game Audio Programming (2003, dated DirectX; ai-sfx) only if nothing fits better; `lit pick` for another beat first.)
+Updated 2026-11-07 (chain session 5, book 2 DONE: Beck, Tidy First? into multi-agent-grind, T-20261107-33; grindwright 0.3.18 (crew.md structure and behaviour apart), readwright 0.69.1 (--chapter brings unnumbered subsections), both installed; no everscout code changes. Book 1: Bilbao into ai-sfx, T-20261107-32. Next candidate: `lit pick`; Modern Software Engineering (Farley) or TDD by Example for multi-agent-grind, or a thinner beat.)
 
 
 ## 0.10.0 (2026-11-02): Discord through the user's own bot
