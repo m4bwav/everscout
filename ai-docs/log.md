@@ -972,3 +972,7 @@ Picked by the subagent: multi-agent-grind just took two books, ai-voice and indi
 ## [2026-11-07] library | chain session 3, book 5: Samara, Typography Workbook into personal-sites (T-20261107-26)
 
 Named by the main session: personal-sites had few recent books and none teaching hierarchy through worked layouts. Read pp. 32-39, 60-65, 148-159 (about 9k of 75k words). 9 principles, 5 changes applied (sitewright 0.8.2 PR #20 x2, vocab, questions, note), 1 rejected (display type as images). Tool fixes: everscout 0.12.19 `lit ingest --tier` refuses a row without `--year` (the row came in yearless and `lit check` warned); readwright 0.64.0 moved the distilling tips to a reference file read on demand (hook flagged ~9.9k tokens per use) plus one tip on dated chapters. All released and installed.
+
+## [2026-11-07] library | chain session 3 summary
+
+Five books, one subagent each in turn (T-20261107-22 Lanham game audio, -23 Dooley, -24 Pezze & Young, -25 EvoMUSART 2019, -26 Samara). Stopped at the five-book cap. Releases: everscout 0.12.15-0.12.19, readwright 0.60.0-0.64.0 (distilling section moved to references/distilling.md), sfxwright 0.1.20, grindwright 0.3.6-0.3.7, sitewright 0.8.2; all installed. Steps 2 and 4 (Judgment-call recheck, trigger evals) not done this session.
