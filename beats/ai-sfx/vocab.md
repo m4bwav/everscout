@@ -145,3 +145,6 @@ Add a new version as its own line when people argue about the difference; otherw
 - ai-tells: AI artifacts, sounds AI, metallic, phasey, smeared transient
 - explosion-anatomy: concussion, trail-off, explosion debris, fireball layer
 - imaging-element: imaging element, stinger, sweeper, stab, power up, power down, swell, hit to whoosh, whoosh to hit, tape rewind
+- futz: futz, futzed, worldize, worldizing, telephone effect
+- scene-transition: prelap, J-cut, postlap, L-cut, hard cut, bang cut
+- stems: DM&E, M&E, premix, stem

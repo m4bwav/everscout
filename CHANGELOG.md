@@ -2,6 +2,12 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.12.13 · 2026-11-07
+
+- `lit pick`: a beat row whose title sits inside a longer title a beat has already read (Stevens and Raybould, *Game Audio Implementation*, inside Coggan, *Unity Game Audio Implementation*) is no longer shown as read elsewhere, and its file line no longer names the longer book's files (Holman run).
+- Root `plugin.json` version brought in line with `.claude-plugin/plugin.json` (it said 0.7.1).
+- ai-sfx distils Holman, *Sound for Film and Television* (3rd ed.): futz, scene-transition and stems vocab, one maker question on ambience across a picture cut; sfxwright 0.1.18.
+
 ## 0.12.12 · 2026-11-07
 
 - `lit pick`: the "read elsewhere, still `lead`" rows now print before the unread file list; after 389 unread files they sat at the very end and `| head` hid them (Pirkle run).
