@@ -100,7 +100,7 @@ Keep canonical ids stable: renaming one splits its history in the tallies. A new
 - promotion-criteria: promotion criteria, promotion process, promotion decision makers, promotion readiness plan
 - pay-audit: pay audit, salary transparency, pay equity review, pay gap
 
-## Quiet candidates (Miki 2019)
+## Quiet candidates (Miki 2019, Belknap 2018)
 
 - confidence-proxy: confidence as competence, looks confident, polished candidate, executive presence
 - dominance-bias: strong leader bias, too polite, too soft, can he go to war, loud candidate wins
@@ -108,6 +108,8 @@ Keep canonical ids stable: renaming one splits its history in the tallies. A new
 - personality-screen: personality profile screen, psychometric shortlist, introvert screened out, ideal leader profile
 - assessment-centre-bias: assessment centre, group exercise bias, think on your feet round, no preparation time
 - team-feedback-gap: no team input on promotion, upward feedback, reports never asked
+- after-round-input: written follow-up, send it later, late answer, answer by email after the interview
+- criteria-skew: rubric rewards talk, scored on live discussion, judged on group exercise
 
 ## Screening and channels
 

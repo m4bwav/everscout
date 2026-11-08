@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.12.20"
+VERSION = "0.12.21"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -3480,7 +3480,7 @@ def lit_problems(b, meta, tiers, searches, today_d=None):
             y = re.match(r"\d{4}", r["year"])
             if not y:
                 warns.append(f"{name}: no year")
-            elif cd and t == "recent" and int(y.group()) < cd.year - LIT_RECENT_YEARS:
+            elif cd and t == "recent" and int(y.group()) < cd.year - LIT_RECENT_YEARS and not lit_user_copy(r["why"]):
                 warns.append(f"{name}: {y.group()} is older than the recent window ({LIT_RECENT_YEARS} years); canon?")
             elif cd and t == "latest" and int(y.group()) < (cd - dt.timedelta(days=LIT_LATEST_MONTHS * 31)).year:
                 warns.append(f"{name}: {y.group()} is older than the latest window ({LIT_LATEST_MONTHS} months)")
@@ -3489,6 +3489,12 @@ def lit_problems(b, meta, tiers, searches, today_d=None):
     if not searches:
         warns.append("no Open Library searches: `lit new` has nothing to run")
     return errs, warns
+
+
+def lit_user_copy(why) -> bool:
+    """A row the user owns but no list ranks (why starts "User's copy") sits in recent whatever its year: canon is for
+    standing, and Belknap's self-published 2018 Leadership for Introverts had to go there to pass ingest."""
+    return str(why or "").lstrip().lower().replace("’", "'").startswith("user's copy")
 
 
 def cmd_lit_list(a):
@@ -3796,8 +3802,9 @@ def cmd_lit_ingest(a):
         y = re.search(r"\d{4}", str(a.year or ""))
         if not y:   # Typography Workbook (Samara) came in with no year and `lit check` warned after distill
             fail("a new row at ingest needs --year (the first edition's year) with --tier")
-        if a.tier == "recent" and y and int(y.group()) < dt.date.today().year - LIT_RECENT_YEARS:
-            fail(f"{y.group()} is older than the recent window ({LIT_RECENT_YEARS} years): use --tier canon")
+        if (a.tier == "recent" and y and int(y.group()) < dt.date.today().year - LIT_RECENT_YEARS
+                and not lit_user_copy(a.why)):
+            fail(f"{y.group()} is older than the recent window ({LIT_RECENT_YEARS} years): use --tier canon, or start --why with User's copy")
         row = {k: "" for k in LIT_COLUMNS}
         row.update(title=title, authors=a.authors or ", ".join(stem_authors), year=a.year or "", id=a.id or "",
                    why=a.why, evidence=a.evidence, status="reading")
