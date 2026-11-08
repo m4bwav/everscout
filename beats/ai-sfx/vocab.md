@@ -78,6 +78,8 @@ Add a new version as its own line when people argue about the difference; otherw
 - round-robin: round robin, round-robin, variation set, machine gun, machine-gunning
 - pitch-variation: pitch variation, pitch randomization, random pitch
 - convolution: convolution, impulse response
+- physical-modeling: physical modeling, physical model, modal synthesis, finite difference, digital waveguide, mass-spring network
+- strike-position: strike position, excitation point, pickup position, readout point
 - serial-chain: serial chain, effects chain, fx chain, insert chain, effect order
 - parallel-processing: parallel processing, parallel compression, parallel chain, wet/dry blend, new york compression
 - granular: granular, granular synthesis

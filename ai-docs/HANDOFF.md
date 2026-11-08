@@ -1,6 +1,6 @@
 # Handoff
 
-Updated 2026-11-07 (chain session 4, book 5 DONE, last of the session: Francis, The Audio Effects Workshop (Cengage 2011) into ai-sfx, T-20261107-31, picked over Sound Systems Design and Optimization because live-sound reinforcement fits neither ai-sfx nor ai-music while its effects-chain chapters feed sfxwright. Applied: sfxwright edit.md level before effects, chain order, serial or parallel; vocab serial-chain, parallel-processing; a process question; book note; ai-sfx beat.md now has `feeds: [sfxwright:sfxwright]` (everscout PR). Rejected: distance by band gain (already covered). Releases, all installed: sfxwright 0.1.22 (PR m4bwav/sfxwright#27), readwright 0.68.0 (PR m4bwav/readwright#117: `read --headings` joins two-line layout heads, closing the open item; Symbol-font minus and plus read as À and þ mapped back, L-083), everscout beat-file change only (no version bump). Open: trigger evals, Judgment-call recheck (Pezze, EvoMUSART, Zizza rows), canon sizes for ai-sfx, ai-voice, tech-hiring; chapter-opening titles in this PDF come out in shuffled order (13 Processing The Chain Gang: Serial FX), cosmetic. Next candidate: Beginning Game Audio Programming (2003) or Numerical Sound Synthesis (Bilbao) for ai-sfx; Sound System Design books fit no beat; ai-voice and indie-game-marketing need Mark to add books.)
+Updated 2026-11-07 (chain session 5, book 1 DONE: Bilbao, Numerical Sound Synthesis (Wiley 2009) into ai-sfx, T-20261107-32; sfxwright 0.1.23 (modal strike and velocity), readwright 0.69.0 (production-file bookmark names replaced by chapter titles), both installed; no everscout code changes. Next candidate: Beginning Game Audio Programming (2003, dated DirectX; ai-sfx) only if nothing fits better; `lit pick` for another beat first.)
 
 
 ## 0.10.0 (2026-11-02): Discord through the user's own bot
@@ -97,6 +97,8 @@ Updated 2026-11-07 (chain session 4, book 5 DONE, last of the session: Francis, 
 - Refining Sound (Shepard) distilled into ai-sfx 2026-11-07 (T-20261107-1): canon row, vocab, questions, sfxwright edit reference (unreleased, no bump); readwright 0.47.3. Next: `ES lit pick`; candidate for ai-sfx is Power Tools for Synthesizer Programming.
 
 - Introduction to Computer Music (Collins) distilled into ai-music 2026-11-07 (T-20261107-7): canon row, vocab, questions, musicwright 0.1.21; readwright 0.49.0. Next: `ES lit pick`; candidate is The Oxford Handbook of Computer Music.
+
+- Bilbao, Numerical Sound Synthesis distilled into ai-sfx 2026-11-07 (T-20261107-32): canon row, vocab physical-modeling and strike-position, a tools question, book note; sfxwright 0.1.23 (PR #28: `synth modal` strike and velocity, routes.md modal limits for large plates); readwright 0.69.0 (PR #118: outline entries named Unlock-ch1, fmatter, index take the chapter's own title, L-084). No open tool items. Next: `ES lit pick`; Beginning Game Audio Programming (Premier 2003) is the remaining ai-sfx file but dated.
 
 ## Reddit discovery built (2026-10-16, night), unreleased
 

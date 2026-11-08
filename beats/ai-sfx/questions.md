@@ -49,6 +49,7 @@ Two or three seeds from different categories. Name the sound or moment you mean.
 - [tools] How do you search your library when the obvious words fail?
 - [tools] How do you name and tag files so you can find them in a year?
 - [tools] What do you script, and what do you always do by hand?
+- [tools] When you make an impact procedurally, do you change where and how hard it is hit, or only the material, and can listeners hear the difference?
 
 ## Models
 
