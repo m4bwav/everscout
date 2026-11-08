@@ -1048,3 +1048,7 @@ Tools: readwright 0.71.1 (PR m4bwav/readwright#122): `rw.py ocr FILE --pages 1-2
 Slips: a heredoc with a doubled backslash refused by the hook twice (used Edit); the first Write of learnings.md refused for not reading it first (same as book 4).
 Session: 5 books done in chain session 5; stopped at the five-book limit.
 Next: `lit pick --expand`; Unity 2022 by Example (game-design), else Refactoring or Modern Software Engineering for multi-agent-grind.
+
+## [2026-11-07] library | chain session 5 summary
+
+Step 1: all tiers current. Step 2: Judgment-call rows rechecked (indie-ai-scout #59): Pezze & Young kept on USI/Milan-Bicocca syllabus evidence; EvoMUSART 2019 row dropped (no second evidence; notes kept). Five books, one subagent each in turn: T-20261107-32 Bilbao, Numerical Sound Synthesis (ai-sfx); -33 Beck, Tidy First? (multi-agent-grind); -34 Beck, TDD by Example (multi-agent-grind); -35 Wilson, Make: Analog Synthesizers (downtempo); -36 Boulanger, The Csound Book (ai-music, OCR'd scan). Stopped at the five-book cap. Releases: readwright 0.69.0-0.71.1, sfxwright 0.1.23, grindwright 0.3.18-0.3.19, musicwright 0.1.25-0.1.26; all installed. No everscout code changes. Step 4 (trigger evals in a fresh session) still not done. Open: readwright overprinted-layer PDFs need OCR (cannot be fixed by text pass). Next candidates: Unity 2022 by Example (game-design), then Fowler Refactoring / Farley MSE (multi-agent-grind).
