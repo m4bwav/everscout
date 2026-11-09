@@ -75,6 +75,10 @@ Some subjects are taught by an official docs site that grows every week (ComfyUI
 6. **Judge by your own test, not the tutorial's claims.** In the ComfyUI sweep most pages confirmed what was already known or failed on the person's hardware; the value sat in a few repair and finishing tools. One seed or one draft-size render is not a verdict. Note each adoption's cost (disk, minutes per run) next to its result.
 7. **Cadence.** Monthly is enough for a docs index. A full read of every page is a one-off baseline, not a routine.
 
+## Technique harvest
+
+A monthly step past the radar: the best technique posts are reproduced and the winners built into the person's own tools. [harvest.md](https://github.com/m4bwav/everscout/blob/main/kb/harvest.md).
+
 ## Feedback and memory
 
 - `feedback.md` (more of this, less of this, never show) is read at the start of every triage, and moves the keep and skip decisions.

@@ -1087,3 +1087,7 @@ Next: few or no worthwhile unread books remain for any beat; stop the chain unti
 - Step 1: `lit due` all current. Step 2: no Judgment-call rows left.
 - Step 3: 0 books. `lit pick --expand --match` over files changed since 2026-11-06 found only books already distilled (the audio set, DDIA, TDD, Continuous Delivery Pipelines not unread) or poor fits (magazine issues, self-published prompt books; Paquette's *Intro to Computer Graphics for Artists* fits no beat). Stopped: nothing left to pick. The chain idles until Mark adds books.
 - Step 4 (trigger evals in a fresh session) still not run. No tool changes needed. The stash@{0} in the main clone is still there (safe to drop, see session 6).
+
+## 2026-11-09 · technique harvest (0.13.0)
+
+Mark asked for the technique-harvest process (top posts of the month, reproduced and measured, winners built into his plugins) to be repeatable from everscout. Added kb/harvest.md and everscout-scan Step 4; method.md points to it. Released 0.13.0.

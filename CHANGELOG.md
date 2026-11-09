@@ -2,6 +2,10 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.13.0 · 2026-11-09
+
+- Technique harvest (`kb/harvest.md`, everscout-scan Step 4): take a beat's top technique and tool posts of the month, score a top 20, test each in its own subagent against the person's tools, and build only what measures better.
+
 ## 0.12.24 · 2026-11-08
 
 - `lit pick --match REGEX` keeps only the files whose path matches (case-insensitive), so a beat's topics can be swept without grepping a 400-line list. `VERSION` in everscout.py caught up (it still said 0.12.22).
