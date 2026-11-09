@@ -1,6 +1,6 @@
 ---
 name: everscout-scan
-description: "Run the everscout scan for a beat: fetch every watch-list source at its platform's polite pace (Reddit, Hacker News, Bluesky, Mastodon, Lemmy, Discourse, newsletters, YouTube, GitHub, arXiv, Hugging Face, news searches), triage new items against the beat's scope and feedback, distil each thread worth keeping into one paraphrased note with entities tallied, collect replies from makers the user asked, run the beat's web searches and retally the signals (new, rising, fading). Use whenever the user says 'scan', 'run the scout', 'check the feeds', 'catch me up on a subject', 'anything new this week', 'any replies to my questions', 'ingest this thread', 'add this post to the notes', 'update the signals', or asks what people are doing in a beat's subject and the last scan is over a day old. Also for 'refresh everscout-scan' and 'is everscout-scan stale'. Setup is everscout-beat; asking makers is everscout-engage; reports are everscout-report."
+description: "Run the everscout scan for a beat: fetch every watch-list source at its platform's polite pace (Reddit, Hacker News, Bluesky, Mastodon, Lemmy, Discourse, newsletters, YouTube, GitHub, arXiv, Hugging Face, news searches), triage new items against the beat's scope and feedback, distil each thread worth keeping into one paraphrased note with entities tallied, collect replies from makers the user asked, run the beat's web searches and retally the signals (new, rising, fading). Use whenever the user says 'scan', 'run the scout', 'check the feeds', 'catch me up on a subject', 'anything new this week', 'any replies to my questions', 'ingest this thread', 'add this post to the notes', 'update the signals', or asks what people are doing in a beat's subject and the last scan is over a day old; also 'harvest the month', 'which techniques should my plugins pick up' (technique harvest). Also for 'refresh everscout-scan' and 'is everscout-scan stale'. Setup is everscout-beat; asking makers is everscout-engage; reports are everscout-report."
 ---
 
 # everscout-scan
@@ -26,6 +26,10 @@ Reddit threads without a listing (procedure section G): `ES discover list --beat
 ## Step 3: replies, web, signals, housekeeping
 
 Replies from `followups` go into the thread's note under `## Their answers` (create the note if none exists; set `engaged: true`). Run the beat's `searches.md` rows due this scan (weekly rows every week, monthly ones on the first scan of a month), following [references/kb/method.md](references/kb/method.md) "Sweeping a docs or tutorial index" for rows whose reason says `sweep`, and ingesting anything substantive as a `web` note with `ES new-note <url> --beat <slug> --note-kind web --title "..." --posted <date>`. Then `ES validate --beat <slug> --strict` (fix every finding), `ES tally --beat <slug>`, `ES stats collect --beat <slug>` (the beat's metrics; failures are recorded, not retried; candidates the user pre-approved with `ES stats approve` are promoted automatically once ready, so report any `promoted ... (pre-approved ...)` line; [references/kb/stats.md](references/kb/stats.md)), `ES index --beat <slug>`, `ES retention`, and append `## [date] scan | <n> sources, <m> new items, <k> notes, <r> replies` plus one line of what stood out to `DATA/log.md`. Rewrite `DATA/HANDOFF.md` when something is left undone.
+
+## Step 4 (on request or monthly): technique harvest
+
+To turn the month's best technique, tutorial and tool posts into tested changes in the person's own tools, follow [references/kb/harvest.md](references/kb/harvest.md): top-of-month listings, a scored top 20, one subagent per candidate that reproduces and measures, then build only what wins. Posting and registry publishing stay the person's.
 
 ## Output
 

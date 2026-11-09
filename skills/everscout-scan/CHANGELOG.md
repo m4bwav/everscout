@@ -2,6 +2,11 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`.
 
+### C-20261109-H · 2026-11-09 · Technique harvest
+- because: Mark's request (2026-11-09), after a Reddit post's GIF kit became a measured pixel-art plugin command
+- files: SKILL.md (description, Step 4), references/kb/ (synced, new harvest.md)
+- Step 4 runs a monthly harvest: top-of-month posts, scored top 20, per-candidate reproduce-and-measure subagents, build only what wins.
+
 ### C-20261103-S · 2026-11-03 · Docs and tutorial sweeps
 - because: Mark's request (2026-11-03), from the comfyui-gen ComfyUI tutorials sweep
 - files: SKILL.md (Step 2 searches), references/kb/ (synced: method.md sweep section, platforms.md path-filtered commit feeds)
