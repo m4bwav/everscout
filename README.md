@@ -122,6 +122,17 @@ claude plugin install everscout@everscout --scope user
 
 Then run `python <plugin dir>/scripts/everscout.py where`, write `~/.everscout/config.json` with at least `contact`, and say "set up a scout for <subject>" or "scan the ai-video beat". Other agents (Copilot, Codex, Cursor) can use the five skill folders directly; AGENTS.md has the rules for working in the repository.
 
+## Works with
+
+- **[fetchwright](https://github.com/m4bwav/fetchwright)**: fetchwright is the page reader behind beat sources that block plain fetches. In return, fetchwright points Discord reads at everscout's invited-bot reader.
+- **[readwright](https://github.com/m4bwav/readwright)**: beats read books with readwright: its outline goes in `toc.txt`, then the sections are read and distilled into learnings.
+- **[chartwright](https://github.com/m4bwav/chartwright)**: when chartwright is installed, it builds the charts for the stats export (`--charts`).
+- **[tokenwright](https://github.com/m4bwav/tokenwright)**: the token-saving beat distils books and papers into tokenwright's levers and habits.
+- **[grindwright](https://github.com/m4bwav/grindwright)**: the multi-agent-grind beat feeds grindwright's crew rules (WIP limits, pull work, done means the checks ran).
+- **Plugins that learn from beats**: beats feed the refreshes of [artwright](https://github.com/m4bwav/artwright), [ludowright](https://github.com/m4bwav/ludowright), [sfxwright](https://github.com/m4bwav/sfxwright), [musicwright](https://github.com/m4bwav/musicwright), [voicewright](https://github.com/m4bwav/voicewright) and [polywright](https://github.com/m4bwav/polywright).
+
+The wiki's [Works with](https://github.com/m4bwav/everscout/wiki/Works-with) page describes each pairing in more detail.
+
 ## Tests
 
 `python -m unittest discover -s tests` runs offline against synthetic fixtures and also checks every built-in beat. Skill evals live in each skill's `evals/evals.json` and run through the evergreen plugin's `evergreen-test`.
