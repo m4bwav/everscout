@@ -1091,3 +1091,6 @@ Next: few or no worthwhile unread books remain for any beat; stop the chain unti
 ## 2026-11-09 · technique harvest (0.13.0)
 
 Mark asked for the technique-harvest process (top posts of the month, reproduced and measured, winners built into his plugins) to be repeatable from everscout. Added kb/harvest.md and everscout-scan Step 4; method.md points to it. Released 0.13.0.
+
+## [2026-11-11] docs | Works with section
+README gained a Works with section (fetchwright, readwright, chartwright, tokenwright, grindwright, domain plugins); the wiki gained a Works-with page linked from the sidebar and Home. Each entry describes a handoff found in the skill files on one side or the other.
