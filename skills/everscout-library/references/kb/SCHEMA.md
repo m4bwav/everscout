@@ -107,7 +107,7 @@ summary: one line saying what this teaches (shown in the index)
 ---
 ```
 
-Body: one `## ` section per `note_sections` entry, then a closing `Related:` line. Default sections: What it is, How it was made, Reception and interest, Why it matters, Questions this raises. Budget 10 to 30 lines. Paraphrase; at most one short quote; say "the maker" or "the poster", never a handle. When an engagement got answers, add `## Their answers` (paraphrased) and set `engaged: true`.
+Body: one `## ` section per `note_sections` entry, then a closing `Related:` line. Default sections: What it is, How it was made, Reception and interest, Why it matters, Questions this raises. Budget 10 to 30 lines. Paraphrase; at most one short quote; a claim the poster conceded or reported in order to reject is labelled so, never given as their view; say "the maker" or "the poster", never a handle. When an engagement got answers, add `## Their answers` (paraphrased) and set `engaged: true`.
 
 ## A report (`reports/<date>-<slug>.md`)
 

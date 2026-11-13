@@ -2,6 +2,11 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.14.0 · 2026-11-13
+
+- Rules from The Craft of Research (Booth, Colomb and Williams, 3rd ed., 2008), all book rules not yet checked on our tools: research questions in three steps with a consequence, plus triage (everscout-beat); a claim's role and a removes count in notes and reports (kb/method.md, kb/SCHEMA.md); a reversal test on Direction sentences and an `against:` line per trend (report.md); the critic's five kinds of disagreement and three named chapter failures (study.md); the weakest evidence test in an answer's confidence (ask.md); a latest-edition check for books (kb/literature.md).
+- Not shipped: a lint warning for most, many, often, usually and widely with no number or note link. On 9 real report and answer files it flagged 3 of 205 sentences and 2 of 3 were right, under the 70% bar.
+
 ## 0.13.0 · 2026-11-09
 
 - Technique harvest (`kb/harvest.md`, everscout-scan Step 4): take a beat's top technique and tool posts of the month, score a top 20, test each in its own subagent against the person's tools, and build only what measures better.

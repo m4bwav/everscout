@@ -24,7 +24,7 @@ Recall is keyword and alias matching, not embeddings: reword the question in the
 
 ## The answer file
 
-Path `DATA/answers/<YYYY-MM-DD>-<slug>.md`, slug from the question (40 characters at most). Frontmatter: `title` (the question, shortened, no colons), `kind: answer`, `status: active`, `date`, `verified`, `beat`, `question` (in full, no colons), `grade: enough|partial|none`, `confidence: high|medium|low`, `notes_used: N`, `fresh_sources: M`, `summary` (the answer in one line), `tags: [answer]`. Body sections: `## Answer`, `## What the beat has seen`, `## What is new`, `## Where sources disagree`, `## Confidence and gaps`, `## Sources` (dated links), then `Related:` with links to the notes used. Follow-ups append `## Follow-up: <question>` with the same parts in short.
+Path `DATA/answers/<YYYY-MM-DD>-<slug>.md`, slug from the question (40 characters at most). Frontmatter: `title` (the question, shortened, no colons), `kind: answer`, `status: active`, `date`, `verified`, `beat`, `question` (in full, no colons), `grade: enough|partial|none`, `confidence: high|medium|low`, `notes_used: N`, `fresh_sources: M`, `summary` (the answer in one line), `tags: [answer]`. Body sections: `## Answer`, `## What the beat has seen`, `## What is new`, `## Where sources disagree`, `## Confidence and gaps` (the reason names the weakest evidence test, precise, sufficient, representative or authoritative, and the communities the notes come from), `## Sources` (dated links), then `Related:` with links to the notes used. Follow-ups append `## Follow-up: <question>` with the same parts in short.
 
 ## Interrogation sessions
 

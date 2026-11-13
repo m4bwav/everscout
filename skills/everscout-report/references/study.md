@@ -6,7 +6,7 @@ Detail for [SKILL.md](../SKILL.md), study mode. The study is what every later re
 
 ## 1. Outline first (the user approves it)
 
-Read the beat's `study.md` (the chapter table and the perspectives). For each perspective, write three to five questions that perspective would ask (a newcomer: "where do I start and what does it cost?"; a veteran maker: "what changed in the last year and what still breaks?"; a critic: "what is lost, who objects and why?"; an institution: "what are the rules and the numbers?"). Merge them into the chapter outline: five to twelve chapters, each with its questions. Show the outline to the user and wait. Their edits are the brief. Record the approved outline in `DATA/study/outline.md`.
+Read the beat's `study.md` (the chapter table and the perspectives). For each perspective, write three to five questions that perspective would ask (a newcomer: "where do I start and what does it cost?"; a veteran maker: "what changed in the last year and what still breaks?"; a critic: "what is lost, who objects and why?", generated from five kinds of disagreement: wrong category, wrong relation of parts, wrong origin or development, wrong cause, one standpoint only; an institution: "what are the rules and the numbers?"). Merge them into the chapter outline: five to twelve chapters, each with its questions. Show the outline to the user and wait. Their edits are the brief. Record the approved outline in `DATA/study/outline.md`.
 
 ## 2. Research per chapter (then write it, then move on)
 
@@ -26,4 +26,4 @@ Read the chapter that covers the present and the notes since the study's `verifi
 
 ## Parallel writing
 
-A study is a good job for subagents: one chapter each, given the approved outline, the beat files, kb/method.md, kb/SCHEMA.md and this procedure. Each writes its chapter to disk and returns its sources. Then one checker pass per chapter: every external link resolves to a page that says what the chapter claims (spot-check five), `ES lint` passes, the chapter answers its outline questions. The overview is written last, by the main session.
+A study is a good job for subagents: one chapter each, given the approved outline, the beat files, kb/method.md, kb/SCHEMA.md and this procedure. Each writes its chapter to disk and returns its sources. Then one checker pass per chapter: every external link resolves to a page that says what the chapter claims (spot-check five), `ES lint` passes, the chapter answers its outline questions; each section opens on a claim, and the chapter is not ordered source by source, does not mirror one main source's order and terms, and does not narrate the search. The overview is written last, by the main session.

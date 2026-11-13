@@ -2,6 +2,11 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`.
 
+### C-20261113-1 · 2026-11-13 · Craft of Research rules
+- because: Booth, Colomb and Williams, The Craft of Research, 3rd ed. (2008), ch. 3-6, 8-12, 14; book rule, unverified on our tools
+- files: kb/literature.md (step 1a)
+- Step 1a checks the copy of a secondary work is the latest edition. Plugin 0.14.0.
+
 ### C-20261107-6 · 2026-11-07 · lit ingest prints the outline
 - because: T-20261107-27 (Step 3.1 says read the outline it prints; ingest printed only paths, so the run opened toc.txt in a second call)
 - files: scripts/everscout.py (`cmd_lit_ingest`); 2 test assertions plus 1 test. Plugin 0.12.20.
