@@ -1094,3 +1094,6 @@ Mark asked for the technique-harvest process (top posts of the month, reproduced
 
 ## [2026-11-11] docs | Works with section
 README gained a Works with section (fetchwright, readwright, chartwright, tokenwright, grindwright, domain plugins); the wiki gained a Works-with page linked from the sidebar and Home. Each entry describes a handoff found in the skill files on one side or the other.
+
+## [2026-11-13] knowledge | The Craft of Research (0.14.0)
+Built the everscout track of the Craft of Research notes: three-step research questions and triage (beat procedure), claim role and removes (kb/method.md, kb/SCHEMA.md), reversal test and `against:` lines (report.md), critic disagreement kinds and checker failures (study.md), weakest-test confidence (ask.md), latest-edition check (kb/literature.md). The vague-quantity lint was measured on the real reports and answers on this machine: 3 of 205 sentences flagged, 2 right (67%), under the 70% bar, so not shipped. Book's 2008 web advice and reliability signs not adopted.
