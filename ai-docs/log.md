@@ -1097,3 +1097,5 @@ README gained a Works with section (fetchwright, readwright, chartwright, tokenw
 
 ## [2026-11-13] knowledge | The Craft of Research (0.14.0)
 Built the everscout track of the Craft of Research notes: three-step research questions and triage (beat procedure), claim role and removes (kb/method.md, kb/SCHEMA.md), reversal test and `against:` lines (report.md), critic disagreement kinds and checker failures (study.md), weakest-test confidence (ask.md), latest-edition check (kb/literature.md). The vague-quantity lint was measured on the real reports and answers on this machine: 3 of 205 sentences flagged, 2 right (67%), under the 70% bar, so not shipped. Book's 2008 web advice and reliability signs not adopted.
+
+## [2026-11-14] update | README Works with: fractalwright (new public plugin), mirroring its own section

@@ -130,6 +130,7 @@ Then run `python <plugin dir>/scripts/everscout.py where`, write `~/.everscout/c
 - **[tokenwright](https://github.com/m4bwav/tokenwright)**: the token-saving beat distils books and papers into tokenwright's levers and habits.
 - **[grindwright](https://github.com/m4bwav/grindwright)**: the multi-agent-grind beat feeds grindwright's crew rules (WIP limits, pull work, done means the checks ran).
 - **Plugins that learn from beats**: beats feed the refreshes of [artwright](https://github.com/m4bwav/artwright), [ludowright](https://github.com/m4bwav/ludowright), [sfxwright](https://github.com/m4bwav/sfxwright), [musicwright](https://github.com/m4bwav/musicwright), [voicewright](https://github.com/m4bwav/voicewright) and [polywright](https://github.com/m4bwav/polywright).
+- **[fractalwright](https://github.com/m4bwav/fractalwright)**: the fractal-art beat feeds fractalwright's refreshes with new tools, renderers and techniques.
 
 The wiki's [Works with](https://github.com/m4bwav/everscout/wiki/Works-with) page describes each pairing in more detail.
 
