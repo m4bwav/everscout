@@ -2,6 +2,10 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.14.1 · 2026-11-14
+
+- everscout-scan's description shortened from 1,041 to 761 chars, under the Agent Skills 1,024-char limit, with every trigger kept.
+
 ## 0.14.0 · 2026-11-13
 
 - Rules from The Craft of Research (Booth, Colomb and Williams, 3rd ed., 2008), all book rules not yet checked on our tools: research questions in three steps with a consequence, plus triage (everscout-beat); a claim's role and a removes count in notes and reports (kb/method.md, kb/SCHEMA.md); a reversal test on Direction sentences and an `against:` line per trend (report.md); the critic's five kinds of disagreement and three named chapter failures (study.md); the weakest evidence test in an answer's confidence (ask.md); a latest-edition check for books (kb/literature.md).
