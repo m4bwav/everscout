@@ -2,6 +2,11 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`.
 
+### C-20261114-1 · 2026-11-14 · Description shortened to 761 chars (was 1,041)
+- because: user request (Agent Skills spec limit of 1,024 chars)
+- files: SKILL.md (description)
+- Every trigger phrase kept; the source list is shorter (the body has the full list).
+
 ### C-20261109-H · 2026-11-09 · Technique harvest
 - because: Mark's request (2026-11-09), after a Reddit post's GIF kit became a measured pixel-art plugin command
 - files: SKILL.md (description, Step 4), references/kb/ (synced, new harvest.md)
