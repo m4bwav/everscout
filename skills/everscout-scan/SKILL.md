@@ -48,6 +48,10 @@ Three to eight lines: sources and items scanned, notes written (count and the fo
 
 If the user corrects you, the same error happens twice, a workaround is found, or an environment fact is discovered, write it to `LEARNINGS.md` now (check existing entries first: add, update, retire, or nothing). If a learning proves a claim above wrong, fix it here, log it in `CHANGELOG.md`, and set `contradiction` in `evergreen.json`.
 
+## YouTube videos
+
+Scans keep feed text. For a vague YouTube keeper, read one chapter span at a time with clip (2 minutes or less). Use fetchwright's `yt.py read URL` (captions, chapters, `&t=` links; opt-in route) and `yt.py clip URL A-B "question"` (Gemini reads the screen for spans of 2 minutes or less). Cite the `&t=` link and check numbers against a written source: auto-captions drop decimals.
+
 ## Maintenance
 
 This skill is evergreen (topic: how public community feeds and APIs can be read politely for continuous subject monitoring, and how findings are distilled, deduplicated and tallied faithfully; tier `fast`, currently every 14 days, next due 2026-10-10). Files: `evergreen.json` (state), [RESEARCH.md](RESEARCH.md), [CHANGELOG.md](CHANGELOG.md), [LEARNINGS.md](LEARNINGS.md), [TESTS.md](TESTS.md) and `evals/evals.json`; procedure in `references/`. Protocol: the installed evergreen plugin (`protocol: "plugin"` in evergreen.json). Refresh with `evergreen-refresh`; test with `evergreen-test`; fix a failure with `evergreen-tune`; audit with `evergreen-audit`.
