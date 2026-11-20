@@ -23,7 +23,7 @@ If the user handed over a URL, use it and still run every check below. Reddit's 
 
 ## Step 3: write the draft
 
-`ES questions --beat <slug> --n 4 --tags <two categories that fit the post>` (add `--avoid-ai` where the community's stance is `hostile` or `mixed` and the post does not mention AI). Write by the conduct code and the voice file: one true, specific observation (or the voice file's short opener), then one to three questions rephrased for this post and tied to what it shows, from at least two categories; no links, no self-promotion, no persona, nothing the user has not done; length per the voice file (default 25 to 90 words). Compare with the last ten ledger texts (`ES ledger --days 60 --text`) and change the opening and shape if anything repeats. In a community that bans AI-written comments (Hacker News and others; the source row says so), give two or three bullet ideas instead of a draft and let the user write it.
+`ES questions --beat <slug> --n 4 --tags <two categories that fit the post>` (add `--avoid-ai` where the community's stance is `hostile` or `mixed` and the post does not mention AI). Write by the conduct code and the voice file: one true, specific observation (or the voice file's short opener), then one to three questions rephrased for this post and tied to what it shows, from at least two categories; no links, no self-promotion, no persona, nothing the user has not done; length per the voice file (default 25 to 90 words). Write the draft to `LOCAL/drafts/<item>.md` and run `ES draft-check --text-file <file>`; rewrite every hit (a hypothetical or habit question becomes one about this piece or the last time). Drop a question the post, caption or linked page already answers. Compare with the last ten ledger texts (`ES ledger --days 60 --text`) and change the opening and shape if anything repeats. In a community that bans AI-written comments (Hacker News and others; the source row says so), give two or three bullet ideas instead of a draft and let the user write it.
 
 ## Step 4: approve, hand over, record
 
@@ -31,7 +31,7 @@ Show: the link, `<community> (stance)`, why this item (one line), and the exact 
 
 ## Other requests routed here
 
-- "thank them": `ES followups --beat <slug>`, read the maker's answer, draft two lines (thanks, and the one thing the answer taught; the voice file's thank-you shape), approve, hand over, `ES engage-record ... --kind thanks`. A thank-you obeys only the hourly gap and the daily cap.
+- "thank them": `ES followups --beat <slug>`, read the maker's answer, draft two lines (thanks, and the one concrete thing the answer taught, not its "usually" or "would" parts; the voice file's thank-you shape); put the maker's key sentence verbatim in quotes in `--note`, and if it contradicts the beat, update `questions.md` or `beat.md`, approve, hand over, `ES engage-record ... --kind thanks`. A thank-you obeys only the hourly gap and the daily cap.
 - "help me answer this": the user's own knowledge first; ask them what they know. Draft only what they know or can cite, with the source. `--kind answer`.
 - "ideas for my reply": bullet ideas, no draft, no ledger entry.
 

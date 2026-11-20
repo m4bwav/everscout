@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`.
 
+### C-20261119-1 · 2026-11-19 · Past-instance questions, draft-check, verbatim thank-you notes (The Mom Test)
+- because: Fitzpatrick, The Mom Test (2013), pp. 19-22, 32-33, 117-118, 128-130
+- files: SKILL.md Step 3 (run `ES draft-check`, drop questions the post answers) and the thank-you route (quote the maker verbatim in `--note`, update the beat on a surprise); ../../kb/conduct.md rules 7 and 9; scripts/everscout.py `draft-check` and a beat-check warning on hypothetical seeds; tests.
+
 ### C-20261023-1 · 2026-10-23 · A discovery trigger case; the GitHub row names Bitcoin Core and maintainer limits
 - because: R-20261023-1
 - files: evals/evals.json (new trigger-3: a natural request with a Bluesky URL that names no skill), ../../kb/conduct.md and its synced copies (Platform notes: GitHub row), RESEARCH.md (finding, Current understanding, Open questions, Search plan with an official-forums line)

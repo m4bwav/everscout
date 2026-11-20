@@ -843,6 +843,9 @@ def cmd_beat_check(a):
     qs = b.questions()
     if len(qs) < 10:
         warns.append(f"questions.md has {len(qs)} seeds (aim for 15 to 40)")
+    for q in qs:
+        if FLUFF_Q_RE.search(q["text"]):
+            warns.append(f"hypothetical seed, ask about a past instance: {q['text'][:80]}")
     if len({q['category'] for q in qs}) < 3 and qs:
         warns.append("questions.md has fewer than three categories")
     if not b.searches():
@@ -2401,6 +2404,61 @@ def cmd_source_log(a):
     print(f"logged {a.url}")
 
 
+# The Mom Test (Fitzpatrick 2013, pp. 19-20, 32-33, 128-129): hypothetical and habit questions get fluff back,
+# approval bait gets compliments, a survey kills candour. Superforecasting (Tetlock and Gardner 2015, ch. 3):
+# a forecast with no time frame cannot be wrong, and hedge words are read wildly differently.
+FLUFF_Q_RE = re.compile(r"\bwould you\b(?! (?:share|mind|post|link))|\bmight you\b|\bdo you (?:ever|usually|think)\b|\bwhat do you usually\b|\bcould you see yourself\b", re.I)
+APPROVAL_BAIT_RE = re.compile(r"\bbe (?:brutally |totally )?honest\b|\b(?:thoughts|feedback|opinion) on my\b|\bwhat do you think (?:of|about) my\b|\bi can take it\b", re.I)
+SCALE_RE = re.compile(r"\bon a scale\b|\b1 ?(?:to|-) ?(?:5|10)\b", re.I)
+VAGUE_HEDGE_RE = re.compile(r"\b(?:fair chance|serious possibility|real possibility|could go either way|possibly)\b", re.I)
+FUTURE_RE = re.compile(r"\b(?:will|is set to|are set to|is heading for|are heading for|is poised to|are poised to)\b", re.I)
+DATED_RE = re.compile(r"\b20\d\d\b|\b(?:by|within|in) (?:the )?(?:next )?(?:\d+ )?(?:days?|weeks?|months?|quarters?|years?)\b|\bQ[1-4]\b", re.I)
+
+
+def draft_problems(text):
+    """Warnings for a drafted engagement comment (everscout-engage Step 3)."""
+    out = []
+    qs = [q.strip() for q in re.findall(r"[^.?!\n]*\?", text)]
+    for q in qs:
+        if FLUFF_Q_RE.search(q):
+            out.append(f"hypothetical or habit question, ask about this piece or the last time: {q}")
+    if APPROVAL_BAIT_RE.search(text):
+        out.append("approval bait: ask about the maker's work, not the user's")
+    if len(qs) > 3:
+        out.append(f"{len(qs)} questions: one to three, not a survey")
+    if SCALE_RE.search(text):
+        out.append("rating scale: keep it casual")
+    return out
+
+
+def section_text(body, heading):
+    """Body of the first '## <heading>...' section (prefix match), or ''."""
+    m = re.search(r"^## " + re.escape(heading) + r"[^\n]*\n(.*?)(?=^## |\Z)", body, re.M | re.S)
+    return m.group(1) if m else ""
+
+
+def claim_problems(body):
+    """Warn-only checks on Direction and Confidence sections: vague hedges, forecasts with no time frame."""
+    out = []
+    for h in ("Direction", "Confidence"):
+        sec = section_text(body, h)
+        hit = VAGUE_HEDGE_RE.search(sec)
+        if hit:
+            out.append(f"{h}: vague hedge '{hit.group(0)}': use a band from kb/method.md")
+        for sent in re.split(r"(?<=[.!?])\s+", sec):
+            if FUTURE_RE.search(sent) and not DATED_RE.search(sent):
+                out.append(f"{h}: forecast with no time frame: {sent.strip()[:90]}")
+    return out
+
+
+def cmd_draft_check(a):
+    probs = draft_problems(read(a.text_file))
+    for p_ in probs:
+        print("warn   " + p_)
+    print(f"{len(probs)} draft problems")
+    sys.exit(1 if probs else 0)
+
+
 def cmd_lint(a):
     """Reports and study chapters: every relative link resolves; every external URL is one a note or snapshot holds
     (a URL the model wrote from memory is the classic invented citation); TODOs; stale verified dates."""
@@ -2440,6 +2498,7 @@ def cmd_lint(a):
                     errs.append(f"{rel}: frontmatter lacks {k}")
             if "TODO" in body:
                 errs.append(f"{rel}: TODO left")
+            warns += [f"{rel}: {w}" for w in claim_problems(body)]
             ver = S.parse_time(str(fm.get("verified") or ""))
             if ver and (now_utc() - ver).days > stale_days:
                 warns.append(f"{rel}: verified {fm.get('verified')} is older than {stale_days} days")
@@ -4343,6 +4402,7 @@ def main(argv=None):
     p = add("index", cmd_index, "regenerate the data folder's indexes"); p.add_argument("--beat")
     p = add("source-log", cmd_source_log, "record a web page actually read, so it may be cited"); p.add_argument("url"); p.add_argument("--beat")
     p.add_argument("--title"); p.add_argument("--supports", help="the claim it supports, in a few words")
+    p = add("draft-check", cmd_draft_check, "check a drafted comment: hypothetical questions, approval bait, surveys; exit 1 on any"); p.add_argument("--text-file", required=True)
     p = add("lint", cmd_lint, "check reports and study: links resolve, external URLs come from notes"); p.add_argument("--beat")
     p.add_argument("--strict", action="store_true"); p.add_argument("--stale-days", type=int, default=120); p.add_argument("--no-url-check", action="store_true")
     p = add("retention", cmd_retention, "purge cached raw content older than retention_hours")
