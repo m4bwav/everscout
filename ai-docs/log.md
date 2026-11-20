@@ -1099,3 +1099,5 @@ README gained a Works with section (fetchwright, readwright, chartwright, tokenw
 Built the everscout track of the Craft of Research notes: three-step research questions and triage (beat procedure), claim role and removes (kb/method.md, kb/SCHEMA.md), reversal test and `against:` lines (report.md), critic disagreement kinds and checker failures (study.md), weakest-test confidence (ask.md), latest-edition check (kb/literature.md). The vague-quantity lint was measured on the real reports and answers on this machine: 3 of 205 sentences flagged, 2 right (67%), under the 70% bar, so not shipped. Book's 2008 web advice and reliability signs not adopted.
 
 ## [2026-11-14] update | README Works with: fractalwright (new public plugin), mirroring its own section
+
+## [2026-11-19] books | The Mom Test and Superforecasting into engage, ask, report: draft-check, hypothetical-seed warn, hedge and undated-forecast lint warns, confidence bands, Last calls (books round 6 track 50)

@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`.
 
+### C-20261119-1 · 2026-11-19 · Confidence bands, outside view, strongest case against (Superforecasting)
+- because: Tetlock and Gardner, Superforecasting (2015), ch. 3, 5, 7 and the ten commandments
+- files: SKILL.md Steps 3 and 5; ../../kb/method.md (bands, dated forecasts, outside view, update size); `lint` warns on vague hedges and undated forecasts in Confidence sections.
+
 ### C-20261113-1 · 2026-11-13 · Craft of Research rules
 - because: Booth, Colomb and Williams, The Craft of Research, 3rd ed. (2008), ch. 3-6, 8-12, 14; book rule, unverified on our tools
 - files: references/ask.md (The answer file)

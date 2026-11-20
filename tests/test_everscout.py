@@ -298,6 +298,29 @@ class BeatTests(WorkspaceTest):
         self.assertIn("duplicate source", out)
         self.assertIn("unknown kind", out)
 
+    def test_beat_check_warns_on_hypothetical_seed(self):
+        qp = os.path.join(self.bd, "questions.md")
+        with open(qp, "a", encoding="utf-8") as f:
+            f.write("\n## Process\n\n- Do you usually grade by hand?\n- Would you share the workflow?\n- What did you try before this worked?\n")
+        code, out, _ = self.run_cli("beat-check", "test-beat")
+        self.assertEqual(code, 0, out)  # warn-only for existing beats
+        self.assertIn("hypothetical seed, ask about a past instance: Do you usually", out)
+        self.assertNotIn("Would you share", out)
+        self.assertNotIn("What did you try", out)
+
+    def test_draft_check(self):
+        p = os.path.join(self.tmp, "d.md")
+        open(p, "w", encoding="utf-8").write("The rim light on the second shot is lovely. What did you try before this pass worked? How long did the grade take?")
+        code, out, _ = self.run_cli("draft-check", "--text-file", p)
+        self.assertEqual(code, 0, out)
+        open(p, "w", encoding="utf-8").write("Be honest, any thoughts on my version? Would you ever use a LUT? Do you think it scales? Rate it 1 to 5?")
+        code, out, _ = self.run_cli("draft-check", "--text-file", p)
+        self.assertEqual(code, 1)
+        self.assertIn("hypothetical or habit question", out)
+        self.assertIn("approval bait", out)
+        self.assertIn("4 questions", out)
+        self.assertIn("rating scale", out)
+
     def test_beat_new_scope_and_leads(self):
         code, out, err = self.run_cli("beat-new", "craft-x", "--title", "Craft X", "--scope", "Follows craft X and how people use AI for it.",
                                       "--question", "What do practitioners do now?", "--question", "How do people use AI for craft X?",
@@ -450,6 +473,17 @@ class FetchTests(WorkspaceTest):
         self.assertIn("already logged", out)
         code, out, _ = self.run_cli("lint", "--beat", "test-beat", "--strict")
         self.assertEqual(code, 0, out)
+        good = ("---\ntitle: r\ndate: 2026-09-26\nverified: 2026-09-26\nsummary: s\n---\n## Direction\n\n"
+                "Tool X will ship a local mode by 2027-06. Interest is flat.\n\n## Confidence and gaps\n\nMedium: 6 notes.\n")
+        rp = os.path.join(dd, "study", "02-now.md")
+        open(rp, "w", encoding="utf-8").write(good)
+        code, out, _ = self.run_cli("lint", "--beat", "test-beat", "--strict")
+        self.assertEqual(code, 0, out)
+        open(rp, "w", encoding="utf-8").write(good.replace(" by 2027-06", "").replace("Medium: 6 notes.", "A fair chance it holds."))
+        code, out, _ = self.run_cli("lint", "--beat", "test-beat")
+        self.assertEqual(code, 0, out)  # warn-only
+        self.assertIn("Direction: forecast with no time frame: Tool X will ship", out)
+        self.assertIn("Confidence: vague hedge 'fair chance'", out)
 
     def test_thread_and_followups(self):
         self.run_cli("fetch", "--beat", "test-beat", "--max-age-days", "3650")

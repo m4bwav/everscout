@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`.
 
+### C-20261119-1 · 2026-11-19 · Dated calls with change signs, a Last calls postmortem (Superforecasting)
+- because: Tetlock and Gardner, Superforecasting (2015), ch. 3 and commandments 5 and 8
+- files: references/report.md (Direction calls carry band, date and change signs; new `## Last calls` section); ../../kb/method.md; `lint` warns on vague hedges and undated "will" sentences in Direction.
+
 ### C-20261113-1 · 2026-11-13 · Craft of Research rules
 - because: Booth, Colomb and Williams, The Craft of Research, 3rd ed. (2008), ch. 3-6, 8-12, 14; book rule, unverified on our tools
 - files: references/report.md (Direction, Signals and trends), references/study.md (section 1, Parallel writing), kb/method.md

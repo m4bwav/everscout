@@ -23,7 +23,7 @@ Run `ES recall --beat <slug> --q "<the question>"`, then once or twice more with
 
 ## Step 3: grade the recall (corrective retrieval)
 
-Decide one of three, and say which in the answer:
+Decide one of three, and say which in the answer. For a trend or forecast question, first note how often things of this kind happened in the beat's notes (the outside view), then the specifics.
 
 - **enough**: relevant notes or answers cover the question and the newest is inside the beat's `half_life_days` (or the question is historical). Answer from the knowledge base; one quick check of the beat's newest items for anything that contradicts it.
 - **partial**: some coverage, but thin, one-sided, or older than the half-life for a question about now. Answer from the knowledge base plus fresh research.
@@ -35,7 +35,7 @@ In this order, stopping when the question is answered: the beat's newest items (
 
 ## Step 5: answer like a reporter
 
-In chat, in this order, short: **the answer** in two to four sentences; **what the beat has seen** (counts and dates from notes and signals, linked); **what is new** since the last scan; **where sources disagree** (communities against data, candidates against managers, anecdote against numbers); **confidence** (high, medium or low, and why); **what the scout does not know** and how it could find out (a web search, a data page, or a question for makers through everscout-engage). Never state a figure without its source and date. Say "the poster" or "a hiring manager", never a handle.
+In chat, in this order, short: **the answer** in two to four sentences; **what the beat has seen** (counts and dates from notes and signals, linked); **what is new** since the last scan; **where sources disagree** (communities against data, candidates against managers, anecdote against numbers); **confidence** (a band from kb/method.md and why; for a question about the future, the deadline and what would show it wrong; the strongest case against in one sentence; or say plainly that nobody can call it); **what the scout does not know** and how it could find out (a web search, a data page, or a question for makers through everscout-engage). Never state a figure without its source and date. Say "the poster" or "a hiring manager", never a handle.
 
 ## Step 6: save and record
 
