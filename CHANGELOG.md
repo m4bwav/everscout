@@ -2,7 +2,7 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
-## Unreleased
+## 0.15.0 · 2026-11-19
 
 - Rules from The Mom Test (Fitzpatrick 2013) and Superforecasting (Tetlock and Gardner 2015). New `everscout.py draft-check` flags hypothetical or habit questions, approval bait, more than three questions and rating scales in a drafted comment; `beat-check` warns on hypothetical question seeds (warn-only: 3 of the built-in seeds match). `lint` warns (never errors) on vague hedges and undated forecasts in Direction and Confidence sections. kb/method.md fixes confidence bands, dated forecasts and the outside view; report.md adds a `## Last calls` postmortem.
 
