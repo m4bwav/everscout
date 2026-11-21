@@ -35,7 +35,7 @@ In this order, stopping when the question is answered: the beat's newest items (
 
 ## Step 5: answer like a reporter
 
-In chat, in this order, short: **the answer** in two to four sentences; **what the beat has seen** (counts and dates from notes and signals, linked); **what is new** since the last scan; **where sources disagree** (communities against data, candidates against managers, anecdote against numbers); **confidence** (a band from kb/method.md and why; for a question about the future, the deadline and what would show it wrong; the strongest case against in one sentence; or say plainly that nobody can call it); **what the scout does not know** and how it could find out (a web search, a data page, or a question for makers through everscout-engage). Never state a figure without its source and date. Say "the poster" or "a hiring manager", never a handle.
+In chat, in this order, short: **the answer** in two to four sentences; **what the beat has seen** (counts and dates from notes and signals, linked); **what is new** since the last scan; **where sources disagree** (communities against data, candidates against managers, anecdote against numbers; when several sources give one number, their mean and range, then the outlier); **confidence** (a band from kb/method.md and why; for a question about the future, the deadline and what would show it wrong; the strongest case against in one sentence; or say plainly that nobody can call it); **what the scout does not know** and how it could find out (a web search, a data page, or a question for makers through everscout-engage). Never state a figure without its source and date. Say "the poster" or "a hiring manager", never a handle.
 
 ## Step 6: save and record
 

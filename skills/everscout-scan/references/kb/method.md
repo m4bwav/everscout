@@ -30,6 +30,7 @@ Never skip a level. A report calls something a trend only with the cluster and t
 - Entities are canonical ids from the beat's `vocab.md`, resolved by aliases in code (`vocab-match`), never spelled freely by the model. An unknown name is added to the vocabulary or left out, and `validate` warns until it is.
 - Weight per note is `1 + sqrt(interest)/4`, where interest is the comment count the source showed; a 100-comment thread counts about three and a half times a quiet one. Decayed weight halves every `half_life_days` (default 30). Reports show raw counts beside weighted ones.
 - Spread is the number of distinct communities in 90 days; it is the breadth axis below.
+- **Aggregate, then name the outlier.** When several independent sources give the same number or forecast (two download trackers, three analysts), report their mean and range first, then the source furthest from it and why it might differ. An average has usually beaten the typical single source, and often the best one over time; it is still poor when every source is poor, and worthless when the sources copy each other, so check they do not share an origin before averaging (Silver, *The Signal and the Noise*, ch. 2 and 11).
 - Feeds carry no scores on most platforms. Interest is comments plus top-of-week membership; say so once in any report that ranks.
 
 ## The signal rubric (each 0 to 3, one line of reason each)

@@ -13,7 +13,7 @@ Start from the beat's research questions (Goal, Question, Metric). A metric earn
 - a stranger could recompute it from the one-sentence `definition`;
 - you can say what you would conclude if it rose or fell (the actionability test; say it to the user when proposing). If you cannot, it is a vanity metric: do not add it;
 - it prefers a share or ratio when the denominator moves (GDELT's `gdelt:` share over `gdelt-raw:` counts, a tally share over a raw count);
-- its known distortions are named (vendor press releases inflate news volume; upvotes and stars are gamed).
+- its known distortions are named (vendor press releases inflate news volume; upvotes and stars are gamed). A metric people are paid or praised to raise stops tracking quality (Goodhart; Bergstrom and West, *Calling Bullshit*, ch. 5): pair a gamed one (stars, leaderboard scores, bot-pushed downloads) with a harder-to-game one (active contributors, issues closed, returning users), and never call a subject rising on the gamed metric alone.
 
 Grade the source on the Admiralty code: a letter for the source's track record (A reliable to E unreliable, F cannot judge) and a digit for the information (1 confirmed to 5 improbable, 6 cannot judge). Wikimedia pageviews are A2, GDELT volume B2, the beat's own tallies C3, a forum poll E5.
 

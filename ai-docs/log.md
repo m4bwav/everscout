@@ -1101,3 +1101,7 @@ Built the everscout track of the Craft of Research notes: three-step research qu
 ## [2026-11-14] update | README Works with: fractalwright (new public plugin), mirroring its own section
 
 ## [2026-11-19] books | The Mom Test and Superforecasting into engage, ask, report: draft-check, hypothetical-seed warn, hedge and undated-forecast lint warns, confidence bands, Last calls (books round 6 track 50)
+
+## [2026-11-21] books | round 7 track 71: source averaging and Goodhart rules (0.16.0)
+
+kb/method.md aggregate-then-outlier rule, kb/stats.md gamed-metric pairing, everscout-ask disagreement line. Docs only; tests 152 OK. Not tagged (the master releases).
