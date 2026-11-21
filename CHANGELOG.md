@@ -2,6 +2,10 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.16.0 · 2026-11-21
+
+- Rules from The Signal and the Noise (Silver 2012) and Calling Bullshit (Bergstrom and West 2020): kb/method.md "aggregate, then name the outlier" (mean and range of independent sources, with the copy and all-poor cautions); kb/stats.md pairs a gamed metric with a harder-to-game one before any rising call; everscout-ask gives the mean and range where sources disagree on one number.
+
 ## 0.15.0 · 2026-11-19
 
 - Rules from The Mom Test (Fitzpatrick 2013) and Superforecasting (Tetlock and Gardner 2015). New `everscout.py draft-check` flags hypothetical or habit questions, approval bait, more than three questions and rating scales in a drafted comment; `beat-check` warns on hypothetical question seeds (warn-only: 3 of the built-in seeds match). `lint` warns (never errors) on vague hedges and undated forecasts in Direction and Confidence sections. kb/method.md fixes confidence bands, dated forecasts and the outside view; report.md adds a `## Last calls` postmortem.

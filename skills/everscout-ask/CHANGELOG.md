@@ -2,6 +2,10 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`.
 
+### C-20261121-1 · 2026-11-21 · Source averaging and Goodhart (Silver; Bergstrom and West)
+- because: Silver, The Signal and the Noise (2012), ch. 2 and 11; Bergstrom and West, Calling Bullshit (2020), ch. 5; book rules, unverified on our tools
+- files: SKILL.md (answer format, where sources disagree); ../../kb/method.md (Counting honestly); ../../kb/stats.md (candidate tests). Plugin 0.16.0.
+
 ### C-20261119-1 · 2026-11-19 · Confidence bands, outside view, strongest case against (Superforecasting)
 - because: Tetlock and Gardner, Superforecasting (2015), ch. 3, 5, 7 and the ten commandments
 - files: SKILL.md Steps 3 and 5; ../../kb/method.md (bands, dated forecasts, outside view, update size); `lint` warns on vague hedges and undated forecasts in Confidence sections.
