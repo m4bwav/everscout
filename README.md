@@ -8,7 +8,7 @@ Say "set up a scout for vintage synth restoration" (or container gardening, or F
 
 A beat covers one subject: AI video, global economics, down-tempo music, whatever you follow. Everscout reads that beat's subreddits, forums, Hacker News, Bluesky, Mastodon, Lemmy, newsletters, YouTube channels, GitHub releases, arXiv and Hugging Face at each platform's polite pace. It writes one short paraphrased note per thread worth keeping and counts the tools, models, artists or indicators those notes name. From that it writes a monthly radar of what is new, rising and fading, and a sourced history-and-guide for the subject. When a maker posts their work, it drafts a question in your voice. You approve it and paste it yourself. And you can interrogate it like a reporter on the beat: ask it anything about the subject, and it answers from what it has already read, fills the gaps from the beat's communities and the web, and tells you what it saw before, what it just found, where sources disagree and how sure it is.
 
-It is a Claude Code plugin: five skills, a standard-library Python CLI and a markdown knowledge base. The skills are evergreen units, so their research refreshes on a schedule instead of going stale.
+It is an agent plugin: five skills, a standard-library Python CLI and a markdown knowledge base. The skills are evergreen units, so their research refreshes on a schedule instead of going stale.
 
 ## The six skills
 
