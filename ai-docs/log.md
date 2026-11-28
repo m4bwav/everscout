@@ -1105,3 +1105,4 @@ Built the everscout track of the Craft of Research notes: three-step research qu
 ## [2026-11-21] books | round 7 track 71: source averaging and Goodhart rules (0.16.0)
 
 kb/method.md aggregate-then-outlier rule, kb/stats.md gamed-metric pairing, everscout-ask disagreement line. Docs only; tests 152 OK. Not tagged (the master releases).
+- 2026-11-27: 0.17.0 novelty filter: `novel`, `new-note --rubric`, exit 7 on repeats (harvestwright improvements chain item 11).

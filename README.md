@@ -82,7 +82,8 @@ The rules come from research into platform policies, the 2025 r/changemyview AI 
 | `fetch --beat [--kinds] [--sources] [--listing new,top] [--max-age-days N] [--peek] [--json]` | fetch a beat's sources (paced, cached) and list new items; `--peek` reads without marking them seen |
 | `thread <url>` | a thread with comments |
 | `search --kind reddit\|hn\|news\|arxiv --q ...` | search one platform |
-| `new-note <url> --beat --note-kind [--capture FILE --title --posted]` | scaffold a note, prefilled with the vocabulary it finds; `--capture` writes it from a page the user saved |
+| `new-note <url> --beat --note-kind [--capture FILE --title --posted] [--rubric ...] [--force]` | scaffold a note, prefilled with the vocabulary it finds; `--capture` writes it from a page the user saved; refuses (exit 7) an item the notes already cover or a rubric with fit or novelty 0 |
+| `novel "<title or claim>" --beat [--json]` | ADD, MERGE or SKIP against the beat's notes, with the closest ones |
 | `discover list\|add\|mark --beat` | Reddit threads found without a listing: links picked up from other sources during `fetch`, the agent's web search, captures wanted |
 | `captures --beat` | files the user dropped in the beat's `captures/` inbox, with the thread URLs inside |
 | `vocab-match --beat --text` | canonical entities named in a text |

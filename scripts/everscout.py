@@ -53,7 +53,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import es_sources as S  # noqa: E402
 
-VERSION = "0.16.0"
+VERSION = "0.17.0"
 UTC = dt.timezone.utc
 
 DEFAULT_CONFIG = {
@@ -1165,6 +1165,77 @@ def near_dupes(items, threshold=0.8):
     return out
 
 
+SIM_STOP = set("a an and are as at be by can for from has have how in into is it its of on or that the this to was "
+               "were what when which who why will with you your not but all any our out new use using via todo".split())
+SIM_SKIP, SIM_MERGE = 0.5, 0.25  # cosine at or above SIM_SKIP: the beat already has it; at or above SIM_MERGE: fold in
+FACTORS = ("fit", "novelty", "evidence", "cost")
+
+
+def sim_tokens(text):
+    return [w for w in re.findall(r"[a-z0-9]+", (text or "").lower()) if len(w) > 2 and w not in SIM_STOP]
+
+
+def similar(query, docs, top=5):
+    """Rank (where, text) docs by TF-IDF cosine with the query; returns (verdict, [(score, where, snippet)]).
+    A small copy of harvestwright's `hw.py similar` (same weights and thresholds): the two plugins cannot import
+    each other, so each keeps its own copy under test."""
+    import math
+    toks = [sim_tokens(t) for _, t in docs]
+    df = {}
+    for ts in toks:
+        for w in set(ts):
+            df[w] = df.get(w, 0) + 1
+    n = len(docs) + 1
+
+    def vec(ts):
+        tf = {}
+        for w in ts:
+            tf[w] = tf.get(w, 0) + 1
+        v = {w: (1 + math.log(c)) * math.log(n / (1 + df.get(w, 0)) + 1) for w, c in tf.items()}
+        norm = math.sqrt(sum(x * x for x in v.values())) or 1.0
+        return {w: x / norm for w, x in v.items()}
+
+    q = vec(sim_tokens(query))
+    scored = []
+    for (where, text), ts in zip(docs, toks):
+        d = vec(ts)
+        sc = sum(x * d.get(w, 0.0) for w, x in q.items())
+        if sc > 0:
+            scored.append((round(sc, 3), where, " ".join(text.split())[:110]))
+    scored.sort(key=lambda x: -x[0])
+    best = scored[0][0] if scored else 0.0
+    verdict = "SKIP" if best >= SIM_SKIP else "MERGE" if best >= SIM_MERGE else "ADD"
+    return verdict, scored[:top]
+
+
+def novelty_docs(dd):
+    """(where, text) for every note in a beat: title, summary and the opening of the body."""
+    return [(os.path.relpath(p, dd).replace(os.sep, "/"), f"{fm.get('title') or ''} {fm.get('summary') or ''} {body[:1500]}")
+            for p, fm, body in all_notes(dd)]
+
+
+def factor_scores(text):
+    """{factor: 0-3} from 'fit 3, novelty 2, evidence 3, cost 1' (also 'fit=3' or 'fit: 3'); harvestwright's rubric."""
+    return {f.lower(): int(n) for f, n in re.findall(r"(?i)\b(" + "|".join(FACTORS) + r")\s*[:=]?\s*([0-3])\b", text or "")}
+
+
+def cmd_novel(a):
+    cfg = config()
+    b = get_beat(cfg, a.beat)
+    if not sim_tokens(a.text):
+        fail("give a title or claim with some words in it", 2)
+    verdict, hits = similar(a.text, novelty_docs(data_dir(cfg, b.slug)), a.top)
+    if a.json:
+        print(json.dumps({"verdict": verdict, "matches": [{"score": sc, "where": w, "text": t} for sc, w, t in hits]}, indent=1))
+        return
+    why = {"SKIP": "the beat already has this: count it as reach on that note, or note it only for a new angle",
+           "MERGE": "close to an existing note: add it there (under also: or a new section) instead of a new note",
+           "ADD": "nothing close: write a note"}[verdict]
+    print(f"{verdict}: {why}")
+    for sc, w, t in hits:
+        print(f"  {sc:.2f}  {w}: {t}")
+
+
 def learn_rate(rates, sub, posts, window_days=None):
     """Remember a subreddit's posts a day, so the next fetch can pack quiet subreddits into one multireddit request."""
     key = re.sub(r"^r/", "", sub).lower()
@@ -2009,6 +2080,17 @@ def cmd_new_note(a):
     if existing and not a.force:
         print(existing[0])
         fail("a note for this item exists (printed above); edit it, or pass --force", 3)
+    rubric = factor_scores(a.rubric) if a.rubric else {}
+    if a.rubric and len(rubric) < len(FACTORS):
+        fail("--rubric needs all four factors, each 0-3: 'fit N, novelty N, evidence N, cost N'", 2)
+    if rubric and not a.force and (rubric["fit"] == 0 or rubric["novelty"] == 0):
+        fail("fit or novelty is 0: not worth a note (pass --force to write it anyway)", 7)
+    verdict, hits = similar(title + " " + body_text[:600], novelty_docs(dd), 3)
+    if verdict == "SKIP" and not a.force:
+        fail(f"the beat already has this ({hits[0][1]}, {hits[0][0]:.2f}): count it as reach there, "
+             "or pass --force for a new angle", 7)
+    if verdict == "MERGE":
+        note(f"close to {hits[0][1]} ({hits[0][0]:.2f}): consider folding this into that note instead")
     matched = vocab_match(b, body_text)
     fm = {"title": re.sub(r"[:#]", " ", title).strip()[:140], "kind": "note", "status": "active", "date": today(), "verified": today(),
           "beat": b.slug, "platform": plat, "community": community, "url": url, "posted": posted,
@@ -2020,6 +2102,8 @@ def cmd_new_note(a):
     if disc:
         fm_extra["discovered"] = disc.get("via") or "pickup"
         fm_extra["mentions"] = disc.get("mentions", 0)
+    if rubric:
+        fm["rubric"] = ", ".join(f"{f} {rubric[f]}" for f in FACTORS)
     fm.update(fm_extra)
     body = f"# {fm['title']}\n\n" + "".join(f"## {s}\n\nTODO\n\n" for s in b.sections()) + \
         f"Related: [beat index](../../INDEX.md)\n"
@@ -4395,6 +4479,9 @@ def main(argv=None):
     p.add_argument("--engaged", action="store_true"); p.add_argument("--force", action="store_true")
     p.add_argument("--thread-reader", choices=list(THREAD_READERS), help="override config reddit.thread_reader")
     p.add_argument("--capture", help="write the note from the user's capture file (no fetch; needs --title); source: user-capture")
+    p.add_argument("--rubric", help="'fit N, novelty N, evidence N, cost N' (0-3 each); fit or novelty 0 refuses (exit 7)")
+    p = add("novel", cmd_novel, "is this already in the beat's notes: ADD, MERGE or SKIP with the closest notes"); p.add_argument("text"); p.add_argument("--beat")
+    p.add_argument("--top", type=int, default=5); p.add_argument("--json", action="store_true")
     p = add("validate", cmd_validate, "check a beat's notes"); p.add_argument("--beat"); p.add_argument("--strict", action="store_true")
     p = add("tally", cmd_tally, "recount signals from the notes"); p.add_argument("--beat")
     p = add("recall", cmd_recall, "what the knowledge base holds on a question: ranked notes, answers, reports, study, signals"); p.add_argument("--beat")
