@@ -2,6 +2,10 @@
 
 Plugin versions, newest first. Skill-level changes are in each skill's `CHANGELOG.md`; the session log is `ai-docs/log.md`.
 
+## 0.17.0 · 2026-11-27
+
+- Novelty filter and rubric against over-collection. New `everscout.py novel "<title>"` says ADD, MERGE or SKIP against the beat's notes (TF-IDF cosine, a small copy of harvestwright's `hw.py similar` with its thresholds). `new-note` refuses (exit 7) an item the beat already has unless `--force`, names the note to fold a close one into, and takes `--rubric "fit N, novelty N, evidence N, cost N"`, refusing fit or novelty 0 and keeping the scores in the note's `rubric:` field.
+
 ## 0.16.0 · 2026-11-21
 
 - Rules from The Signal and the Noise (Silver 2012) and Calling Bullshit (Bergstrom and West 2020): kb/method.md "aggregate, then name the outlier" (mean and range of independent sources, with the copy and all-poor cautions); kb/stats.md pairs a gamed metric with a harder-to-game one before any rising call; everscout-ask gives the mean and range where sources disagree on one number.

@@ -100,6 +100,7 @@ discovered: pickup          # optional: how a Reddit thread was found without a 
 mentions: 2                 # optional: items on other platforms that linked the thread
 source: user-capture        # optional: written from the user's own capture, not a fetch
 capture: captures/done/x.html  # optional: that capture file, in DATA
+rubric: fit 3, novelty 2, evidence 2, cost 1  # optional: the 0-3 scores new-note --rubric took (fit to the beat's questions, novelty against the notes, evidence, cost to read)
 models: [veo-3.1, kling-3]  # one list per vocab facet, canonical ids only
 tools: [comfyui]
 tags: [ai-video, reddit]

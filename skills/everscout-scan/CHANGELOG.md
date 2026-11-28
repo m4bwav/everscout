@@ -2,6 +2,11 @@
 
 Every change to [SKILL.md](SKILL.md) and its companions, newest first, each with the reason. Reasons cite findings in [RESEARCH.md](RESEARCH.md) (`R-`), lessons in [LEARNINGS.md](LEARNINGS.md) (`L-`), and test runs in [TESTS.md](TESTS.md) (`T-`). State in `evergreen.json`.
 
+### C-20261127-1 · 2026-11-27 · Novelty gate and rubric on new-note
+- because: L-novelty-gate (harvest improvements chain item 11: scans kept notes for stories the beat already held)
+- files: SKILL.md (Step 3 triage), references/kb/SCHEMA.md (synced)
+- `ES novel` before reading; `new-note --rubric`; exit 7 on a repeat or a zero fit or novelty.
+
 ### C-20261114-1 · 2026-11-14 · Description shortened to 761 chars (was 1,041)
 - because: user request (Agent Skills spec limit of 1,024 chars)
 - files: SKILL.md (description)

@@ -1493,6 +1493,34 @@ class FetchwrightReaderTests(WorkspaceTest):
         self.assertEqual(st["fetchwright_reads"], 1)
 
 
+class NoveltyTests(WorkspaceTest):
+    def test_similar_verdicts_and_factor_scores(self):
+        docs = [("notes/a.md", "Tool X adds depth maps to video generation"), ("notes/b.md", "pricing of GPU rentals")]
+        self.assertEqual(E.similar("Tool X adds depth maps to video generation", docs)[0], "SKIP")
+        self.assertEqual(E.similar("unrelated sourdough baking", docs)[0], "ADD")
+        self.assertEqual(E.factor_scores("fit 3, novelty=2, Evidence: 1, cost 0"), {"fit": 3, "novelty": 2, "evidence": 1, "cost": 0})
+
+    def test_new_note_refuses_repeats_and_low_rubric_and_novel_reports(self):
+        note = lambda u, t, *x: self.run_cli("new-note", u, "--beat", "test-beat", "--note-kind", "web", "--title", t,
+                                             "--posted", "2026-11-01", *x)
+        code, out, err = note("https://example.org/a", "Tool X adds depth maps to video generation",
+                              "--rubric", "fit 3, novelty 3, evidence 2, cost 1")
+        self.assertEqual(code, 0, err)
+        self.assertIn("rubric: fit 3, novelty 3, evidence 2, cost 1", open(out.strip(), encoding="utf-8").read())
+        code, _, err = note("https://example.org/b", "Tool X adds depth maps to video generation")
+        self.assertEqual(code, 7, err)
+        self.assertIn("already has this", err)
+        self.assertEqual(note("https://example.org/b", "Tool X adds depth maps to video generation", "--force")[0], 0)
+        code, _, err = note("https://example.org/c", "A sourdough starter guide", "--rubric", "fit 0, novelty 3, evidence 2, cost 1")
+        self.assertEqual(code, 7, err)
+        self.assertEqual(note("https://example.org/c", "A sourdough starter guide", "--rubric", "fit 2")[0], 2)
+        code, out, _ = self.run_cli("novel", "depth maps for video generation in Tool X", "--beat", "test-beat")
+        self.assertEqual(code, 0)
+        self.assertTrue(out.startswith(("SKIP", "MERGE")), out)
+        code, out, _ = self.run_cli("novel", "sourdough starter", "--beat", "test-beat", "--json")
+        self.assertEqual(json.loads(out)["verdict"], "ADD")
+
+
 class DiscoveryTests(WorkspaceTest):
     def test_reddit_ids_in_every_link_form(self):
         text = ("a https://old.reddit.com/r/exampleSub/comments/1abcd2e/my_film/ b www.reddit.com/r/exampleSub/comments/1ABCD2E/x/c0mm3nt/ "
